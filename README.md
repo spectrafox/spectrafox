@@ -22,21 +22,13 @@ A development version is
 Requirements
 ------------
 
-* Microsoft Windows Vista or higher
+* Microsoft Windows Vista or higher (32- or 64-bit)
     * .NET Framework 4.5
 
 Installation
 ------------
 
 Please see [the wiki](https://github.com/spectrafox/spectrafox/wiki/Installation)
-
-Upgrading
----------
-
-If you are upgrading from an older version of Ampache we recommend
-moving the old directory out of the way, extracting the new copy in
-its place and then copying the old /config/ampache.cfg.php, /rest/.htaccess,
-and /play/.htaccess files if any. All database updates will be handled by Ampache.
 
 License
 -------
