@@ -1,0 +1,6 @@
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\ExpTreeLib.dll
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\ExpTreeLib.xml
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\Release\ExpTreeLib.ExpTree.resources
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\Release\ExpTreeLib.vbproj.GenerateResource.Cache
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\Release\ExpTreeLib.dll
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\Release\ExpTreeLib.xml

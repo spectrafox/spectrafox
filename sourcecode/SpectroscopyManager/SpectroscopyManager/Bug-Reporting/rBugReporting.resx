@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BugReport_AttachmentFileFilter" xml:space="preserve">
+    <value>All Files|*.*</value>
+  </data>
+  <data name="BugReport_ContentLine" xml:space="preserve">
+    <value>&lt;div&gt;&lt;p class='title'&gt;%t&lt;/p&gt;&lt;p class='content'&gt;%c&lt;/p&gt;&lt;/div&gt;</value>
+  </data>
+  <data name="BugReport_DefaultDescription" xml:space="preserve">
+    <value>Please write a description of what you were doing when the error occurred.</value>
+  </data>
+  <data name="BugReport_DefaultMail" xml:space="preserve">
+    <value>Please enter your e-mail address.</value>
+  </data>
+  <data name="BugReport_HTMLFooter" xml:space="preserve">
+    <value>&lt;/body&gt;
+&lt;/html&gt;</value>
+  </data>
+  <data name="BugReport_HTMLHeader" xml:space="preserve">
+    <value>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+&lt;head&gt;
+	&lt;meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /&gt;
+	&lt;title&gt;Bug-Report&lt;/title&gt;
+                   &lt;style type="text/css"&gt;
+                          body{background-color:black;color:white;font-family:Verdana;}
+                          .title {color:blue;font-size:12px;font-weight:bold;}
+                          .content {font-size:10px;position:relative;left:25px;}
+                   &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;span style="font-size:7mm; font-weight:bold;"&gt;Bug Report:&lt;/span&gt;&lt;br /&gt;</value>
+  </data>
+  <data name="BugReport_SelectAdditionalAttachments" xml:space="preserve">
+    <value>Please select additional files to attach to your bug report.</value>
+  </data>
+  <data name="Submission_ErrorOccured" xml:space="preserve">
+    <value>The bug-report could not be created due to an error:
+%e</value>
+  </data>
+  <data name="Submission_FileUploadFinished" xml:space="preserve">
+    <value>The report gets uploaded to the report-server. This may need a moment ... complete!</value>
+  </data>
+  <data name="Submission_FileUploadStarted" xml:space="preserve">
+    <value>The report gets uploaded to the report-server. This may need a moment ...</value>
+  </data>
+  <data name="Submission_ManualSubmissionNeeded" xml:space="preserve">
+    <value>The report could NOT be submitted automatically!</value>
+  </data>
+  <data name="Submission_ManualSubmissionNeededMsg" xml:space="preserve">
+    <value>There was a problem in the automatic report submission procedure.
+
+The report is saved to your desktop. Please be so kind, and send it as
+attachment by e-mail to mike@mikeruby.net. We will then contact you
+if we have further questions or have fixed the problem.</value>
+  </data>
+  <data name="Submission_NetworkCheck" xml:space="preserve">
+    <value>Wait, let's see if we can reach the automatic report-server ...</value>
+  </data>
+  <data name="Submission_ProgressWindowTitle" xml:space="preserve">
+    <value>Submitting bug-report ...</value>
+  </data>
+  <data name="Submission_ReportFinished" xml:space="preserve">
+    <value>Your bug-report is generated ... complete!</value>
+  </data>
+  <data name="Submission_ReportStarted" xml:space="preserve">
+    <value>Your bug-report is generated ...</value>
+  </data>
+  <data name="Submission_SubmissionFinished" xml:space="preserve">
+    <value>The report was successfully submitted!</value>
+  </data>
+  <data name="Submission_SubmissionFinishedMsg" xml:space="preserve">
+    <value>Thank you for your help!
+
+We will analyze your bug-report in detail, and contact you
+if we have further questions or have fixed the problem. </value>
+  </data>
+  <data name="Submission_ZipFileFinished" xml:space="preserve">
+    <value>A zip file is created containing all attachments ... complete!</value>
+  </data>
+  <data name="Submission_ZipFileStarted" xml:space="preserve">
+    <value>A zip file is created containing all attachments ...</value>
+  </data>
+</root>

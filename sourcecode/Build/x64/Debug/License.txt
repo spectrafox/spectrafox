@@ -1,0 +1,36 @@
+﻿License Agreement:
+
+© 2013-2014 by Michael Ruby (http://mikeruby.net). All rights reserved. This software is free of charge. However, if it contributes to publish a scientific work, please acknowledge SpectraFox in an appropriate way!
+
+Permission is hereby granted to any person obtaining a copy of this software and associated documentation files (the "Software"), to use the Software free of charge without restriction, and to permit persons to whom the Software is furnished, to do so, subject to the following conditions:
+
+* Any use is done solely for scientific benefit and not for any commercial purpose or for monetary gain. 
+* The above copyright notice and this permission notice shall be included in all copies of the Software.
+ 
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+These third-party libraries are used by this project:
+(For a full version of the individual license conditions, please have a look in the SpectraFox's program folder.)
+
+CUDAfy.NET (http://cudafy.codeplex.com)
+GNU Library General Public License (LGPL)
+
+DotNetZip (http://dotnetzip.codeplex.com/)
+Microsoft Public License (Ms-PL)
+
+ExpTreeLib (http://www.codeproject.com/Articles/8546/An-All-VB-NET-Explorer-Tree-Control-with-ImageList)
+The Code Project Open License (CPOL) 1.02
+
+Math.NET Numerics (http://numerics.mathdotnet.com/)
+The MIT License (MIT)
+Copyright (c) 2009-2012 Math.NET Team
+
+NetSparkle (http://netsparkle.codeplex.com/)
+The MIT License (MIT)
+Copyright (c) 2010 Dirk Eisenberg
+
+SmartThreadPool (http://smartthreadpool.codeplex.com/)
+Microsoft Public License (Ms-PL)
+
+ZedGraph (http://zedgraph.sourceforge.net/)
+GNU Lesser General Public License (LGPL)

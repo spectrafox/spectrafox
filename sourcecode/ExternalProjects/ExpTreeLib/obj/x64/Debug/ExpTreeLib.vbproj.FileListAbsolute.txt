@@ -1,0 +1,12 @@
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\x64\Debug\ExpTreeLib.dll
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\x64\Debug\ExpTreeLib.pdb
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.ExpTree.resources
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.vbproj.GenerateResource.Cache
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.dll
+D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.pdb
+D:\SpectraFox\ExternalProjects\ExpTreeLib\bin\x64\Debug\ExpTreeLib.dll
+D:\SpectraFox\ExternalProjects\ExpTreeLib\bin\x64\Debug\ExpTreeLib.pdb
+D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.ExpTree.resources
+D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.vbproj.GenerateResource.Cache
+D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.dll
+D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.pdb

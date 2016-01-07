@@ -1,0 +1,6 @@
+D:\SpectraFox\ExternalProjects\Resampling\bin\Debug\ResampleImage.dll.config
+D:\SpectraFox\ExternalProjects\Resampling\bin\Debug\ResampleImage.dll
+D:\SpectraFox\ExternalProjects\Resampling\bin\Debug\ResampleImage.pdb
+D:\SpectraFox\ExternalProjects\Resampling\obj\Debug\Resample.csprojResolveAssemblyReference.cache
+D:\SpectraFox\ExternalProjects\Resampling\obj\Debug\ResampleImage.dll
+D:\SpectraFox\ExternalProjects\Resampling\obj\Debug\ResampleImage.pdb

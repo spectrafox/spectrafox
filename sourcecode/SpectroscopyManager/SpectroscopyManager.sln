@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SpectroscopyManager", "SpectroscopyManager\SpectroscopyManager.vbproj", "{B93E0A13-859F-4F36-AF04-8858E9A03C37}"
+	ProjectSection(ProjectDependencies) = postProject
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8} = {22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ExpTreeLib", "..\ExternalProjects\ExpTreeLib\ExpTreeLib.vbproj", "{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZedGraph", "..\ExternalProjects\ZedGraph\ZedGraph.csproj", "{2541686B-1673-43BF-AF89-3163945DB009}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F123FD4B-85B7-4ABB-851C-60B026020257}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+		Performance37.psess = Performance37.psess
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Debug|x64.ActiveCfg = Debug|x64
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Debug|x64.Build.0 = Debug|x64
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Debug|x86.ActiveCfg = Debug|x86
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Debug|x86.Build.0 = Debug|x86
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Release|x64.ActiveCfg = Release|x64
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Release|x64.Build.0 = Release|x64
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Release|x86.ActiveCfg = Release|x86
+		{B93E0A13-859F-4F36-AF04-8858E9A03C37}.Release|x86.Build.0 = Release|x86
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Debug|x64.ActiveCfg = Debug|x64
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Debug|x64.Build.0 = Debug|x64
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Debug|x86.ActiveCfg = Debug|x86
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Debug|x86.Build.0 = Debug|x86
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Release|x64.ActiveCfg = Release|x64
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Release|x64.Build.0 = Release|x64
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Release|x86.ActiveCfg = Release|x86
+		{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}.Release|x86.Build.0 = Release|x86
+		{2541686B-1673-43BF-AF89-3163945DB009}.Debug|x64.ActiveCfg = Debug|x64
+		{2541686B-1673-43BF-AF89-3163945DB009}.Debug|x64.Build.0 = Debug|x64
+		{2541686B-1673-43BF-AF89-3163945DB009}.Debug|x86.ActiveCfg = Debug|x86
+		{2541686B-1673-43BF-AF89-3163945DB009}.Debug|x86.Build.0 = Debug|x86
+		{2541686B-1673-43BF-AF89-3163945DB009}.Release|x64.ActiveCfg = Release|x64
+		{2541686B-1673-43BF-AF89-3163945DB009}.Release|x64.Build.0 = Release|x64
+		{2541686B-1673-43BF-AF89-3163945DB009}.Release|x86.ActiveCfg = Release|x86
+		{2541686B-1673-43BF-AF89-3163945DB009}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = ..
+	EndGlobalSection
+EndGlobal

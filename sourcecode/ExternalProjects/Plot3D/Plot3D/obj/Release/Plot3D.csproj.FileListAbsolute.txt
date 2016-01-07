@@ -1,0 +1,9 @@
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\bin\Release\Plot3D.dll
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\bin\Release\Plot3D.pdb
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\ResolveAssemblyReference.cache
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\Plot3D.Plot3DMainForm.resources
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\Plot3D.Properties.Resources.resources
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\GenerateResource.read.1.tlog
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\GenerateResource.write.1.tlog
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\Plot3D.dll
+D:\Visual Studio Projects\SpectroscopyManager\SpectroscopyManager\Plot3D\Plot3D\obj\Release\Plot3D.pdb

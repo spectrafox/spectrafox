@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>ftp://download.spectrafox.com/|ftp://specman.mikeruby.net/|ftp://mikeruby.net/specman/|D:\VSTest\|\\grouphome.physik.fu-berlin.de\ag-pascual\Software\Spectroscopy Manager\</PublishUrlHistory>
+    <InstallUrlHistory>http://download.spectrafox.com/|http://specman.mikeruby.net/|http://mikeruby.net/%3fp=mrsm/|http://mikeruby.net/specman/</InstallUrlHistory>
+    <SupportUrlHistory>http://spectrafox.com|http://mikeruby.net</SupportUrlHistory>
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory>http://spectrafox.com|http://mikeruby.net</ErrorReportUrlHistory>
+    <FallbackCulture>de-DE</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+    <ProjectView>ShowAllFiles</ProjectView>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
+</Project>

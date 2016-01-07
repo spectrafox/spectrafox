@@ -1,0 +1,2331 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+ExpTreeLib
+</name>
+</assembly>
+<members>
+<member name="F:ExpTreeLib.CShItem.m_Recycle">
+	<summary>
+ The CShItem of the Recycle Bin. Set in New() (the Desktop creator)
+ Used to prevent UPDATEDIR on this Item from processing.
+ Als used to prevent normal UPDATEDIR on Desktop from processing the
+ Recycle Bin which would cause an effectively endless loop.
+ </summary>
+</member><member name="F:ExpTreeLib.CShItem.LockObj">
+	<summary>
+ LockObj is used for locking critical updating blocks of code
+ that reference the Shared Directory Tree of CShItems.  In the
+ normal case, it will not actually lock the block of code since
+ Most (all?) updating is done in the main thread. HOWEVER, empirical evidence
+ suggests that if multiple code paths of the SAME thread are in play 
+ as a byproduct of overriding WndProc for Notification messages, the
+ SyncLock LockObj statement will allow pending messages to be processed.
+ This effectively causes messages to be processed in reverse order of receipt.
+ This is a bit funky, but is at least made predictible by the SyncLock.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.Dispose">
+	<summary>
+ Summary of Dispose.
+ </summary>
+</member><member name="M:ExpTreeLib.CShItem.Dispose(System.Boolean)">
+	<summary>
+ Deallocates CoTaskMem contianing m_Pidl and removes reference to m_Folder
+ </summary>
+	<param name="disposing"></param>
+</member><member name="M:ExpTreeLib.CShItem.Finalize">
+	<summary>
+ Summary of Finalize.
+ </summary>
+</member><member name="M:ExpTreeLib.CShItem.GetFolder(ExpTreeLib.CShItem,System.IntPtr)">
+	<summary>
+ GetFolder returns the IShellFolder interface of the Folder designated by the input Parent and 
+ relative PIDL.
+ </summary>
+	<param name="parent">The CShItem of the Folder containing the folder for which the 
+ IShellFolder interface is desired.</param>
+	<param name="relPidl">The relative Pidl of the folder for which the interface is desired.</param>
+	<returns>The desired interface or Nothing if error.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.#ctor">
+	<summary>
+ Private Constructor. Creates CShItem of the Desktop
+ </summary>
+</member><member name="M:ExpTreeLib.CShItem.IsValidPidl(System.Byte[])">
+	<summary>It is impossible to validate a PIDL completely since its contents
+ are arbitrarily defined by the creating Shell Namespace.  However, it
+ is possible to validate the structure of a PIDL.</summary>
+	<returns>True if input Byte() contains a valid PIDL structure, False Otherwise</returns>
+</member><member name="M:ExpTreeLib.CShItem.MakeFolderFromBytes(System.Byte[])">
+	<summary>
+ Given a Byte() containing a valid PIDL of a Folder, return the IShellFolder of that Folder
+ </summary>
+	<param name="b">Byte() containing a valid PIDL of a Folder</param>
+	<returns>The IShellFolder for the requested PIDL. If Byte() does not contain a valid PIDL of a Folder, return Nothing</returns>
+</member><member name="M:ExpTreeLib.CShItem.GetParentOf(System.IntPtr,System.IntPtr@)">
+	<summary>Returns both the IShellFolder interface of the parent folder
+  and the relative pidl of the input PIDL</summary>
+	<remarks>Several internal functions need this information and do not have
+ it readily available. GetParentOf serves those functions</remarks>
+</member><member name="M:ExpTreeLib.CShItem.SetUpAttributes(ExpTreeLib.ShellDll.IShellFolder,System.IntPtr)">
+	<summary>Get the base attributes of the folder/file that this CShItem represents</summary>
+	<param name="folder">Parent Folder of this Item</param>
+	<param name="pidl">Relative Pidl of this Item.</param>
+</member><member name="M:ExpTreeLib.CShItem.SetPath">
+	<summary>
+ Sets m_Path to the Full Path of the current Item.
+ </summary>
+	<remarks>Reworked 11/13/3013 to deal with the case of folder.GetDisplayNameOf returning an error.<br/>
+          This can occur for incompletely implemented or otherwise corrupt Shell Extension Folders.<br/>
+          All CShItem constructors will call SetUpAttributes which will call SetPath. Effectively all
+          CShItem constructors will be called by GetContents. 
+          GetContents will deal with the exceptions that might be thrown here by simply not inserting the
+          faulting CShItem into the internal tree. Since the CShItem is not in the tree, no change 
+          notification will be called for the Item.<br/>
+          A Move of a file/folder from a known Folder to a faulty Folder will cause the moved item to 
+          disappear from its' original location and not appear anywhere else.
+ </remarks>
+</member><member name="M:ExpTreeLib.CShItem.BrowseTo(System.IntPtr,ExpTreeLib.CShItem@)">
+	<summary>
+ BrowseTo locates the desired item and places it in its proper location on the internal tree.
+ Any and all sub-directories that need to be populated in the tree in order to properly place
+ the desired item, are populated. This is the programatic equivalent of Browsing to a node in <code>ExpTree's</code> TreeView.<br/>
+ BrowseTo also returns the Parent CShItem. 
+ If the desired CShItem does not exist, the returned Parent is the CShItem that would be the
+ Immediate ancestor (containing CShItem or Parent) of the desired item should it be created.
+ </summary>
+	<param name="absPidl">A Absolute PIDL whose CShItem is to be found</param>
+	<param name="Parent">Output parameter -- Immediate Ancestor CShItem of the found item OR 
+ the CShItem that would contain the item if it existed OR Nothing if NO Immediate ancestor found in the Shell namespace. </param>
+	<returns>The desired CShItem or, if not found, Nothing.</returns>
+	<remarks>A by-product of this search is that any sub-dirs of the tree along the path will be 
+ populated with their sub directories.
+ It is logically possible that NO Immediate ancestor can be found.
+ For Example: GetCShItem(Path) may be given a string specifying a non-existant directory.
+ (eg -- C:\Test\NonExistant\junk.txt). 
+ In that case, and that case only, Parent may be returned as Nothing.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetCShItem(System.IntPtr)">
+	<summary>Given an IntPtr representation of a PIDL,
+ GetCshItem finds or creates a CShItem and places any new CShItem into the internal tree.
+ The tree is expanded (filled in) as necessary to locate the CShItem or to locate the proper
+ placement of a new Item. The assumption is that the Folder system actually contains the item
+ that is requested -- File or Directory.Exists equivalent. Returns Nothing on errors such as
+ non-existant item.
+ </summary>
+	<param name="pidl">Absolute (Full) Pidl of item to be Found or Created</param>
+	<returns>A CShItem or, in case of error, Nothing</returns>
+</member><member name="M:ExpTreeLib.CShItem.GetCShItem(System.String)">
+	<summary>Given a Full Path in a String,
+ GetCshItem finds or creates a CShItem and places any new CShItem into the internal tree.
+ The tree is expanded (filled in) as necessary to locate the CShItem or to locate the proper
+ placement of a new Item. The assumption is that the Folder system actually contains the item
+ that is requested -- File or Directory.Exists equivalent. Returns Nothing on errors such as
+ non-existant item.
+ </summary>
+	<param name="path">The Full Path of the desired CShItem</param>
+	<returns>A CShItem or, in case of error, Nothing</returns>
+</member><member name="M:ExpTreeLib.CShItem.GetCShItem(ExpTreeLib.ShellDll.ShellAPI.CSIDL)">
+	<summary>Given a CSIDL,
+ GetCshItem finds or creates a CShItem and places any new CShItem into the internal tree.
+ The tree is expanded (filled in) as necessary to locate the CShItem or to locate the proper
+ placement of a new Item. The assumption is that the Folder system actually contains the item
+ that is requested -- File or Directory.Exists equivalent. Returns Nothing on errors such as
+ non-existant item.
+ </summary>
+	<param name="ID"></param>
+	<returns>A CShItem or, in case of error, Nothing</returns>
+</member><member name="M:ExpTreeLib.CShItem.GetCShItem(System.Byte[],System.Byte[])">
+	<summary>Given a Byte() containing the PIDL of a Folder and a Byte() containing the relative PIDL of the desired item,
+ GetCshItem finds or creates a CShItem and places any new CShItem into the internal tree.
+ The tree is expanded (filled in) as necessary to locate the CShItem or to locate the proper
+ placement of a new Item. The assumption is that the Folder system actually contains the item
+ that is requested -- File or Directory.Exists equivalent. Returns Nothing on errors such as
+ non-existant item.
+ </summary>
+	<param name="FoldBytes"></param>
+	<param name="ItemBytes"></param>
+	<returns>A CShItem or, in case of error, Nothing</returns>
+</member><member name="M:ExpTreeLib.CShItem.FindCShItem(System.IntPtr)">
+	<summary>
+ FindCShItem attempts to locate a CShItem in the internal tree. It will NOT expand the Tree during the
+ search. If the Item identified by the Absolute PIDL parameter is not ALREADY in the internal tree, then
+ FindCShItem will return NOTHING.
+ </summary>
+	<param name="ptr">An Absolute PIDL referencing the item to be Found.</param>
+	<returns>The existant CShItem if found, Nothing if not found.</returns>
+	<remarks> 5/31/2012 - most code in this function replaced by a call to FindCShItem(BaseItem as CShItem, Abs as IntPtr)</remarks>
+</member><member name="M:ExpTreeLib.CShItem.FindCShItem(ExpTreeLib.CShItem,System.IntPtr)">
+	<summary>
+ FindCShItem attempts to locate a CShItem in the internal tree. It will NOT expand the Tree during the
+ search. If the Item identified by the Absolute PIDL parameter is not ALREADY in the internal tree, then
+ FindCShItem will return NOTHING.
+ </summary>
+	<param name="Abs">An Absolute PIDL referencing the item to be Found.</param>
+	<returns>The existant CShItem if found, Nothing if not found.</returns>
+	<remarks> 5/31/2012 -Function added to replace algorithm used in FindCShItem(ptr as IntPtr) which now only calls this routine.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.FindCShItem(System.Byte[])">
+	<summary>
+ FindCShItem attempts to locate a CShItem in the internal tree. It will NOT expand the Tree during the
+ search. If the Item identified by the Absolute PIDL parameter is not ALREADY in the internal tree, then
+ FindCShItem will return NOTHING.
+ </summary>
+	<param name="b">A Byte array representation of a Full or Absolute PIDL 
+ referencing the item to be Found.</param>
+	<returns>The existant CShItem if found, Nothing if not found.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.ComputeSortFlag">
+	<summary>Computes the Sort key of this CShItem, based on its attributes</summary>
+</member><member name="M:ExpTreeLib.CShItem.CompareTo(System.Object)">
+	<summary>
+  Compares an Object to this instance based on SortFlag. The Object must be a CShItem
+ </summary>
+	<param name="obj">A CShItem to be Compared to this instance.</param>
+	<returns>-1 if this instance less than obj, 0 if equal, 1 if greater.</returns>
+	<remarks>The Sort Order from Low to High is:
+ <list type="bullet">
+			<item><description>Nothing</description></item>
+			<item><description>Disks</description></item>
+			<item><description>non-browsable System Folders</description></item>
+			<item><description>browsable System Folders</description></item>
+			<item><description>Directories</description></item>
+			<item><description>Files</description></item>
+		</list>
+	</remarks>
+</member><member name="P:ExpTreeLib.CShItem.strMyComputer">
+	<summary>
+ Contains a String with the Local representation of "My Computer"
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.strSystemFolder">
+	<summary>
+ Contains a String with the Local representation of "System Folder".
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.DesktopDirectoryPath">
+	<summary>
+ Contains a String with the Full Path of the Desktop Directory
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsVista">
+	<summary>
+ True if System OS is Vista or above.
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.PIDL">
+	<summary>
+ Contains the PIDL for the current instance as an IntPtr
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.Folder">
+	<summary>
+ Contains the IShellFolder Interface of the instance if it is a Folder.
+ </summary>
+	<returns>The IShellFolder Interface of the instance if it is a Folder</returns>
+</member><member name="P:ExpTreeLib.CShItem.Path">
+	<summary>
+ Contains the Full Path of the instance as obtained from Folder.GetDisplayNameOf
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.ItemPath">
+	<summary>
+ Contains the Full Path of the instance as obtained by traversing the internal cache's tree structure.
+ </summary>
+	<remarks>Useful for items located on certain removable drives not handled well by Folder.GetDisplayNameOf.</remarks>
+</member><member name="P:ExpTreeLib.CShItem.FoldersInitialized">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.FilesInitialized">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.DirectoryList">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.Directories">
+	<summary>
+ Returns an Array of CShItems containing the sub Directories of this instance.
+ </summary>
+	<returns>Array of CShItems containing the sub Directories of this instance.</returns>
+</member><member name="P:ExpTreeLib.CShItem.FileList">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.Files">
+	<summary>
+ Returns an Array of CShItems containing the Files contained in this instance.
+ </summary>
+	<returns>Array of CShItems containing the Files contained in this instance.</returns>
+</member><member name="P:ExpTreeLib.CShItem.Parent">
+	<summary>
+ Contains the CShItem of this instance's Parent Folder
+ </summary>
+	<returns>CShItem of this instance's Parent Folder</returns>
+	<remarks>Returns Nothing for the Desktop which has no Parent</remarks>
+</member><member name="M:ExpTreeLib.CShItem.SetParent(ExpTreeLib.CShItem)">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.SFGAO_Attributes">
+	<summary>
+ This instance's Shell Attributes as returned by Folder.GetAttributesOf
+ </summary>
+	<returns>This instance's Shell Attributes as returned by Folder.GetAttributesOf</returns>
+	<remarks>Internal use only</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsBrowsable">
+	<summary>
+ True if instance is Browsable, False otherwise
+ </summary>
+	<returns>True if instance is Browsable, False otherwise</returns>
+	<remarks>See MSDN for definition of "Browsable"</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsFileSystem">
+	<summary>
+ True if instance is a File System item
+ </summary>
+	<returns>True if instance is a File System item</returns>
+	<remarks>Numerous Virtual and/or Shell Extension Folders and their content are not members of the File System</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsFolder">
+	<summary>True if instance is a Folder, False otherwise
+ </summary>
+	<returns>True if instance is a Folder, False otherwise</returns>
+	<remarks>Numerous Virtual and/or Shell Extension Folders are not members of the File System</remarks>
+</member><member name="P:ExpTreeLib.CShItem.HasSubFolders">
+	<summary>
+ True if item is a Folder and has sub-Folders
+ </summary>
+	<returns>True if item is a Folder and has sub-Folders, False otherwise</returns>
+	<remarks>Modified to make this attribute behave (with respect to Remote Folders) like XP, even on Vista/Win7.
+ That is, any Remote Folder is reported as HasSubFolders = True. Local Folders are tested with the API call.
+ On Vista/Win7, Compressed files (eg - .Zip, .Cab, etc) are considered sub Folders by this Property.
+ This behavior is NOT modified to behave like XP.</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsDisk">
+	<summary>
+ True if this instance is a Disk like device, False otherwise
+ </summary>
+	<returns>True if this instance is a Disk like device, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsLink">
+	<summary>
+ True if this instance is a Link (.lnk or Shortcut), False otherwise
+ </summary>
+	<returns>True if this instance is a Link (.lnk or Shortcut), False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsShared">
+	<summary>
+ True if this instance is Shared, False otherwise
+ </summary>
+	<returns>True if this instance Shared, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsHidden">
+	<summary>
+ True if this instance is Hidden, False otherwise
+ </summary>
+	<returns>True if this instance Hidden, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsRemovable">
+	<summary>
+ True if this instance is a Removable device, False otherwise
+ </summary>
+	<returns>True if this instance is a Removable device, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsRemote">
+	<summary>
+ Returns True if this CShItem represents a Folder/File stored on a Remote system
+ </summary>
+	<returns>Returns True if this CShItem represents a Folder/File stored on a Remote system, False otherwise.</returns>
+	<remarks>
+ A Remote item is any item whose path is a UNC not referring to the Local system or
+ resides on a Mapped (Network) Drive. Set up in SetupAttributes.
+ </remarks>
+</member><member name="P:ExpTreeLib.CShItem.CanRename">
+	<summary>
+ True if this instance can be Renamed, False otherwise
+ </summary>
+	<returns>True if this instance can be Renamed, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.Size">
+	<summary>
+ A Formatted String representation of the Item's FileSize
+ </summary>
+	<returns>A Formatted String representation of the Item's FileSize</returns>
+</member><member name="P:ExpTreeLib.CShItem.Tag">
+	<summary>
+ An Object which may used to associate application information with this instance
+ </summary>
+	<returns>An Object which may used to associate application information with this instance. Nothing if not set by application.</returns>
+	<remarks>
+ Property may be used for any application defined purpose.
+ </remarks>
+</member><member name="P:ExpTreeLib.CShItem.W32Data">
+	<summary>
+ Property used to store information returned by FindFirstFile/FindNextFile API call.
+ </summary>
+	<returns>The current value or Nothing if not set</returns>
+	<remarks>Used to optimize the fetching of information otherwise only easily available from FileInfo/DirectoryInfo.</remarks>
+</member><member name="P:ExpTreeLib.CShItem.CanMove">
+	<summary>
+ Returns True if instance may be Moved, False otherwise.
+ </summary>
+	<returns>True if instance may be Moved, False otherwise.</returns>
+</member><member name="P:ExpTreeLib.CShItem.CanCopy">
+	<summary>
+ Returns True if instance can be Copied, False otherwise
+ </summary>
+	<returns>True if instance can be Copied, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.CanDelete">
+	<summary>
+ Returns True if instance can be Deleted, False otherwise
+ </summary>
+	<returns>True if instance can be Deleted, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.CanLink">
+	<summary>
+ Returns True if instance can be Linked to, False otherwise
+ </summary>
+	<returns>True if instance can be Linked to, False otherwise</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsDropTarget">
+	<summary>
+ Returns True if instance can be a Drop Target, False otherwise
+ </summary>
+	<returns>True if instance can be a Drop Target, False otherwise</returns>
+</member><member name="M:ExpTreeLib.CShItem.SetDispType">
+	<summary>
+ Sets DisplayName, TypeName, and SortFlag when actually needed
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.DisplayName">
+	<summary>
+ The Name of the File or Directory. If a Special Folder, then the Windows name for that Special Folder
+ </summary>
+	<returns>The Name of the File or Directory. If a Special Folder, then the Windows name for that Special Folder</returns>
+	<remarks>For a link file (xxx.txt.lnk for example) the
+  DisplayName property will return xxx.txt</remarks>
+</member><member name="P:ExpTreeLib.CShItem.Text">
+	<summary>
+ An alternate way of obtaining the DisplayName
+ </summary>
+	<returns>The DisplayName</returns>
+	<remarks>For a link file (xxx.txt.lnk for example) the
+  DisplayName property will return xxx.txt</remarks>
+</member><member name="P:ExpTreeLib.CShItem.Name">
+	<summary>
+ Name is another way of obtaining the DisplayName
+ </summary>
+	<returns>The DisplayName of the Item</returns>
+	<remarks>For a link file (xxx.txt.lnk for example) the
+  DisplayName property will return xxx.txt</remarks>
+</member><member name="P:ExpTreeLib.CShItem.TypeName">
+	<summary>
+ The Windows TypeName (eg "Text File")
+ </summary>
+	<returns>The Windows TypeName</returns>
+</member><member name="P:ExpTreeLib.CShItem.IconIndexNormalOrig">
+	<summary>
+ Should not be directly referenced by the application.<br/>
+ Contains the base IconIndex of the "normal" Icon in the System ImageList 
+ as returned by SHGetFileInfo
+ </summary>
+	<returns>The IconIndex into the System ImageList as returned by SHGetFileInfo</returns>
+	<remarks>This is not the IconIndex returned by SystemImageListManager. It is the
+          IconIndex that is passed to SystemImageListManager to obtain the true index
+          into the per process System Image List. In most, but not all cases, the two
+          values are the same.</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IconIndexOpenOrig">
+	<summary>
+ Should not be directly referenced by the application.<br/>
+ The base IconIndex of the "Open" image in the System Image List.
+ </summary>
+	<returns>The base IconIndex of the "Open" image as returned by SHGetFileInfo</returns>
+	<remarks>On at least Win7 systems, the "open" Icon is the same as the "normal" Icon.</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IconIndexNormal">
+	<summary>
+ The Index of the "normal" Icon into the list maintained by SystemImageListManager and
+ used for the IconIndex in ListViewItems and TreeNodes.
+ </summary>
+	<value></value>
+	<returns>The "normal" IconIndex as used by ListViewItems and TreeNodes</returns>
+	<remarks></remarks>
+</member><member name="P:ExpTreeLib.CShItem.IconIndexOpen">
+	<summary>
+ The Index of the "Open" Icon into the list maintained by SystemImageListManager and
+ used for the IconIndex in ListViewItems and TreeNodes.
+ </summary>
+	<value></value>
+	<returns>The "Open" IconIndex as used by ListViewItems and TreeNodes</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.FillDemandInfo">
+	<summary>
+ Obtains information available from FileInfo. Uses data from W32Data rather than FileInfo/DirectoryInfo if W32Data is present.
+ </summary>
+</member><member name="P:ExpTreeLib.CShItem.LastWriteTime">
+	<summary>
+ Contains the LastWriteTime (Last Modified) DateTime of this instance
+ </summary>
+	<returns>The LastWriteTime (Last Modified) DateTime of this instance</returns>
+	<remarks>With other information, Filled by FillDemandInfo on first Get</remarks>
+</member><member name="P:ExpTreeLib.CShItem.LastAccessTime">
+	<summary>
+ Contains the LastAccessTime DateTime of this instance
+ </summary>
+	<returns>The LastAccessTime DateTime of this instance</returns>
+	<remarks>With other information, Filled by FillDemandInfo on first Get</remarks>
+</member><member name="P:ExpTreeLib.CShItem.CreationTime">
+	<summary>
+ Contains the CreationTime DateTime of this instance
+ </summary>
+	<returns>The CreationTime DateTime of this instance</returns>
+	<remarks>With other information, Filled by FillDemandInfo on first Get</remarks>
+</member><member name="P:ExpTreeLib.CShItem.Length">
+	<summary>
+ Contains the FileSize of this instance
+ </summary>
+	<returns>The FileSize of this instance</returns>
+	<remarks>With other information, Filled by FillDemandInfo on first Get</remarks>
+</member><member name="P:ExpTreeLib.CShItem.Attributes">
+	<summary>
+ Contains the FileAttributes of this instance
+ </summary>
+	<returns>The FileAttributes of this instance</returns>
+	<remarks>This is the same information, formatted the same way, as found in FileInfo, GetAttr, etc.<br/>
+          With other information, Filled by FillDemandInfo on first Get</remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsNetworkDrive">
+	<summary>
+ Returns True if instance is a Mapped (not Local) Drive, False otherwise
+ </summary>
+	<returns>True if instance is a Mapped (not Local) Drive, False otherwise</returns>
+	<remarks>With other information, Filled by FillDemandInfo on first Get</remarks>
+</member><member name="P:ExpTreeLib.CShItem.clsPidl">
+	<summary>
+ The CPidl representation of this instance's PIDL
+ </summary>
+	<returns>The CPidl representation of this instance's PIDL</returns>
+</member><member name="P:ExpTreeLib.CShItem.IsReadOnly">
+	<summary>True if instance is ReadOnly, False otherwise</summary>
+	<remarks>The IsReadOnly attribute causes an annoying access to any floppy drives
+ on the system. To postpone this (or avoid, depending on user action),
+ the attribute is only queried when asked for
+ </remarks>
+</member><member name="P:ExpTreeLib.CShItem.IsSystem">
+	<summary>True if this instance has been marked "System", False otherwise
+</summary>
+	<returns>True if this instance has been marked "System", False otherwise</returns>
+	<remarks>The IsSystem attribute is seldom used, but required by DragDrop operations.
+ Since there is no way of getting ONLY the System attribute without getting
+ the RO attribute (which forces a reference to the floppy drive), we pay
+ the price of calling File.GetAttributes for this purpose alone.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetDeskTop">
+	<summary>
+ If not initialized, then build DesktopBase
+ once done, or if initialized already, returns DestopBase
+ </summary>
+	<returns>The DesktopBase CShItem representing the desktop</returns>
+</member><member name="M:ExpTreeLib.CShItem.IsAncestorOf(ExpTreeLib.CShItem,ExpTreeLib.CShItem,System.Boolean)">
+	<summary>True if parameter "ancestor" is an ancestor of parameter "current" 
+</summary>
+	<returns>IsAncestorOf returns True if input CShItem ancestor is an ancestor of input CShItem current</returns>
+	<remarks>if OS is Win2K or above, uses the ILIsParent API, otherwise uses the
+ cPidl function StartsWith.  This is necessary since ILIsParent in only available
+ in Win2K or above systems AND StartsWith fails on some folders on XP systems (most
+ obviously some Network Folder Shortcuts, but also Control Panel. Note, StartsWith
+ always works on systems prior to XP.<br/>
+ NOTE: if ancestor and current reference the same Item, both
+ methods return True</remarks>
+</member><member name="M:ExpTreeLib.CShItem.IsAncestorOf(System.IntPtr,System.IntPtr,System.Boolean)">
+	<summary> Compares a candidate Ancestor PIDL with a Child PIDL and
+ returns True if Ancestor is an ancestor of the child.
+ if fParent is True, then only return True if Ancestor is the immediate
+ parent of the Child</summary>
+	<param name="AncestorPidl">The Absolute PIDL that is the candidate for being an Ancestor of ChildPidl.</param>
+	<param name="ChildPidl">The Absolute PIDL whose ancestory is being searched for.</param>
+	<param name="fParent">A flag. If True, then only return True if AncestorPidl is the immediate Parent of ChildPidl.</param>
+	<returns>True if AncestorPidl is an ancestor of ChildPidl.
+          If fParent is False then will also return True if AncestorPidl and ChildPidl are equal. 
+          If fParent is True, <i>only</i> returns True if AncestorPidl is the Parent of ChildPidl</returns>
+</member><member name="T:ExpTreeLib.CShItem.WalkAllCallBack">
+	<summary>The WalkAllCallBack delegate defines the signature of 
+ the routine to be passed to AllFolderWalk which returns the CShItem of each
+ file and directory in and below an Folder CShItem.
+</summary>
+	<example>Dim DWalk as New CshItem.WalkAllCallBack(addressof yourroutine)</example>
+</member><member name="M:ExpTreeLib.CShItem.AllFolderWalk(ExpTreeLib.CShItem,ExpTreeLib.CShItem.WalkAllCallBack,System.Int32,System.Int32)">
+	<summary>
+ AllFolderWalk recursively walks down directories from cStart, calling its
+   callback routine, WalkAllCallBack, for each Directory and File encountered, including those in
+   cStart.  UserLevel is incremented by 1 for each level of dirs that DirWalker
+  recurses thru.  Tag is an Integer that is simply passed, unmodified to the 
+  callback, with each CShItem encountered, both File and Directory CShItems.
+ </summary>
+	<param name="cStart">The CShItem being examined</param>
+	<param name="cback">AddressOf a WalkAllCallBack routine</param>
+	<param name="UserLevel">An integer, incremented by 1 for each level of directory and passed to the CallBack routine</param>
+	<param name="Tag">An integer passed unmodified to the CallBack routine</param>
+	<returns>True to continue Walk, False if Callback said to stop</returns>
+	<remarks>It is much more efficient to implement this Function (without CallBack) in the application.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.Equals(ExpTreeLib.CShItem)">
+	<summary>
+ Compares this instance of CShItem to another CShItem. Equality is based on a string comparison of
+ their Paths.
+ </summary>
+	<param name="other">A CShItem to be tested for equality to the current instance.</param>
+	<returns>True if both paths are equal.</returns>
+	<remarks>An Obsolete method. Since only one copy of a CShItem is allowed, the proper test
+ is "If Me Is other".</remarks>
+</member><member name="M:ExpTreeLib.CShItem.AddItem(ExpTreeLib.CShItem)">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="M:ExpTreeLib.CShItem.RemoveItem(ExpTreeLib.CShItem)">
+	<summary>
+ For internal use only
+ </summary>
+</member><member name="M:ExpTreeLib.CShItem.ClearItems(System.Boolean,System.Boolean)">
+	<summary>
+ Clear File and/or Folder items from the CShItem internal cache.
+ </summary>
+	<param name="ClearFiles">Clear Files</param>
+	<param name="ClearDirectories">Clear Folders</param>
+	<remarks>Typically used to discard CShItems representing Files that are no longer displayed in 
+ the GUI.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.StopGlobalNotification">
+	<summary>
+ Stops monitoring of changes to the File System.
+ </summary>
+	<returns>True if Successful, False otherwise</returns>
+	<remarks>Global Change Notification is started by default. Call this function to turn it off.
+          Only turn Notification Off under rare, well understood circumstances. If turned off, NO
+          changes, including those made by the application will be noticed.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.StartGlobalNotification">
+	<summary>
+ Restarts the Dynamic Update listening for Windows Notify messages
+ </summary>
+	<returns>True if successful, False otherwise</returns>
+	<remarks>Resumesthe detection of changes to the FileSystem after a StopGlobalNotification call.
+          Changes between that call and a restart will be lost.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetDirectories">
+	<summary>
+ Returns the sub-directories of the current instance, if the current instance is a
+ Folder. Similar to to Property Directories except that it returns the Directories
+ as an ArrayList.
+ </summary>
+	<returns>If the current instance is a Folder, returns its sub-directories as an 
+ ArrayList containing the CShItems of its sub-directories. Returns an empty list if
+ there are no sub-directories. Returns Nothing if the current instance is not a Folder.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetFiles">
+	<summary>
+ If the current instance is a Folder then returns an ArrayList of the CShItems of Files 
+ contained in the current instance. Otherwise returns Nothing.
+ </summary>
+	<returns>An ArrayList of the CShItems of the Files in the current instance. If the 
+ current instance is not a Folder, returns Nothing. If there are no Files in the 
+ current instance, returns an empty ArrayList.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetFiles(System.String)">
+	<summary>
+ Returns the Files of this sub-folder, filtered by a filtering string, as an
+   ArrayList of CShitems
+ </summary>
+	<param name="Filter">A filter string (for example: *.Doc)</param>
+	<returns>An ArrayList of CShItems. May return an empty ArrayList if there are none.</returns>
+	<remarks>Added 8/22/2012</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetItems">
+	<summary>
+ Returns the Directories and Files of this sub-folder as a sorted
+   ArrayList of CShitems
+ </summary>
+	<returns>An ArrayList of CShItems. May return an empty ArrayList if there are none.</returns>
+	<remarks>This version is the Optimized version added after any distribution of v2.14</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetFileName">
+	<summary>GetFileName returns the Full file name of this item.
+  Specifically, for a link file (xxx.txt.lnk for example) the
+  DisplayName property will return xxx.txt, this method will
+  return xxx.txt.lnk.</summary>
+	<returns>The Name of this instance</returns>
+	<remarks>In most cases this is equivalent to
+  System.IO.Path.GetFileName(m_Path).  However, some m_Paths
+  actually are GUIDs.  In that case, this routine returns the
+  DisplayName</remarks>
+</member><member name="M:ExpTreeLib.CShItem.ResetIconIndex">
+	<summary>
+ Resets the IconIndex to the current value
+ </summary>
+	<remarks>Certain, seldom occuring, Dynamic Updates will cause the actual Icon and its' IconIndex to change.
+          The handlers for these Update Events should Reset the IconIndex to show the new Icon.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetLinkTarget">
+	<summary>
+ If the current instance (Me) is a Link then return the name of the Target of this link.
+ </summary>
+	<returns>If this instance is a link, then the name of the link target. If current instance
+ is not a link, then returns the empty string.</returns>
+	<remarks>Illustrates use of Activator.CreateInstance.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.ToString">
+	<summary>
+ Returns the DisplayName as the normal ToString value
+ </summary>
+	<returns>The DisplayName</returns>
+</member><member name="M:ExpTreeLib.CShItem.DebugDump">
+	<summary>
+ Writes some key properties of this CShItem to the Debug console.
+ </summary>
+</member><member name="M:ExpTreeLib.CShItem.GetDropTargetOf(System.Windows.Forms.Control)">
+	<summary>
+ This method uses the CreateViewObject method of IShellFolder to obtain the IDropTarget of this
+ CShItem instance. 
+ </summary>
+	<param name="tn">The control in which the GUI representation of this CShItem lives.</param>
+	<returns>If successful, the IDropTarget interface of the Folder represented by this CShItem.
+ If unsuccessful, returns Nothing.</returns>
+	<remarks>A similar function exists in the ShellHelper class. GetDropTargetOf is more efficient.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetContents(ExpTreeLib.ShellDll.ShellAPI.SHCONTF)">
+	<summary>
+ Returns the requested Items of this Folder as a CShitemCollection
+</summary>
+	<param name="flags">A set of one or more SHCONTF flags indicating which items to return</param>
+</member><member name="M:ExpTreeLib.CShItem.IsFolderRel(System.IntPtr)">
+	<summary>
+ Given a relative PIDL (relative to Me.Folder) determine if item is a Folder.
+ </summary>
+	<param name="ptr">A relative PIDL, relative to Me.Folder</param>
+	<returns>True if item is a Folder, False is item is NOT a Folder.</returns>
+	<remarks>Container files (such as .zip or .cab) are marked as a "Folder" in WinXP and above, so
+ some further testing must be done on XP and above systems. We define such items as non-Folders.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.GetContentPtrs(ExpTreeLib.ShellDll.ShellAPI.SHCONTF)">
+	<summary>
+ Returns the requested Items of this Folder as an ArrayList of relative PIDLs 
+ (caller must free the pidls after use).
+</summary>
+	<param name="flags">A set of one or more SHCONTF flags indicating which items to return</param>
+	<returns>On error, returns an empty (count=0) ArrayList. Otherwise, returns the relative PIDLs of
+ the requested (via flags param) items in this Folder.</returns>
+</member><member name="M:ExpTreeLib.CShItem.ItemIDSize(System.IntPtr)">
+	<summary>
+ Get Size in bytes of the first (possibly only)
+  SHItem in an ID list.  Note: the full size of
+   the item is the sum of the sizes of all SHItems
+   in the list!!
+ </summary>
+	<param name="pidl">A pointer to a PIDL.</param>
+</member><member name="M:ExpTreeLib.CShItem.ItemIDListSize(System.IntPtr)">
+	<summary>
+ Computes the actual size of the ItemIDList (all SHItems) pointed to by pidl.
+ </summary>
+	<param name="pidl">The pidl pointing to an ItemIDList</param>
+	<returns> Returns actual size of the ItemIDList, less the terminating nulnul</returns>
+</member><member name="M:ExpTreeLib.CShItem.PidlCount(System.IntPtr)">
+	<summary>
+ Counts the total number of SHItems in input pidl
+ </summary>
+	<param name="pidl">The pidl to obtain the count for</param>
+	<returns> Returns the count of SHItems pointed to by pidl</returns>
+</member><member name="M:ExpTreeLib.CShItem.DecomposePIDL(System.IntPtr)">
+	<summary>
+ Given a PIDL(Pointer to ID List) as IntPtr, return an Array of PIDL, one for each ID in the List.
+ Each PIDL in the returned Array will be a single, well formed and terminated ID.
+ </summary>
+	<param name="pidl">The PIDL to be Factored</param>
+	<returns>An Array of PIDL, each a Single Relative PIDL</returns>
+	<remarks>The returned PIDLs must be Released when no longer needed by calling PIDLFree.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.PIDLClone(System.IntPtr)">
+	<summary>
+ Given a PIDL as IntPtr, Allocate memory for and return a Clone of the input PIDL.
+ </summary>
+	<param name="pidl">A PIDL to be Cloned</param>
+	<returns>A Clone of the input PIDL</returns>
+	<remarks>The Clone must be Released when no longer needed by calling PIDLFree</remarks>
+</member><member name="M:ExpTreeLib.CShItem.PIDLFree(System.IntPtr)">
+	<summary>
+ Frees a PIDL, releasing its' allocated memory
+ </summary>
+	<param name="pidl">The PIDL to be Freed</param>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.IsReallyEqual(System.IntPtr,System.IntPtr)">
+	<summary>
+ IsReallyEqual compares Pidls using the IsEqual routine. If IsEqual declares them Equal, IsReallyEqual
+ checks the Last (or relative) Pidls using a byte by byte comparison. This is necessary because new file
+ versions created by File-&gt;Save will compare Equal in IsEqual, when we really want to know that a new version
+ of a file has been created. Fortunately, the relative Pidl of a new version will differ in a few bytes from
+ the relative Pidl of the previous version.
+ This Function is no longer used by ExpTreeLib.
+ </summary>
+	<param name="Pidl1">IntPtr pointing to an ItemIDList.</param>
+	<param name="Pidl2">IntPtr pointing to an ItemIDList.</param>
+	<returns>True is completely equal, False otherwise.</returns>
+	<remarks>At this point, this has been tested on NTFS file systems only.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.AreBytesEqual(System.IntPtr,System.IntPtr)">
+	<summary>
+ AreBytesEqual performs a binary comparison of the contents of two ItemIDLists pointed to by two Pidls.
+ </summary>
+	<param name="Pidl1">IntPtr pointing to an ItemIDList.</param>
+	<param name="pidl2">IntPtr pointing to an ItemIDList.</param>
+	<returns>True if all bytes are the same, False otherwise.</returns>
+	<remarks>A substitute for ILIsEqual on pre-Win2K systems, and used by IsReallyEqual when binary
+ comparison is needed on Win2K and above systems.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.IsEqual(System.IntPtr,System.IntPtr)">
+	<summary>
+ IsEqual compares two ItemIDLists. On Win2K and above systems, it uses the ILIsEqual API, which only
+ compares portions of each ItemID. On such systems, the other portions of the ItemID may differ in a 
+ few bytes -- typically this is desired behavior, but not in UPDATEDIR cases which do a Byte comparison in addition to IsEqual.
+ On Pre-Win2K systems, it performs a binary comparison of the entire content of the ItemIDLists, this
+ is OK behavior on such systems.
+ </summary>
+	<param name="Pidl1">IntPtr pointing to an ItemIDList.</param>
+	<param name="Pidl2">IntPtr pointing to an ItemIDList.</param>
+	<returns>True if ILIsEqual returns or would return True, False otherwise.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.PidlsEqual(System.IntPtr,System.IntPtr)">
+	<summary>
+ Not currently used. Compares two PIDLs Relative to the instance Folder using the folder.CompareIDs API call.
+ </summary>
+	<param name="RelPidl1">First Relative PIDL to compare.</param>
+	<param name="RelPidl2">Second Relative PIDL to compare.</param>
+	<returns>True if Equal, False otherwise.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.concatPidls(System.IntPtr,System.IntPtr)">
+	<summary>
+ Concatenates the contents of two pidls into a new Pidl (ended by 00)
+ allocating CoTaskMem to hold the result,
+ placing the concatenation (followed by 00) into the
+ allocated Memory,
+ and returning an IntPtr pointing to the allocated mem
+ </summary>
+	<param name="pidl1">IntPtr to a well formed SHItemIDList or IntPtr.Zero</param>
+	<param name="pidl2">IntPtr to a well formed SHItemIDList or IntPtr.Zero</param>
+	<returns>Returns a ptr to an ItemIDList containing the 
+   concatenation of the two (followed by the req 2 zeros
+   Caller must Free this pidl when done with it</returns>
+	<remarks>On Win2k or above systems, will use the API function ILCombine, otherwise performs
+ byte array manipulation to accomplish the same thing.
+ Caller must free the returned Pidl when no longer needed.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.TrimPidl(System.IntPtr,System.IntPtr@)">
+	<summary>
+ TrimPidl returns an ItemIDList with the last ItemID trimed off.
+  It's purpose is to generate an ItemIDList for the Parent of a
+  Special Folder which can then be processed with DesktopBase.BindToObject,
+  yeilding a Folder for the parent of the Special Folder
+  It also creates and passes back a RELATIVE pidl for this item
+ </summary>
+	<param name="pidl">A pointer to a well formed ItemIDList. The PIDL to trim</param>
+	<param name="relPidl">BYREF IntPtr which will point to a new relative pidl
+        containing the contents of the last ItemID in the ItemIDList
+        terminated by the required 2 nulls.</param>
+	<returns> an ItemIDList with the last element removed.</returns>
+	<remarks>Caller must Free BOTH the returned, Trimmed PIDL and the 
+ returned relPidl.
+</remarks>
+</member><member name="M:ExpTreeLib.CShItem.ILFindLastID(System.IntPtr)">
+	<summary>ILFindLastID -- returns a pointer to the last ITEMID in a valid
+ ITEMIDLIST. Returned pointer SHOULD NOT be released since it
+ points to place within the original PIDL</summary>
+	<returns>IntPtr pointing to last ITEMID in ITEMIDLIST structure,
+ Returns IntPtr.Zero if given a null pointer.
+ If given a pointer to the Desktop, will return same pointer.</returns>
+	<remarks>Uses the API ILFindLastID function if Win2k or above, otherwise
+ computes the same thing.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.DumpPidl(System.IntPtr)">
+	<summary>
+ Dumps, to the Debug output, the contents of the mem block pointed to by
+ a PIDL. Depends on the internal structure of a PIDL
+ </summary>
+	<param name="pidl">The IntPtr(a PIDL) pointing to the block to dump</param>
+</member><member name="M:ExpTreeLib.CShItem.DumpHex(System.Byte[],System.Int32,System.Int32)">
+	<summary>Dump a portion or all of a Byte Array to Debug output</summary>
+	<param name="b">A single dimension Byte Array</param>
+	<param name="sPos">Optional start index of area to dump (default = 0)</param>
+	<param name="epos">Optional last index position to dump (default = end of array)</param>
+</member><member name="M:ExpTreeLib.CShItem.HexNum(System.Int32,System.Int32)">
+	<summary>
+ Formats an Integer into a String representation of the Hexidecimal representation of that number with
+ enough leading zero Chars to fill nrChars number of characters.
+ </summary>
+	<param name="num">The Integer to Format</param>
+	<param name="nrChrs">The desired size of the returned String</param>
+	<returns>A String with the Hex representation of the Integer parameter</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.TagComparer.Compare(System.Object,System.Object)">
+	<summary>
+ Compares the .Tags of two Objects, which must be CShItems.
+ </summary>
+	<param name="x">First Object with a CShItem in its' .Tag</param>
+	<param name="y">Second Object with a CShItem in its' .Tag</param>
+	<returns>-1, 0, or 1 depending on the results of comparing the two CShItems</returns>
+	<remarks>See CShItem.CompareTo for discussion of the Comparison of two CShItems</remarks>
+</member><member name="T:ExpTreeLib.CShItem.TagComparer">
+	<summary> It is sometimes useful to sort a list of TreeNodes,
+ ListViewItems, or other objects in an order based on CShItems in their Tag.
+ TagComparer is a Icomparer Class for that situation. Sorting is based on CShItem.CompareTo
+ </summary>
+</member><member name="E:ExpTreeLib.CShItem.CShItemUpdate">
+	<summary>
+ CShItemUpdate is the Event Raised to notify the using application, typically the GUI portion, of changes made to
+ Folders and Files that the application has an interest in.<br/>
+ See <see cref="P:ExpTreeLib.ShellItemUpdateEventArgs.UpdateType">UpdateType</see> for details.
+ </summary>
+	<param name="sender">The CShItem of the Folder that has changes in its' content.</param>
+	<param name="e">A <see cref="T:ExpTreeLib.ShellItemUpdateEventArgs">ShellItemUpdateEventArgs</see> which provides information about the change.</param>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.CShItem.CShItemUpdateType">
+	<summary>
+ CShItemUpdateType is an Enum of the various types of change that will be reported in a ShellItemUpdateEventArgs.
+ </summary>
+	<remarks>This Enum is also used by the CShItemUpdater Class to report change types to CShItem.Update which passes it 
+          on to the Application.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.updateFolderPidlAndPath">
+	<summary>
+ On a Rename operation, we simply modify the existant CShItem to reflect the new PIDL, Path, and
+ Folder (if a folder).
+ Since in this version of CShItem, m_Pidl is an absolute, fully qualified pidl, it must be updated
+ when any of the ancestor Folders is Renamed/Moved. 
+ This is also true for both the Path property and the Folder property.
+ For Pidls, we actually perform the update here. For Paths, we simply set it to String.Empty and let
+ me.Path recreate it as needed.  The latter implies that m_Path should never be read -- use Me.Path instead
+ for any _get references.
+ For Folders, we set the UpdateFolder property so that the folder interface is re-fetched when needed.
+ As with Path, this implies that Me.Folder should always be used rather than m_Folder.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CShItem.Update(System.IntPtr,ExpTreeLib.CShItem.CShItemUpdateType)">
+	<summary>For internal use only<br/>
+ Update is called by the CShItemUpdater Class when that Class receives a WM_Notify message. The purpose of this Class is to
+ translate the information passed to it into the appropriate set of actions needed to maintain the internal cache and to,
+ directly or indirectly (thru the routines it calls), Raise CShItemUpdate events to notify the using application of changes.
+ </summary>
+	<param name="newPidl">The absolute PIDL of the affected item. The definition of "affected item" varies with the type of
+                       change being reported.</param>
+	<param name="changeType">The type of change.</param>
+	<remarks>Serves as a bridge between CShItemUpdater and the CShItem that should handle a change.</remarks>
+</member><member name="M:ExpTreeLib.CShItem.UpdateRefresh(System.Boolean,System.Boolean)">
+	<summary>
+ The UpdateRefresh function compares the Current content of the Folder with the
+ current state of m_Directories and m_Files, adding/deleting CShItems as appropriate  (thus causing
+ appropriate events to be raised for listening clients. 
+ Called internally to handle WM_UPDATEDIR messages which map to CShItemUpdateType.UpdateDir. 
+ This message indicates that the Contents of this Folder has changed.  Typically, it is fired 
+ when multiple items are added/deleted. In practice, several explicit add/delete notification 
+ messages are fired followed by WM_UPDATEDIR to indicate that there are more changes. 
+ Certain other types of file operations (eg Save) use only WM_UPDATEDIR rather than WM_CREATE.
+ </summary>
+	<param name="UpdateFiles">True to examine Files of this folder for changes.</param>
+	<param name="UpdateFolders">True to examine sub-directories of this folder for changes.</param>
+	<returns>True if changes have been made, False otherwise</returns>
+	<remarks>If m_Directories or m_Files is Nothing, then no attempt is made to compare with current 
+ contents.  That is, if m_files is Nothing then it is not updated, m_Directories is treated the same.
+ Note that m_xxxx.Count=0 is not the same thing as m_xxxx is Nothing! m_xxxx = Nothing means
+ no one cares about the content.  m_xxxx.Count = 0 means that someone does care, but there were 
+ no such items known until (perhaps) now.</remarks>
+</member><member name="T:ExpTreeLib.CShItem">
+	<summary>
+ CShItem is the <b>Primary Class</b> in ExpTreeLib. It is a superset of the .Net Classes FileInfo/DirectoryInfo. CShItem and its' supporting
+ Classes provide all the functionality of the .Net Classes as well as Change Notification, correct Icons for all Items, support for 
+ non-FileSystem Items, and obtains most information about Items more rapidly than the .Net Classes.
+ </summary>
+	<remarks>Creates and maintains an internal cache of Directories and Files that the calling application has expressed an interest in.
+          The calling application is responsible for explicitly discarding elements from the cache when it no longer has an interest
+          in them. Normal usage is to retain all Directory entries but explicitly discard the file entries of Directories that are
+          no longer of interest. 
+ </remarks>
+</member><member name="P:ExpTreeLib.ShellItemUpdateEventArgs.Item">
+	<summary>
+ The CShItem that changed.
+ </summary>
+	<returns>The CShItem changed.</returns>
+	<remarks>The precise role of this CShItem in a change depends on the type of change.<br/>
+ See <see cref="P:ExpTreeLib.ShellItemUpdateEventArgs.UpdateType">UpdateType</see> for details.
+ </remarks>
+</member><member name="P:ExpTreeLib.ShellItemUpdateEventArgs.UpdateType">
+	<summary>
+ The type of change given as one of the CShItemUpdateType Enum values.
+ </summary>
+	<returns>The type of change given as one of the CShItemUpdateType Enum values.</returns>
+	<remarks>The UpdateType has the following meaning:
+ <table style="text-align: left" border="3">
+			<caption>
+ UpdateTypes</caption>
+			<tr>
+				<td style="width: 100px">
+					<strong>UpdateType</strong></td>
+				<td style="width: 181px">
+					<strong>sender</strong></td>
+				<td style="width: 202px">
+					<strong>Item</strong></td>
+				<td style="width: 295px">
+					<strong>  
+                    Occurs when:</strong></td>
+			</tr>
+			<tr>
+				<td style="width: 100px">  
+                    Created
+                </td>
+				<td style="width: 181px">
+                    Folder of Item</td>
+				<td style="width: 202px">
+                    Newly Created Item</td>
+				<td style="width: 295px">
+                    Item has been created</td>
+			</tr>
+			<tr>
+				<td style="width: 100px">
+                    Deleted
+                </td>
+				<td style="width: 181px">
+                    Folder of Item</td>
+				<td style="width: 202px">
+                    Newly Deleted Item</td>
+				<td style="width: 295px">
+                    Item has been Deleted</td>
+			</tr>
+			<tr>
+				<td style="width: 100px">
+                    Renamed
+                </td>
+				<td style="width: 181px">
+                    Original Folder of Item</td>
+				<td style="width: 202px">
+                    Item that has been Renamed</td>
+				<td style="width: 295px">
+                    Item has been Renamed or Moved<span style="font-size: 8pt; vertical-align: super;&#xA;                        font-family: Courier New">1</span></td>
+			</tr>
+			<tr>
+				<td style="width: 100px">
+                    Updated
+                </td>
+				<td style="width: 181px">
+                    Folder of Item</td>
+				<td style="width: 202px">
+                    Item that has changed</td>
+				<td style="width: 295px">
+                    Attributes of Item have changed</td>
+			</tr>
+			<tr>
+				<td style="width: 100px">
+                    UpdateDir
+                </td>
+				<td style="width: 181px">
+                    Folder that has Changed</td>
+				<td style="width: 202px">
+                    Folder that has Changed</td>
+				<td style="width: 295px">
+                    A Folder has had Items Added/Deleted<span style="font-size: 8pt; vertical-align: super;&#xA;                        font-family: Courier New">2</span></td>
+			</tr>
+			<tr>
+				<td style="width: 100px">
+                    MediaChange</td>
+				<td style="width: 181px">
+                    Folder of Item</td>
+				<td style="width: 202px">
+                    CShItem of Media</td>
+				<td style="width: 295px">
+                    When Media has been inserted or removed</td>
+			</tr>
+			<tr>
+				<td style="width: 100px">
+                    IconChange</td>
+				<td style="width: 181px">  
+                    Folder of Item</td>
+				<td style="width: 202px">  
+                    Item that has changed</td>
+				<td style="width: 295px">  
+                    When Icon has changed</td>
+			</tr>
+		</table>
+		<br/>
+		<span style="font-size: 8pt; vertical-align: super; font-family: Courier New">1</span>
+      In the Renamed case, sender is the Folder of the Item before it
+      was Renamed (or Moved). The Item may have moved to a new Folder, in which case,
+      the new Folder may be determined by e.Item.Parent.
+    <p>
+			<span style="font-size: 8pt; vertical-align: super; font-family: Courier New">2</span>
+      The UpdateDir UpdateType normally may be ignored since any Add or Deletes of Items
+      will have been already reported with previous Created and/or Deleted Events.
+ </p>
+	</remarks>
+</member><member name="T:ExpTreeLib.ShellItemUpdateEventArgs">
+	<summary>
+ ShellItemUpdateEventArgs is used to pass information about a change in the Shell Namespace (that we actually care about) 
+   to an Event Handler.<br/>
+ See <see cref="P:ExpTreeLib.ShellItemUpdateEventArgs.UpdateType">UpdateType</see> for details.
+ </summary>
+	<remarks>
+	</remarks>
+</member><member name="T:ExpTreeLib.ShellDll.ShellAPI.WM">
+	<summary>
+ Windows Message Numbers
+ </summary>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CPidl.#ctor(System.IntPtr)">
+	<summary>
+ Given an IntPtr pointing to a valid PIDL, copy the bytes of that PIDL to a Byte()
+ </summary>
+	<param name="Pidl">IntPtr pointing to a valid PIDL</param>
+</member><member name="P:ExpTreeLib.CPidl.PidlBytes">
+	<summary>
+ Returns this cPIDL's Byte() containing the Bytes of the original PIDL
+ </summary>
+	<returns>This cPIDL's Byte() containing the Bytes of the original PIDL</returns>
+</member><member name="P:ExpTreeLib.CPidl.Length">
+	<summary>
+ Returns the number of Bytes in this cPidl
+ </summary>
+	<returns>The number of Bytes in this cPidl</returns>
+</member><member name="P:ExpTreeLib.CPidl.ItemCount">
+	<summary>
+ Returns the number of Item IDs in this instance
+ </summary>
+	<returns>The number of Item IDs in this cPidl</returns>
+</member><member name="M:ExpTreeLib.CPidl.ToPIDL">
+	<summary> Copy the contents of a byte() containing a PIDL to
+ CoTaskMemory, returning an IntPtr that points to that mem block
+ Assumes that this cPidl is properly terminated, as all New 
+ cPidls are.
+</summary>
+	<returns>The newly created PIDL</returns>
+	<remarks> Caller must Free the returned IntPtr when done with the returned PIDL.</remarks>
+</member><member name="M:ExpTreeLib.CPidl.Decompose">
+	<summary>
+ Returns an object containing a byte() for each of this cPidl's
+ ITEMIDs (individual PIDLS), in order such that obj(0) is
+ a byte() containing the bytes of the first ITEMID, etc.
+ Each ITEMID is properly terminated with a nulnul    ''' </summary>
+	<returns>An Object containing a Byte() for each ID in the PIDL</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CPidl.IsEqual(ExpTreeLib.CPidl)">
+	<summary>
+ Returns True if input cPidl's content exactly match the 
+ contents of this instance, False otherwise
+ </summary>
+	<param name="other">The CPidl to compare to this instance</param>
+	<returns>True if "other" is Equal to this instance, False otherwise</returns>
+</member><member name="M:ExpTreeLib.CPidl.JoinPidlBytes(System.Byte[],System.Byte[])">
+	<summary> Join two byte arrays containing PIDLS. 
+ Returns NOTHING if error
+ </summary>
+	<returns>A Byte() containing the resultant ITEMIDLIST.</returns>
+	<remarks>Both Byte() must be properly terminated (nulnul)</remarks>
+</member><member name="M:ExpTreeLib.CPidl.BytesToPidl(System.Byte[])">
+	<summary>
+ Copy the contents of a byte() containing a pidl to
+  CoTaskMemory, returning an IntPtr that points to that mem block
+ Caller must free the IntPtr when done with it
+ </summary>
+	<param name="b">A Byte() containing a valid PIDL</param>
+	<returns>An IntPtr pointing to the newly allocated and created PIDL</returns>
+	<remarks>Caller is responsible for Freeing the PIDL when no longer required</remarks>
+</member><member name="M:ExpTreeLib.CPidl.StartsWith(System.IntPtr,System.IntPtr)">
+	<summary>returns True if the beginning of pidlA matches PidlB exactly for pidlB's entire length</summary>
+	<returns>True if the beginning of pidlA matches PidlB exactly for pidlB's entire length</returns>
+</member><member name="M:ExpTreeLib.CPidl.StartsWith(ExpTreeLib.CPidl,ExpTreeLib.CPidl)">
+	<summary>returns True if the beginning of A matches B exactly for B's entire length</summary>
+	<returns>True if the beginning of A matches B exactly for pidlB's entire length</returns>
+</member><member name="M:ExpTreeLib.CPidl.StartsWith(ExpTreeLib.CPidl)">
+	<summary>Returns true if the CPidl input parameter exactly matches the
+ beginning of this instance of CPidl</summary>
+	<returns>True if the CPidl input parameter exactly matches the
+ beginning of this instance of CPidl</returns>
+</member><member name="M:ExpTreeLib.CPidl.GetEnumerator">
+	<summary>
+ Obtains a new Enumerator for this cPidl
+ </summary>
+	<returns>a new Enumerator for this cPidl</returns>
+</member><member name="M:ExpTreeLib.CPidl.ICPidlEnumerator.#ctor(System.Byte[])">
+	<summary>
+ Creates a New instance of ICPidlEnumerator
+ </summary>
+	<param name="b">A Byte() containing a valid PIDL</param>
+</member><member name="P:ExpTreeLib.CPidl.ICPidlEnumerator.Current">
+	<summary>
+ Returns the Byte() containing the Current Item ID
+ </summary>
+	<returns>Current ID as Byte()</returns>
+</member><member name="M:ExpTreeLib.CPidl.ICPidlEnumerator.MoveNext">
+	<summary>
+ Moves the Current pointer to the Next Item ID in this cPidl
+ </summary>
+	<returns>True if successful, False if there is no Next Item ID</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CPidl.ICPidlEnumerator.Reset">
+	<summary>
+ Resets the Current pointer to the beginning of this cPidl
+ </summary>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.CPidl">
+	<summary>cPidl class contains a Byte() representation of a PIDL and
+ certain Methods and Properties for comparing one cPidl to another</summary>
+</member><member name="M:ExpTreeLib.CShItemCollection.CopyTo(System.Array,System.Int32)">
+	<summary>
+ Copys all CShItems contained in this instance to an Array (of CShItems), starting at the supplied
+ index into the Array.
+ </summary>
+	<param name="array">CShItem Array to copy to.</param>
+	<param name="index">Index into array to copy the first instance of CShItem.</param>
+	<remarks>Is Thread save.</remarks>
+</member><member name="M:ExpTreeLib.CShItemCollection.ToArray">
+	<summary>
+ Returns all CShItems contained in this instance.
+ </summary>
+	<returns>An Array of CShItems</returns>
+	<remarks>Is Thread safe.</remarks>
+</member><member name="T:ExpTreeLib.CShItemCollection">
+	<summary>
+ Provides a Synchronized wrapper for a Strongly Typed Arraylist of CShItems. 
+ </summary>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.SystemImageListManager.Initializer">
+	<summary>
+ Summary of Initializer.
+ </summary>
+</member><member name="P:ExpTreeLib.SystemImageListManager.hSmallImageList">
+	<summary>
+ The Handle (as IntPtr) of the per process System Image List containing Small Icons.
+ </summary>
+</member><member name="P:ExpTreeLib.SystemImageListManager.hLargeImageList">
+	<summary>
+ The Handle (as IntPtr) of the per process System Image List containing Large Icons.
+ </summary>
+</member><member name="P:ExpTreeLib.SystemImageListManager.hXLargeImageList">
+	<summary>
+ The Handle (as IntPtr) of the per process System Image List containing Extra Large Icons.
+ </summary>
+</member><member name="P:ExpTreeLib.SystemImageListManager.hJumboImageList">
+	<summary>
+ The Handle (as IntPtr) of the per process System Image List containing Jumbo Icons.
+ </summary>
+</member><member name="F:ExpTreeLib.SystemImageListManager.ovlShare">
+	<summary>
+ Location of the SHIL's overlay icons.
+ </summary>
+	<remarks>http://msdn.microsoft.com/en-us/library/windows/desktop/bb762183(v=vs.85).aspx </remarks>
+</member><member name="M:ExpTreeLib.SystemImageListManager.GetIconIndex(ExpTreeLib.CShItem,System.Boolean,System.Boolean)">
+	<summary>
+ Queries the internal Hashtable of IConIndexes and returns the IconIndex for the requested CShItem.
+ </summary>
+	<param name="item">The CShItem for which the IconIndex is requested</param>
+	<param name="GetOpenIcon">True if the "open" IconIndex is requested</param>
+	<param name="GetSelectedIcon">True if the "Selected" Icon is requested</param>
+	<returns>The true IConIndex into the per process ImageList for the CShItem given as a parameter</returns>
+</member><member name="M:ExpTreeLib.SystemImageListManager.SHGetIconOverlayIndex(System.String,System.Int32)">
+	<summary>
+ Returns the index of the overlay icon in the system image list.
+ OBS! The System ImageList must be instantiated for this method to work!
+ </summary>
+	<param name="pszIconPath">A pointer to a null-terminated string of maximum length MAX_PATH that contains the fully qualified path of the file that contains the icon, or NOTHING to retrieve one of then standard overlay icons.</param>
+	<param name="iIconIndex">The icon's index in the file pointed to by pszIconPath. To request a standard overlay icon, set pszIconPath to NULL, and iIconIndex to one of the <seealso cref="T:ExpTreeLib.SystemImageListManager.IDO_SHGIOI"/> flags.</param>
+	<returns>Returns the index of the overlay icon in the system image list if successful, or -1 otherwise.</returns>
+	<remarks>Icon overlays are part of the system image list. They have two identifiers. The first is a one-based overlay index that identifies the overlay relative to other overlays in the image list. The other is an image index that identifies the actual image. These two indexes are equivalent to the values that you assign to the iOverlay and iImage parameters, respectively, when you add an icon overlay to a private image list with ImageList_SetOverlayImage. SHGetIconOverlayIndex returns the overlay index. To convert an overlay index to its equivalent image index, call <seealso cref="M:ExpTreeLib.SystemImageListManager.INDEXTOOVERLAYMASK(System.Int32)"/>. 
+ Note: After the image has been loaded into the system image list during initialization, it cannot be changed. The file name and index specified by pszIconPath and iIconIndex are used only to identify the icon overlay. SHGetIconOverlayIndex cannot be used to modify the system image list.
+ http://msdn.microsoft.com/en-us/library/windows/desktop/bb762183(v=vs.85).aspx </remarks>
+</member><member name="M:ExpTreeLib.SystemImageListManager.INDEXTOOVERLAYMASK(System.Int32)">
+	<summary>
+ Mockup of Shell Macros.
+ </summary>
+	<param name="i"></param>
+	<returns></returns>
+	<remarks>Prepares the index of an overlay mask so that ImageList_GetIcon and ImageList_Draw can use it. </remarks>
+</member><member name="T:ExpTreeLib.SystemImageListManager.IDO_SHGIOI">
+	<summary>
+ Used by <see cref="M:ExpTreeLib.SystemImageListManager.SHGetIconOverlayIndex(System.String,System.Int32)"/> to request a standard overlay icon: 
+ Set pszIconPath to NULL, and iIconIndex to one of the following values:
+ </summary>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.SystemImageListManager.GetIcon(System.Int32,System.Boolean)">
+	<summary>
+ Returns a GDI+ copy of a Large or Small icon from the ImageList
+ at the specified index.</summary>
+	<param name="Index">The IconIndex of the desired Icon</param>
+	<param name="smallIcon">Optional, default = False. If True, return the
+   icon from the Small ImageList rather than the Large.</param>
+	<returns>The specified Icon or Nothing</returns>
+</member><member name="M:ExpTreeLib.SystemImageListManager.GetXLIcon(System.Int32)">
+	<summary>
+Returns a GDI+ copy of an Extra Large Icon from the ImageList 
+ </summary>
+	<param name="index"></param>
+	<returns>The desired Icon or Nothing</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.SystemImageListManager.GetJumboIcon(System.Int32)">
+	<summary>
+Returns a GDI+ copy of an Jumbo Icon from the ImageList 
+ </summary>
+	<param name="index"></param>
+	<returns>The desired Icon or Nothing</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.SystemImageListManager.SetListViewImageList(System.Windows.Forms.ListView,System.Boolean,System.Boolean)">
+	<summary>
+    Associates a SysImageList with a ListView control
+    </summary>
+	<param name="listView">ListView control to associate ImageList with</param>
+	<param name="forLargeIcons">True=Set Large Icon List
+                   False=Set Small Icon List</param>
+	<param name="forStateImages">Whether to add ImageList as StateImageList</param>
+</member><member name="M:ExpTreeLib.SystemImageListManager.SetListViewImageList(System.Windows.Forms.ListView,ExpTreeLib.SystemImageListManager.LVSIL,ExpTreeLib.SystemImageListManager.SHIL)">
+	<summary>
+    Associates a SysImageList with a ListView control
+    </summary>
+	<param name="listView">ListView control to associate ImageList with</param>
+	<param name="Usage">State, Group, Normal, Small
+                   False=Set Small Icon List</param>
+	<param name="IIlSize">Size of Images</param>
+</member><member name="M:ExpTreeLib.SystemImageListManager.SetTreeViewImageList(System.Windows.Forms.TreeView,System.Boolean)">
+	<summary>
+ Associates a SysImageList with a TreeView control
+ </summary>
+	<param name="treeView">TreeView control to associate the ImageList with</param>
+	<param name="forStateImages">Whether to add ImageList as StateImageList</param>
+</member><member name="T:ExpTreeLib.SystemImageListManager">
+	<summary>
+ Provides an Icon and IConIndex manager between <see cref="T:ExpTreeLib.CShItem">CShItem</see> and 3 per process System Image Lists,
+ one for Small Icons, one for Large Icons, and one for Extra Large Icons. The IConIndex for a given combination of base Icon and
+ overlays is synchronized such that the same IConIndex will serve for each list. 
+ </summary>
+	<remarks>
+ Correct usage is to obtain a CShItem in any of the normal methods of the CShItem Class. Typically, that CShItem will
+ not have its' IConIndex property assigned.<br/>
+ Then call <see cref="M:ExpTreeLib.SystemImageListManager.GetIconIndex(ExpTreeLib.CShItem,System.Boolean,System.Boolean)">SystemImageListManager.GetIconIndex</see> to obtain the 
+ true IConIndex into the per process ImageList.<br/>
+ GetIconIndex will query CShItem.IconIndexNormal or CShItem.IconIndexOpen to obtain the base IconIndex. This
+ query will force CShItem to do the system call to obtain that icon index (if needed) and set the correct CShItem Property.<br/>
+ GetIconIndex will then determine what, if any, Overlays should be applied and, if not already obtained,
+ obtain the Icon and place it in the per process ImageList and save the true IconIndex into the
+ HashTable and return the correct IconIndex to the caller.<br/>
+ 
+ Incorporates ExtraLarge and Jumbo Icon code from Jens Madsen as of 5/11/2013 which is a modification of Calum's ExtraLarge code
+ </remarks>
+</member><member name="E:ExpTreeLib.CDragWrapper.DragStart">
+	<summary>
+ Event Raised when a Drag is started from the associated Control
+ </summary>
+</member><member name="E:ExpTreeLib.CDragWrapper.DragEnd">
+	<summary>
+ Event Raised when a Drag from the associated Control is complete (Dropped)
+ </summary>
+</member><member name="M:ExpTreeLib.CDragWrapper.#ctor(System.Windows.Forms.Control)">
+	<summary>
+ Creates and registers this instance to receive events when an item is being dragged
+ </summary>
+	<param name="Ctl">The ListView or TreeView for which to support the drag</param>
+</member><member name="M:ExpTreeLib.CDragWrapper.ItemDrag(System.Object,System.Windows.Forms.ItemDragEventArgs)">
+	<summary>
+ This method initialises the dragging of a TreeNode or 1 or more ListViewItems
+ </summary>
+</member><member name="M:ExpTreeLib.CDragWrapper.QueryContinueDrag(System.Boolean,ExpTreeLib.ShellDll.ShellAPI.MK)">
+	<summary>
+ Provides a minimal implementation of IDropSource.QueryContinueDrag
+ </summary>
+	<param name="fEscapePressed">True if the Escape Key is pressed</param>
+	<param name="grfKeyState">Which Button is pressed</param>
+	<returns>S_CANCEL if Escape Key is pressed, S_OK otherwise</returns>
+</member><member name="M:ExpTreeLib.CDragWrapper.GiveFeedback(System.Windows.Forms.DragDropEffects)">
+	<summary>
+ Used to provide a minimal implementation of IDropSource.GiveFeedback
+ </summary>
+	<param name="dwEffect">Unused</param>
+	<returns>Always returns DRAGDROP_S_USEDEFAULTCURSORS</returns>
+</member><member name="M:ExpTreeLib.CDragWrapper.Dispose">
+	<summary>
+ If not disposed, dispose the class
+ </summary>
+</member><member name="M:ExpTreeLib.CDragWrapper.ReleaseCom">
+	<summary>
+ Release the IDataObject and free's the allocated memory
+ </summary>
+</member><member name="T:ExpTreeLib.CDragWrapper">
+	<summary>
+ This class completely handles all drag from operation for its' associated ListView or TreeView control. Each TreeNode in the
+ associated TreeView must have a valid CShItem in its' .Tag. Each ListViewItem in the associated ListView must have a valid CShItem in
+ its' Tag. All ListViewItems and the CShItems in their .Tags must be direct children of the same Folder.
+ </summary>
+</member><member name="T:ExpTreeLib.DragStartEventHandler">
+	<summary>
+ The Delegate defining the signature of an Event Handler to Handle the Event Raised when
+ a Drag is started from a Control associated with an instance of <see cref="T:ExpTreeLib.CDragWrapper">CDragWrapper</see>.
+ </summary>
+	<param name="sender">The Control from which the Drag originates</param>
+	<param name="e">A <see cref="T:ExpTreeLib.DragStartEventArgs">DragStartEventArgs</see>DragStartEventArgs constructed by CDragWrapper</param>
+</member><member name="M:ExpTreeLib.DragStartEventArgs.#ctor(ExpTreeLib.CShItem,System.Windows.Forms.Control)">
+	<summary>
+ Contructs a new Instance of this Class
+ </summary>
+	<param name="parent">The Folder being Dragged or the Parent Folder of the Items being Dragged</param>
+	<param name="dragStartControl">Control in which the Drag originated</param>
+</member><member name="P:ExpTreeLib.DragStartEventArgs.Parent">
+	<summary>
+ The Folder being Dragged or the Parent Folder of the Items being Dragged
+ </summary>
+	<returns>The Folder being Dragged or the Parent Folder of the Items being Dragged</returns>
+	<remarks>If Drag is a single Folder then the CShItem of that Folder. If from a ListView, then the Folder containing all
+          Item(s) being Dragged</remarks>
+</member><member name="P:ExpTreeLib.DragStartEventArgs.DragStartControl">
+	<summary>
+ The Control in which the Drag originated
+ </summary>
+	<returns>The Control in which the Drag originated</returns>
+</member><member name="T:ExpTreeLib.DragStartEventArgs">
+	<summary>
+ An EventArgs which provides information about a Drag started within a Control managed by an instance of <see cref="T:ExpTreeLib.CDragWrapper">CDragWrapper</see>.
+ </summary>
+	<remarks>The information is the CShItem of the Folder being Dragged or the Parent of the Items being Dragged and the Control in which the Drag originated.</remarks>
+</member><member name="M:ExpTreeLib.LVColSorter.Compare(System.Object,System.Object)">
+	<summary>
+ Compares two ListViewItems from the same ListView in accordance to the Sort rules of the Class.
+ </summary>
+	<param name="x">First ListViewItem to be Compared.</param>
+	<param name="y">Second ListViewItem to be Compared.</param>
+	<returns><list type="table">
+			<item><term>-1</term><description>If the First item is Less than the Second.</description></item>
+			<item><term>0</term><description>If the two items are Equal.</description></item>
+			<item><term>1</term><description>If the First item is Greater than the Second.</description></item>
+		</list></returns>
+	<remarks>Odd numbers of clicks on a column will sort Ascending, even numbers will sort 
+ Descending (click 1 Ascending, Click 2 Descending ...). The Sort rules are:
+ <list type="number">
+			<item><description>If the Clicked column is Column 0 and the ListViewItem's Tag supports the
+                    Icomparable Interface, then Compare the ListViewItems Tags.</description></item>
+			<item><description>Otherwise, or if the ListViewItems .Tags Compare Equal, then continue with
+                    the following rules.</description></item>
+			<item><description>If the Clicked column's ListViewItem.SubItem's Tag property supports the
+                    IComparable Interface, then use CompareTo to compare the .Tags</description></item>
+			<item><description>If the Clicked column's ListViewItem.SubItem's Tag property is Nothing or
+                    does not support the Icomparable Interface, Compare the .Text properties.</description></item>
+			<item><description>If the items Compare Equal and the Clicked column is not Column 0 then
+                    continue the Comparison based on the Column 0 rules above. This has
+                    the effect of using the either the source Class instances or the contents of
+                    column 0 as a secondary key for the Sort.</description></item>
+			<item><description>The result of the comparison is toggled according to if the sort is
+                    Ascending or Decending. This sort order is determined by reversing the
+                    sort order of the last click on this column.</description></item>
+		</list></remarks>
+</member><member name="M:ExpTreeLib.LVColSorter.#ctor(System.Windows.Forms.ListView)">
+	<summary>
+ Creates a new instance of LVColSorter based on a fully populated
+ ListView, with ColumnHeaders defined. Assigns its own Handler for ListView.ColumnClick Events.
+ </summary>
+	<param name="lv">A fully populated ListView, preferably set up by SetUpListView, which will
+ be using this instance as the ListViewItemSorter.</param>
+	<remarks></remarks>
+</member><member name="P:ExpTreeLib.LVColSorter.OrderOfSort">
+	<summary>
+ The order in which the ListView was last sorted.
+ </summary>
+	<returns>A SortOrder indicating the order in which the ListView was last sorted.</returns>
+	<remarks>A return of SortOrder.None indicates that the ListView has never been sorted.
+ The Properties OrderOfSort and SortColumn may be used if the application wishes to Draw Sort
+ glyphs on the ColumnHeaders.
+ </remarks>
+</member><member name="P:ExpTreeLib.LVColSorter.SortColumn">
+	<summary>
+ The ListView column on which the ListView was last sorted. Setting this property to a valid
+ value will cause the ListView to be sorted on that column in the order based on OrderOfSort rules.
+ Specifically, the column will be sorted in reverse of the order it was last sorted.
+ </summary>
+	<returns>The ListView column on which the ListView was last sorted.</returns>
+	<remarks>Unsorted ListViews will return 0 for the SortColumn.
+ The Properties OrderOfSort and SortColumn may be used if the application wishes to Draw Sort
+ glyphs on the ColumnHeaders.
+ </remarks>
+</member><member name="T:ExpTreeLib.LVColSorter">
+	<summary>
+ LVColSorter is a Class to be used as a ListViewItemSorter. 
+ LVColSorter may be used as the ListViewItemSorter for ListViews populated by any means, but works
+ best when the .Tag properties of the ListViewItems and SubItems are set as described in Remarks.
+ </summary>
+	<remarks>LVColSorter uses the .Tag properties of ListViewItems and SubItems to Sort the contents of a
+ ListView based on the underlying data. If no .Tag properties are set, or if the value of those
+ properties do not implement the IComparable interface, then LVColSorter sorts based on the .Text
+ properties of the SubItems of the ListViewItems.
+ <para>If the .Text properties of SubItems are structured properly for Sorting, then no .Tag information
+ is required for Sorting. Most .Text is not properly structured for Sorting. In that case, 
+ the .Tag property may be set to provide this class with the information needed for a proper Sort.</para>
+		<para>Set the .Tags as follows:
+ <list type="table">
+				<item><term>Each ListViewItem</term><description>The Class instance or DataRow from which the ListViewItem is built.
+                                                  The instance should support the IComparable Interface,
+                                                  if not, it is ignored for Sort purposes and may be omitted.</description></item>
+				<item><term>Each SubItem</term><description>If the .Text property will not Sort correctly, then the .Tag should be
+                                set to the original Value (Date, Double, etc.)</description></item>
+			</list>See the documentation of the Compare Method of this Class for the actual Sort rules.</para>
+		<para>Class Properties
+ or DataRow Fields whose Value is a String will Sort based on that String. String
+ Properties that have been Formatted in a non-Sortable Format in the original data will not Sort correctly. 
+ The application
+ will have to deal with that case separately by setting the SubItem.Tags to a Sortable Value.</para>
+		<para>Each instance of LVColSorter will handle the ListView.ColumnClick event for the associated
+ ListView. The using application <i>should not</i> Handle that Event. When a new ListViewItemSorter
+ is assigned to a ListView, any prior instances of LVColSorter will remove themselves from the 
+ EventHandler list of that ListView. In other words, multiple ListViewItemSorters may be assigned
+ to a ListView without causing prior instances to attempt to handle ColumnClick.</para></remarks>
+</member><member name="M:ExpTreeLib.ListViewSortGlyph.SetSortIcon(System.Windows.Forms.ListView,System.Int32,System.Windows.Forms.SortOrder)">
+	<summary>
+ Set the input ordering Sort Glyph on the input Column of the input ListView, and clears the Sort Glyph from all other Columns.
+ </summary>
+	<param name="ListViewControl">The ListView Control containing the Column</param>
+	<param name="ColumnIndex">The Index of the Column to receive the Sort Glyph</param>
+	<param name="Order">The SortOrder designator of the desired Glyph</param>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.ListViewSortGlyph">
+	<summary>
+ Set the Sort Glyph on a ListView Column.
+ Obtained from <a href="http://stackoverflow.com/questions/254129/how-to-i-display-a-sort-arrow-in-the-header-of-a-list-view-column-using-c">here</a>
+ and converted to VB.Net by JDP using
+ <a href="http://www.developerfusion.com/tools/convert/csharp-to-vb/">The tools at DeveloperFusion.com</a>
+ JDP also added all XML comments.
+ 
+ The only Public member is the Shared Sub SetIcon.
+ </summary>
+	<remarks>
+ This Class is included here for the use of the LVColSorter Class. However, it may used with any ListViewColumnSorter that calls it.
+ <para>Normally the Caller will set the Glyph to point to the direction that the Column will be Sorted on the NEXT ColumnClick</para></remarks>
+</member><member name="M:ExpTreeLib.LinkFile.Finalize">
+	<summary>
+ Calls Dispose(False) to ensure release of the IShellLink object
+ </summary>
+</member><member name="P:ExpTreeLib.LinkFile.LinkTargetPath">
+	<summary>
+ Returns a String containing the Path of the Link Target
+ </summary>
+	<returns>String containing the Path of the Link Target</returns>
+</member><member name="P:ExpTreeLib.LinkFile.IsValidLink">
+	<summary>
+ Returns True if the file associated with this instance is a Valid Link
+ </summary>
+	<returns>True if the file associated with this instance is a Valid Link</returns>
+	<remarks>Validity is determined by Windows</remarks>
+</member><member name="M:ExpTreeLib.LinkFile.SaveAs(System.String)">
+	<summary>
+ Saves a copy of the instance Link File to a different location within the File System
+ </summary>
+	<param name="TargetPath">Location to Save the Link File</param>
+	<returns>True if successful, False otherwise</returns>
+	<remarks>It is normally best to use the System Context Menu for this operation</remarks>
+</member><member name="M:ExpTreeLib.LinkFile.SaveCopyAs(System.String)">
+	<summary>
+ Saves a copy of the instance Link File with a different name to a different location within the File System
+ </summary>
+	<param name="TargetPath">Location to Save the Link File with a different name</param>
+	<returns>True if successful, False otherwise</returns>
+	<remarks>It is normally best to use the System Context Menu for this operation</remarks>
+</member><member name="T:ExpTreeLib.LinkFile">
+	<summary>
+ A Class for reading and writing .lnk files. It is not used by ExpLib_Demo.
+ </summary>
+	<remarks>
+		<pre>
+ This is a slightly modified version of:
+ Filename:     ShellShortcut.vb
+ Author:       Mattias Sjögren (mattias@mvps.org)
+               http://www.msjogren.net/dotnet/
+
+ Description:  Defines a .NET friendly class, ShellShortcut, for reading
+               and writing shortcuts.
+ </pre>
+	</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.HiWord(System.IntPtr)">
+	<summary>
+ Retrieves the High Word of a WParam of a WindowMessage
+ </summary>
+	<param name="ptr">The pointer to the WParam</param>
+	<returns>The unsigned integer for the High Word</returns>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.LoWord(System.IntPtr)">
+	<summary>
+ Retrieves the Low Word of a WParam of a WindowMessage
+ </summary>
+	<param name="ptr">The pointer to the WParam</param>
+	<returns>The unsigned integer for the Low Word</returns>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.szToString(System.Byte[],System.Int32,System.Int32)">
+	<summary>
+ szToString accepts an array of bytes representing an Default Encoded string and
+ converts it to a .Net Unicode String.  szToString Truncates the String at the first
+ nul (0) byte in the input array.  
+ </summary>
+	<param name="arb">A Byte() to be translated using the Default codepage</param>
+	<param name="iPos">Start index in the Array - Defaults to 0</param>
+	<param name="len">Number of Bytes to translate - Defaults to entire Array</param>
+	<returns>A .Net String. If errors, returns the empty string ("")</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetIStream(ExpTreeLib.CShItem,System.IntPtr@,ExpTreeLib.ShellDll.IStream@)">
+	<summary>
+ Obtains an IStream Interface for the input CShItem
+ </summary>
+	<param name="item">The CShItem for whom an IStream Interface is desired.</param>
+	<param name="streamPtr"></param>
+	<param name="stream">Returned Interface</param>
+	<returns>An IStream Interface for the input CShItem</returns>
+	<remarks>Not used by ExpTreeLib or its' Demo</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetIStorage(ExpTreeLib.CShItem,System.IntPtr@,ExpTreeLib.ShellDll.IStorage@)">
+	<summary>
+ Obtains an IStorage Interface for the input CShItem
+ </summary>
+	<param name="item">The CShItem for whom an IStorage Interface is desired.</param>
+	<param name="storagePtr"></param>
+	<param name="storage">Returned Interface</param>
+	<returns>An IStorage Interface for the input CShItem</returns>
+	<remarks>Not used by ExpTreeLib or its' Demo</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetIDropTarget(ExpTreeLib.CShItem,ExpTreeLib.ShellDll.IDropTarget@)">
+	<summary>
+ This method uses the GetUIObjectOf method of IShellFolder to obtain the IDropTarget of a
+ CShItem. 
+ </summary>
+	<param name="item">The item for which to obtain the IDropTarget</param>
+	<param name="dropTarget">The IDropTarget interface of the input Folder</param>
+	<returns>True if successful in obtaining the IDropTarget Interface.</returns>
+	<remarks>The original FileBrowser version of this returned the IntPtr which points to
+ the interface. This is not needed since GetTypedObjectForIUnknown manages that IntPtr.
+ For all purposes, the CShItem.GetDropTargetOf routine is more efficient and provides
+ the same interface.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetIDataObject(ExpTreeLib.CShItem[])">
+	<summary>
+ This method will use the GetUIObjectOf method of IShellFolder to obtain the IDataObject of a
+ ShellItem. 
+ </summary>
+	<param name="items">An array of CShItem for which to obtain the IDataObject</param>
+	<returns>the IDataObject the ShellItem</returns>
+	<remarks>All CShItems in the array are ASSUMED to have the same parent folder.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetIDropTargetHelper(System.IntPtr@,ExpTreeLib.ShellDll.IDropTargetHelper@)">
+	<summary>
+ Obtains an IDropTargetHelper Interface
+ </summary>
+	<param name="helperPtr">Returns a pointer to the Interface</param>
+	<param name="dropHelper">Returns the Interface itself.</param>
+	<returns>True if successful, False otherwise.</returns>
+	<remarks>This interface is used by drop targets to enable the drag-image manager to display the drag image while the image is over the target window. </remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.CanDropClipboard(ExpTreeLib.CShItem)">
+	<summary>
+  It obtains a DragDropEffects flag variable indicating the input CShItem's ability to accept a Paste from the Clipboard.
+ </summary>
+	<param name="item">The item whose ability to accept a Paste is to be queried.</param>
+	<returns>A DragDropEffect indicating what actions the input CShItem is willing to do.</returns>
+	<remarks>Used to determine if Paste is a valid menu item.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetIQueryInfo(ExpTreeLib.CShItem,System.IntPtr@,ExpTreeLib.ShellDll.IQueryInfo@)">
+	<summary>
+ Obtains an IQueryInfo Interface for the input CShItem.
+ </summary>
+	<param name="item">The Item to obtain the Interface for.</param>
+	<param name="iQueryInfoPtr">The pointer to the obtained Interface</param>
+	<param name="iQueryInfo">The actual Interface</param>
+	<returns>True if successful, False otherwise.</returns>
+	<remarks>Not used by ExpTree or its' Demo.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.MakeShellIDArray(System.Collections.ArrayList)">
+	<summary>
+ Shell Folders prefer their IDragData to contain this format which is
+  NOT directly supported by .Net.  The underlying structure is the CIDA structure
+  which is basically VB, VB.Net, and C# Hostile.
+If "Make ShortCut(s) here" is the desired or
+  POSSIBLE effect of the drag, then this format is REQUIRED -- otherwise the
+  Folder will interpret the DragDropEffects.Link to be "Create Document Shortcut"
+  which is NEVER the desired effect in this case
+ The normal CIDA contains the Absolute PIDL of the source Folder and 
+  Relative PIDLs for each Item in the Drag. 
+  I cheat a bit an provide the Absolute PIDL of the Desktop (00, a short)
+  and the Absolute PIDLs for the Items (all such Absolute PIDLS ar 
+  relative to the Desktop.
+</summary>
+	<param name="CSIList">An ArrayList of CShItems to be included in the CIDA MemoryStream</param>
+	<returns>A MemoryStream which contains a CIDA containing the PIDLs of all Items in CSIList</returns>
+	<remark>
+		<para>The overall concept and much code taken from</para>
+ http://www.dotnetmonster.com/Uwe/Forum.aspx/dotnet-interop/3482/Drag-and-Drop
+ <para>Dave Anderson's response, translated from C# to VB.Net, was the basis
+ of this routine</para>
+		<para>An AHA momemnt and a ref to the above url came from</para>
+http://www.Planet-Source-Code.com/vb/scripts/ShowCode.asp?txtCodeId=61324%26lngWId=1
+</remark>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.MakeDragListFromPtr(System.IntPtr)">
+	<summary>Builds a List of the CShItems being dragged from m_StreamCIDA</summary>
+	<param name="ptr">IntPtr pointing to a CIDA</param>
+	<returns>A List of the CShItems being dragged or nothing on failure</returns>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.MakeStreamFromCIDA(System.IntPtr)">
+	<summary>Given an IntPtr pointing to a CIDA,
+ copy the CIDA to a new MemoryStream</summary>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.DataObjectContainsCShItems(ExpTreeLib.ShellDll.IDataObject)">
+	<summary>
+ Determines if input ShellDll.IDataObject will provide a Shell IDList Array (CIDA).
+ </summary>
+	<param name="dataObj">The ShellDll.IDataObject to be queried.</param>
+	<returns>True if ShellDll.IDataObject will provide a CIDA.</returns>
+	<remarks>Normally not needed.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellHelper.GetCShItemsFromDataObject(ExpTreeLib.ShellDll.IDataObject)">
+	<summary>
+ Given an IDataObject, return a list of CShItems corresponding to the PIDLs in
+ the Shell IDList Array (CIDA) contained in the IDataObject.
+ </summary>
+	<param name="dataObj">A well formed ShellDll.IDataObject from which to extract the CShItems.</param>
+	<returns>List(Of CShItems) with all CShItems represented by the PIDLs in the CIDA.</returns>
+	<remarks>Used by ExplorerControls for standalone ExpList.</remarks>
+</member><member name="T:ExpTreeLib.ShellDll.ShellHelper">
+	<summary>
+ Contains a number of utility routines used by and with ExpTreeLib.
+ </summary>
+</member><member name="T:ExpTreeLib.NamespaceDoc">
+	<summary>
+ Contains the User Control <see cref="T:ExpTreeLib.ExpTree">ExpTree</see>, the major Class <see cref="T:ExpTreeLib.CShItem">CShItem</see>,
+ the Classes that enable Drag/Drop - <see cref="T:ExpTreeLib.CDragWrapper">CDragWrapper</see>, <see cref="T:ExpTreeLib.ClvDropWrapper">ClvDropWrapper</see>,
+ <see cref="T:ExpTreeLib.CtvDropWrapper">CtvDropWrapper</see>, and <see cref="T:ExpTreeLib.ControlDropWrapper">ControlDropWrapper</see>.
+ It also contains the Class <see cref="T:ExpTreeLib.WindowsContextMenu">WindowsContextMenu</see> that provides the infrastucture 
+ for displaying a Windows Context Menu on a Control and for Invoking a Command selected by the user from that Context Menu.
+ Additionally it contains a number of Classes that support the main Classes.
+ </summary>
+</member><member name="M:ExpTreeLib.CShItemUpdater.WndProc(System.Windows.Forms.Message@)">
+	<summary>
+ CShItemUpdater.WndProc processes WM.SH_NOTIFY messages requested by the SHChangeNotifyRegister 
+ API call in the CShItemUpdater constructor.
+ Messages are processed as follows:
+ 1.Folder/File Create or Delete: If Parent of Item is not in internal tree, ignore message. If
+ located, then add or remove the item from the internal tree, which raises an appropriate event to
+ notify interested controls.
+ 2.Folder/File Rename, Update, UpdateDir, MediaInserted, MediaRemoved: 
+ If Item itself is not in the internal tree, ignore message. 
+ If located, then call Item.Update for further processing. 
+ If appropriate, Item.Update will raise an appropriate event to notify
+ interested controls.
+ </summary>
+	<param name="m">A Windows Message</param>
+	<remarks>The use of SHGetRealIDL appears non-essential and wasteful. It is NOT.
+ SHGetRealIDL appears specifically designed for use in this situation, returning an 
+ Absolute real PIDL in CoTaskMemory. The pidls given in dwItem1 and dwItem2 are owned and
+ released by the Message Class. </remarks>
+</member><member name="T:ExpTreeLib.CShItemUpdater">
+	<summary>
+ CShItemUpdater provides the infrastructure that registers for and receives WM_Notify messages for all changes to the FileSystem and
+ Virtual Folders known to the local machine. It has knowledge of the internal CShItem cache. If a change affects that cache, 
+ it calls the appropriate CShItem routines to report these changes.
+ </summary>
+	<remarks>Only changes of interest to the CShItem internal cache are reported. All others are ignored.</remarks>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.#ctor(System.Windows.Forms.ListView)">
+	<summary>
+ Initializes a new instance of the Class.
+ </summary>
+	<param name="ctl">The ListView for whom this Class will Handle Drag/Drops.</param>
+	<remarks>Registers itself to Handle Drag/Drops for the ListView.</remarks>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.DragEnter(System.IntPtr,ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only
+ DragEnter is called by the Shell as a drag enters the listview. It determines the default (parent)
+ DropTarget and default (parent) pdwEffect for use in those areas of the ListView that do not
+ contain eligible DropTargets.
+ </summary>
+	<param name="pDataObj">IDataObject of the Folder of the Item being dragged, containing references to
+ the item(s) being Dragged.</param>
+	<param name="grfKeyState">State of the keyboard keys at this moment</param>
+	<param name="pt">Location, in screen coordinates, of the mouse.</param>
+	<param name="pdwEffect">Permitted Drop actions as set by the DragSource.</param>
+	<returns>Always returns S_OK (0)</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.DragOver(ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only
+ Entered when a Drag moves over the surface of the associated Control.<br/>
+ If the Mouse is over a ListViewItem representing a Folder, sets that item as the 
+ most recent potential Drop Target and Changes the colors of that ListViewItem.
+ </summary>
+	<param name="grfKeyState">The state of certain Keyboard keys</param>
+	<param name="pt">The location of the Mouse in the Control.</param>
+	<param name="pdwEffect">The actions permitted by the DragSource</param>
+	<returns>S_OK</returns>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.DragLeave">
+	<summary>
+ For internal use only
+ DragLeave is raised by the Shell when the Drag is cancelled or otherwise leaves the underlying
+ listview.  The handler does whatever cleanup is needed to prepare for another DragEnter.
+ </summary>
+	<returns>Always returns S_OK</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.DragDrop(System.IntPtr,ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only
+ Entered when a DragDrop has occurred on the associated Control.
+ Normally simply passes the Drop on to the Dropped on Folder which is determined here
+ in conjuction with DragEnter.
+ </summary>
+	<param name="pDataObj">Pointer to the IDataObject</param>
+	<param name="grfKeyState">State of the keyboard Keys and Mouse Buttons</param>
+	<param name="pt">Where the Drop occurred on the Control</param>
+	<param name="pdwEffect">Result of the Drop - unreliable in case of Move</param>
+	<returns>S_OK</returns>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.DisposeDropWrapper">
+	<summary>
+ Revokes the View from getting drop messages and releases the IDropTarget
+ </summary>
+</member><member name="M:ExpTreeLib.ClvDropWrapper.ReleaseCom">
+	<summary>
+ Release the IDropTarget and free's the allocated memory
+ </summary>
+</member><member name="T:ExpTreeLib.ClvDropWrapper">
+	<summary>The ClvDropWrapper class deals with the mechanics of receiving a
+ Drag/Drop operation for a ListView.  In effect, it implements the IDropTarget interface
+ for a ListView.  It is designed to handle a ListView which <b>must</b> have CShItems 
+ in the Tags of the ListViewItems contained in the control. The ListView <b>must also</b> have the 
+ CShItem of the <i>single</i> Parent Folder stored in its' .Tag Property
+ </summary>
+	<remarks>
+		<para>The class receives the DragEnter, DragLeave, DragOver, and DragDrop events for
+ the associated ListView and performs the Drag specific processing. Unlike CtvDropWrapper,
+ this class DOES NOT raise ShDragxxx events for the ListView, and DOES do the
+ GUI related processing.</para>
+		<para>The interesting part of this class is that it makes no decisions about the drag
+ nor does any Drop related processing itself. Instead, it acts as a broker between
+ the Drag/Drop operation and the IDropTarget interface of the underlying 
+ Shell Folder.  This allows the Shell Folder, which may be a Shell Extension, to
+ perform whatever action it needs to in order to effect the Drag/Drop.
+ The benefit of this approach is that Drag/Drop targets need not be part of the
+ File System.</para>
+ ListViews, unlike TreeViews, may be displaying non-folder items and may have
+ substantial areas within the control that are empty of any ListViewItems. This requires
+ different behavior rules for a ListView receiving a Drag.
+ <list type="bullet">
+			<item><description>Upon DragEnter, the "parent" directory of the entire set of Listview items is determined. The "parent" is
+                    determined from the CShItems contained in the ListViewItem.Tags or if there are no ListViewItems, from
+                    the CShItem contained in the ListView's .Tag. </description></item>
+			<item><description>The default pdweffect for this control/drag is obtained from the IDropTarget of that "parent"</description></item>
+			<item><description>If there is no common "parent" and if the ListView's Tag does not contain a CShItem,
+                    the default pdweffect for this control/drag is set to "None"</description></item>
+			<item><description>Upon DragOver: 
+ <br/>If over a ListViewItem representing a Directory,Obtain IDropTarget from the Directory, and invoke its DragEnter,DragOver to set pwdeffects.
+ <br/>Also set BackGroundColor of that ListView Item to SelectedColor
+ <br/>If not over a ListViewItem representing a directory AndAlso a common "parent" can be determined from the ListViewItems or the ListView's
+ .Tag Property then use IDropTarget of parent to accept DragOver and adjust pdweffect.
+ <br/>If not over a ListViewItem representing a directory AndAlso if no common "parent" can be determined, then
+ set pwdeffects to "None"</description></item>
+			<item><description>Upon DragLeave, all local vars are reset to "New" state</description></item>
+			<item><description>Upon DragDrop, the IDropTarget.DragDrop of the Folder represented by the current ListViewItem
+ is called and all local vars are reset to "New" state.</description></item>
+		</list></remarks>
+</member><member name="T:ExpTreeLib.ShellDll.ShellAPI.W32Find_Data">
+	<summary>
+ W32Find_Data is a Class representation of the Win32_Find_Data Structure. It should be an exact replacement for
+ that structure, but, for some reason, which I do not care to explore, is not.
+ There are some references to Win32_Find_Data in the ShellDll Namespace which will simply cause the app to quit
+ if given a W32Find_Data. I suspect it has to do with the problem API calls not having the necessary attributes on 
+ the parameter.
+ The references related to FindFirstFile and FindNextFile work just fine when called with this class rather than
+ Win32_Find_Data. I do not care to pursue this, so I define both versions here.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.SafeFindHandle.ReleaseHandle">
+	<summary>
+ Releases this Handle
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.ShellDll.ShellAPI.SafeFindHandle">
+	<summary>
+ Provides a <see cref="T:Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid">SafeHandleZeroOrMinusOneIsInvalid</see> to FindFirstFile and
+ FindNextFile, preset that the Handle will be reliably released.
+ </summary>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.SHGetImageListHandle(System.Int32,System.Guid@,System.IntPtr@)">
+	<summary>
+SHGetImageList is not exported correctly in XP.  See KB316931
+http://support.microsoft.com/default.aspx?scid=kb;EN-US;Q316931
+Apparently (and hopefully) ordinal 727 isn't going to change.
+</summary>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.SHGetNewLinkInfo(System.String,System.String,System.Text.StringBuilder,System.Boolean@,ExpTreeLib.ShellDll.ShellAPI.SHGNLI)">
+	<summary>Despite its name, the API returns a filename
+ for a link to be copied/created in a Target directory,
+ with a specific LinkTarget. It will create a unique name
+ unless instructed otherwise (SHGLNI_NOUNIQUE).  And add
+ the ".lnk" extension, unless instructed otherwise(SHGLNI.NOLNK)
+</summary>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.SHGetNewLinkInfo(System.IntPtr,System.String,System.Text.StringBuilder,System.Boolean@,ExpTreeLib.ShellDll.ShellAPI.SHGNLI)">
+	<summary> Same function using a PIDL as the pszLinkTo.
+  SHGNLI.PIDL must be set.
+</summary>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.GlobalLock(System.IntPtr)">
+	<summary>
+ Locks a Global memory Handle. Used for referencing stg.hGlobal in some CIDA related cases
+ of ExploreControls. Returns a pointer to the actual data block, dealing with intra and inter
+ application Drag ops.
+ </summary>
+	<param name="handle">A Global memory handle.</param>
+	<returns>Pointer to actual data.</returns>
+	<remarks>Needed when actually implementing IDropTarget type processing.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.GlobalUnlock(System.IntPtr)">
+	<summary>
+ Releases a handle by decrementing a reference counter kept with it.
+ </summary>
+	<param name="handle">A previously GlobalLock locked Global memory handle.</param>
+	<returns>True if locks remain, False if none.</returns>
+	<remarks>Just unlocks a previous lock.</remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.GetSpecialFolderLocation(System.IntPtr,System.Int32)">
+	<summary>
+ Returns an IntPtr referencing the PIDL of the requested Special Folder.
+ </summary>
+	<param name="hWnd">Unused</param>
+	<param name="csidl">The integer equivalent of the CSIDL Enum Value for the desired Special Folder.</param>
+	<returns>An IntPtr referencing the PIDL of the requested Special Folder.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.IsXpOrAbove">
+	<summary>
+ Determines is the current OS is Windows XP or newer.
+ </summary>
+	<returns>True if current OS is Windows XP or newer. Returns False otherwise.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.Is2KOrAbove">
+	<summary>
+ Determines is the current OS is Windows 2000 or newer.
+ </summary>
+	<returns>True if current OS is Windows XP or newer. Returns False otherwise.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ShellDll.ShellAPI.IsVistaOrAbove">
+	<summary>
+ Determines is the current OS is Windows Vista or newer.
+ </summary>
+	<returns>True if current OS is Windows Vista or newer. Returns False otherwise.</returns>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.ShellDll.ShellAPI">
+	<summary>
+ ShellAPI contains many declarations of Shell API functions, Constants, Structures, Enums used by ExpTreeLib.
+ Certain other declarations of Shell API components are declared outside of this Class, typically in those Classes that
+ are the only place that such declarations are needed.
+ </summary>
+	<remarks></remarks>
+</member><member name="E:ExpTreeLib.ExpTree.StartUpDirectoryChanged">
+	<summary>
+ StartUpDirectoryChanged is raised when the root of the TreeView is changed via StartUpDirectory
+ Property. 
+ </summary>
+	<param name="newVal">One of the StartDir Enum values that represent the possible Start Up Directories.</param>
+	<remarks>Seldom listened for since, in typical use, the Method which set the StartUpDirectory value
+ is the only Method which is interested. It is also true that a by-product of setting the StartUpDirectory 
+ value is the Selection of the new root node.  That change in SelectedNode will cause an ExpTreeNodeSelected
+ Event to be raised.</remarks>
+</member><member name="E:ExpTreeLib.ExpTree.ExpTreeNodeSelected">
+	<summary>
+ ExpTreeNodeSelected is raised when a Node in the TreeView is Selected.
+ </summary>
+	<param name="SelPath">The Path of the CShItem represented by the TreeNode, and stored in the
+ TreeNode's Tag.</param>
+	<param name="Item">The CShItem represented by the TreeNode, and stored in the
+ TreeNode's Tag.</param>
+	<remarks></remarks>
+</member><member name="P:ExpTreeLib.ExpTree.AllowDrop">
+	<summary>
+ Turns this ExpTree Control's ability to accept Drops on or Off.<br/>
+ True - Enables the ExpTree Control to accept Drops.<br/>
+ False - Disables the ExpTree Control acceptance of  Drops.
+ </summary>
+	<returns>True or False</returns>
+	<remarks>Works by assigning or  removing an instance of CtvDropWrapper to the Local variable DropHandler.</remarks>
+</member><member name="P:ExpTreeLib.ExpTree.RootItem">
+	<summary>
+ RootItem is a Run-Time only Property. Setting this Item via an External call results in
+  re-setting the entire tree to be rooted in the input CShItem.
+ The new CShItem must be a valid CShItem of some kind of Folder (File Folder or System Folder).
+ Attempts to set it using a non-Folder CShItem are ignored.
+</summary>
+</member><member name="P:ExpTreeLib.ExpTree.SelectedItem">
+	<summary>
+ Run-time only Property which returns the CShItem underlying the SelectedNode of the TreeView.
+ </summary>
+	<returns>The underlying CShItem of the TreeView.SelectedNode. If none Selected, returns Nothing.</returns>
+</member><member name="P:ExpTreeLib.ExpTree.ShowHiddenFolders">
+	<summary>
+ ShowHiddenFolders sets or gets a Boolean indicating whether or not to Display Folders with the Hidden Attribute.
+ </summary>
+	<value></value>
+	<returns>True if ExpTree is Displaying Hidden Folders, False if not.</returns>
+	<remarks>Hidden Folders may be Displayed or not Displayed at run-time.</remarks>
+</member><member name="P:ExpTreeLib.ExpTree.ShowRootLines">
+	<summary>
+ Exposes the normal TreeView ShowRootLines property.
+ </summary>
+	<value></value>
+	<returns>The state of the underlying TreeView property.</returns>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.ExpTree.StartDir">
+	<summary>
+ The values representing the System's Special Folders.
+ </summary>
+	<remarks>Certain Special Folders are disallowed since they may not exist, or may cause program failure
+ on certain versions of Windows (primarily the older, unsupported versions).</remarks>
+</member><member name="P:ExpTreeLib.ExpTree.StartUpDirectory">
+	<summary>
+ Sets the initial Root directory of ExpTree.
+ </summary>
+	<value>Must be one of the StartDir Enum values.</value>
+	<returns>Current StartDir value.</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ExpTree.ExpandANode(System.String,System.Boolean)">
+	<summary>
+ Expands TreeNodes from the tree root through the input Path. All intermediate nodes between the
+ Tree Root and the input Path are Expanded. If the Optional Property SelectExpandedNode is True (the Default),
+ the Expanded Node will be Selected, Raising a ExpNodeSelected Event. If False, the current Selected Node is unchanged
+ and no Event is Raised.
+ </summary>
+	<param name="newPath">The FileSystem path of the Node node to be Expanded.</param>
+	<param name="SelectExpandedNode">If True(the Default) then Select the Expanded Node.<br/>
+                                  If False, Do Not Select the Expanded Node.</param>
+	<returns>True if Successful, False otherwise.</returns>
+	<remarks>The preferred method is to use:
+ <pre lang="vbnet">Public Function ExpandANode(ByVal newItem As CShItem) As Boolean</pre> 
+ If the item defined by the input Path does not exist, False is returned.<br/>
+ Calling with SelectExpandedNode = False is useful when it is not desired to Raise an
+ ExpTreeNodeSelected Event as a result of ExpandaNode.</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.ExpandANode(ExpTreeLib.CShItem,System.Boolean)">
+	<summary>
+ Expands TreeNodes from the tree root through the input CShItem. All intermediate nodes between the
+ Tree Root and the input CShItem are Expanded. If the Optional Property SelectExpandedNode is True (the Default),
+ the Expanded Node will be Selected, Raising a ExpNodeSelected Event. If False, the current Selected Node is unchanged
+ and no Event is Raised.
+ </summary>
+	<param name="newItem">The CShItem representing the Shell Namespace object whose TreeNode is to
+ be expanded.</param>
+	<param name="SelectExpandedNode">If True(the Default) then Select the Expanded Node.<br/>
+                                  If False, Do Not Select the Expanded Node.</param>
+	<returns>True if Successful, False otherwise.</returns>
+	<remarks>This is the preferred method of ExpandANode.<br/>
+ Calling with SelectExpandedNode = False is useful when it is not desired to Raise an
+ ExpTreeNodeSelected Event as a result of ExpandaNode.</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.MakeNode(ExpTreeLib.CShItem)">
+	<summary>
+ Creates a TreeNode whose .Text is the DisplayName of the CShItem.<br/>
+ Sets the IconIndexes for that TreeNode from the CShItem.<br/>
+ Sets the Tag of the TreeNode to the CShItem<br/>
+ If the CShItem (a Folder) has or may have sub-Folders (see Remarks), adds a Dummy node to
+   the TreeNode's .Nodes collection. This is always done if the input CShItem represents a Removable device. Checking
+   further on such devices may cause unacceptable delays.
+ Returns the complete TreeNode.
+ </summary>
+	<param name="item">The CShItem to make a TreeNode to represent.</param>
+	<returns>A TreeNode set up to represent the CShItem.</returns>
+	<remarks>
+ This routine will not be called if the CShItem (a Folder) is Hidden and ExpTree's ShowHidden Property is False.<br/>
+ If the Folder is Hidden and ShowHidden is True, then this routine will be called.<br/>
+ If the Folder is Hidden and it only contains Hidden Folders (files are not considered here), then, 
+ the HasSubFolders attribute may be returned False even though Hidden Folders exist. In that case, we 
+ must make an extra check to ensure that the TreeNode is expandable.<br/>
+ 
+ There are additional complication with HasSubFolders. 
+ <ul>
+			<li>
+ On XP and earlier systems, HasSubFolders was always
+ returned True if the Folder was on a Remote system. On Vista and above, the OS would check and return an 
+ accurate value. This extra check can take a long time on Remote systems - approximately the same amount of time as checking
+ item.GetDirectories.Count. Versions 2.12 and above of ExpTreeLib have a modified HasSubFolders Property which will always
+ return True if the Folder is on a Remote system, restoring XP behavior.</li>
+			<li>
+ On XP and earlier systems, compressed files (.zip, .cab, etc) were treated as files. On Vista and above, they are treated
+ as Folders. ExpTreeLib continues to treat such files as files. The HasSubFolder attribute will report a Folder which
+ contains only compressed files as True. In MakeNode, I simply accept the Vista and above interpretation, setting a dummy
+ node in such a Folder. An attempt to expand such a TreeNode will just turn off the expansion marker.
+ </li>
+		</ul>
+	</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.RefreshTree(ExpTreeLib.CShItem)">
+	<summary>RefreshTree Method thanks to Calum McLellan</summary>
+</member><member name="M:ExpTreeLib.ExpTree.PopulateNode(System.Windows.Forms.TreeNode)">
+	<summary>
+ Called to Populate the TreeNodes of a TreeNode that only contains a Dummy Node.
+ </summary>
+	<param name="NodeToFill">The unexpanded TreeNode to Fill</param>
+	<remarks>Should only be called to populate a TreeNode which only has a Dummy Node.<br/>
+ Refactored code added 8/26/2012 so that this functionality could be used from more than one method.</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.tv1_VisibleChanged(System.Object,System.EventArgs)">
+	<summary>When a form containing this control is Hidden and then re-Shown,
+ the association to the SystemImageList is lost.  Also lost is the
+ Expanded state of the various TreeNodes. 
+ The VisibleChanged Event occurs when the form is re-shown (and other times
+  as well).  
+ We re-establish the SystemImageList as the ImageList for the TreeView and
+ restore at least some of the Expansion.</summary>
+</member><member name="M:ExpTreeLib.ExpTree.tv1_BeforeCollapse(System.Object,System.Windows.Forms.TreeViewCancelEventArgs)">
+	<summary>Should never occur since if the condition tested for is True,
+ the user should never be able to Collapse the node. However, it is
+ theoretically possible for the code to request a collapse of this node
+ If it occurs, cancel it</summary>
+</member><member name="M:ExpTreeLib.ExpTree.DragWrapper_ShDragEnter(System.IntPtr,System.Int32,System.Int32)">
+	<summary>ShDragEnter does nothing. It is here for debug tracking</summary>
+</member><member name="M:ExpTreeLib.ExpTree.DragWrapper_ShDragLeave">
+	<summary>Drag has left the control. Cleanup what we have to</summary>
+</member><member name="M:ExpTreeLib.ExpTree.DragWrapper_ShDragOver(System.Windows.Forms.TreeNode,System.Drawing.Point,System.Int32,System.Int32)">
+	<summary>ShDragOver manages the appearance of the TreeView.  Management of
+ the underlying FolderItem is done in CDragWrapper
+ Credit to Cory Smith for TreeView colorizing technique and code,
+ at http://addressof.com/blog/archive/2004/10/01/955.aspx
+ Node expansion based on expandNodeTimer added by me.
+</summary>
+</member><member name="P:ExpTreeLib.ExpTree.AllowFolderRename">
+	<summary>
+ Allow renaming of folders using LabelEdit
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:ExpTreeLib.ExpTree.UseWindowsContextMenu">
+	<summary>
+ Sets whether or not the control should use Windows System context menu for TreeNode items.
+ </summary>
+	<returns>The current setting (True or False).</returns>
+	<remarks>Setting this Property to False prevents the display and processing of Windows Context Menus on a Right-Click on a TreeNode.</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.WndProc(System.Windows.Forms.Message@)">
+	<summary>
+ Windows Message Handler for receiving Messages associated with a System Menu. 
+ This is what causes Cascading menus to Display
+ </summary>
+	<param name="m">A Windows Message</param>
+	<remarks>Only Handles Messages relating to Windows Context Menus</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.InsertNode(System.Windows.Forms.TreeNode,System.Windows.Forms.TreeNode)">
+	<summary>
+ Insert a TreeNode into its' Parent's Nodes list in its' proper location
+ in its' Parent Node's Nodes list.
+ </summary>
+	<param name="Node">The Node to be inserted</param>
+	<param name="ParentNode">The Parent Node of the Node to be inserted.</param>
+	<remarks>Only called from Dynamic update code when the Parent Node is known (ie displayed).</remarks>
+</member><member name="M:ExpTreeLib.ExpTree.SortNodes(System.Windows.Forms.TreeNode)">
+	<summary>
+ Sorts the Nodes of the input TreeNode
+ </summary>
+	<param name="N">The Node whose Nodes.Collection is to be sorted</param>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.ExpTree.NodePath(System.Windows.Forms.TreeNode)">
+	<summary>
+ NodePath returns the Text version of the full path of a TreeNode.
+ </summary>
+	<param name="node">The TreeNode to return the full path for.</param>
+	<returns>The full path to the input node within a tree</returns>
+	<remarks>Used only for some Debug.WriteLine statements.</remarks>
+</member><member name="T:ExpTreeLib.ExpTree">
+	<summary>
+ ExpTree is a UserControl encapsulating a TreeView which will display all or part of the Windows Shell
+ Namespace.  The Shell Namespace is a superset of the Windows file system. It is the Tree commonly shown
+ by Windows Explorer, in Classic View. That is, it is a Tree rooted in the Desktop.
+ ExpTree supports Drag and Drop and standard Windows Context Menus.
+ </summary>
+	<remarks>ExpTree raises one major Event, ExpTreeNodeSelected. That event is raised whenever the 
+ Selected TreeNode changes because of User Action (i.e. -- clicking on the node)</remarks>
+</member><member name="E:ExpTreeLib.CtvDropWrapper.ShDragEnter">
+	<summary>
+ The Event Raised by this Class to inform the TreeView that a Drag has entered the TreeView
+ </summary>
+	<param name="pDataObj">Pointer to the DataObject being Dragged.</param>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+	<param name="pdwEffect">The type of Drop actions permitted by the Drag Source</param>
+</member><member name="E:ExpTreeLib.CtvDropWrapper.ShDragOver">
+	<summary>
+ The Event Raised by this Class to inform the TreeView that a Drag has moved over the TreeView
+ </summary>
+	<param name="Node">The TreeNode that the Drag is over</param>
+	<param name="ClientPoint">Location, in Client coordinates, of the mouse.</param>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+	<param name="pdwEffect">The type of Drop actions permitted by the Drag Source</param>
+</member><member name="E:ExpTreeLib.CtvDropWrapper.ShDragLeave">
+	<summary>
+ The Event Raised by this Class to inform the TreeView that a Drag has left the TreeView
+ </summary>
+</member><member name="E:ExpTreeLib.CtvDropWrapper.ShDragDrop">
+	<summary>
+ The Event Raised by this Class to inform the TreeView that a Drop has occured on the TreeView
+ </summary>
+	<param name="Node">The TreeNode that the Drop occured on</param>
+	<param name="grfKeyState"></param>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+</member><member name="T:ExpTreeLib.CtvDropWrapper.KeyStates">
+	<summary>
+ Bit mask showing the state of Control Keys and Mouse Buttons during a Drag
+ </summary>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.#ctor(System.Windows.Forms.TreeView)">
+	<summary>
+ Initializes a new instance of the Class.
+ </summary>
+	<param name="ctl">The TreeView for which this instance will Handle Drag/Drop</param>
+	<remarks>Registers itself to Handle Drag/Drops for the TreeView.</remarks>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.DragEnter(System.IntPtr,ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only<br/>
+ DragEnter is called by the Shell as a drag enters the TreeView. Its main function is to
+ save off the IDataObject of the Drag for use in DragOver processing, since DragOver does
+ not receive the IDataObject as a parameter.
+ </summary>
+	<param name="pDataObj">IDataObject of the Folder of the Item being dragged, containing references to
+ the item(s) being Dragged.</param>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+	<param name="pt">Location, in screen coordinates, of the mouse.</param>
+	<param name="pdwEffect">Permitted Drop actions as set by the DragSource.</param>
+	<returns>Always returns S_OK (0)</returns>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.DragOver(ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only
+ Entered when a Drag moves over the surface of the associated Control.<br/>
+	</summary>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+	<param name="pt">Location, in screen coordinates, of the mouse.</param>
+	<param name="pdwEffect">Permitted Drop actions as set by the DragSource and modified by
+ candidate DropTargets.</param>
+	<returns>Always returns S_OK (0)</returns>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.DragLeave">
+	<summary>
+ DragLeave is raised by the Shell when the Drag is cancelled or otherwise leaves the underlying
+ TreeView.  The handler does whatever cleanup is needed to prepare for another DragEnter.
+ </summary>
+	<returns>Always returns S_OK</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.DragDrop(System.IntPtr,ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only
+ Entered when a DragDrop has occurred on the associated Control.
+ </summary>
+	<param name="pDataObj">Pointer to the IDataObject</param>
+	<param name="grfKeyState">State of the keyboard Keys and Mouse Buttons</param>
+	<param name="pt">Where the Drop occurred on the Control</param>
+	<param name="pdwEffect">Result of the Drop - unreliable in case of Move</param>
+	<returns>S_OK</returns>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.DisposeDropWrapper">
+	<summary>
+ Revokes the View from getting drop messages and releases the IDropTarget
+ </summary>
+</member><member name="M:ExpTreeLib.CtvDropWrapper.ReleaseCom">
+	<summary>
+ Release the IDropTarget and free's the allocated memory
+ </summary>
+</member><member name="T:ExpTreeLib.CtvDropWrapper">
+	<summary>The CtvDropWrapper class deals with the mechanics of receiving a
+ Drag/Drop operation for a TreeView Control. In effect, it implements the IDropTarget interface
+ for a TreeView. It is designed to handle a TreeView which <b>must</b> have CShItems 
+ in the Tags of the TreeNodes contained in the control.
+</summary>
+	<remarks>
+		<para>The class recieves the DragEnter, DragLeave, DragOver, and DragDrop events for
+ the associated TreeView, performs the Drag specific processing, and raises corresponding 
+ Events for the associated TreeView to allow the TreeView to do any GUI related processing.</para>
+ The interesting part of this class is that it makes no decisions about the drag
+ nor does any Drop related processing itself. Instead, it acts as a broker between
+ the Drag/Drop operation and the IDropTarget interface of the underlying 
+ Shell Folder.  This allows the Shell Folder, which may be a Shell Extention, to
+ perform whatever action it needs to in order to effect the Drag/Drop.
+ The benefit of this approach is that Drag/Drop targets need not be part of the
+ File System.
+ </remarks>
+</member><member name="M:ExpTreeLib.WindowsContextMenu.ShowMenu(System.IntPtr,ExpTreeLib.CShItem[],System.Drawing.Point,System.Boolean,ExpTreeLib.ShellDll.ShellAPI.CMInvokeCommandInfoEx@)">
+	<summary>
+ If this method returns true then the caller must call ReleaseMenu
+ </summary>
+	<param name="hwnd">The handle to the control to host the ContextMenu</param>
+	<param name="items">The items for which to show the ContextMenu. These items must be in the same folder.</param>
+	<param name="pt">The point where the ContextMenu should appear</param>
+	<param name="allowrename">Set if the ContextMenu should contain the Rename command where appropriate</param>
+	<param name="cmi">The command information for the users selection</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.WindowsContextMenu.InvokeCommand(ExpTreeLib.ShellDll.IContextMenu,System.UInt32,System.String,System.Drawing.Point)">
+	<summary>
+ Invokes a specific command from an IContextMenu
+ </summary>
+	<param name="iContextMenu">the IContextMenu containing the item</param>
+	<param name="cmd">the index of the command to invoke</param>
+	<param name="parentDir">the parent directory from where to invoke</param>
+	<param name="ptInvoke">the point (in screen coördinates) from which to invoke</param>
+</member><member name="M:ExpTreeLib.WindowsContextMenu.SetUpNewMenu(ExpTreeLib.CShItem,System.IntPtr,System.Int32)">
+	<summary>
+ If this method returns true then the caller must call ReleaseNewMenu
+ </summary>
+	<param name="itm"></param>
+	<param name="contextMenu"></param>
+	<param name="index"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:ExpTreeLib.WindowsContextMenu">
+	<summary>
+ WindowsContextMenu provides the infrastucture for displaying a Windows Context Menu on a Control
+ and for Invoking a Command selected by the user from that Context Menu. Cascaded sub-menus are created,
+ displayed, and responded to as required.
+ The Context Menu applies to all CShItems
+ passed to the ShowMenu Function and all CShItems must be in the same Folder. 
+ </summary>
+	<remarks>Though specifically designed for ListView and TreeView Controls, this Class will work for any Control which
+          is associated with a single Folder and can provide CShItems from that Folder.</remarks>
+</member><member name="P:ExpTreeLib.ControlDropWrapper.FullPath">
+	<summary>
+ Contains the Full Path of the Folder associated with this Control
+ </summary>
+	<returns>The Full Path of the Folder associated with this Control</returns>
+	<remarks>Setting this Property to another valid Path will release all references to the previous Folder (if any) and
+          associate this instance with the new Folder.</remarks>
+</member><member name="M:ExpTreeLib.ControlDropWrapper.DragEnter(System.IntPtr,ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only<br/>
+ DragEnter is called by the Shell as a drag enters the Control. Its main function is to
+ save off the IDataObject of the Drag for use in DragOver processing, since DragOver does
+ not receive the IDataObject as a parameter.
+ </summary>
+	<param name="pDataObj">IDataObject of the Folder of the Item being dragged, containing references to
+ the item(s) being Dragged.</param>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+	<param name="pt">Location, in screen coordinates, of the mouse.</param>
+	<param name="pdwEffect">Permitted Drop actions as set by the DragSource.</param>
+	<returns>S_OK</returns>
+</member><member name="M:ExpTreeLib.ControlDropWrapper.DragOver(ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only
+ Entered when a Drag moves over the surface of the associated Control.<br/>
+	</summary>
+	<param name="grfKeyState">State of the Control Keys and Mouse Buttons</param>
+	<param name="pt">Location, in screen coordinates, of the mouse.</param>
+	<param name="pdwEffect">Permitted Drop actions as set by the DragSource and modified by
+ candidate DropTargets.</param>
+	<returns>S_OK</returns>
+</member><member name="M:ExpTreeLib.ControlDropWrapper.DragLeave">
+	<summary>
+ DragLeave is raised by the Shell when the Drag is cancelled or otherwise leaves the underlying
+ Control.  The handler does whatever cleanup is needed to prepare for another DragEnter.
+ </summary>
+	<returns>S_OK</returns>
+</member><member name="M:ExpTreeLib.ControlDropWrapper.DragDrop(System.IntPtr,ExpTreeLib.ShellDll.ShellAPI.MK,ExpTreeLib.ShellDll.ShellAPI.POINT,System.Windows.Forms.DragDropEffects@)">
+	<summary>
+ For internal use only<br/>
+ Entered when a DragDrop has occurred on the associated Control.
+ </summary>
+	<param name="pDataObj">Pointer to the IDataObject</param>
+	<param name="grfKeyState">State of the keyboard Keys and Mouse Buttons</param>
+	<param name="pt">Where the Drop occurred on the Control</param>
+	<param name="pdwEffect">Result of the Drop - unreliable in case of Move</param>
+	<returns>S_OK</returns>
+</member><member name="T:ExpTreeLib.ControlDropWrapper">
+	<summary>
+ A Class to serve as a broker between a Control that is associated with a single Folder and
+  a DragTo/DropOn operation initiated From any other DragSource that the Shell supports. The calling application may change 
+ the associated Folder of an instance of ControlDropWrapper as needed - it is not needed or desireable to create new a instance
+ as the associated Folder changes.<br/>
+  This should not be used for TreeView or ListView Controls which require special handling.
+ </summary>
+	<remarks>Originally the targeted use of this Class was for DragSources that provide email items,however it will also work
+          for Drags from WinExplorer or any application that provides an IDataObject with appropriately formatted data.</remarks>
+</member><member name="T:ExpTreeLib.ShellDll.NamespaceDoc">
+	<summary>
+ Contains a large number of Windows Shell API, Data Structure, and Enumeration Declarations used by Methods in 
+ the ExpTreeLib and ExpTree_Demo Namespaces. <br/>
+ For the majority of the entities in this Namespace, the documentation is found on MSDN. 
+ </summary>
+	<remarks>The content of this Namespace was built up over a long period of time. The MSDN definitions may not fully be
+          reflected in the Declarations here, but the Declarations here work for their intended purposes in ExpTreeLib and
+          ExpTree_Demo. </remarks>
+</member><member name="P:ExpTreeLib.StringLogicalComparer.Default">
+	<summary>
+ Returns an Instance of StringLogicalComparer
+ </summary>
+	<returns>an Instance of StringLogicalComparer</returns>
+</member><member name="M:ExpTreeLib.StringLogicalComparer.Compare(System.Object,System.Object)">
+	<summary>
+ Compares two Objects which must be Strings. Allows for and Compares properly if one or both Strings are Nothing. 
+ <para>When given two initialized Strings, Compares them using 
+ <see cref="M:ExpTreeLib.StringLogicalComparer.CompareStrings(System.String,System.String)">the CompareStrings function of this Class</see></para>
+	</summary>
+	<param name="x">First String to Compare</param>
+	<param name="y">Second String to Compare</param>
+	<returns>Negative value if x less than y, 0 if x=y, or a positive value if x greater than y</returns>
+	<remarks></remarks>
+</member><member name="M:ExpTreeLib.StringLogicalComparer.CompareStrings(System.String,System.String)">
+	<summary>
+ Compares string such that strings containing numeric values will, assuming that non-numeric leading portions
+ are equal, will sort in numeric order. Specifically, the strings: "a1", "a101", "a3" will sort as:
+ "a1", "a3", "a101"
+ </summary>
+	<param name="s1">First String to Compare</param>
+	<param name="s2">Second String to Compare</param>
+	<returns>Negative value if s1 less than s2, 0 if s1=s2, positive value if s1 greater than s2</returns>
+	<remarks>Note that negative return values may be other than -1 and that positive return values may be other than 1</remarks>
+</member><member name="T:ExpTreeLib.StringLogicalComparer">
+	<summary>
+ Compares string such that strings containing numeric values will, assuming that non-numeric leading portions
+ are equal, will sort in numeric order. Specifically, the strings: "a1", "a101", "a3" will sort as:
+ "a1", "a3", "a101"
+ </summary>
+	<remarks><list type="bullet">
+			<item><description>Article, code, and forum additions are found at:</description></item>
+			<item><description>http://www.codeproject.com/cs/algorithms/csnsort.asp</description></item>
+			<item><description>Original C# code by Vasian Cepa</description></item>
+			<item><description>Optimized C# code by Richard Deeming</description></item>
+			<item><description>Translated to VB.Net by Mike Cattle</description></item>
+			<item><description>Corrected version of CompareNumbers by Jim Parsells</description></item>
+		</list>
+	</remarks>
+</member>
+</members>
+</doc>

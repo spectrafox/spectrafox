@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CM_CropFile" xml:space="preserve">
+    <value>crop</value>
+  </data>
+  <data name="CM_DataAverageSingleFile" xml:space="preserve">
+    <value>average</value>
+  </data>
+  <data name="CM_DataMultiplication" xml:space="preserve">
+    <value>multiply / divide</value>
+  </data>
+  <data name="CM_DataNonLinearFit" xml:space="preserve">
+    <value>non linear data fitting</value>
+  </data>
+  <data name="CM_DataNormalization" xml:space="preserve">
+    <value>normalize</value>
+  </data>
+  <data name="CM_DataRegauging_ByFit" xml:space="preserve">
+    <value>regauge to numeric derivative</value>
+  </data>
+  <data name="CM_DataReversion" xml:space="preserve">
+    <value>reverse</value>
+  </data>
+  <data name="CM_DataSmoothing" xml:space="preserve">
+    <value>smooth</value>
+  </data>
+  <data name="CM_DataSummation" xml:space="preserve">
+    <value>add / substract</value>
+  </data>
+  <data name="CM_DerivativeOfFile" xml:space="preserve">
+    <value>numeric derivative</value>
+  </data>
+  <data name="CM_RenameColumns" xml:space="preserve">
+    <value>rename data-columns</value>
+  </data>
+  <data name="MM_ClearExtendedComment" xml:space="preserve">
+    <value>clear all created comments</value>
+  </data>
+  <data name="MM_ClearPreviewImages" xml:space="preserve">
+    <value>remove all cached preview images</value>
+  </data>
+  <data name="MM_ClearScanChannels" xml:space="preserve">
+    <value>remove all channels generated by SpectraFox</value>
+  </data>
+  <data name="MM_ClearSpectroscopyColumn" xml:space="preserve">
+    <value>remove all data columns generated by SpectraFox</value>
+  </data>
+  <data name="MM_ClearSpectroscopyCropInformations" xml:space="preserve">
+    <value>remove all crop ranges</value>
+  </data>
+  <data name="MM_CropFiles" xml:space="preserve">
+    <value>using last settings: crop all files</value>
+  </data>
+  <data name="MM_DataAverageMultipleFiles" xml:space="preserve">
+    <value>average values across files</value>
+  </data>
+  <data name="MM_DataAverageSingleFile" xml:space="preserve">
+    <value>using last settings: average columns in each file</value>
+  </data>
+  <data name="MM_DataMultiplicationFactor" xml:space="preserve">
+    <value>using last settings: multiply by factor</value>
+  </data>
+  <data name="MM_DataMultiplicationOtherColumn" xml:space="preserve">
+    <value>using last settings: multiply two data columns</value>
+  </data>
+  <data name="MM_DataNonLinearFit" xml:space="preserve">
+    <value>two data sets: non linear data fitting</value>
+  </data>
+  <data name="MM_DataNormalization" xml:space="preserve">
+    <value>using last settings: normalize</value>
+  </data>
+  <data name="MM_DataRegauging_ByFit" xml:space="preserve">
+    <value>using last settings: regauge to numeric derivative</value>
+  </data>
+  <data name="MM_DataRegauging_ByParameters" xml:space="preserve">
+    <value>using last settings: regauge by parameters</value>
+  </data>
+  <data name="MM_DataReversion" xml:space="preserve">
+    <value>using last settings: reverse</value>
+  </data>
+  <data name="MM_DataSmoothing" xml:space="preserve">
+    <value>using last settings: smooth</value>
+  </data>
+  <data name="MM_DataSummationFactor" xml:space="preserve">
+    <value>using last settings: add / substract a value</value>
+  </data>
+  <data name="MM_DataSummationOtherColumn" xml:space="preserve">
+    <value>using last settings: sum two columns</value>
+  </data>
+  <data name="MM_DataSummationTwoSets_Last" xml:space="preserve">
+    <value>using last settings: sum values of different files</value>
+  </data>
+  <data name="MM_DataSummationTwoSets_Manual" xml:space="preserve">
+    <value>two data sets: sum values of different files</value>
+  </data>
+  <data name="MM_DerivativeOfFile" xml:space="preserve">
+    <value>using last settings: numeric derivative</value>
+  </data>
+  <data name="MM_LineScanPlot" xml:space="preserve">
+    <value>plot spectra as stacked contour-plot</value>
+  </data>
+  <data name="MM_RenameColumns" xml:space="preserve">
+    <value>using last settings: rename data-columns</value>
+  </data>
+  <data name="TT_CropFile" xml:space="preserve">
+    <value>crops measured data to certain ranges</value>
+  </data>
+  <data name="TT_DataAverageSingleFile" xml:space="preserve">
+    <value>Average multiple columns in the same file to
+one single column with improved data quality.</value>
+  </data>
+  <data name="TT_DataMultiplication" xml:space="preserve">
+    <value>multiply or divide values in a data column by a constant factor,
+or with another data column in the same file</value>
+  </data>
+  <data name="TT_DataNonLinearFit" xml:space="preserve">
+    <value>Fit data using a non-linear fit model.</value>
+  </data>
+  <data name="TT_DataNormalization" xml:space="preserve">
+    <value>Allows to select a range which should be set to one (1),
+and normalizes the rest to this reference.</value>
+  </data>
+  <data name="TT_DataRegauging_ByFit" xml:space="preserve">
+    <value>Calculate the numeric derivative of a source column, and
+fit the target column to it, using a linearly factor.
+The target column is then regauged by the fitted parameters
+to obtain correct physical dimensions of the target column. [e.g. I(V) -&gt; dI/dV(V)]</value>
+  </data>
+  <data name="TT_DataSmoothing" xml:space="preserve">
+    <value>Smooth values of a data column using different procedures.</value>
+  </data>
+  <data name="TT_DataSummation" xml:space="preserve">
+    <value>add or substract values in data column with a constant value,
+or with another data column in the same file</value>
+  </data>
+  <data name="TT_DerivativeOfFile" xml:space="preserve">
+    <value>calculates the numeric derivative of a column in the data file</value>
+  </data>
+</root>

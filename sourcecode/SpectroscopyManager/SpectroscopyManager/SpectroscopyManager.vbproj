@@ -1,0 +1,1979 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B93E0A13-859F-4F36-AF04-8858E9A03C37}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>SpectroscopyManager.My.MyApplication</StartupObject>
+    <RootNamespace>SpectroscopyManager</RootNamespace>
+    <AssemblyName>SpectroscopyManager</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>ftp://download.spectrafox.com/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>3</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>http://download.spectrafox.com/</InstallUrl>
+    <SupportUrl>http://spectrafox.com</SupportUrl>
+    <ErrorReportUrl>http://spectrafox.com</ErrorReportUrl>
+    <TargetCulture>en</TargetCulture>
+    <ProductName>SpectraFox</ProductName>
+    <PublisherName>Michael Ruby</PublisherName>
+    <SuiteName>SpectraFox Spectroscopy Manager</SuiteName>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>publish.htm</WebPage>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>9.1.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>0B190EE1FF7510AAD9B3FC81B89CCEAD4EFA1283</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>MichaelKleinertCodeSign.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\SpectraFoxLogo3.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestTimestampUrl>http://timestamp.globalsign.com/scripts/timstamp.dll</ManifestTimestampUrl>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\Build\x86\Debug\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42020,42021,42022</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\..\Build\x64\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42020,42021,42022</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>false</DefineTrace>
+    <OutputPath>..\..\Build\x86\Release\</OutputPath>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42020,42021,42022</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>false</DefineTrace>
+    <OutputPath>..\..\Build\x64\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <WarningsAsErrors>41999,42016,42020,42021,42022</WarningsAsErrors>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cudafy.NET, Version=1.29.5576.13786, Culture=neutral, PublicKeyToken=63a4c9931616906b, processorArchitecture=MSIL">
+      <HintPath>..\packages\CUDAfy.NET.1.29.5576.13786\lib\net40\Cudafy.NET.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ionic.Zip.Reduced, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
+    </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.10.0\lib\net40\MathNet.Numerics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MathNet.Numerics.Data.Matlab, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Data.Matlab.3.1.1\lib\net40\MathNet.Numerics.Data.Matlab.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MathNet.Numerics.Data.Text, Version=3.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Data.Text.3.1.1\lib\net40\MathNet.Numerics.Data.Text.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NetSparkle.Net40">
+      <HintPath>..\packages\NetSparkle.1.1.0\lib\net40-full\NetSparkle.Net40.dll</HintPath>
+    </Reference>
+    <Reference Include="SmartThreadPool">
+      <HintPath>..\packages\SmartThreadPool.dll.2.2.3\lib\SmartThreadPool.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="zlib.net, Version=1.0.3.0, Culture=neutral, PublicKeyToken=47d7877cb3620160">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\zlib.net.1.0.4.0\lib\zlib.net.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Collections.ObjectModel" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Bug-Reporting\cBugReporter.vb" />
+    <Compile Include="Bug-Reporting\cBugReport_UploadReporter.vb" />
+    <Compile Include="Bug-Reporting\iBugReporter.vb" />
+    <Compile Include="Bug-Reporting\rBugReporting.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rBugReporting.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Clipboard\cClipboard_SpectroscopyTable.vb" />
+    <Compile Include="ComputingCloud\cComputingCloud.vb" />
+    <Compile Include="ComputingCloud\rComputingCloud.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rComputingCloud.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Export\ExportMethods\cExportMethod_Ascii.vb" />
+    <Compile Include="Export\ExportMethods\cExportMethod_Ascii_CSV.vb" />
+    <Compile Include="Export\ExportMethods\cExportMethod_Ascii_TAB.vb" />
+    <Compile Include="Export\ExportMethods\cExportMethod_Ascii_ORIGIN.vb" />
+    <Compile Include="Export\ExportMethods\cExportMethod_Mathematica.vb" />
+    <Compile Include="Export\iExport_CustomFormatSetting.vb" />
+    <Compile Include="Export\iExportMethod_Ascii.vb" />
+    <Compile Include="Export\ExportMethods\rExportMethods.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rExportMethods.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitFunction_Fano.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Frota\cFitFunction_FrotaDerivative.vb" />
+    <Compile Include="Fitting\FitFunctions\Frota\cFitSettingPanel_FrotaDerivative.Designer.vb">
+      <DependentUpon>cFitSettingPanel_FrotaDerivative.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Frota\cFitSettingPanel_FrotaDerivative.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Frota\rFitFunction_Frota1.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitFunction_Frota.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Frota\rFitFunction_FrotaDerivative.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitFunction_FrotaDerivative.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\cFitProcedureSingleDataFit.vb" />
+    <Compile Include="Fitting\FitProcedures\cFitProcedureBase.vb" />
+    <Compile Include="Fitting\FitProcedures\cFitProcedureMultipleDataFit.vb" />
+    <Compile Include="Fitting\FitProcedures\iFitProcedure.vb" />
+    <Compile Include="Fitting\FitProcedures\iFitProcedureSettings.vb" />
+    <Compile Include="Fitting\FitProcedures\cFitProcedureSettingsPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Levenberg-Marquardt\cFitProcedureSettingsPanel_LMA.Designer.vb">
+      <DependentUpon>cFitProcedureSettingsPanel_LMA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Levenberg-Marquardt\cFitProcedureSettingsPanel_LMA.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Levenberg-Marquardt\cLMAFit.vb" />
+    <Compile Include="Fitting\FitProcedures\Levenberg-Marquardt\rLMAFit.Designer.vb">
+      <DependentUpon>rLMAFit.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Nelder–Mead\cFitProcedureSettingsPanel_NMA.Designer.vb">
+      <DependentUpon>cFitProcedureSettingsPanel_NMA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Nelder–Mead\cFitProcedureSettingsPanel_NMA.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Nelder–Mead\cNMAFit.vb" />
+    <Compile Include="Fitting\FitProcedures\rFitProcedure.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitProcedure.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\wFitProcedureSettingsWindow.Designer.vb">
+      <DependentUpon>wFitProcedureSettingsWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\wFitProcedureSettingsWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitProcedures\Nelder–Mead\rNMAFit.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rNMAFit.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\cFitFunction_TipSampleConvolutionBase - Integral - new.vb" />
+    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\cFitSettingPanel_TipSampleConvolution.Designer.vb">
+      <DependentUpon>cFitSettingPanel_TipSampleConvolution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\cFitSettingPanel_TipSampleConvolution.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\iFitFunction_TipSampleConvolutionBase.vb" />
+    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\rFitFunction_TipSampleConvolutionBase.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\cFitFunction_BCSBase.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitFunction_BCSDoubleGap.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitFunction_BCSDoubleGap_TipAndSample.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitFunction_BCSDoubleGap_TwoLifetimes.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap_TipAndSample.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_TipAndSample.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap_TipAndSample.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap_TwoLifetimes.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_TwoLifetimes.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap_TwoLifetimes.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\rFitFunction_BCSDoubleGap.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_SubGapPeaks\cFitFunction_BCSDoubleGap_SubGapPeaks.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_SubGapPeaks\cFitSettingPanel_BCSDoubleGap_SubGapPeaks.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_SubGapPeaks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_SubGapPeaks\cFitSettingPanel_BCSDoubleGap_SubGapPeaks.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_SubGapPeaks\rFitFunction_BCSDoubleGap_SubGapPeaks.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\NormalTip_SingleGap\cFitFunction_BCS_NormalTip_SingleGap.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\NormalTip_SingleGap\cFitSettingPanel_BCS_NormalTip_SingleGap.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCS_NormalTip_SingleGap.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\NormalTip_SingleGap\cFitSettingPanel_BCS_NormalTip_SingleGap.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\NormalTip_SingleGap\rFitFunction_BCS_NormalTip_SingleGap.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\rFitFunction_BCSBase.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\SingleGap\cFitFunction_BCSSingleGap.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\SingleGap\cFitSettingPanel_BCSSingleGap.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSSingleGap.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\SingleGap\cFitSettingPanel_BCSSingleGap.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\SingleGap\rFitFunction_BCSSingleGap.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\SingleGap_SubGapPeaks\cFitFunction_BCSSingleGap_SubGapPeaks.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\StepGap_SubGapPeaks\cFitFunction_StepGap_SubGapPeaks.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\StepGap_SubGapPeaks\cFitSettingPanel_StepGap_SubGapPeaks.Designer.vb">
+      <DependentUpon>cFitSettingPanel_StepGap_SubGapPeaks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\StepGap_SubGapPeaks\cFitSettingPanel_StepGap_SubGapPeaks.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\StepGap_SubGapPeaks\rFitFunction_StepGap_SubGapPeaks.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\SubGapPeak\cFitSettingPanel_SubGapPeaks.Designer.vb">
+      <DependentUpon>cFitSettingPanel_SubGapPeaks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\SubGapPeak\cFitSettingPanel_SubGapPeaks.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\SubGapPeak\cFitSettingSubParameter_SubGapPeakPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\SubGapPeak\iFitFunction_SubGapPeaks.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\SubGapPeak\rBCSFit_SubGapPeak.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\Exponential\cFitFunction_Exponential.vb" />
+    <Compile Include="Fitting\FitFunctions\Exponential\cFitSettingPanel_Exponential.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Exponential.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Exponential\cFitSettingPanel_Exponential.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Exponential\rFitFunction_Exponential.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\Fano\cFitFunction_Fano.vb" />
+    <Compile Include="Fitting\FitFunctions\Fano\cFitSettingPanel_Fano.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Fano.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Fano\cFitSettingPanel_Fano.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Frota\cFitFunction_Frota.vb" />
+    <Compile Include="Fitting\FitFunctions\Frota\cFitSettingPanel_Frota.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Frota.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Frota\cFitSettingPanel_Frota.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\IETS - Spin Excitations\cFitFunction_IETS_SpinExcitation.vb" />
+    <Compile Include="Fitting\FitFunctions\IETS - Spin Excitations\cFitSettingPanel_IETS_SpinExcitation.Designer.vb">
+      <DependentUpon>cFitSettingPanel_IETS_SpinExcitation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\IETS - Spin Excitations\cFitSettingPanel_IETS_SpinExcitation.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\IETS - Spin Excitations\rFitFunction_IETS_SpinExcitation.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\Lorentz\cFitFunction_Lorentz.vb" />
+    <Compile Include="Fitting\FitFunctions\Lorentz\cFitSettingPanel_Lorentz.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Lorentz.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Lorentz\cFitSettingPanel_Lorentz.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Lorentz\rFitFunction_Lorentz.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\MultipleFitFunctions\cFitFunction_MultiplePeaks.vb" />
+    <Compile Include="Fitting\FitFunctions\MultipleFitFunctions\rFitFunction_MultiplePeaks.Designer.vb">
+      <DependentUpon>rFitFunction_MultiplePeaks.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Polynomial\cFitFunction_Polynomial.vb" />
+    <Compile Include="Fitting\FitFunctions\Polynomial\cFitSettingPanel_Polynomial.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Polynomial.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Polynomial\cFitSettingPanel_Polynomial.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Polynomial\rFitFunction_Polynomial.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\Step - FermiFunction\cFitFunction_Step_FermiFunction.vb" />
+    <Compile Include="Fitting\FitFunctions\Step - FermiFunction\cFitSettingPanel_Step_FermiFunction.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Step_FermiFunction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Step - FermiFunction\cFitSettingPanel_Step_FermiFunction.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Step - FermiFunction\rFitFunction_Step_FermiFunction.Designer.vb" />
+    <Compile Include="Fitting\FitParameter\cFitParameterGroup.vb" />
+    <Compile Include="Fitting\FitParameter\cFitParameterGroupGroup.vb" />
+    <Compile Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_4.Designer.vb">
+      <DependentUpon>cFitSettingSubParameterPanel_4.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_4.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Gauss\cFitSettingPanel_Gauss.Designer.vb">
+      <DependentUpon>cFitSettingPanel_Gauss.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\Gauss\cFitSettingPanel_Gauss.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitParameter\wBoundarySelector.Designer.vb">
+      <DependentUpon>wBoundarySelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitParameter\wBoundarySelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitSettingPanel\cFitSettingPanel.Designer.vb">
+      <DependentUpon>cFitSettingPanel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitSettingPanel\cFitSettingPanel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitSettingPanel\rFitSettingPanel.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitSettingPanel.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitParameter\mFitParameter.Designer.vb">
+      <DependentUpon>mFitParameter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitParameter\mFitParameter.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\rFitting.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitting.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitParameter\cFitParameter.vb" />
+    <Compile Include="Fitting\FitFunctions\Gauss\cFitFunction_Gauss.vb" />
+    <Compile Include="Fitting\FitFunctions\Gauss\rFitFunction_Gauss.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitFunction_Gauss.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GPUComputing\cGPUComputing.vb" />
+    <Compile Include="GPUComputing\rGPUComputing.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rGPUComputing.resx</DependentUpon>
+    </Compile>
+    <Compile Include="HelperClasses\cArrayHelper.vb" />
+    <Compile Include="HelperClasses\cClipboardInvoker.vb" />
+    <Compile Include="HelperClasses\cColorHelper.vb" />
+    <Compile Include="HelperClasses\cDateTimeUtils.vb" />
+    <Compile Include="HelperClasses\cDialogInvoker.vb" />
+    <Compile Include="HelperClasses\cEventExtensions.vb" />
+    <Compile Include="HelperClasses\cFileLock.vb" />
+    <Compile Include="HelperClasses\cFormHelper.vb" />
+    <Compile Include="HelperClasses\cGlobal.vb" />
+    <Compile Include="HelperClasses\cImageConverter.vb" />
+    <Compile Include="HelperClasses\cMouseBounds.vb" />
+    <Compile Include="HelperClasses\cNetwork.vb" />
+    <Compile Include="HelperClasses\cNumericExtensions.vb" />
+    <Compile Include="HelperClasses\cSmartThreadPoolExtended.vb" />
+    <Compile Include="HelperClasses\cStringCollectionHistory.vb" />
+    <Compile Include="HelperClasses\ReadOnlyDictionary.vb" />
+    <Compile Include="ImportMethods\cFileObject.vb" />
+    <Compile Include="ImportMethods\iFileImport_ScanImage.vb" />
+    <Compile Include="ImportMethods\iFileImport_SpectroscopyTable.vb" />
+    <Compile Include="ImportMethods\rFileImport.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFileImport.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ImportMethods\SpectraFox-SFX\cFileImportSpectraFoxSFX.vb" />
+    <Compile Include="MyControls\GeneralControls\ColorPickerComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\ListView_DoubleBuffered.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\MouseBoundControl.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\GroupBoxCheckable.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\ImageComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\MouseBoundPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\UserPaintArea.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\ProgressPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\ScrollablePanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\VirtualVerticalPanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucScanChannelSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucFilteredListComboBoxSelector.Designer.vb">
+      <DependentUpon>ucFilteredListComboBoxSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucFilteredListComboBoxSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucSpectroscopyTableSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NumericMethods\cNumericFunctions.vb" />
+    <Compile Include="Plotting\Performance-Classes\cFastImage.vb" />
+    <Compile Include="PluginInterface\cPluginService.vb" />
+    <Compile Include="PluginInterface\iPluginInterface.vb" />
+    <Compile Include="PluginInterface\wPluginDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanImage\rScanImage.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rScanImage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ScanImage\ScanImageFilters\cScanImageFilter_GlobalPlaneSubstraction.vb" />
+    <Compile Include="ScanImage\ScanImageFilters\cScanImageFilter_LinearLineSubstraction.vb" />
+    <Compile Include="ScanImage\ScanImageFilters\iScanImageFilter.vb" />
+    <Compile Include="ScanImage\ScanImageFilters\rScanImageFilters.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rScanImageFilters.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableColumnRenamer.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataAverager.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataReverter.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataRegaugeByGivenParameters.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataRenormalizer.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataSmoother.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataSummer.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataMultiplier.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataRenormalizerByParameter.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataSummerTwoSets.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableFetcherMultiple.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ColumnRenaming.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataAverageMultipleFiles.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataAverageSingleFile.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataRegaugerByParameters.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataReversion.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationFactor.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationOtherColumn.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationTwoSetsAutomatic.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationTwoSetsManually.vb" />
+    <Compile Include="WindowModules\DataBrowser\mDataBrowserListCompact.Designer.vb">
+      <DependentUpon>mDataBrowserListCompact.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\mDataBrowserListCompact.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\LineScan\rLineScanViewer.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rLineScanViewer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\ScanImage\rScanImageViewer.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rScanImageViewer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\ValueRangeSelector\mValueRangeSelector2.Designer.vb">
+      <DependentUpon>mValueRangeSelector2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\ValueRangeSelector\mValueRangeSelector2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\ScanImageLoaderInterfaces\iMultipleScanImageLoaded.vb" />
+    <Compile Include="WindowModules\SpectroscopyTablesLoaderInterfaces\iMultipleSpectroscopyTablesLoaded.vb" />
+    <Compile Include="WindowModules\ScanImageLoaderInterfaces\iSingleScanImageLoaded.vb" />
+    <Compile Include="WindowModules\SpectroscopyTablesLoaderInterfaces\iSingleSpectroscopyTableLoaded.vb" />
+    <Compile Include="WindowModules\SpectroscopyTable\mSpectroscopyTableDataTable.Designer.vb">
+      <DependentUpon>mSpectroscopyTableDataTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\SpectroscopyTable\mSpectroscopyTableDataTable.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\SpectroscopyTable\rSpectroscopyTableViewer.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rSpectroscopyTableViewer.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ComputingCloud\wComputingCloudDetails.Designer.vb">
+      <DependentUpon>wComputingCloudDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ComputingCloud\wComputingCloudDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheCropInformations.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheScanImageChannels.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheSpectroscopyDataColumns.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheScanImageExtendedComments.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheSpectroscopyExtendedComments.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheScanImagePreviewImages.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ClearCacheSpectroscopyPreviewImages.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataCropping.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataMultiplicationOtherColumn.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataMultiplicationFactor.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataNonLinearFitting.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataNormalizer.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataLineScanPlotting.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataNumericDerivative.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataRegauger.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSmoothing.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\rFileObjectActions.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFileObjectActions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\iDataBrowser_FileObjectAction.vb" />
+    <Compile Include="WindowModules\DataBrowser\mDataBrowserList.Designer.vb">
+      <DependentUpon>mDataBrowserList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\mDataBrowserList.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\mDataBrowserListEntry.Designer.vb">
+      <DependentUpon>mDataBrowserListEntry.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\mDataBrowserListEntry.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\DataBrowser\rDataBrowser.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rDataBrowser.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\LineProfile\rScanImageLineProfile.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rScanImageLineProfile.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.Designer.vb">
+      <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummationTwoSets.Designer.vb">
+      <DependentUpon>wDataSummationTwoSets.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummationTwoSets.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Normalization\rDataNormalization.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rDataNormalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Smoothing\wDataReversion.Designer.vb">
+      <DependentUpon>wDataReversion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Smoothing\wDataReversion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataBrowser\wDataBrowserModular.Designer.vb">
+      <DependentUpon>wDataBrowserModular.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataBrowser\wDataBrowserModular.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataExplorer\wDataExplorer_ScanImage.Designer.vb">
+      <DependentUpon>wDataExplorer_ScanImage.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataExplorer\wDataExplorer_ScanImage.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataExplorer\wDataExplorer_SpectroscopyTable.Designer.vb">
+      <DependentUpon>wDataExplorer_SpectroscopyTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataExplorer\wDataExplorer_SpectroscopyTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataFitting\iFitWindow.vb" />
+    <Compile Include="Windows\DataFitting\rFitBase.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitBase.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataFitting\rFitQueue.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitQueue.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFitParallelizationSettings.Designer.vb">
+      <DependentUpon>wFitParallelizationSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFitParallelizationSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFitQueue.Designer.vb">
+      <DependentUpon>wFitQueue.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFitQueue.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummation.Designer.vb">
+      <DependentUpon>wDataSummation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummation.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Renormalization\rDataRenormalization.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rDataRenormalization.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Renormalization\wDataRenormalization2.Designer.vb">
+      <DependentUpon>wDataRenormalization2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Renormalization\wDataRenormalization2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFit_MultipleDataSets.Designer.vb">
+      <DependentUpon>wFit_MultipleDataSets.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFit_MultipleDataSets.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\File Treatment\wSpectroscopyTableRenameColumns.Designer.vb">
+      <DependentUpon>wSpectroscopyTableRenameColumns.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\File Treatment\wSpectroscopyTableRenameColumns.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FolderBrowser\rFolderBrowser.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFolderBrowser.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FolderBrowser\wFolderBrowser.Designer.vb">
+      <DependentUpon>wFolderBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FolderBrowser\wFolderBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\rFormBaseExpectsFiles.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFormBaseExpectsFiles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\wFormBaseExpectsMultipleSpectroscopyTableFileObjectsOnLoad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\GPUComputing\wGPUComputingSettings.Designer.vb">
+      <DependentUpon>wGPUComputingSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GPUComputing\wGPUComputingSettings.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Renormalization\wDataRenormalizationByParameters.Designer.vb">
+      <DependentUpon>wDataRenormalizationByParameters.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Renormalization\wDataRenormalizationByParameters.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Derivative\wDataNumericDerivative.Designer.vb">
+      <DependentUpon>wDataNumericDerivative.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Derivative\wDataNumericDerivative.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataMultiplication.Designer.vb">
+      <DependentUpon>wDataMultiplication.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataMultiplication.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\GridPlotter\rGridPlotter.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rGridPlotter.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GridPlotter\wGridPlotter.Designer.vb">
+      <DependentUpon>wGridPlotter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GridPlotter\wGridPlotter.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MainWindow\rMain.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rMain.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow\wMain.Designer.vb">
+      <DependentUpon>wMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\MainWindow\wMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFit_SingleDataSet.Designer.vb">
+      <DependentUpon>wFit_SingleDataSet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\wFormBaseExpectsScanImageObjectOnLoad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\wFormBaseExpectsIndividualSpectroscopyTableFileObjectOnLoad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\wProgress.Designer.vb">
+      <DependentUpon>wProgress.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\wProgress.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bug-Reporting\wUnhandledExceptionReportForm.Designer.vb">
+      <DependentUpon>wUnhandledExceptionReportForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Bug-Reporting\wUnhandledExceptionReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Deployment\rProgramUpdateMessages.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rProgramUpdateMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Deployment\wProgramUpdateAvailable.Designer.vb">
+      <DependentUpon>wProgramUpdateAvailable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Deployment\wProgramUpdateAvailable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\cFitFunction.vb" />
+    <Compile Include="Fitting\FitFunctions\iFitFunction.vb" />
+    <Compile Include="HelperClasses\cCompression.vb" />
+    <Compile Include="Deployment\cProgrammDeployment.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataCropper.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataDeriver.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableFetcher.vb" />
+    <Compile Include="ScanImage\cScanImageFetcher.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableDataNormalizer.vb" />
+    <Compile Include="Export\cExport.vb" />
+    <Compile Include="Export\cExportSpectroscopyTable.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisBias.vb" />
+    <Compile Include="ImportMethods\Createc\cFileImportCreatecDAT.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisZ.vb" />
+    <Compile Include="NumericMethods\cConstants.vb" />
+    <Compile Include="NumericMethods\cNumericAveraging.vb" />
+    <Compile Include="NumericMethods\cNumericNormalization.vb" />
+    <Compile Include="Plotting\Color-Types\cColorHSL.vb" />
+    <Compile Include="Plotting\Color-Types\cColorRGB.vb" />
+    <Compile Include="Plotting\Contour-Color-Scheme\cColorScheme.vb" />
+    <Compile Include="Plotting\Contour-Plots\cContourPlot.vb" />
+    <Compile Include="ScanImage\cScanImage.vb" />
+    <Compile Include="ImportMethods\cFileImport.vb" />
+    <Compile Include="ImportMethods\Createc\cFileImportCreatecVERT.vb" />
+    <Compile Include="Interoperability\cMathematica.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisSXM.vb" />
+    <Compile Include="NumericMethods\cNumericGeometry.vb" />
+    <Compile Include="NumericMethods\cNumericStatistics.vb" />
+    <Compile Include="SpectroscopyTable\cSpectroscopyTable.vb" />
+    <Compile Include="HelperClasses\cUnits.vb" />
+    <Compile Include="NumericMethods\cNumericDerivation.vb" />
+    <Compile Include="NumericMethods\cNumericInterpolation.vb" />
+    <Compile Include="NumericMethods\cNumericRenormalization.vb" />
+    <Compile Include="NumericMethods\cNumericSmoothing.vb" />
+    <Compile Include="Plotting\Contour-Plots\cScanImagePlot.vb" />
+    <Compile Include="Plotting\Contour-Plots\cLineScanPlot.vb" />
+    <Compile Include="MyControls\GeneralControls\DockablePanel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WindowModules\mDataSmoothing.Designer.vb">
+      <DependentUpon>mDataSmoothing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\mDataSmoothing.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\LineScan\mLineScanViewer.Designer.vb">
+      <DependentUpon>mLineScanViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\LineScan\mLineScanViewer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\ScanImage\mScanImageViewer.Designer.vb">
+      <DependentUpon>mScanImageViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\ScanImage\mScanImageViewer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WindowModules\ValueRangeSelector\mValueRangeSelector.Designer.vb">
+      <DependentUpon>mValueRangeSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\ValueRangeSelector\mValueRangeSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\GeneralControls\NumericTextbox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucColorPalettePicker.Designer.vb">
+      <DependentUpon>ucColorPalettePicker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucColorPalettePicker.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MyControls\ManagerControls\ucSpectroscopyColumnSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Deployment\wProgramUpdate.Designer.vb">
+      <DependentUpon>wProgramUpdate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Deployment\wProgramUpdate.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DataFitting\wFit_SingleDataSet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\wFormBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Cropping\wDataCropping.Designer.vb">
+      <DependentUpon>wDataCropping.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Cropping\wDataCropping.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Normalization\wDataNormalization.Designer.vb">
+      <DependentUpon>wDataNormalization.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Normalization\wDataNormalization.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\SplashAbout\wAbout.Designer.vb">
+      <DependentUpon>wAbout.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SplashAbout\wAbout.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Averaging\wDataAveragingMultipleFiles.Designer.vb">
+      <DependentUpon>wDataAveragingMultipleFiles.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Averaging\wDataAveragingMultipleFiles.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Averaging\wDataAveragingSingleFile.Designer.vb">
+      <DependentUpon>wDataAveragingSingleFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Averaging\wDataAveragingSingleFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Smoothing\wDataSmoothing.Designer.vb">
+      <DependentUpon>wDataSmoothing.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\Smoothing\wDataSmoothing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Export\wExportWizard_SpectroscopyTable.Designer.vb">
+      <DependentUpon>wExportWizard_SpectroscopyTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Export\wExportWizard_SpectroscopyTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\wLineScanPlot.Designer.vb">
+      <DependentUpon>wLineScanPlot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\wLineScanPlot.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="WindowModules\SpectroscopyTable\mSpectroscopyTableViewer.Designer.vb">
+      <DependentUpon>mSpectroscopyTableViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowModules\SpectroscopyTable\mSpectroscopyTableViewer.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\SplashAbout\wSplash.Designer.vb">
+      <DependentUpon>wSplash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SplashAbout\wSplash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\wSpectroscopyTable_PointDistance.Designer.vb">
+      <DependentUpon>wSpectroscopyTable_PointDistance.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\wSpectroscopyTable_PointDistance.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowTests\wSXMTest.Designer.vb">
+      <DependentUpon>wSXMTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowTests\wSXMTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WindowTests\wTest.Designer.vb">
+      <DependentUpon>wTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="WindowTests\wTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Bug-Reporting\rBugReporting.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rBugReporting.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComputingCloud\rComputingCloud.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rComputingCloud.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Export\ExportMethods\rExportMethods.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rExportMethods.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitFunction_Fano.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Frota\cFitSettingPanel_FrotaDerivative.resx">
+      <DependentUpon>cFitSettingPanel_FrotaDerivative.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Frota\rFitFunction_FrotaDerivative.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitFunction_FrotaDerivative.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\cFitProcedureSettingsPanel.resx">
+      <DependentUpon>cFitProcedureSettingsPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\Levenberg-Marquardt\cFitProcedureSettingsPanel_LMA.resx">
+      <DependentUpon>cFitProcedureSettingsPanel_LMA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\Levenberg-Marquardt\rLMAFit.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rLMAFit.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\Nelder–Mead\cFitProcedureSettingsPanel_NMA.resx">
+      <DependentUpon>cFitProcedureSettingsPanel_NMA.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\rFitProcedure.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitProcedure.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\wFitProcedureSettingsWindow.resx">
+      <DependentUpon>wFitProcedureSettingsWindow.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitProcedures\Nelder–Mead\rNMAFit.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rNMAFit.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Base_TipSampleConvolution\cFitSettingPanel_TipSampleConvolution.resx">
+      <DependentUpon>cFitSettingPanel_TipSampleConvolution.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Base_TipSampleConvolution\rFitFunction_TipSampleConvolutionBase.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap.resx">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap_TipAndSample.resx">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_TipAndSample.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap_TwoLifetimes.resx">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_TwoLifetimes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap\rFitFunction_BCSDoubleGap.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap_SubGapPeaks\cFitSettingPanel_BCSDoubleGap_SubGapPeaks.resx">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_SubGapPeaks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap_SubGapPeaks\rFitFunction_BCSDoubleGap_SubGapPeaks.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\NormalTip_SingleGap\cFitSettingPanel_BCS_NormalTip_SingleGap.resx">
+      <DependentUpon>cFitSettingPanel_BCS_NormalTip_SingleGap.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\NormalTip_SingleGap\rFitFunction_BCS_NormalTip_SingleGap.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\rFitFunction_BCSBase.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\SingleGap\cFitSettingPanel_BCSSingleGap.resx">
+      <DependentUpon>cFitSettingPanel_BCSSingleGap.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\SingleGap\rFitFunction_BCSSingleGap.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\StepGap_SubGapPeaks\cFitSettingPanel_StepGap_SubGapPeaks.resx">
+      <DependentUpon>cFitSettingPanel_StepGap_SubGapPeaks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\StepGap_SubGapPeaks\rFitFunction_StepGap_SubGapPeaks.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\SubGapPeak\cFitSettingPanel_SubGapPeaks.resx">
+      <DependentUpon>cFitSettingPanel_SubGapPeaks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\SubGapPeak\cFitSettingSubParameter_SubGapPeakPanel.resx">
+      <DependentUpon>cFitSettingSubParameter_SubGapPeakPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\SubGapPeak\rBCSFit_SubGapPeak.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\Exponential\cFitSettingPanel_Exponential.resx">
+      <DependentUpon>cFitSettingPanel_Exponential.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Exponential\rFitFunction_Exponential.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\Fano\cFitSettingPanel_Fano.resx">
+      <DependentUpon>cFitSettingPanel_Fano.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Frota\cFitSettingPanel_Frota.resx">
+      <DependentUpon>cFitSettingPanel_Frota.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Frota\rFitFunction_Frota.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <LastGenOutput>rFitFunction_Frota1.Designer.vb</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\IETS - Spin Excitations\cFitSettingPanel_IETS_SpinExcitation.resx">
+      <DependentUpon>cFitSettingPanel_IETS_SpinExcitation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\IETS - Spin Excitations\rFitFunction_IETS_SpinExcitation.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\Lorentz\cFitSettingPanel_Lorentz.resx">
+      <DependentUpon>cFitSettingPanel_Lorentz.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Lorentz\rFitFunction_Lorentz.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\MultipleFitFunctions\rFitFunction_MultiplePeaks.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitFunction_MultiplePeaks.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Polynomial\cFitSettingPanel_Polynomial.resx">
+      <DependentUpon>cFitSettingPanel_Polynomial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Polynomial\rFitFunction_Polynomial.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\Step - FermiFunction\cFitSettingPanel_Step_FermiFunction.resx">
+      <DependentUpon>cFitSettingPanel_Step_FermiFunction.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Step - FermiFunction\rFitFunction_Step_FermiFunction.resx" />
+    <EmbeddedResource Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_4.resx">
+      <DependentUpon>cFitSettingSubParameterPanel_4.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Gauss\cFitSettingPanel_Gauss.resx">
+      <DependentUpon>cFitSettingPanel_Gauss.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Gauss\rFitFunction_Gauss.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitFunction_Gauss.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitParameter\wBoundarySelector.resx">
+      <DependentUpon>wBoundarySelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitSettingPanel\cFitSettingPanel.resx">
+      <DependentUpon>cFitSettingPanel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitSettingPanel\rFitSettingPanel.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitSettingPanel.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitParameter\mFitParameter.resx">
+      <DependentUpon>mFitParameter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\rFitting.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitting.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GPUComputing\rGPUComputing.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rGPUComputing.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportMethods\rFileImport.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFileImport.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyControls\ManagerControls\ucFilteredListComboBoxSelector.resx">
+      <DependentUpon>ucFilteredListComboBoxSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScanImage\rScanImage.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rScanImage.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScanImage\ScanImageFilters\rScanImageFilters.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rScanImageFilters.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\DataBrowser\mDataBrowserListCompact.resx">
+      <DependentUpon>mDataBrowserListCompact.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\LineScan\rLineScanViewer.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rLineScanViewer.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\ScanImage\rScanImageViewer.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rScanImageViewer.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\ValueRangeSelector\mValueRangeSelector2.resx">
+      <DependentUpon>mValueRangeSelector2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\SpectroscopyTable\mSpectroscopyTableDataTable.resx">
+      <DependentUpon>mSpectroscopyTableDataTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\SpectroscopyTable\mSpectroscopyTableViewer.resx">
+      <DependentUpon>mSpectroscopyTableViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\SpectroscopyTable\rSpectroscopyTableViewer.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rSpectroscopyTableViewer.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ComputingCloud\wComputingCloudDetails.resx">
+      <DependentUpon>wComputingCloudDetails.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\DataBrowser\FileObjectActions\rFileObjectActions.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFileObjectActions.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\DataBrowser\mDataBrowserList.resx">
+      <DependentUpon>mDataBrowserList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\DataBrowser\mDataBrowserListEntry.resx">
+      <DependentUpon>mDataBrowserListEntry.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\DataBrowser\rDataBrowser.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rDataBrowser.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ScanImage Data Treatment\LineProfile\rScanImageLineProfile.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rScanImageLineProfile.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.resx">
+      <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummationTwoSets.resx">
+      <DependentUpon>wDataSummationTwoSets.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Normalization\rDataNormalization.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rDataNormalization.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Smoothing\wDataReversion.resx">
+      <DependentUpon>wDataReversion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataBrowser\wDataBrowserModular.resx">
+      <DependentUpon>wDataBrowserModular.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataExplorer\wDataExplorer_ScanImage.resx">
+      <DependentUpon>wDataExplorer_ScanImage.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataExplorer\wDataExplorer_SpectroscopyTable.resx">
+      <DependentUpon>wDataExplorer_SpectroscopyTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataFitting\rFitBase.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitBase.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataFitting\rFitQueue.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitQueue.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataFitting\wFitParallelizationSettings.resx">
+      <DependentUpon>wFitParallelizationSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataFitting\wFitQueue.resx">
+      <DependentUpon>wFitQueue.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummation.resx">
+      <DependentUpon>wDataSummation.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Renormalization\rDataRenormalization.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rDataRenormalization.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Renormalization\wDataRenormalization2.resx">
+      <DependentUpon>wDataRenormalization2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataFitting\wFit_MultipleDataSets.resx">
+      <DependentUpon>wFit_MultipleDataSets.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\File Treatment\wSpectroscopyTableRenameColumns.resx">
+      <DependentUpon>wSpectroscopyTableRenameColumns.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FolderBrowser\rFolderBrowser.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFolderBrowser.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FolderBrowser\wFolderBrowser.resx">
+      <DependentUpon>wFolderBrowser.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FormBase-Class\rFormBaseExpectsFiles.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFormBaseExpectsFiles.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FormBase-Class\wFormBaseExpectsMultipleSpectroscopyTableFileObjectsOnLoad.resx">
+      <DependentUpon>wFormBaseExpectsMultipleSpectroscopyTableFileObjectsOnLoad.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\GPUComputing\wGPUComputingSettings.resx">
+      <DependentUpon>wGPUComputingSettings.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Renormalization\wDataRenormalizationByParameters.resx">
+      <DependentUpon>wDataRenormalizationByParameters.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Derivative\wDataNumericDerivative.resx">
+      <DependentUpon>wDataNumericDerivative.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataMultiplication.resx">
+      <DependentUpon>wDataMultiplication.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\GridPlotter\rGridPlotter.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rGridPlotter.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\GridPlotter\wGridPlotter.resx">
+      <DependentUpon>wGridPlotter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MainWindow\rMain.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rMain.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MainWindow\wMain.resx">
+      <DependentUpon>wMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataFitting\wFit_SingleDataSet.resx">
+      <DependentUpon>wFit_SingleDataSet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FormBase-Class\wFormBaseExpectsScanImageObjectOnLoad.resx">
+      <DependentUpon>wFormBaseExpectsScanImageObjectOnLoad.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\FormBase-Class\wFormBaseExpectsIndividualSpectroscopyTableFileObjectOnLoad.resx">
+      <DependentUpon>wFormBaseExpectsIndividualSpectroscopyTableFileObjectOnLoad.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\wProgress.resx">
+      <DependentUpon>wProgress.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bug-Reporting\wUnhandledExceptionReportForm.resx">
+      <DependentUpon>wUnhandledExceptionReportForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Deployment\rProgramUpdateMessages.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rProgramUpdateMessages.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Deployment\wProgramUpdateAvailable.resx">
+      <DependentUpon>wProgramUpdateAvailable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\mDataSmoothing.resx">
+      <DependentUpon>mDataSmoothing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\LineScan\mLineScanViewer.resx">
+      <DependentUpon>mLineScanViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\ScanImage\mScanImageViewer.resx">
+      <DependentUpon>mScanImageViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowModules\ValueRangeSelector\mValueRangeSelector.resx">
+      <DependentUpon>mValueRangeSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyControls\ManagerControls\ucColorPalettePicker.resx">
+      <DependentUpon>ucColorPalettePicker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Deployment\wProgramUpdate.resx">
+      <DependentUpon>wProgramUpdate.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Cropping\wDataCropping.resx">
+      <DependentUpon>wDataCropping.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Normalization\wDataNormalization.resx">
+      <DependentUpon>wDataNormalization.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\SplashAbout\wAbout.resx">
+      <DependentUpon>wAbout.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Averaging\wDataAveragingMultipleFiles.resx">
+      <DependentUpon>wDataAveragingMultipleFiles.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Averaging\wDataAveragingSingleFile.resx">
+      <DependentUpon>wDataAveragingSingleFile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\Smoothing\wDataSmoothing.resx">
+      <DependentUpon>wDataSmoothing.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Export\wExportWizard_SpectroscopyTable.resx">
+      <DependentUpon>wExportWizard_SpectroscopyTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\wLineScanPlot.resx">
+      <DependentUpon>wLineScanPlot.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\SplashAbout\wSplash.resx">
+      <DependentUpon>wSplash.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\wSpectroscopyTable_PointDistance.resx">
+      <DependentUpon>wSpectroscopyTable_PointDistance.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowTests\wSXMTest.resx">
+      <DependentUpon>wSXMTest.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WindowTests\wTest.resx">
+      <DependentUpon>wTest.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <Content Include="ColorSchemes\alpine colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\aquamarine.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\army colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\atlantic colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\aurora colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\avocado colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\beach colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\blue-green-yellow.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\brass tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\bright bands.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\brown-cyan tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\candy colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\cherry tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\CMYK colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\coffee tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\dark bands.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\dark rainbow.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\dark terrain.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\deep sea colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\fall colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\fruit punch colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\fuchsia tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\gray tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\gray-yellow tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\green-brown terrain.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\green-pink tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\island colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\lake colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\light temperature map.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\light terrain.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\mint colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\neon colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\pastel.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\pearl colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\pigeon tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\plum colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\rainbow.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\red-blue tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\red-green split.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\rose colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\rust tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\sandy terrain.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\sienna tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\solar colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\southwest colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\starry night colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\sunset colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\temperature map.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\thermometer colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\valentine tones.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ColorSchemes\watermelon colors.sfc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="MikeRuby.pfx" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Tools\place_these_executables_in_same_folder_as_Cudafy.NET.dll_" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Resources\columnsnotfound.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="changelog_dev.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="changelog_stable.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\average2_32.png" />
+    <None Include="Resources\average2.png" />
+    <None Include="Resources\average2_16.png" />
+    <None Include="Resources\average2_25.png" />
+    <None Include="Tools\CudafyModuleViewer.exe" />
+    <None Include="Tools\CudafyModuleViewerx86.exe" />
+    <None Include="Tools\cudafycl.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Tools\CudafyViewer.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\gridplotter.png" />
+    <None Include="Resources\gridplotter_16.png" />
+    <None Include="Resources\gridplotter_25.png" />
+    <None Include="Resources\tools_special.png" />
+    <None Include="Resources\tools_special_16.png" />
+    <None Include="Resources\tools_special_25.png" />
+    <None Include="Resources\curve.png" />
+    <None Include="Resources\curve_16.png" />
+    <None Include="Resources\curve_25.png" />
+    <Content Include="LowPrivilegeSetup.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="versioninfo_dev_lowpriv.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="versioninfo_dev.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="versioninfo_stable_lowpriv.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="versioninfo_stable.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="License-CUDAfy.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="fmx.ico" />
+    <Content Include="icon.ico" />
+    <Content Include="icon2.ico" />
+    <Content Include="icon3.ico" />
+    <Content Include="License-ILSpy.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License-Math.Net.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License-NetSparkle.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License-ZedGraph.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License-zip.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="License.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Background3_s.png" />
+    <None Include="Resources\lock.png" />
+    <None Include="Resources\lock_16.png" />
+    <None Include="Resources\lock_32.png" />
+    <None Include="Resources\lock_64.png" />
+    <None Include="Resources\chain_64.png" />
+    <None Include="Resources\chain.png" />
+    <None Include="Resources\chain_16.png" />
+    <None Include="Resources\chain_32.png" />
+    <None Include="Resources\lock_12.png" />
+    <None Include="Resources\lock_disable_64.png" />
+    <None Include="Resources\lock_disable.png" />
+    <None Include="Resources\lock_disable_12.png" />
+    <None Include="Resources\lock_disable_16.png" />
+    <None Include="Resources\lock_disable_32.png" />
+    <None Include="Resources\chain_disable_32.png" />
+    <None Include="Resources\chain_disable_64.png" />
+    <None Include="Resources\chain_23.png" />
+    <None Include="Resources\chain_disable.png" />
+    <None Include="Resources\chain_disable_16.png" />
+    <None Include="Resources\chain_disable_23.png" />
+    <None Include="Resources\larger_10.png" />
+    <None Include="Resources\larger_32.png" />
+    <None Include="Resources\larger.png" />
+    <None Include="Resources\smaller_32.png" />
+    <None Include="Resources\smaller.png" />
+    <None Include="Resources\smaller_10.png" />
+    <None Include="Resources\boundaries_disabled_64.png" />
+    <None Include="Resources\boundaries.png" />
+    <None Include="Resources\boundaries_16.png" />
+    <None Include="Resources\boundaries_32.png" />
+    <None Include="Resources\boundaries_64.png" />
+    <None Include="Resources\boundaries_disabled.png" />
+    <None Include="Resources\boundaries_disabled_16.png" />
+    <None Include="Resources\boundaries_disabled_32.png" />
+    <None Include="Resources\pause.png" />
+    <None Include="Resources\pause_16.png" />
+    <None Include="Resources\pause_25.png" />
+    <None Include="Resources\play.png" />
+    <None Include="Resources\play_16.png" />
+    <None Include="Resources\play_25.png" />
+    <None Include="Resources\StartScreen2_bg.png" />
+    <None Include="Resources\StartScreen2_bg_s.png" />
+    <None Include="Resources\combined_icon.ico" />
+    <None Include="Resources\Background2_s.png" />
+    <None Include="Resources\SpectraFoxLogo2.ico" />
+    <None Include="Resources\SpectraFoxLogo3.ico" />
+    <None Include="Resources\Background4s.png" />
+    <None Include="Resources\timer_16.png" />
+    <None Include="Resources\timer_25.png" />
+    <None Include="Resources\timer.png" />
+    <None Include="Resources\sort_25.png" />
+    <None Include="Resources\sort.png" />
+    <None Include="Resources\sort_16.png" />
+    <None Include="Resources\filter_16.png" />
+    <None Include="Resources\filter_25.png" />
+    <None Include="Resources\filter.png" />
+    <None Include="Resources\selected.png" />
+    <None Include="Resources\topography_25.png" />
+    <None Include="Resources\topography.png" />
+    <None Include="Resources\topography_16.png" />
+    <None Include="Resources\fit_25.png" />
+    <None Include="Resources\derivative_16.png" />
+    <None Include="Resources\derivative_25.png" />
+    <None Include="Resources\normalize_16.png" />
+    <None Include="Resources\normalize_25.png" />
+    <None Include="Resources\regauge_16.png" />
+    <None Include="Resources\regauge_25.png" />
+    <None Include="Resources\multiply_16.png" />
+    <None Include="Resources\multiply_25.png" />
+    <None Include="Resources\divide_16.png" />
+    <None Include="Resources\divide_25.png" />
+    <None Include="Resources\multiplybyothercolumn.png" />
+    <None Include="Resources\smooth.png" />
+    <None Include="Resources\fit.png" />
+    <None Include="Resources\derivative.png" />
+    <None Include="Resources\normalize.png" />
+    <None Include="Resources\regauge.png" />
+    <None Include="Resources\multiply.png" />
+    <None Include="Resources\divide.png" />
+    <None Include="Resources\multiplybyothercolumn_16.png" />
+    <None Include="Resources\multiplybyothercolumn_25.png" />
+    <None Include="Resources\smooth_16.png" />
+    <None Include="Resources\smooth_25.png" />
+    <None Include="Resources\fit_16.png" />
+    <None Include="Resources\trash.png" />
+    <None Include="Resources\addsubstractothercolumn.png" />
+    <None Include="Resources\addsubstractothercolumn_16.png" />
+    <None Include="Resources\addsubstractothercolumn_25.png" />
+    <None Include="Resources\trash_16.png" />
+    <None Include="Resources\trash_25.png" />
+    <None Include="Resources\cut_16.png" />
+    <None Include="Resources\cut_25.png" />
+    <None Include="Resources\cut.png" />
+    <None Include="Resources\average_16.png" />
+    <None Include="Resources\average_25.png" />
+    <None Include="Resources\average.png" />
+    <None Include="Resources\selected_w.png" />
+    <None Include="Resources\z_25.png" />
+    <None Include="Resources\x.png" />
+    <None Include="Resources\x_16.png" />
+    <None Include="Resources\x_25.png" />
+    <None Include="Resources\y.png" />
+    <None Include="Resources\y_16.png" />
+    <None Include="Resources\y_25.png" />
+    <None Include="Resources\z.png" />
+    <None Include="Resources\z_16.png" />
+    <Content Include="sfx.ico" />
+    <None Include="Resources\fmx_16.png" />
+    <None Include="Resources\fmx.png" />
+    <None Include="Resources\fmx_25.png" />
+    <None Include="Resources\sfx_16.png" />
+    <None Include="Resources\sfx.png" />
+    <None Include="Resources\sfx_25.png" />
+    <None Include="Resources\sfx.ico" />
+    <None Include="Resources\fmx.ico" />
+    <None Include="Resources\plot.png" />
+    <None Include="Resources\plot_25.png" />
+    <None Include="Resources\plot_16.png" />
+    <None Include="Resources\copy.png" />
+    <None Include="Resources\copy_25.png" />
+    <None Include="Resources\copy_16.png" />
+    <None Include="Resources\openfolder.png" />
+    <None Include="Resources\openfolder_25.png" />
+    <None Include="Resources\openfolder_16.png" />
+    <None Include="Resources\settings_16.png" />
+    <None Include="Resources\settings.png" />
+    <None Include="Resources\settings_25.png" />
+    <None Include="Resources\loading_25.png" />
+    <None Include="Resources\loading_16.png" />
+    <None Include="Resources\loading.png" />
+    <None Include="Resources\channel_does_not_exist.png" />
+    <None Include="Resources\StartScreen_bg_s.png" />
+    <None Include="Resources\StartScreen_bg.png" />
+    <None Include="Resources\import.png" />
+    <None Include="Resources\import_25.png" />
+    <None Include="Resources\import_16.png" />
+    <None Include="Resources\export.png" />
+    <None Include="Resources\folder_25.png" />
+    <None Include="Resources\folder_16.png" />
+    <None Include="Resources\folder.png" />
+    <None Include="Resources\export_25.png" />
+    <None Include="Resources\export_16.png" />
+    <None Include="Resources\rangeselection_vert_16.png" />
+    <None Include="Resources\rangeselection_vert_12.png" />
+    <None Include="Resources\rangeselection_vert.png" />
+    <None Include="Resources\rangeselection_25.png" />
+    <None Include="Resources\rangeselection_16.png" />
+    <None Include="Resources\rangeselection_12.png" />
+    <None Include="Resources\rangeselection.png" />
+    <None Include="Resources\rangeselection_vert_25.png" />
+    <None Include="Resources\select_12.png" />
+    <None Include="Resources\select.png" />
+    <None Include="Resources\select_25.png" />
+    <None Include="Resources\select_16.png" />
+    <None Include="Resources\left_25.png" />
+    <None Include="Resources\left_16.png" />
+    <None Include="Resources\left_10.png" />
+    <None Include="Resources\left.png" />
+    <None Include="Resources\right_25.png" />
+    <None Include="Resources\right_16.png" />
+    <None Include="Resources\right_10.png" />
+    <None Include="Resources\right.png" />
+    <None Include="Resources\columns_do_not_exist.png" />
+    <None Include="Resources\run_16.png" />
+    <None Include="Resources\run.png" />
+    <None Include="Resources\run_25.png" />
+    <None Include="Resources\download.png" />
+    <None Include="Resources\download_25.png" />
+    <None Include="Resources\download_16.png" />
+    <None Include="Resources\update_25.png" />
+    <None Include="Resources\update_16.png" />
+    <None Include="Resources\update.png" />
+    <None Include="Resources\remove_25.png" />
+    <None Include="Resources\remove_16.png" />
+    <None Include="Resources\remove.png" />
+    <None Include="Resources\add_25.png" />
+    <None Include="Resources\add_16.png" />
+    <None Include="Resources\add.png" />
+    <None Include="Resources\question_25.png" />
+    <None Include="Resources\question_16.png" />
+    <None Include="Resources\question.png" />
+    <None Include="Resources\choice_pos_25.png" />
+    <None Include="Resources\choice_pos_16.png" />
+    <None Include="Resources\choice_pos.png" />
+    <None Include="Resources\choice_neg_25.png" />
+    <None Include="Resources\choice_neg_16.png" />
+    <None Include="Resources\choice_neg.png" />
+    <None Include="Resources\attention_25.png" />
+    <None Include="Resources\attention_16.png" />
+    <None Include="Resources\attention.png" />
+    <None Include="Resources\abort_25.png" />
+    <None Include="Resources\abort_16.png" />
+    <None Include="Resources\abort.png" />
+    <None Include="Resources\icon3.ico" />
+    <None Include="Resources\save_25.png" />
+    <None Include="Resources\save_16.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\power_25.png" />
+    <None Include="Resources\power_16.png" />
+    <None Include="Resources\power.png" />
+    <None Include="Resources\reload_25.png" />
+    <None Include="Resources\reload_16.png" />
+    <None Include="Resources\reload.png" />
+    <None Include="Resources\ok_25.png" />
+    <None Include="Resources\ok_16.png" />
+    <None Include="Resources\ok.png" />
+    <None Include="Resources\info_25.png" />
+    <None Include="Resources\info_16.png" />
+    <None Include="Resources\info.png" />
+    <None Include="Resources\favourite_25.png" />
+    <None Include="Resources\favourite_16.png" />
+    <None Include="Resources\favourite.png" />
+    <None Include="Resources\expandpanel_25.png" />
+    <None Include="Resources\expandpanel_16.png" />
+    <None Include="Resources\expandpanel.png" />
+    <None Include="Resources\cancel_25.png" />
+    <None Include="Resources\cancel_16.png" />
+    <None Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Fitting\FitProcedures\old\" />
+    <Folder Include="Windows\OldWindows_not_included\" />
+    <Folder Include="Windows\Spectroscopy Data Treatment\Inversion\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ExternalProjects\ExpTreeLib\ExpTreeLib.vbproj">
+      <Project>{22d53870-1b39-4fa2-92d7-1f4b7d3df0c8}</Project>
+      <Name>ExpTreeLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ExternalProjects\ZedGraph\ZedGraph.csproj">
+      <Project>{2541686b-1673-43bf-af89-3163945db009}</Project>
+      <Name>ZedGraph</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(DevEnvDir)..\Tools\vsvars32.bat"
+"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe" sign /sha1 0B190EE1FF7510AAD9B3FC81B89CCEAD4EFA1283 /t http://timestamp.verisign.com/scripts/timstamp.dll /v "$(ProjectDir)obj\x86\$(ConfigurationName)\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{22D53870-1B39-4FA2-92D7-1F4B7D3DF0C8}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>ExpTreeLib</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyMode>None</AssemblyOriginatorKeyMode>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>Library</OutputType>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionStrict>Off</OptionStrict>
+    <RootNamespace>ExpTreeLib</RootNamespace>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <MyType>Windows</MyType>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>
+    </DocumentationFile>
+    <WarningLevel>0</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42030,42032,42104,42108,42109,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>
+    </DocumentationFile>
+    <WarningLevel>0</WarningLevel>
+    <NoWarn>42016,42017,42018,42019,42030,42032,42104,42108,42109,42353,42354,42355</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <WarningLevel>0</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Management">
+      <Name>System.Management</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CDragWrapper.vb" />
+    <Compile Include="ClvDropWrapper.vb" />
+    <Compile Include="CtvDropWrapper.vb" />
+    <Compile Include="ContextMenu.vb" />
+    <Compile Include="ControlDropWrapper.vb" />
+    <Compile Include="LVColSorter.vb" />
+    <Compile Include="NamespaceDoc.vb" />
+    <Compile Include="Shell\CPidl.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shell\CShItem.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shell\CShItemCollection.vb" />
+    <Compile Include="Shell\CShItemUpdater.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ExpTree.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Shell\Enums.vb" />
+    <Compile Include="Shell\Interfaces\IAdviseSink.vb" />
+    <Compile Include="Shell\Interfaces\IContextMenu.vb" />
+    <Compile Include="Shell\Interfaces\IContextMenu2.vb" />
+    <Compile Include="Shell\Interfaces\IContextMenu3.vb" />
+    <Compile Include="Shell\Interfaces\IDataObject.vb" />
+    <Compile Include="Shell\Interfaces\IDragSourceHelper.vb" />
+    <Compile Include="Shell\Interfaces\IDropSource.vb" />
+    <Compile Include="Shell\Interfaces\IDropTarget.vb" />
+    <Compile Include="Shell\Interfaces\IDropTargetHelper.vb" />
+    <Compile Include="Shell\Interfaces\IEnumFORMATETC.vb" />
+    <Compile Include="Shell\Interfaces\IEnumIDList.vb" />
+    <Compile Include="Shell\Interfaces\IEnumSTATSTG.vb" />
+    <Compile Include="Shell\Interfaces\IMalloc.vb" />
+    <Compile Include="Shell\Interfaces\IPersistFile.vb" />
+    <Compile Include="Shell\Interfaces\IQueryInfo.vb" />
+    <Compile Include="Shell\Interfaces\IShellExtInit.vb" />
+    <Compile Include="Shell\Interfaces\IShellFolder.vb" />
+    <Compile Include="Shell\Interfaces\IShellLink.vb" />
+    <Compile Include="Shell\Interfaces\IStorage.vb" />
+    <Compile Include="Shell\Interfaces\IStream.vb" />
+    <Compile Include="Shell\Interfaces\IUnknown.vb" />
+    <Compile Include="Shell\LinkFile.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shell\NamespaceDoc.vb" />
+    <Compile Include="Shell\ShellDll.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Shell\ShellHelper.vb" />
+    <Compile Include="Shell\StringLogicalComparer.vb" />
+    <Compile Include="Shell\SystemImageListManager.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="ExpTree.resx">
+      <DependentUpon>ExpTree.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="My Project\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
