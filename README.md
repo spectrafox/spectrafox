@@ -1,6 +1,6 @@
 ![Logo](http://spectrafox.com/images/style/headerlogo3.png) SpectraFox
 =======
-[www.spectrafox.com](http://spectrafox.org/) |
+[git.spectrafox.com](http://git.spectrafox.com/) |
 [spectrafox.github.io](http://spectrafox.github.io)
 
 Introduction
