@@ -1,7 +1,7 @@
 ![Logo](http://spectrafox.com/images/style/headerlogo3.png) SpectraFox
 =======
 [git.spectrafox.com](http://git.spectrafox.com/) |
-[spectrafox.github.io](http://spectrafox.github.io)
+[spectrafox.com](http://spectrafox.com)
 
 Introduction
 ------
@@ -11,13 +11,12 @@ SpectraFox is a free solution for managing, processing, and evaluating scientifi
 Recommended Version
 -------------------
 
-The recommended and most stable version is [2016.01.04.00](https://github.com/spectrafox/spectrafox/setup/spectrafox-stable.exe).
+The recommended and most stable version is 2016.01.08.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
 
-If you do not have administrator privileges, use the specially packed version:
-[2016.01.04.00](https://github.com/spectrafox/spectrafox/setup/spectrafox-stable-lowpriv.exe).
+If you do not have administrator privileges, use the [low privilege installer](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe).
 
-A development version is 
-[2016.01.04.00](https://github.com/spectrafox/spectrafox/setup/spectrafox-dev.exe).
+A development version is 2016.01.08.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-dev.exe)
+[\[low privilege installer\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe)
 
 Requirements
 ------------
@@ -28,7 +27,7 @@ Requirements
 Installation
 ------------
 
-Please see [the wiki](https://github.com/spectrafox/spectrafox/wiki/Installation)
+Please see [the wiki](https://github.com/spectrafox/spectrafox/wiki/DownloadAndSetup)
 
 License
 -------
@@ -54,5 +53,5 @@ SpectraFox is currently available in english.
 Further Information and basic Help
 ----------------------------------
 
-* Everything related to the development of SpectraFox can be found on our [Public Repository](https://github.com/spectrafox)
+* Everything related to the development of SpectraFox can be found on our [Public Repository](https://github.com/spectrafox/spectrafox)
 * [Documentation](https://github.com/spectrafox/spectrafox/wiki)
