@@ -47,6 +47,7 @@ Parsing [Icons] section, line 131
 Parsing [Icons] section, line 132
 Parsing [Run] section, line 136
 Parsing [Run] section, line 137
+Parsing [Run] section, line 138
 Parsing [Files] section, line 63
 Parsing [Files] section, line 64
 Parsing [Files] section, line 65
@@ -228,7 +229,7 @@ Creating setup files
    Compressing Setup program executable
    Updating version info
 
-Warning: Line 159, Column 23: [Hint] Variable 'REQNETVER' never used
+Warning: Line 160, Column 23: [Hint] Variable 'REQNETVER' never used
 
-Successful compile (5.844 sec). Resulting Setup program filename is:
+Successful compile (6.047 sec). Resulting Setup program filename is:
 D:\SpectraFoxGIT\spectrafox\setup\output\spectrafox-stable_lowpriv.exe

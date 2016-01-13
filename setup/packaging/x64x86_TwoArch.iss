@@ -135,6 +135,7 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 ;Filename: {tmp}\dotNetFx40_Full_setup.exe; Parameters: "/q:a /c:""install /l /q"""; Check: not IsRequiredDotNetDetected; StatusMsg: Installing Microsoft .NET Framework 4.0. Please wait ...
 Filename: {tmp}\dotNetFx45_Full_setup.exe; Parameters: "/q:a /c:""install /l /q"""; Check: not IsRequiredDotNetDetected; StatusMsg: Installing Microsoft .NET Framework 4.5. Please wait ...
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent unchecked
+Filename: http://wiki.spectrafox.com/; Description: "open the online manual"; Flags: postinstall shellexec unchecked
 
 [Code]
 function IsDotNetDetected(version: string; service: cardinal): boolean;
