@@ -9,7 +9,7 @@
     End Enum
 
     ''' <summary>
-    ''' Returns a Description-Text for the Smoothing-Method.
+    ''' Returns a description-text for the smoothing-method.
     ''' </summary>
     Public Shared Function GetSmoothingDescriptionFromType(ByVal Method As SmoothingMethod) As String
         Select Case Method
@@ -22,7 +22,7 @@
     End Function
 
     ''' <summary>
-    ''' Smoothes the Given Data using the given Number of next Neighbors.
+    ''' Smoothes the given data using the given number of next neighbors.
     ''' </summary>
     Public Shared Function AdjacentAverageSmooth(ByRef InColumn As ICollection(Of Double),
                                                  Optional ByVal Neighbors As Integer = 1) As List(Of Double)
@@ -58,30 +58,27 @@
     End Function
 
     ''' <summary>
-    ''' Smoothes the Given Data using the given Number of next Neighbors.
+    ''' Smoothes the given data using the given number of next neighbors.
     ''' </summary>
-    ''' <param name="Neighbors"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Shared Function AdjacentAverageSmooth(ByRef InDataColumn As cSpectroscopyTable.DataColumn,
                                                  Optional ByVal Neighbors As Integer = 1) As List(Of Double)
         Return cNumericalMethods.AdjacentAverageSmooth(InDataColumn.Values, Neighbors)
     End Function
 
     ''' <summary>
-    ''' Smoothes a given Data using the SavitzkyGolay Polynomial Fitting Method.
+    ''' Smoothes a given dataset using the SavitzkyGolay polynomial fitting method.
+    ''' It uses second order polynomials, and a moving average window of size NP.
     ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Shared Function SavitzkyGolaySmooth(ByRef InColumnY As ICollection(Of Double),
-                                               ByVal NP As Integer) As List(Of Double)
+                                               ByVal Neighbors As Integer) As List(Of Double)
 
+        ' Create the matrix of the Savitzky-Golay Coefficients
         Dim SGCoef As MathNet.Numerics.LinearAlgebra.Single.DenseMatrix = MathNet.Numerics.LinearAlgebra.Single.DenseMatrix.Create(13, 14, Function(x As Integer, y As Integer) As Single
                                                                                                                                                Return 0
                                                                                                                                            End Function)
-        'Set the Smoothing Coefficients for Savitzky-Golay
-        'The zeroth value is the normalization factor
-        'SGCoef(NP) : NP = Filterbreite
+        ' Set the smoothing Coefficients for Savitzky-Golay
+        ' The zeroth value is the normalization factor
+        ' SGCoef(Neighbors)
         SGCoef(2, 1) = 17
         SGCoef(2, 2) = 12
         SGCoef(2, 3) = -3
@@ -192,41 +189,31 @@
         SGCoef(12, 13) = -253
         SGCoef(12, 0) = 5175
 
-        'Savitzky_Golay Smoothing
-        'If SmoothCurrent is set to true, then the last smoothed data set will be smoothed,
-        '(i.e. The new smoothing will be cumulative over the last smoothing operation.  If
-        'SmoothCurrent is false, then the original Y-data will be smoothed, and the smoothedY array will
-        'be overwritten
-
-        'The Savitzky-Golay smoothing algorithm essentialy fits the data to a second order polynomial
-        'within a moving data window.  It assumes that the data has a fixed spacing in the x direction,
-        'but does work even if this is not the case.
-
-        'For more info see:
-        '"Smoothing and Differentiation of Data by Simplified Least Squares Procedure",
-        'Abraham Savitzky and Marcel J. E. Golay, Analytical Chemistry, Vol. 36, No. 8, Page 1627 (1964)
+        ' This method of the Savitzky-Golay smoothing algorithm fits the data window
+        ' given by a certain number of neighbors to a second order polynomial.
+        ' This method assumes a fixed spacing of the data points.
 
         Dim NumberOfPoints As Integer = InColumnY.Count
 
         Dim SmoothedY As New MathNet.Numerics.LinearAlgebra.Double.DenseVector(NumberOfPoints)
 
         'we cannot smooth too close to the data bounds
-        For i As Integer = 0 To NP Step 1
+        For i As Integer = 0 To Neighbors Step 1
             SmoothedY(i) = InColumnY(i)
         Next
-        For i As Integer = NumberOfPoints - NP - 1 To NumberOfPoints - 1 Step 1
+        For i As Integer = NumberOfPoints - Neighbors - 1 To NumberOfPoints - 1 Step 1
             SmoothedY(i) = InColumnY(i)
         Next
 
         Dim TempSum As Double = 0
 
-        For i As Integer = NP + 1 To NumberOfPoints - NP - 2 Step 1
-            TempSum = InColumnY(i) * SGCoef(NP, 1)
-            For j As Integer = 1 To NP Step 1
-                TempSum += InColumnY(i - j) * (SGCoef(NP, j + 1))
-                TempSum += InColumnY(i + j) * (SGCoef(NP, j + 1))
+        For i As Integer = Neighbors + 1 To NumberOfPoints - Neighbors - 2 Step 1
+            TempSum = InColumnY(i) * SGCoef(Neighbors, 1)
+            For j As Integer = 1 To Neighbors Step 1
+                TempSum += InColumnY(i - j) * (SGCoef(Neighbors, j + 1))
+                TempSum += InColumnY(i + j) * (SGCoef(Neighbors, j + 1))
             Next
-            SmoothedY(i) = TempSum / SGCoef(NP, 0)
+            SmoothedY(i) = TempSum / SGCoef(Neighbors, 0)
         Next
 
         Return New List(Of Double)(SmoothedY.ToArray)

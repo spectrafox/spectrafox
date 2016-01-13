@@ -2313,7 +2313,8 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Takes the simple average value between the given number of adjacent datapoints. This filter often boadens and dereases the height of sharp features. E.g. for Kondo-resonances, you should chose a different one..
+        '''  Looks up a localized string similar to Takes the simple average value between the given number of adjacent datapoints.
+        '''This filter often flattens the height and width of sharp features. E.g., for Kondo-resonances you should chose a different method..
         '''</summary>
         Friend ReadOnly Property SmoothingDescription_AdjacentAverage() As String
             Get
@@ -2324,9 +2325,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to The Savitzky–Golay smoothing filter is a type of filter first described in 1964 by Abraham Savitzky and Marcel J. E. Golay.
         '''
-        '''The Savitzky–Golay method essentially performs a local polynomial regression (of degree k) on a series of values (of at least k+1 points which are treated as being equally spaced in the series) to determine the smoothed value for each point.
+        '''The Savitzky–Golay method performs a local polynomial regression on a series of values to determine the smoothed value for each point.
         '''
-        '''The main advantage of this approach is that it tends to preserve features of the distribution such as relative maxima, minima and width, whi [rest of string was truncated]&quot;;.
+        '''Its main advantage is that it preserve sharp features of the source data, such as relative maxima, minima and the width of these features..
         '''</summary>
         Friend ReadOnly Property SmoothingDescription_SavitzkyGolay() As String
             Get

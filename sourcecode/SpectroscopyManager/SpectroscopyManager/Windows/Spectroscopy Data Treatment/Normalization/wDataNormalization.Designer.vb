@@ -131,7 +131,7 @@ Partial Class wDataNormalization
         Me.GroupBox1.Size = New System.Drawing.Size(640, 368)
         Me.GroupBox1.TabIndex = 12
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Before Normalization:"
+        Me.GroupBox1.Text = "before normalization:"
         '
         'pbBeforeNormalization
         '
@@ -148,6 +148,7 @@ Partial Class wDataNormalization
         Me.pbBeforeNormalization.ClearPointSelectionModeAfterSelection = False
         Me.pbBeforeNormalization.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbBeforeNormalization.Location = New System.Drawing.Point(3, 16)
+        Me.pbBeforeNormalization.MultipleSpectraStackOffset = 0R
         Me.pbBeforeNormalization.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.One
         Me.pbBeforeNormalization.Name = "pbBeforeNormalization"
         Me.pbBeforeNormalization.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -186,7 +187,7 @@ Partial Class wDataNormalization
         Me.GroupBox2.Size = New System.Drawing.Size(640, 367)
         Me.GroupBox2.TabIndex = 13
         Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "After Normalization:"
+        Me.GroupBox2.Text = "after normalization:"
         '
         'pbAfterNormalization
         '
@@ -203,6 +204,7 @@ Partial Class wDataNormalization
         Me.pbAfterNormalization.ClearPointSelectionModeAfterSelection = False
         Me.pbAfterNormalization.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbAfterNormalization.Location = New System.Drawing.Point(3, 16)
+        Me.pbAfterNormalization.MultipleSpectraStackOffset = 0R
         Me.pbAfterNormalization.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         Me.pbAfterNormalization.Name = "pbAfterNormalization"
         Me.pbAfterNormalization.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -257,6 +259,7 @@ Partial Class wDataNormalization
         '
         'txtRightValue
         '
+        Me.txtRightValue.AllowZero = True
         Me.txtRightValue.BackColor = System.Drawing.Color.White
         Me.txtRightValue.ForeColor = System.Drawing.Color.Black
         Me.txtRightValue.FormatDecimalPlaces = 6
@@ -272,6 +275,7 @@ Partial Class wDataNormalization
         '
         'txtLeftValue
         '
+        Me.txtLeftValue.AllowZero = True
         Me.txtLeftValue.BackColor = System.Drawing.Color.White
         Me.txtLeftValue.ForeColor = System.Drawing.Color.Black
         Me.txtLeftValue.FormatDecimalPlaces = 6

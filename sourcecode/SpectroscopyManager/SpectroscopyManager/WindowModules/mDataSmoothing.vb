@@ -17,21 +17,15 @@
     End Sub
 
     ''' <summary>
-    ''' Constructor, that writes the Smoothing Methods and Start-Values into the Interface.
+    ''' Constructor
     ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    ''' <remarks></remarks>
     Private Sub mDataSmoothing_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
        
     End Sub
 
     ''' <summary>
-    ''' Change the Description of the Smoothing Method.
+    ''' Change the description of the Smoothing Method.
     ''' </summary>
-    ''' <param name="sender"></param>
-    ''' <param name="e"></param>
-    ''' <remarks></remarks>
     Private Sub cbMethods_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbMethods.SelectedIndexChanged
         If Me.cbMethods.SelectedItem Is Nothing Then Return
         
@@ -56,8 +50,6 @@
     ''' <summary>
     ''' Set/Get selected Smoothing Method
     ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Property SelectedSmoothingMethod() As cNumericalMethods.SmoothingMethod
         Get
             If Me.cbMethods.SelectedItem Is Nothing Then Return cNumericalMethods.SmoothingMethod.AdjacentAverageSmooth
@@ -75,8 +67,6 @@
     ''' <summary>
     ''' Set/Get selected NeighborNumber
     ''' </summary>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
     Public Property SmoothingParameter() As Integer
         Get
             Return Convert.ToInt32(Me.udSmoothProperties.Value)
@@ -86,28 +76,5 @@
         End Set
     End Property
 
-#Region "Obsolete Direct Smoothing Functions"
-    ''' <summary>
-    ''' Returns the given Data Smoothed by the Selected Method.
-    ''' </summary>
-    Public Function GetSmoothedData(ByRef InData As ICollection(Of Double)) As List(Of Double)
-        ' Return the Smoothed Data
-        Select Case Me.SelectedSmoothingMethod
-            Case cNumericalMethods.SmoothingMethod.AdjacentAverageSmooth
-                Return cNumericalMethods.AdjacentAverageSmooth(InData, Convert.ToInt32(Me.udSmoothProperties.Value))
-            Case cNumericalMethods.SmoothingMethod.SavitzkyGolay
-                Return cNumericalMethods.SavitzkyGolaySmooth(InData, Convert.ToInt32(Me.udSmoothProperties.Value))
-            Case Else
-                Return InData.ToList
-        End Select
-    End Function
-
-    ''' <summary>
-    ''' Returns the given Data Smoothed by the Selected Method.
-    ''' </summary>
-    Public Function GetSmoothedData(ByRef InDataColumn As cSpectroscopyTable.DataColumn) As List(Of Double)
-        Return Me.GetSmoothedData(InDataColumn.Values)
-    End Function
-#End Region
 
 End Class
