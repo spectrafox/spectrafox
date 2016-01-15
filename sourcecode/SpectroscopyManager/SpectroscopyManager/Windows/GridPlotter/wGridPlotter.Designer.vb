@@ -327,7 +327,7 @@ Partial Class wGridPlotter
         '
         'gbExport
         '
-        Me.gbExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbExport.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbExport.Controls.Add(Me.btnExport_SaveAsXYZ)
         Me.gbExport.Location = New System.Drawing.Point(774, 2)
         Me.gbExport.Name = "gbExport"
@@ -365,6 +365,8 @@ Partial Class wGridPlotter
         Me.svOutputImage.Dock = System.Windows.Forms.DockStyle.Fill
         Me.svOutputImage.Location = New System.Drawing.Point(3, 16)
         Me.svOutputImage.Name = "svOutputImage"
+        Me.svOutputImage.SelectedPoints_PixelCoordinate = CType(resources.GetObject("svOutputImage.SelectedPoints_PixelCoordinate"), System.Collections.Generic.List(Of System.Drawing.Point))
+        Me.svOutputImage.SelectionMode = SpectroscopyManager.mScanImageViewer.SelectionModes.None
         Me.svOutputImage.Size = New System.Drawing.Size(511, 498)
         Me.svOutputImage.TabIndex = 0
         '
@@ -390,6 +392,8 @@ Partial Class wGridPlotter
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.vrsPlotSettings_ColorScaling.Location = New System.Drawing.Point(15, 91)
         Me.vrsPlotSettings_ColorScaling.Name = "vrsPlotSettings_ColorScaling"
+        Me.vrsPlotSettings_ColorScaling.SelectedMaxValue = 0R
+        Me.vrsPlotSettings_ColorScaling.SelectedMinValue = 0R
         Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 420)
         Me.vrsPlotSettings_ColorScaling.TabIndex = 4
         '
