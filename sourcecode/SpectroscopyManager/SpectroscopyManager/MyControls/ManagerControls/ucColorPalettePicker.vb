@@ -68,6 +68,7 @@
     ''' Reads the combobox, and extracts the selected color-scheme if possible.
     ''' </summary>
     Private Sub _UpdateSelectedColorScheme()
+
         Dim Color As cColorScheme = Nothing
 
         ' Try to get a color-scheme
@@ -80,24 +81,42 @@
             Color = cColorScheme.Gray
         End If
 
-        ' Save the selected color-scheme.
+        ' Set the new selection.
         Me._SelectedColorScheme = Color
+
+        ' Now create the preview image plot.
+        If Me.pbSchemePreview.Height > 0 AndAlso Me.pbSchemePreview.Width > 0 Then
+            Me.pbSchemePreview.Image = Me._SelectedColorScheme.GetPreviewImage(Me.pbSchemePreview.Height, Me.pbSchemePreview.Width, cColorScheme.ColorSchemePreviewDirections.Horizontal)
+        End If
+
     End Sub
 
     ''' <summary>
     ''' Change the selected colorscheme if the selection changes.
     ''' </summary>
     Private Sub cbColorPalettes_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbColorPicker.SelectionChangeCommitted
+
         If Not Me.bReady Then Return
 
         ' Set the new color-scheme.
         Me._UpdateSelectedColorScheme()
 
-        ' save the selected colorscheme
+        ' save the selected colorscheme as XML to the settings.
         My.Settings.LastColorScheme = Me._SelectedColorScheme.ExportToXML()
 
-        ' Raise the event.
+        ' Raise the event, that the selected ColorScheme changed.
         RaiseEvent SelectedColorSchemaChanged(Me._SelectedColorScheme)
+
     End Sub
 
+#Region "Copy ColorScheme preview to the clipboard."
+
+    ''' <summary>
+    ''' Copys the image to the clipboard.
+    ''' </summary>
+    Private Sub CopyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyToolStripMenuItem.Click
+        Clipboard.SetImage(Me.pbSchemePreview.Image)
+    End Sub
+
+#End Region
 End Class

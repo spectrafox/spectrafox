@@ -8,6 +8,8 @@ Imports System.IO
 ''' <summary>
 ''' ColorScheme, as defined on CodePlex:
 ''' http://www.codeproject.com/Articles/17715/Plot-D-surfaces
+''' 
+''' With additional changes made by Michael Ruby.
 ''' </summary>
 Public Class cColorScheme
 
@@ -162,13 +164,24 @@ Public Class cColorScheme
 #Region "ColorScheme Preview Image"
 
     ''' <summary>
+    ''' Plot direction for the color-gradient of
+    ''' the ColorScheme preview image
+    ''' </summary>
+    Public Enum ColorSchemePreviewDirections
+        Vertical
+        Horizontal
+    End Enum
+
+    ''' <summary>
     ''' Returns a preview image of the color-schemes colors
     ''' </summary>
     Public Function GetPreviewImage(ByVal Height As Integer,
-                                    ByVal Width As Integer) As Image
+                                    ByVal Width As Integer,
+                                    ByVal GradientDirection As ColorSchemePreviewDirections) As Image
 
         ' Check dimensions
         If Width <= 0 Or Height <= 0 Then Throw New ArgumentException("Previewcreation of ColorScheme: ImageSize is invalid!")
+        If Me.Length <= 0 Then Throw New ArgumentException("Previewcreation of ColorScheme: ColorScheme is invalid!")
 
         ' Create Bitmap
         Dim B As New Bitmap(Width, Height)
@@ -176,20 +189,43 @@ Public Class cColorScheme
         ' Load fast-Image class
         Dim I As New cFastImage(B)
 
-        Dim ColorSteps As Integer = CInt(Me.Length / Width)
-
+        ' Get the number of color-steps.
         Dim ColorStep As Integer = 0
-        For X As Integer = 0 To Width - 1 Step 1
-            For Y As Integer = 0 To Height - 1 Step 1
-                I.SetPixel(X, Y, Me.Item(ColorSteps))
+
+        I.Lock()
+        ' Paint the gradient according to the chosen direction.
+        If GradientDirection = ColorSchemePreviewDirections.Horizontal Then
+
+            ' Now paint the color-steps to the preview-image.
+            For X As Integer = 0 To Width - 1 Step 1
+                ColorStep = CInt(X / Width * (Me.Length - 1))
+
+                For Y As Integer = 0 To Height - 1 Step 1
+                    If ColorStep < Me.Length Then
+                        I.SetPixel(X, Y, Me.Item(ColorStep))
+                    End If
+                Next
             Next
-        Next
+
+        Else
+
+            ' Now paint the color-steps to the preview-image.
+            For Y As Integer = 0 To Height - 1 Step 1
+                ColorStep = CInt(Y / Height * (Me.Length - 1))
+
+                For X As Integer = 0 To Width - 1 Step 1
+                    If ColorStep < Me.Length Then
+                        I.SetPixel(X, Y, Me.Item(ColorStep))
+                    End If
+                Next
+            Next
+
+        End If
+        I.Unlock(True)
 
         ' Return Bitmap
         I = Nothing
-        Dim ReturnImage As Image = B
-        B.Dispose()
-        Return ReturnImage
+        Return B
     End Function
 
 #End Region

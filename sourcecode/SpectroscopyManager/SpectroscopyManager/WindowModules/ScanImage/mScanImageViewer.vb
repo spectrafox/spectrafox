@@ -1079,6 +1079,10 @@ Public Class mScanImageViewer
         wPlot.Show(Me.oScanImagePlot, P1, P2)
     End Sub
 
+    Private Sub RecalculateImage(NewColorSchema As cColorScheme)
+
+    End Sub
+
 #End Region
 
 End Class

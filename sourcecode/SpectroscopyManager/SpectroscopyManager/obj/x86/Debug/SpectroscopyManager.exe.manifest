@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3578368">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3580928">
       <assemblyIdentity name="SpectroscopyManager" version="2016.1.8.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>RK3LyrAon5UhJgY+h2jEepwWcBUjWwIEaEFUDnmq4CQ=</dsig:DigestValue>
+        <dsig:DigestValue>Us1i0YsPxH9t0Jz0XTPajrwoEH9XqHP0Zkk0bNLJayY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -174,22 +174,22 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="2525">
+  <file name="changelog_dev.html" size="2825">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>i+nRYVNsPQsutrL2MU03F8RIORByVMDnntl2IhUObFk=</dsig:DigestValue>
+      <dsig:DigestValue>7tKXlTfvFSVYciumEHANx8YX8/5Pe3Q84PHifT0Jf0c=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="changelog_stable.html" size="31085">
+  <file name="changelog_stable.html" size="31397">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>VcrrTZSgOcnMFdPbKoChSfOxNCQUklNBWFkFwf5BCQg=</dsig:DigestValue>
+      <dsig:DigestValue>h+2sHO8dK539WZ+GKKsd2Pzj+wD7blw0931IXR/tz2I=</dsig:DigestValue>
     </hash>
   </file>
   <file name="ColorSchemes\alpine colors.sfc" size="3162">
@@ -786,13 +786,13 @@
       <dsig:DigestValue>Zfye0wgGWM+acR+2Pav6M47GvxRnBBxVTn2+RWDjdG0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_dev.xml" size="811" writeableType="applicationData">
+  <file name="versioninfo_dev.xml" size="805" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>w5B9jnSiw9u0Cw0n+4HNLAbLIE307urmxAfTZfncTRY=</dsig:DigestValue>
+      <dsig:DigestValue>mE4Tgw7rPDSBC/4p27P5mdz2uITEFUaYws6yI98nR3w=</dsig:DigestValue>
     </hash>
   </file>
   <file name="versioninfo_dev_lowpriv.xml" size="813" writeableType="applicationData">
@@ -801,25 +801,25 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>SSAXENgignKMwT+uteTuyiAADoWucW+b9gyK/lFwWzA=</dsig:DigestValue>
+      <dsig:DigestValue>qv6pt5etmHVeWWfCYW4b4KWkLWgQo80Ka3OnD4VS/YI=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_stable.xml" size="820" writeableType="applicationData">
+  <file name="versioninfo_stable.xml" size="814" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>uLPsgnfy2kIXJ4nlKvcYaCQboOQJsxD3hSluuAQOiBM=</dsig:DigestValue>
+      <dsig:DigestValue>ZqoBMDxaZeO1v2UuagDfdRJh3/Uz3PcBAHOzBcWjP64=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_stable_lowpriv.xml" size="828" writeableType="applicationData">
+  <file name="versioninfo_stable_lowpriv.xml" size="822" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>L49lrbXhP3O1ZvCsZtRS2RT6bjqGP4sv1X78DBK5JEg=</dsig:DigestValue>
+      <dsig:DigestValue>iXtkshiAX5zondyyVc7trZFeX0hXkBW4mNEyNrJNlgY=</dsig:DigestValue>
     </hash>
   </file>
   <fileAssociation extension=".fmx" description="SpectraFox Fit-Model Settings" progid="SpectraFox.FitModel" defaultIcon="fmx.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />

@@ -7,14 +7,14 @@
     <description></description>
     <language>en</language>
     <item>
-      <title>Version 2016.01.08.0</title>
+      <title>Version 2016.01.18.0</title>
       <sparkle:releaseNotesLink>http://download.spectrafox.com/changelog_dev.html</sparkle:releaseNotesLink>
-      <pubDate>2016/01/08</pubDate>
+      <pubDate>2016/01/18</pubDate>
       <enclosure
           url="http://download.spectrafox.com/spectrafox-dev.exe"
           length="5120"
           type="application/octet-stream"
-          sparkle:version="2016.01.08.0"
+          sparkle:version="2016.01.18.0"
           />
     </item>
   </channel>

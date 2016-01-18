@@ -146,7 +146,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>gF/m6JwsxJ5LwOog+2vpNkZJYpUDAprc3tITtYpjKHk=</dsig:DigestValue>
+        <dsig:DigestValue>xMlSoibzWKcGIkFUK6g/IjIT9saewA7zEOeSDenus6A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -786,40 +786,40 @@
       <dsig:DigestValue>Zfye0wgGWM+acR+2Pav6M47GvxRnBBxVTn2+RWDjdG0=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_dev.xml" size="811" writeableType="applicationData">
+  <file name="versioninfo_dev.xml" size="805" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>w5B9jnSiw9u0Cw0n+4HNLAbLIE307urmxAfTZfncTRY=</dsig:DigestValue>
+      <dsig:DigestValue>a116kctkUZef1mREo1emh3KeJqnMCuaTB3aPeVDepug=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_dev_lowpriv.xml" size="819" writeableType="applicationData">
+  <file name="versioninfo_dev_lowpriv.xml" size="813" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mullgVF8t7L6HPW3/2fY75XxZZEq/Ns8dHZIg9a3a74=</dsig:DigestValue>
+      <dsig:DigestValue>VC3fe1o6yyMbRWuX7AQNKcKxbS1K5icm71z9CADZ9Bc=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_stable.xml" size="820" writeableType="applicationData">
+  <file name="versioninfo_stable.xml" size="814" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>uLPsgnfy2kIXJ4nlKvcYaCQboOQJsxD3hSluuAQOiBM=</dsig:DigestValue>
+      <dsig:DigestValue>Us7+ErDur83qOtlFgA6VhhQfRmQyg8EGwYYNl1UNTyE=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="versioninfo_stable_lowpriv.xml" size="828" writeableType="applicationData">
+  <file name="versioninfo_stable_lowpriv.xml" size="822" writeableType="applicationData">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>L49lrbXhP3O1ZvCsZtRS2RT6bjqGP4sv1X78DBK5JEg=</dsig:DigestValue>
+      <dsig:DigestValue>cqqlJVxuSpcGJbQ8f6kHnaYu893sc9gskEM/al1W+Ow=</dsig:DigestValue>
     </hash>
   </file>
   <fileAssociation extension=".fmx" description="SpectraFox Fit-Model Settings" progid="SpectraFox.FitModel" defaultIcon="fmx.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />

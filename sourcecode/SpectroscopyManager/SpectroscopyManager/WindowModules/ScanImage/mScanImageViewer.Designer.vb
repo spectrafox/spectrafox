@@ -48,13 +48,13 @@ Partial Class mScanImageViewer
         Me.btnAddFilter = New System.Windows.Forms.Button()
         Me.cbAddFilter = New System.Windows.Forms.ComboBox()
         Me.lbFilters = New System.Windows.Forms.ListBox()
-        Me.lblColorCode = New System.Windows.Forms.Label()
         Me.lblFilters = New System.Windows.Forms.Label()
-        Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.dpRight = New SpectroscopyManager.DockablePanel()
         Me.ckbScaleBarVisible = New System.Windows.Forms.CheckBox()
-        Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
         Me.ckbUseHighQualityScaling = New System.Windows.Forms.CheckBox()
+        Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
+        Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
+        Me.lblColorCode = New System.Windows.Forms.Label()
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.panChannelSettings.SuspendLayout()
@@ -223,12 +223,10 @@ Partial Class mScanImageViewer
         Me.gbChannel.Controls.Add(Me.btnAddFilter)
         Me.gbChannel.Controls.Add(Me.cbAddFilter)
         Me.gbChannel.Controls.Add(Me.lbFilters)
-        Me.gbChannel.Controls.Add(Me.lblColorCode)
         Me.gbChannel.Controls.Add(Me.lblFilters)
-        Me.gbChannel.Controls.Add(Me.cpColorPicker)
         Me.gbChannel.Location = New System.Drawing.Point(3, 3)
         Me.gbChannel.Name = "gbChannel"
-        Me.gbChannel.Size = New System.Drawing.Size(160, 257)
+        Me.gbChannel.Size = New System.Drawing.Size(160, 219)
         Me.gbChannel.TabIndex = 11
         Me.gbChannel.TabStop = False
         Me.gbChannel.Text = "channel settings:"
@@ -237,12 +235,12 @@ Partial Class mScanImageViewer
         '
         Me.cbChannel.AppereanceType = SpectroscopyManager.ucFilteredListComboBoxSelector.SelectorType.Combobox
         Me.cbChannel.IfAppearanceListBox_MultiSelectionMode = System.Windows.Forms.SelectionMode.One
-        Me.cbChannel.Location = New System.Drawing.Point(9, 19)
+        Me.cbChannel.Location = New System.Drawing.Point(6, 19)
         Me.cbChannel.MinimumSize = New System.Drawing.Size(0, 21)
         Me.cbChannel.Name = "cbChannel"
         Me.cbChannel.SelectedEntries = CType(resources.GetObject("cbChannel.SelectedEntries"), System.Collections.Generic.List(Of String))
         Me.cbChannel.SelectedEntry = ""
-        Me.cbChannel.Size = New System.Drawing.Size(145, 21)
+        Me.cbChannel.Size = New System.Drawing.Size(148, 27)
         Me.cbChannel.TabIndex = 1
         Me.cbChannel.TurnOnLastFilterSaving = False
         Me.cbChannel.TurnOnLastSelectionSaving = False
@@ -251,7 +249,7 @@ Partial Class mScanImageViewer
         '
         Me.btnFilterSettings.Enabled = False
         Me.btnFilterSettings.Image = Global.SpectroscopyManager.My.Resources.Resources.settings_16
-        Me.btnFilterSettings.Location = New System.Drawing.Point(134, 110)
+        Me.btnFilterSettings.Location = New System.Drawing.Point(131, 70)
         Me.btnFilterSettings.Name = "btnFilterSettings"
         Me.btnFilterSettings.Size = New System.Drawing.Size(25, 23)
         Me.btnFilterSettings.TabIndex = 4
@@ -262,7 +260,7 @@ Partial Class mScanImageViewer
         '
         Me.btnRemoveFilter.Enabled = False
         Me.btnRemoveFilter.Image = Global.SpectroscopyManager.My.Resources.Resources.remove_16
-        Me.btnRemoveFilter.Location = New System.Drawing.Point(135, 195)
+        Me.btnRemoveFilter.Location = New System.Drawing.Point(132, 155)
         Me.btnRemoveFilter.Name = "btnRemoveFilter"
         Me.btnRemoveFilter.Size = New System.Drawing.Size(25, 23)
         Me.btnRemoveFilter.TabIndex = 5
@@ -272,7 +270,7 @@ Partial Class mScanImageViewer
         'btnAddFilter
         '
         Me.btnAddFilter.Image = Global.SpectroscopyManager.My.Resources.Resources.add_16
-        Me.btnAddFilter.Location = New System.Drawing.Point(134, 224)
+        Me.btnAddFilter.Location = New System.Drawing.Point(131, 184)
         Me.btnAddFilter.Name = "btnAddFilter"
         Me.btnAddFilter.Size = New System.Drawing.Size(25, 23)
         Me.btnAddFilter.TabIndex = 7
@@ -283,7 +281,7 @@ Partial Class mScanImageViewer
         '
         Me.cbAddFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbAddFilter.FormattingEnabled = True
-        Me.cbAddFilter.Location = New System.Drawing.Point(9, 225)
+        Me.cbAddFilter.Location = New System.Drawing.Point(6, 185)
         Me.cbAddFilter.Name = "cbAddFilter"
         Me.cbAddFilter.Size = New System.Drawing.Size(120, 21)
         Me.cbAddFilter.TabIndex = 6
@@ -291,43 +289,27 @@ Partial Class mScanImageViewer
         'lbFilters
         '
         Me.lbFilters.FormattingEnabled = True
-        Me.lbFilters.Location = New System.Drawing.Point(9, 110)
+        Me.lbFilters.Location = New System.Drawing.Point(6, 70)
         Me.lbFilters.Name = "lbFilters"
         Me.lbFilters.Size = New System.Drawing.Size(120, 108)
         Me.lbFilters.TabIndex = 3
         '
-        'lblColorCode
-        '
-        Me.lblColorCode.AutoSize = True
-        Me.lblColorCode.Location = New System.Drawing.Point(6, 46)
-        Me.lblColorCode.Name = "lblColorCode"
-        Me.lblColorCode.Size = New System.Drawing.Size(60, 13)
-        Me.lblColorCode.TabIndex = 14
-        Me.lblColorCode.Text = "color code:"
-        '
         'lblFilters
         '
         Me.lblFilters.AutoSize = True
-        Me.lblFilters.Location = New System.Drawing.Point(6, 94)
+        Me.lblFilters.Location = New System.Drawing.Point(3, 54)
         Me.lblFilters.Name = "lblFilters"
         Me.lblFilters.Size = New System.Drawing.Size(75, 13)
         Me.lblFilters.TabIndex = 14
         Me.lblFilters.Text = "channel filters:"
-        '
-        'cpColorPicker
-        '
-        Me.cpColorPicker.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.cpColorPicker.Location = New System.Drawing.Point(6, 65)
-        Me.cpColorPicker.Name = "cpColorPicker"
-        Me.cpColorPicker.Size = New System.Drawing.Size(148, 23)
-        Me.cpColorPicker.TabIndex = 2
         '
         'dpRight
         '
         Me.dpRight.Controls.Add(Me.ckbScaleBarVisible)
         Me.dpRight.Controls.Add(Me.ckbUseHighQualityScaling)
         Me.dpRight.Controls.Add(Me.vsValueRangeSelector)
+        Me.dpRight.Controls.Add(Me.cpColorPicker)
+        Me.dpRight.Controls.Add(Me.lblColorCode)
         Me.dpRight.Dock = System.Windows.Forms.DockStyle.Right
         Me.dpRight.Location = New System.Drawing.Point(455, 25)
         Me.dpRight.Name = "dpRight"
@@ -343,33 +325,49 @@ Partial Class mScanImageViewer
         Me.ckbScaleBarVisible.Checked = Global.SpectroscopyManager.My.MySettings.Default.ScanImageViewer_ShowScaleBar
         Me.ckbScaleBarVisible.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ckbScaleBarVisible.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.SpectroscopyManager.My.MySettings.Default, "ScanImageViewer_ShowScaleBar", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.ckbScaleBarVisible.Location = New System.Drawing.Point(9, 289)
+        Me.ckbScaleBarVisible.Location = New System.Drawing.Point(6, 359)
         Me.ckbScaleBarVisible.Name = "ckbScaleBarVisible"
         Me.ckbScaleBarVisible.Size = New System.Drawing.Size(97, 17)
         Me.ckbScaleBarVisible.TabIndex = 10
         Me.ckbScaleBarVisible.Text = "show scale bar"
         Me.ckbScaleBarVisible.UseVisualStyleBackColor = True
         '
+        'ckbUseHighQualityScaling
+        '
+        Me.ckbUseHighQualityScaling.AutoSize = True
+        Me.ckbUseHighQualityScaling.Checked = Global.SpectroscopyManager.My.MySettings.Default.ScanImageViewer_HQPlot
+        Me.ckbUseHighQualityScaling.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.SpectroscopyManager.My.MySettings.Default, "ScanImageViewer_HQPlot", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
+        Me.ckbUseHighQualityScaling.Location = New System.Drawing.Point(6, 341)
+        Me.ckbUseHighQualityScaling.Name = "ckbUseHighQualityScaling"
+        Me.ckbUseHighQualityScaling.Size = New System.Drawing.Size(133, 17)
+        Me.ckbUseHighQualityScaling.TabIndex = 9
+        Me.ckbUseHighQualityScaling.Text = "high quality processing"
+        Me.ckbUseHighQualityScaling.UseVisualStyleBackColor = True
+        '
         'vsValueRangeSelector
         '
-        Me.vsValueRangeSelector.Location = New System.Drawing.Point(3, 3)
+        Me.vsValueRangeSelector.Location = New System.Drawing.Point(2, 73)
         Me.vsValueRangeSelector.Name = "vsValueRangeSelector"
         Me.vsValueRangeSelector.SelectedMaxValue = 0R
         Me.vsValueRangeSelector.SelectedMinValue = 0R
         Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 264)
         Me.vsValueRangeSelector.TabIndex = 8
         '
-        'ckbUseHighQualityScaling
+        'cpColorPicker
         '
-        Me.ckbUseHighQualityScaling.AutoSize = True
-        Me.ckbUseHighQualityScaling.Checked = Global.SpectroscopyManager.My.MySettings.Default.ScanImageViewer_HQPlot
-        Me.ckbUseHighQualityScaling.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.SpectroscopyManager.My.MySettings.Default, "ScanImageViewer_HQPlot", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.ckbUseHighQualityScaling.Location = New System.Drawing.Point(9, 271)
-        Me.ckbUseHighQualityScaling.Name = "ckbUseHighQualityScaling"
-        Me.ckbUseHighQualityScaling.Size = New System.Drawing.Size(133, 17)
-        Me.ckbUseHighQualityScaling.TabIndex = 9
-        Me.ckbUseHighQualityScaling.Text = "high quality processing"
-        Me.ckbUseHighQualityScaling.UseVisualStyleBackColor = True
+        Me.cpColorPicker.Location = New System.Drawing.Point(6, 22)
+        Me.cpColorPicker.Name = "cpColorPicker"
+        Me.cpColorPicker.Size = New System.Drawing.Size(148, 45)
+        Me.cpColorPicker.TabIndex = 2
+        '
+        'lblColorCode
+        '
+        Me.lblColorCode.AutoSize = True
+        Me.lblColorCode.Location = New System.Drawing.Point(6, 3)
+        Me.lblColorCode.Name = "lblColorCode"
+        Me.lblColorCode.Size = New System.Drawing.Size(73, 13)
+        Me.lblColorCode.TabIndex = 14
+        Me.lblColorCode.Text = "color scheme:"
         '
         'mScanImageViewer
         '

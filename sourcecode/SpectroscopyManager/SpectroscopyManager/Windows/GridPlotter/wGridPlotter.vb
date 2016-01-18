@@ -386,6 +386,7 @@ Public Class wGridPlotter
         Me._SelectedRange_XMax = Double.MinValue
         Me._SelectedRange_XMin = Double.MaxValue
         For Each S As cSpectroscopyTable In Me._SpectroscopyTables
+            If Not S.ColumnExists(XColumnName) Then Return
             Me._SelectedRange_XMax = Math.Max(S.Column(XColumnName).GetMaximumValueOfColumn, Me._SelectedRange_XMax)
             Me._SelectedRange_XMin = Math.Min(S.Column(XColumnName).GetMinimumValueOfColumn, Me._SelectedRange_XMin)
         Next

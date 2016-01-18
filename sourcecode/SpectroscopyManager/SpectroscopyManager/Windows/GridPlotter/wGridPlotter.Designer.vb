@@ -390,18 +390,18 @@ Partial Class wGridPlotter
         '
         Me.vrsPlotSettings_ColorScaling.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.vrsPlotSettings_ColorScaling.Location = New System.Drawing.Point(15, 91)
+        Me.vrsPlotSettings_ColorScaling.Location = New System.Drawing.Point(15, 113)
         Me.vrsPlotSettings_ColorScaling.Name = "vrsPlotSettings_ColorScaling"
         Me.vrsPlotSettings_ColorScaling.SelectedMaxValue = 0R
         Me.vrsPlotSettings_ColorScaling.SelectedMinValue = 0R
-        Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 420)
+        Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 398)
         Me.vrsPlotSettings_ColorScaling.TabIndex = 4
         '
         'cpPlotSettings_ColorCode
         '
         Me.cpPlotSettings_ColorCode.Location = New System.Drawing.Point(17, 62)
         Me.cpPlotSettings_ColorCode.Name = "cpPlotSettings_ColorCode"
-        Me.cpPlotSettings_ColorCode.Size = New System.Drawing.Size(212, 23)
+        Me.cpPlotSettings_ColorCode.Size = New System.Drawing.Size(212, 45)
         Me.cpPlotSettings_ColorCode.TabIndex = 5
         '
         'txtPlotSettings_PointDiameter
