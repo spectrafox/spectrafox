@@ -11,18 +11,25 @@ SpectraFox is a free solution for managing, processing, and evaluating scientifi
 Recommended Version
 -------------------
 
-The recommended and most stable version is 2016.01.08.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
+The recommended and most stable version is 2016.01.18.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
 
 If you do not have administrator privileges, use the [low privilege installer](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe).
 
-A development version is 2016.01.08.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-dev.exe)
+Downloads for the latest *beta* version:
+[\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-dev.exe)
 [\[low privilege installer\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe)
 
 Requirements
 ------------
 
+Operating system:
 * Microsoft Windows Vista or higher (32- or 64-bit)
     * .NET Framework 4.5
+
+Currently compatible with measurement files of the following manufacturers:
+* Nanonis
+* Createc
+
 
 Installation
 ------------
