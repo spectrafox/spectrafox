@@ -12,8 +12,9 @@ echo  # finished!
 echo  #
 echo  # copying the changelogs
 copy ..\..\sourcecode\SpectroscopyManager\SpectroscopyManager\changelog_*.html ..\output
-echo  # copying the version infos of the autoupdater
-copy ..\..\sourcecode\SpectroscopyManager\SpectroscopyManager\versioninfo_*.xml ..\output
+REM using now PHP-scripts to create the version info from the setup-files... no need to create them manually anymore!
+REM echo  # copying the version infos of the autoupdater
+REM copy ..\..\sourcecode\SpectroscopyManager\SpectroscopyManager\versioninfo_*.xml ..\output
 echo  #
 echo  ByeBye!
 echo ---------------------------------------
