@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3580928">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3591168">
       <assemblyIdentity name="SpectroscopyManager" version="2016.1.18.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pPPRlDjjt0CquUMXj9kwM2UOKDQo7MrneGpzqmk4vRw=</dsig:DigestValue>
+        <dsig:DigestValue>3z1G7GnbcCUr+3cGhEOm0LwBg6JdfXL4e63yQAMluug=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -174,22 +174,22 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="2908">
+  <file name="changelog_dev.html" size="3271">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>mO07RGR8iTFmcnHD3ipxNq9xebda3EIfTaMsQTy4SLQ=</dsig:DigestValue>
+      <dsig:DigestValue>Cqp0enaymwEE7x0SP5sC61TFe0jhJ/repTC13dwHinE=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="changelog_stable.html" size="31480">
+  <file name="changelog_stable.html" size="31825">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>TMW6eKGMGxwI/vNgQ5VXsMZoi2s1MMgCTHcYYjoEZUA=</dsig:DigestValue>
+      <dsig:DigestValue>NurpNQdBECz4AsF3U0rgm+lrjCN2PQCGfmY4QqiPCAE=</dsig:DigestValue>
     </hash>
   </file>
   <file name="ColorSchemes\alpine colors.sfc" size="3162">

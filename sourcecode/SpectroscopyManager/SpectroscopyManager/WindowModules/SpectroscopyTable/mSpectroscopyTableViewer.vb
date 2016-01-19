@@ -420,7 +420,6 @@ Public Class mSpectroscopyTableViewer
         End Get
         Set(value As Boolean)
             Me._ShowColumnSelectors = value
-            Me.panSettings.Visible = value
             If Not value Then
                 Me.zPreview.Dock = DockStyle.Fill
             Else
@@ -506,14 +505,6 @@ Public Class mSpectroscopyTableViewer
 
         ' Set the last stacking property
         Me.MultipleSpectraStackOffset = My.Settings.SpectroscopyTableViewer_StackOffset_Last
-
-        ' Position Settings-Panel at lower left/right corner:
-        With Me.zPreview.GraphPane
-            Me.panSettings.Location = New Point(CInt(.Rect.Location.X + .Rect.Width - Me.panSettings.Width) + 3,
-                                                CInt(.Rect.Location.Y + .Rect.Height - Me.panSettings.Height) - 3)
-            Me.panStyle.Location = New Point(CInt(.Rect.Location.X + .Margin.Left),
-                                             CInt(.Rect.Location.Y + .Rect.Height - Me.panStyle.Height) - 3)
-        End With
 
         ' Initially collapse the setting panels
         Me.dpRight.SlideIn(True)
@@ -708,14 +699,20 @@ Public Class mSpectroscopyTableViewer
 
                         ' If only a single Graph if plotted, add as title the file-name of the SpectroscopyTable.
                         ' Else, add a legend, if not too many files were shown.
-                        If Me.SpectroscopyTables.Count = 1 And ColumnNamesY.Count = 1 Then
+                        If Me.SpectroscopyTables.Count = 1 AndAlso ColumnNamesY.Count = 1 Then
                             .Title.IsVisible = True
-                            .Title.Text = IO.Path.GetFileName(SpectroscopyTable.FullFileName)
+                            .Title.Text = SpectroscopyTable.FileNameWithoutPath
+                            Me.tslblInfobar.Text = My.Resources.rSpectroscopyTableViewer.InfobarTemplate_SingleFile.Replace("%f", SpectroscopyTable.FileNameWithoutPath)
 
                             .Legend.IsVisible = False
                         Else
                             .Title.IsVisible = False
                             .Title.Text = ""
+                            If Me.SpectroscopyTables.Count > 1 Then
+                                Me.tslblInfobar.Text = My.Resources.rSpectroscopyTableViewer.InfobarTemplate_MultipleFiles.Replace("%n", Me.SpectroscopyTables.Count.ToString("N0"))
+                            Else
+                                Me.tslblInfobar.Text = My.Resources.rSpectroscopyTableViewer.InfobarTemplate_SingleFile.Replace("%f", SpectroscopyTable.FileNameWithoutPath)
+                            End If
 
                             ' Check, if more than 5 files are shown in the graph.
                             ' If this is the case, hide the legend, to not squeez the graph too much.
@@ -1757,7 +1754,7 @@ Public Class mSpectroscopyTableViewer
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
-    Private Sub dpRight_MouseEnter(sender As Object, e As EventArgs) Handles dpRight.MouseEnter_PanelArea, panSettings.MouseEnter, lblDataSettings.MouseEnter
+    Private Sub dpRight_MouseEnter(sender As Object, e As EventArgs) Handles dpRight.MouseEnter_PanelArea, tsbtnColumnSetup.MouseEnter
         Me.dpRight.SlideOut()
     End Sub
 
@@ -1771,7 +1768,7 @@ Public Class mSpectroscopyTableViewer
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
-    Private Sub dpLeft_MouseEnter(sender As Object, e As EventArgs) Handles dpLeft.MouseEnter_PanelArea, panStyle.MouseEnter, lblStyleSettings.MouseEnter
+    Private Sub dpLeft_MouseEnter(sender As Object, e As EventArgs) Handles dpLeft.MouseEnter_PanelArea, tsbtnPlotSetup.MouseEnter
         Me.dpLeft.SlideOut()
     End Sub
 
@@ -1831,6 +1828,19 @@ Public Class mSpectroscopyTableViewer
         Me.SelectionPen.Dispose()
         Me.SelectionSemiTransparentBrush.Dispose()
         Me.PreviewDrawingSurface.Dispose()
+    End Sub
+
+#End Region
+
+#Region "Tools in the Toolbar"
+
+    ''' <summary>
+    ''' Reset the Zoom again.
+    ''' </summary>
+    Private Sub btnTool_Zoom_Click(sender As Object, e As EventArgs) Handles btnTool_Zoom.Click
+        With Me.zPreview
+            .RestoreScale(.GraphPane)
+        End With
     End Sub
 
 #End Region

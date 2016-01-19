@@ -65,6 +65,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to plot of %n files.
+        '''</summary>
+        Friend Shared ReadOnly Property InfobarTemplate_MultipleFiles() As String
+            Get
+                Return ResourceManager.GetString("InfobarTemplate_MultipleFiles", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to %f.
+        '''</summary>
+        Friend Shared ReadOnly Property InfobarTemplate_SingleFile() As String
+            Get
+                Return ResourceManager.GetString("InfobarTemplate_SingleFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to click to select a datapoint, ESC to cancel.
         '''</summary>
         Friend Shared ReadOnly Property SelectionMode_DataPoint() As String

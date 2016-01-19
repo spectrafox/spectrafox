@@ -117,12 +117,6 @@ Public Class mScanImageViewer
         Me.dpRight.SlideIn(True)
         Me.dpLeft.SlideIn(True)
 
-        ' Locate the panel buttons at the lower corners
-        Me.panChannelSettings.Location = New Point(CInt(0) + 3,
-                                                   CInt(Me.Height - Me.panChannelSettings.Height) - 3)
-        Me.panValueSettings.Location = New Point(CInt(Me.Width - Me.panValueSettings.Width) - 3,
-                                                 CInt(Me.Height - Me.panValueSettings.Height) - 3)
-
     End Sub
 
     ''' <summary>
@@ -546,7 +540,7 @@ Public Class mScanImageViewer
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
-    Private Sub dpRight_MouseEnter(sender As Object, e As EventArgs) Handles dpRight.MouseEnter_PanelArea, panValueSettings.MouseEnter, lblDataSettings.MouseEnter, tsbtnValueRange.MouseEnter
+    Private Sub dpRight_MouseEnter(sender As Object, e As EventArgs) Handles dpRight.MouseEnter_PanelArea, tsbtnPlotSetup.MouseEnter
         Me.dpRight.SlideOut()
     End Sub
 
@@ -561,7 +555,7 @@ Public Class mScanImageViewer
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
-    Private Sub dpLeft_MouseEnter(sender As Object, e As EventArgs) Handles dpLeft.MouseEnter_PanelArea, panChannelSettings.MouseEnter, lblStyleSettings.MouseEnter, tsbtnChannelSetup.MouseEnter
+    Private Sub dpLeft_MouseEnter(sender As Object, e As EventArgs) Handles dpLeft.MouseEnter_PanelArea, tsbtnChannelSetup.MouseEnter
         Me.dpLeft.SlideOut()
     End Sub
 

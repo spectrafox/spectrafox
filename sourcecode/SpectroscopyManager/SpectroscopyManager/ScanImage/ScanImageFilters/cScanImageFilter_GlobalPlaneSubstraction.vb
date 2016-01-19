@@ -21,6 +21,12 @@
         Dim XStart As Integer = ScanChannel.GetFirstColumnWithoutNaN
         Dim XEnd As Integer = ScanChannel.GetLastColumnWithoutNaN
 
+        ' Data checks. We can apply the filter e.g. only, if enough data points are present.
+        ' We need at least 4 quadrants, so at least 2x2 pixels!
+        If (YEnd - YStart) < 4 OrElse (XEnd - XStart) < 4 Then
+            Return ScanChannel
+        End If
+
         '  // ** Calculate global plane gradients in x and y direction; **
         Dim dGradientX As Double = 0
         Dim dGradientY As Double = 0
@@ -115,7 +121,12 @@
     ''' </summary>
     Public ReadOnly Property ShowFilterInFilterMenu As Boolean Implements iScanImageFilter.ShowFilterInFilterMenu
         Get
+#If DEBUG Then
             Return False
+            'Return True
+#Else
+            Return False
+#End If
         End Get
     End Property
 

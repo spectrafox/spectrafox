@@ -28,12 +28,8 @@ Partial Class mScanImageViewer
         Me.cmnuImageContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.cmnuCopyImageToClipboard = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmnuSaveAsImage = New System.Windows.Forms.ToolStripMenuItem()
-        Me.panChannelSettings = New System.Windows.Forms.Panel()
-        Me.lblStyleSettings = New System.Windows.Forms.Label()
-        Me.panValueSettings = New System.Windows.Forms.Panel()
-        Me.lblDataSettings = New System.Windows.Forms.Label()
         Me.tsTools = New System.Windows.Forms.ToolStrip()
-        Me.tsbtnValueRange = New System.Windows.Forms.ToolStripButton()
+        Me.tsbtnPlotSetup = New System.Windows.Forms.ToolStripButton()
         Me.tssRight = New System.Windows.Forms.ToolStripSeparator()
         Me.btnTool_LineProfile = New System.Windows.Forms.ToolStripButton()
         Me.tslblTools = New System.Windows.Forms.ToolStripLabel()
@@ -57,8 +53,6 @@ Partial Class mScanImageViewer
         Me.lblColorCode = New System.Windows.Forms.Label()
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
-        Me.panChannelSettings.SuspendLayout()
-        Me.panValueSettings.SuspendLayout()
         Me.tsTools.SuspendLayout()
         Me.dpLeft.SuspendLayout()
         Me.gbChannel.SuspendLayout()
@@ -93,71 +87,25 @@ Partial Class mScanImageViewer
         Me.cmnuSaveAsImage.Size = New System.Drawing.Size(123, 22)
         Me.cmnuSaveAsImage.Text = "save as ..."
         '
-        'panChannelSettings
-        '
-        Me.panChannelSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.panChannelSettings.BackColor = System.Drawing.Color.White
-        Me.panChannelSettings.BackgroundImage = Global.SpectroscopyManager.My.Resources.Resources.topography_16
-        Me.panChannelSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.panChannelSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.panChannelSettings.Controls.Add(Me.lblStyleSettings)
-        Me.panChannelSettings.Location = New System.Drawing.Point(183, 498)
-        Me.panChannelSettings.Name = "panChannelSettings"
-        Me.panChannelSettings.Size = New System.Drawing.Size(74, 17)
-        Me.panChannelSettings.TabIndex = 17
-        Me.panChannelSettings.Visible = False
-        '
-        'lblStyleSettings
-        '
-        Me.lblStyleSettings.AutoSize = True
-        Me.lblStyleSettings.Location = New System.Drawing.Point(23, 1)
-        Me.lblStyleSettings.Name = "lblStyleSettings"
-        Me.lblStyleSettings.Size = New System.Drawing.Size(45, 13)
-        Me.lblStyleSettings.TabIndex = 0
-        Me.lblStyleSettings.Text = "channel"
-        '
-        'panValueSettings
-        '
-        Me.panValueSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.panValueSettings.BackColor = System.Drawing.Color.White
-        Me.panValueSettings.BackgroundImage = Global.SpectroscopyManager.My.Resources.Resources.settings_16
-        Me.panValueSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
-        Me.panValueSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.panValueSettings.Controls.Add(Me.lblDataSettings)
-        Me.panValueSettings.Location = New System.Drawing.Point(371, 498)
-        Me.panValueSettings.Name = "panValueSettings"
-        Me.panValueSettings.Size = New System.Drawing.Size(70, 17)
-        Me.panValueSettings.TabIndex = 16
-        Me.panValueSettings.Visible = False
-        '
-        'lblDataSettings
-        '
-        Me.lblDataSettings.AutoSize = True
-        Me.lblDataSettings.Location = New System.Drawing.Point(23, 1)
-        Me.lblDataSettings.Name = "lblDataSettings"
-        Me.lblDataSettings.Size = New System.Drawing.Size(38, 13)
-        Me.lblDataSettings.TabIndex = 1
-        Me.lblDataSettings.Text = "values"
-        '
         'tsTools
         '
         Me.tsTools.BackColor = System.Drawing.Color.Transparent
         Me.tsTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.tsTools.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbtnValueRange, Me.tssRight, Me.btnTool_LineProfile, Me.tslblTools, Me.tsbtnChannelSetup, Me.tssLeft1, Me.tslblInfobar})
+        Me.tsTools.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbtnPlotSetup, Me.tssRight, Me.btnTool_LineProfile, Me.tslblTools, Me.tsbtnChannelSetup, Me.tssLeft1, Me.tslblInfobar})
         Me.tsTools.Location = New System.Drawing.Point(0, 0)
         Me.tsTools.Name = "tsTools"
         Me.tsTools.Size = New System.Drawing.Size(625, 25)
         Me.tsTools.TabIndex = 19
         Me.tsTools.Text = "tsTools"
         '
-        'tsbtnValueRange
+        'tsbtnPlotSetup
         '
-        Me.tsbtnValueRange.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsbtnValueRange.Image = Global.SpectroscopyManager.My.Resources.Resources.settings_16
-        Me.tsbtnValueRange.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbtnValueRange.Name = "tsbtnValueRange"
-        Me.tsbtnValueRange.Size = New System.Drawing.Size(80, 22)
-        Me.tsbtnValueRange.Text = "plot setup"
+        Me.tsbtnPlotSetup.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsbtnPlotSetup.Image = Global.SpectroscopyManager.My.Resources.Resources.settings_16
+        Me.tsbtnPlotSetup.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtnPlotSetup.Name = "tsbtnPlotSetup"
+        Me.tsbtnPlotSetup.Size = New System.Drawing.Size(80, 22)
+        Me.tsbtnPlotSetup.Text = "plot setup"
         '
         'tssRight
         '
@@ -375,18 +323,12 @@ Partial Class mScanImageViewer
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.dpLeft)
         Me.Controls.Add(Me.dpRight)
-        Me.Controls.Add(Me.panChannelSettings)
-        Me.Controls.Add(Me.panValueSettings)
         Me.Controls.Add(Me.pbScanImage)
         Me.Controls.Add(Me.tsTools)
         Me.Name = "mScanImageViewer"
         Me.Size = New System.Drawing.Size(625, 528)
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cmnuImageContextMenuStrip.ResumeLayout(False)
-        Me.panChannelSettings.ResumeLayout(False)
-        Me.panChannelSettings.PerformLayout()
-        Me.panValueSettings.ResumeLayout(False)
-        Me.panValueSettings.PerformLayout()
         Me.tsTools.ResumeLayout(False)
         Me.tsTools.PerformLayout()
         Me.dpLeft.ResumeLayout(False)
@@ -414,10 +356,6 @@ Partial Class mScanImageViewer
     Friend WithEvents btnFilterSettings As System.Windows.Forms.Button
     Friend WithEvents dpRight As DockablePanel
     Friend WithEvents dpLeft As DockablePanel
-    Friend WithEvents panChannelSettings As Panel
-    Friend WithEvents lblStyleSettings As Label
-    Friend WithEvents panValueSettings As Panel
-    Friend WithEvents lblDataSettings As Label
     Friend WithEvents cbChannel As ucScanChannelSelector
     Friend WithEvents ckbUseHighQualityScaling As CheckBox
     Friend WithEvents tsTools As ToolStrip
@@ -426,7 +364,7 @@ Partial Class mScanImageViewer
     Friend WithEvents tslblTools As ToolStripLabel
     Friend WithEvents tssLeft1 As ToolStripSeparator
     Friend WithEvents tsbtnChannelSetup As ToolStripButton
-    Friend WithEvents tsbtnValueRange As ToolStripButton
+    Friend WithEvents tsbtnPlotSetup As ToolStripButton
     Friend WithEvents tssRight As ToolStripSeparator
     Friend WithEvents ckbScaleBarVisible As CheckBox
 End Class
