@@ -34,5 +34,5 @@ Imports System.Resources
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2016.01.18.0")>
-<Assembly: AssemblyFileVersion("2016.01.18.0")>
+<Assembly: AssemblyVersion("2016.01.19.0")>
+<Assembly: AssemblyFileVersion("2016.01.19.0")>
