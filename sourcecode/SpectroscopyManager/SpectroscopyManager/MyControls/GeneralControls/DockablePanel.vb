@@ -36,6 +36,18 @@ Public Class DockablePanel
     ''' </summary>
     Public Event SlideChanged(CurrentSlideState As SlideStates)
 
+#Region "Constructor"
+
+    ''' <summary>
+    ''' Stores the new original size, if the parent control changed.
+    ''' This means usually, that the control is created, and the final size is fixed!
+    ''' </summary>
+    Public Sub OnParentChangedStoreOriginalSize() Handles MyBase.ParentChanged
+        Me.iOriginalSize = Me.GetSize()
+    End Sub
+
+#End Region
+
     ''' <summary>
     ''' This function initializes the SlideOut-Procedure.
     ''' </summary>
@@ -56,7 +68,12 @@ Public Class DockablePanel
     ''' </summary>
     Public Sub SlideIn(Optional ByVal WithoutAnimation As Boolean = False)
         If Me.SlideState = SlideStates.SlidIn Then Return
-        iOriginalSize = Me.GetSize()
+        '# 2016/01/19: removed the next line due to a bug:
+        ' If the mouse entered the control during the SlideIn-function,
+        ' the control lost its original size!
+        ' -> The size is now stored in OnParentChangedStoreOriginalSize
+        '    on the creation of the control.
+        'iOriginalSize = Me.GetSize()
         If Not WithoutAnimation Then
             DoSlide(-1)
         Else
