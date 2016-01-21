@@ -160,9 +160,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property addsubstractothercolumn() As System.Drawing.Bitmap
+        Friend ReadOnly Property addsubtractothercolumn() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("addsubstractothercolumn", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("addsubtractothercolumn", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -170,9 +170,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property addsubstractothercolumn_16() As System.Drawing.Bitmap
+        Friend ReadOnly Property addsubtractothercolumn_16() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("addsubstractothercolumn_16", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("addsubtractothercolumn_16", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -180,9 +180,9 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
-        Friend ReadOnly Property addsubstractothercolumn_25() As System.Drawing.Bitmap
+        Friend ReadOnly Property addsubtractothercolumn_25() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("addsubstractothercolumn_25", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("addsubtractothercolumn_25", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

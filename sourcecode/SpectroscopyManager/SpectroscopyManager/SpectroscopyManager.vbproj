@@ -559,8 +559,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rScanImage.resx</DependentUpon>
     </Compile>
-    <Compile Include="ScanImage\ScanImageFilters\cScanImageFilter_GlobalPlaneSubstraction.vb" />
-    <Compile Include="ScanImage\ScanImageFilters\cScanImageFilter_LinearLineSubstraction.vb" />
+    <Compile Include="ScanImage\ScanImageFilters\cScanImageFilter_GlobalPlaneSubtraction.vb" />
+    <Compile Include="ScanImage\ScanImageFilters\cScanImageFilter_LinearLineSubtraction.vb" />
     <Compile Include="ScanImage\ScanImageFilters\iScanImageFilter.vb" />
     <Compile Include="ScanImage\ScanImageFilters\rScanImageFilters.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -39,7 +39,7 @@
         Dim B As New Button()
         B.Text = String.Empty
         B.ImageAlign = ContentAlignment.TopCenter
-        B.Image = My.Resources.addsubstractothercolumn_16
+        B.Image = My.Resources.addsubtractothercolumn_16
         Return B
     End Function
 
@@ -67,7 +67,7 @@
     Public Function SingleFileActionMenuItem() As ToolStripMenuItem Implements iDataBrowser_FileObjectAction.SingleFileActionMenuItem
         Dim M As New ToolStripMenuItem
         M.Text = My.Resources.rFileObjectActions.CM_DataSummation
-        M.Image = My.Resources.addsubstractothercolumn_16
+        M.Image = My.Resources.addsubtractothercolumn_16
         Return M
     End Function
 

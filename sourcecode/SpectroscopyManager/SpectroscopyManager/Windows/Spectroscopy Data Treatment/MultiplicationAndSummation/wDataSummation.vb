@@ -54,8 +54,8 @@
                 Case cSpectroscopyTableDataSummer.SummationMode.OtherColumnSum
                     Me.rbAdd.Checked = True
                     Me.tcSummationMethod.SelectedTab = Me.tpOtherColumnSummation
-                Case cSpectroscopyTableDataSummer.SummationMode.OtherColumnSubstract
-                    Me.rbSubstract.Checked = True
+                Case cSpectroscopyTableDataSummer.SummationMode.OtherColumnSubtract
+                    Me.rbSubtract.Checked = True
                     Me.tcSummationMethod.SelectedTab = Me.tpOtherColumnSummation
             End Select
         End With
@@ -124,7 +124,7 @@
                 If Me.rbAdd.Checked Then
                     SumMode = cSpectroscopyTableDataSummer.SummationMode.OtherColumnSum
                 Else
-                    SumMode = cSpectroscopyTableDataSummer.SummationMode.OtherColumnSubstract
+                    SumMode = cSpectroscopyTableDataSummer.SummationMode.OtherColumnSubtract
                 End If
 
                 ' Sum other column
@@ -206,7 +206,7 @@
                     If Me.rbAdd.Checked Then
                         SumMode = cSpectroscopyTableDataSummer.SummationMode.OtherColumnSum
                     Else
-                        SumMode = cSpectroscopyTableDataSummer.SummationMode.OtherColumnSubstract
+                        SumMode = cSpectroscopyTableDataSummer.SummationMode.OtherColumnSubtract
                     End If
             End Select
 

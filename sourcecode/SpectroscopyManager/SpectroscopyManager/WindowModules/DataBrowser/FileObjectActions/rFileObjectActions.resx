@@ -142,7 +142,7 @@
     <value>smooth</value>
   </data>
   <data name="CM_DataSummation" xml:space="preserve">
-    <value>add / substract</value>
+    <value>add / subtract</value>
   </data>
   <data name="CM_DerivativeOfFile" xml:space="preserve">
     <value>numeric derivative</value>
@@ -199,7 +199,7 @@
     <value>using last settings: smooth</value>
   </data>
   <data name="MM_DataSummationFactor" xml:space="preserve">
-    <value>using last settings: add / substract a value</value>
+    <value>using last settings: add / subtract a value</value>
   </data>
   <data name="MM_DataSummationOtherColumn" xml:space="preserve">
     <value>using last settings: sum two columns</value>
@@ -247,7 +247,7 @@ to obtain correct physical dimensions of the target column. [e.g. I(V) -&gt; dI/
     <value>Smooth values of a data column using different procedures.</value>
   </data>
   <data name="TT_DataSummation" xml:space="preserve">
-    <value>add or substract values in data column with a constant value,
+    <value>add or subtract values in data column with a constant value,
 or with another data column in the same file</value>
   </data>
   <data name="TT_DerivativeOfFile" xml:space="preserve">

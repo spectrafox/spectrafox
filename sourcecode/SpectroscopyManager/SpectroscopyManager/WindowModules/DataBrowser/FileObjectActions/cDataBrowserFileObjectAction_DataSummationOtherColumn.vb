@@ -80,7 +80,7 @@
     Public Function MultipleFileActionMenuItem() As ToolStripMenuItem Implements iDataBrowser_FileObjectAction.MultipleFileActionMenuItem
         Dim M As New ToolStripMenuItem
         M.Text = My.Resources.rFileObjectActions.MM_DataSummationOtherColumn
-        M.Image = My.Resources.addsubstractothercolumn_16
+        M.Image = My.Resources.addsubtractothercolumn_16
         Return M
     End Function
 

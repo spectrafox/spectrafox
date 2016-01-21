@@ -1,4 +1,4 @@
-﻿Public Class cScanImageFilter_LinearLineSubstraction
+﻿Public Class cScanImageFilter_LinearLineSubtraction
     Implements iScanImageFilter
 
     ''' <summary>

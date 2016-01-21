@@ -41,7 +41,7 @@ Partial Class wDataSummation
         Me.tcSummationMethod = New System.Windows.Forms.TabControl()
         Me.tpFactorSummation = New System.Windows.Forms.TabPage()
         Me.tpOtherColumnSummation = New System.Windows.Forms.TabPage()
-        Me.rbSubstract = New System.Windows.Forms.RadioButton()
+        Me.rbSubtract = New System.Windows.Forms.RadioButton()
         Me.rbAdd = New System.Windows.Forms.RadioButton()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.csColumnToSumWith = New SpectroscopyManager.ucSpectroscopyColumnSelector()
@@ -151,6 +151,7 @@ Partial Class wDataSummation
         Me.pbBeforeSummation.ClearPointSelectionModeAfterSelection = False
         Me.pbBeforeSummation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbBeforeSummation.Location = New System.Drawing.Point(3, 16)
+        Me.pbBeforeSummation.MultipleSpectraStackOffset = 0R
         Me.pbBeforeSummation.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.One
         Me.pbBeforeSummation.Name = "pbBeforeSummation"
         Me.pbBeforeSummation.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -206,6 +207,7 @@ Partial Class wDataSummation
         Me.pbAfterSummation.ClearPointSelectionModeAfterSelection = False
         Me.pbAfterSummation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbAfterSummation.Location = New System.Drawing.Point(3, 16)
+        Me.pbAfterSummation.MultipleSpectraStackOffset = 0R
         Me.pbAfterSummation.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         Me.pbAfterSummation.Name = "pbAfterSummation"
         Me.pbAfterSummation.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -234,6 +236,7 @@ Partial Class wDataSummation
         '
         'txtSummationFactor
         '
+        Me.txtSummationFactor.AllowZero = True
         Me.txtSummationFactor.BackColor = System.Drawing.Color.White
         Me.txtSummationFactor.ForeColor = System.Drawing.Color.Black
         Me.txtSummationFactor.FormatDecimalPlaces = 6
@@ -288,12 +291,12 @@ Partial Class wDataSummation
         Me.tpFactorSummation.Padding = New System.Windows.Forms.Padding(3)
         Me.tpFactorSummation.Size = New System.Drawing.Size(275, 78)
         Me.tpFactorSummation.TabIndex = 0
-        Me.tpFactorSummation.Text = "const. summation"
+        Me.tpFactorSummation.Text = "add / subtract scalar"
         Me.tpFactorSummation.UseVisualStyleBackColor = True
         '
         'tpOtherColumnSummation
         '
-        Me.tpOtherColumnSummation.Controls.Add(Me.rbSubstract)
+        Me.tpOtherColumnSummation.Controls.Add(Me.rbSubtract)
         Me.tpOtherColumnSummation.Controls.Add(Me.rbAdd)
         Me.tpOtherColumnSummation.Controls.Add(Me.Label5)
         Me.tpOtherColumnSummation.Controls.Add(Me.csColumnToSumWith)
@@ -302,18 +305,18 @@ Partial Class wDataSummation
         Me.tpOtherColumnSummation.Padding = New System.Windows.Forms.Padding(3)
         Me.tpOtherColumnSummation.Size = New System.Drawing.Size(275, 78)
         Me.tpOtherColumnSummation.TabIndex = 1
-        Me.tpOtherColumnSummation.Text = "add / substract other column"
+        Me.tpOtherColumnSummation.Text = "add / subtract other column"
         Me.tpOtherColumnSummation.UseVisualStyleBackColor = True
         '
-        'rbSubstract
+        'rbSubtract
         '
-        Me.rbSubstract.AutoSize = True
-        Me.rbSubstract.Location = New System.Drawing.Point(138, 52)
-        Me.rbSubstract.Name = "rbSubstract"
-        Me.rbSubstract.Size = New System.Drawing.Size(68, 17)
-        Me.rbSubstract.TabIndex = 18
-        Me.rbSubstract.Text = "substract"
-        Me.rbSubstract.UseVisualStyleBackColor = True
+        Me.rbSubtract.AutoSize = True
+        Me.rbSubtract.Location = New System.Drawing.Point(138, 52)
+        Me.rbSubtract.Name = "rbSubtract"
+        Me.rbSubtract.Size = New System.Drawing.Size(63, 17)
+        Me.rbSubtract.TabIndex = 18
+        Me.rbSubtract.Text = "subtract"
+        Me.rbSubtract.UseVisualStyleBackColor = True
         '
         'rbAdd
         '
@@ -411,7 +414,7 @@ Partial Class wDataSummation
     Friend WithEvents tcSummationMethod As System.Windows.Forms.TabControl
     Friend WithEvents tpFactorSummation As System.Windows.Forms.TabPage
     Friend WithEvents tpOtherColumnSummation As System.Windows.Forms.TabPage
-    Friend WithEvents rbSubstract As System.Windows.Forms.RadioButton
+    Friend WithEvents rbSubtract As System.Windows.Forms.RadioButton
     Friend WithEvents rbAdd As System.Windows.Forms.RadioButton
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents csColumnToSumWith As SpectroscopyManager.ucSpectroscopyColumnSelector

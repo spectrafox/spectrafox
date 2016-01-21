@@ -31,7 +31,7 @@ Public Class cSpectroscopyTableDataSummer
     Public Enum SummationMode
         ByValue
         OtherColumnSum
-        OtherColumnSubstract
+        OtherColumnSubtract
     End Enum
 
     Private _ColumnNameToSum As String
@@ -169,7 +169,7 @@ Public Class cSpectroscopyTableDataSummer
     Public Sub SumColumnWITHAutomaticFetching_Direct(ByVal ColumnNameToBeSummed As String,
                                                      ByVal SummationFactor As Double,
                                                      Optional ByVal dColumnTargetName As String = "Summation Result")
-        Me._SummationColumnName = ColumnNameToBeSummed
+        Me._ColumnNameToSum = ColumnNameToBeSummed
         Me.SummationMethod = SummationMode.ByValue
         Me.SummationFactor = SummationFactor
         Me.ColumnTargetName = dColumnTargetName
@@ -264,7 +264,7 @@ Public Class cSpectroscopyTableDataSummer
                 Else
                     Me._SummedColumn.UnitSymbol = SourceColumn.UnitSymbol
                 End If
-            Case SummationMode.OtherColumnSubstract
+            Case SummationMode.OtherColumnSubtract
                 Dim OtherColumnValues As ReadOnlyCollection(Of Double) = SpectroscopyTable.Column(Me._SummationColumnName).Values
 
                 For i As Integer = 0 To SourceColumnValues.Count - 1 Step 1

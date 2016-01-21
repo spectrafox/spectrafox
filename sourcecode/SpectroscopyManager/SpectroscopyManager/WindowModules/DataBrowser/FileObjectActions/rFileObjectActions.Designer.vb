@@ -137,7 +137,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to add / substract.
+        '''  Looks up a localized string similar to add / subtract.
         '''</summary>
         Friend Shared ReadOnly Property CM_DataSummation() As String
             Get
@@ -308,7 +308,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to using last settings: add / substract a value.
+        '''  Looks up a localized string similar to using last settings: add / subtract a value.
         '''</summary>
         Friend Shared ReadOnly Property MM_DataSummationFactor() As String
             Get
@@ -440,7 +440,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to add or substract values in data column with a constant value,
+        '''  Looks up a localized string similar to add or subtract values in data column with a constant value,
         '''or with another data column in the same file.
         '''</summary>
         Friend Shared ReadOnly Property TT_DataSummation() As String

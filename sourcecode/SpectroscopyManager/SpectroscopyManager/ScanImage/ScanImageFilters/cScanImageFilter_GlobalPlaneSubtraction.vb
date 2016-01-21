@@ -1,4 +1,4 @@
-﻿Public Class cScanImageFilter_GlobalPlaneSubstraction
+﻿Public Class cScanImageFilter_GlobalPlaneSubtraction
     Implements iScanImageFilter
 
     ''' <summary>

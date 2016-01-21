@@ -11,7 +11,7 @@ SpectraFox is a free solution for managing, processing, and evaluating scientifi
 Recommended Version
 -------------------
 
-The recommended and most stable version is 2016.01.19.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
+The recommended and most stable version is 2016.01.21.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
 
 If you do not have administrator privileges, use the [low privilege installer](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe).
 
