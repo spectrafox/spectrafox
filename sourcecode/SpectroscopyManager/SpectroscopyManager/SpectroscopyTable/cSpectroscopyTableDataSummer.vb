@@ -169,7 +169,7 @@ Public Class cSpectroscopyTableDataSummer
     Public Sub SumColumnWITHAutomaticFetching_Direct(ByVal ColumnNameToBeSummed As String,
                                                      ByVal SummationFactor As Double,
                                                      Optional ByVal dColumnTargetName As String = "Summation Result")
-        Me._SummationColumnName = ColumnNameToBeSummed
+        Me._ColumnNameToSum = ColumnNameToBeSummed
         Me.SummationMethod = SummationMode.ByValue
         Me.SummationFactor = SummationFactor
         Me.ColumnTargetName = dColumnTargetName
