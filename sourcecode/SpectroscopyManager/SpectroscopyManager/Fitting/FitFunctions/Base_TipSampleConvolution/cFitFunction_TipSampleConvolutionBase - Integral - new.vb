@@ -36,7 +36,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
 #Region "Fit range plausibility check"
 
     ''' <summary>
-    ''' Check the fit-range to be not too large (<= 10mV).
+    ''' Check the fit-range to be not too large (\leq 10mV).
     ''' Otherwise the default inititalization will need too much time.
     ''' </summary>
     Public Overrides Function FitFunctionSuggestsDifferentFitRange(ByRef FitRangeLower As Double, ByRef FitRangeUpper As Double) As Boolean
@@ -58,31 +58,31 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' This is the step size between which the current is summed up.
     ''' (irrational for minizing numerical artifacts)
     ''' </summary>
-    Public Property ConvolutionIntegrationStepSize As Double = 0.000010901699437494743
+    Public Overridable Property ConvolutionIntegrationStepSize As Double = 0.000010901699437494743
 
     ''' <summary>
     ''' Largest relevant energy value to be considered for integration in the current integral.
     ''' Should be set in advance, to minimize the calculation time.
     ''' </summary>
-    Public Property ConvolutionIntegralE_POS As Double = 0.004
+    Public Overridable Property ConvolutionIntegralE_POS As Double = 0.004
 
     ''' <summary>
     ''' Smallest relevant energy value to be considered for integration in the current integral.
     ''' Should be set in advance, to minimize the calculation time.
     ''' </summary>
-    Public Property ConvolutionIntegralE_NEG As Double = -0.004
+    Public Overridable Property ConvolutionIntegralE_NEG As Double = -0.004
 
     ''' <summary>
     ''' Calculate and cache all current values up to this bias.
     ''' Should be set in advance, to minimize the calculation time.
     ''' </summary>
-    Public Property CalculateForBiasRangeUpperE As Double = 0.004
+    Public Overridable Property CalculateForBiasRangeUpperE As Double = 0.004
 
     ''' <summary>
     ''' Calculate and cache all current values from this bias.
     ''' Should be set in advance, to minimize the calculation time.
     ''' </summary>
-    Public Property CalculateForBiasRangeLowerE As Double = -0.004
+    Public Overridable Property CalculateForBiasRangeLowerE As Double = -0.004
 
     ''' <summary>
     ''' Change the bias range of the calculated current.
@@ -106,6 +106,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
 #End Region
 
 #Region "Model-Specific Properties"
+
     ''' <summary>
     ''' Type of function that should be returned by the FitFunction()
     ''' </summary>
@@ -118,6 +119,20 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' Type of data that should be fitted.
     ''' </summary>
     Public Property FitDataType As FitFunctionType = FitFunctionType.dIdV
+
+    ''' <summary>
+    ''' Gets the FitFunctionType from an input integer (e.g. from loading settings, where the FitFunctionType is stored as integer).
+    ''' </summary>
+    Public Shared Function GetFitFunctionTypeFromInteger(ByVal Input As Integer) As FitFunctionType
+        Select Case Input
+            Case FitFunctionType.I
+                Return FitFunctionType.I
+            Case FitFunctionType.dIdV
+                Return FitFunctionType.dIdV
+            Case Else
+                Return FitFunctionType.I
+        End Select
+    End Function
 
 #End Region
 
@@ -291,49 +306,6 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     End Sub
 #End Region
 
-#Region "Convolution Integrand (CPU version)"
-    ''' <summary>
-    ''' // *****************************************************************
-    ''' // * Integrand des elastischen Kanals (EC) des Tunnelintegrals zur *
-    ''' // * Berechnung des Stroms I(V):                                   *
-    ''' // *                                                               *
-    ''' // *    Integr_EC = DOS_t(E) * DOS_s(E+eV) * [f(E) - f(E+eV)]      *
-    ''' // *****************************************************************
-    ''' </summary>
-    Public Function IntegrandEC(ByVal E As Double,
-                                ByVal eV As Double,
-                                ByRef InputParameters As cFitParameterGroupGroup) As Double
-        Return (FermiF_eV(E, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_sample.ToString).Value) - FermiF_eV(E + eV, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_tip.ToString).Value)) * (SampleDOS(E, InputParameters) * TipDOS(E + eV, InputParameters))
-    End Function
-
-    '// *****************************************************************
-    '// * Integrand  eines  inelastischen Kanals (IEC) des  Tunnelinte- *
-    '// * grals zur Berechnung des Stroms I(V):                         *
-    '// *                                                               *
-    '// * Intgr_IEC = DOS_t(E+E_iec)*DOS_s(E+eV)*f(E+E_iec)*[1-f(E+eV)] *
-    '// *           - DOS_t(E-E_iec)*DOS_s(E+eV)*f(E+eV)*[1-f(E-E_iec)] *
-    '// *                                                               *
-    '// * (siehe Aufschriebe)                                           *
-    '// *****************************************************************
-    Public Function IntegrandIEC(ByVal EPlusEIEC As Double,
-                                 ByVal EMinusEIEC As Double,
-                                 ByVal EPlusBias As Double,
-                                 ByRef InputParameters As cFitParameterGroupGroup) As Double
-        ' // ** Berechne Fermifunktionen der Spitze f(E + E_iec) sowie f(E - E_iec) und der Probe f(E + eV); **
-        Dim FermiTipEPEIEC As Double = FermiF_eV(EPlusEIEC, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_tip.ToString).Value)
-        Dim FermiTipEMEIEC As Double = FermiF_eV(EMinusEIEC, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_tip.ToString).Value)
-        Dim FermiSampleEPV As Double = FermiF_eV(EPlusBias, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_sample.ToString).Value)
-
-        '// ** Berechnung und Rueckgabe des Integrand; **
-        '// ** Benutze Vorausberechnete Funktionen um Rechenzeit zu sparen; **
-        Return SampleDOS(EPlusBias, InputParameters) _
-                * (TipDOS(EPlusEIEC, InputParameters) * FermiTipEPEIEC * (1.0 - FermiSampleEPV) _
-                - TipDOS(EMinusEIEC, InputParameters) * (1.0 - FermiTipEMEIEC) * FermiSampleEPV)
-    End Function
-
-
-#End Region
-
 #Region "Fit-Function Interface and caching algorithm to calculate the current"
 
     ''' <summary>
@@ -341,7 +313,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' is responsible for the number of points that need to be calculated,
     ''' and therefore the speed of the calculation, and the accuracy.
     ''' </summary>
-    Public Shared dE_BiasStepWidth As Double = 0.00001
+    Public Overridable Property dE_BiasStepWidth As Double = 0.00001
 
     ''' <summary>
     ''' Cache storage for the current integral.
@@ -356,7 +328,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     Private dVBiasEnd As Double = 0
 
     ' cache variables for the last used parameters, for which the current is cached
-    Private LastParameterValues() As Double
+    Protected LastParameterValues() As Double
 
     ''' <summary>
     ''' Returns the actual FitFunction-Value at a given X
@@ -373,8 +345,9 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
 
     ''' <summary>
     ''' Precalculates the current cache.
+    ''' Used to save a long calculation time for each point, if the parameters have not changed.
     ''' </summary>
-    Protected Sub PrecalculateCurrent(ByRef InputParameters As cFitParameterGroupGroup, ByVal Force As Boolean)
+    Protected Overridable Sub PrecalculateCurrent(ByRef InputParameters As cFitParameterGroupGroup, ByVal Force As Boolean)
 
         ' Current
         Dim ParameterValues As Double() = InputParameters.Group(Me.UseFitParameterGroupID).GetParameterValues
@@ -473,29 +446,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
             ConvolutedCurrent.CopyTo(Me.CurrentIntegralCache, 0)
         End If
 #Else
-            ' Convolute the current with a gaussian afterwards, to broaden it.
-            If iCurrentCachePoints_Pos > 0 Then
-                For j As Integer = 0 To iCurrentCachePoints_Pos - 1 Step 1
-                    CurrentIntegralCache_POS(j) = FuncI(CurrentIntegralX_POS(j), Identifiers, Values, Me.ConvolutionIntegralE_POS, Me.ConvolutionIntegralE_NEG, ConvolutionIntegrationStepSize)
-                Next
-                ' Convolute the current with a gaussian afterwards, to broaden it.
-                Dim ConvolutedCurrent_POS(CurrentIntegralX_POS.Length - 1) As Double
-                For i As Integer = 0 To CurrentIntegralX_POS.Length - 1 Step 1
-                    ConvolutedCurrent_POS(i) = ConvolveFunction(CurrentIntegralX_POS(i), CInt(Me.ConvolutionFunction), sFitParameter.GetValueForIdentifier(FitParameterIdentifier.SystemBroadening, Identifiers, Values))
-                Next
-                ConvolutedCurrent_POS.CopyTo(CurrentIntegralCache_POS, 0)
-            End If
-            If iCurrentCachePoints_Neg > 0 Then
-                For j As Integer = 0 To iCurrentCachePoints_Neg - 1 Step 1
-                    CurrentIntegralCache_NEG(j) = FuncI(CurrentIntegralX_NEG(j), Identifiers, Values, Me.ConvolutionIntegralE_POS, Me.ConvolutionIntegralE_NEG, ConvolutionIntegrationStepSize)
-                Next
-                ' Convolute the current with a gaussian afterwards, to broaden it.
-                Dim ConvolutedCurrent_NEG(CurrentIntegralX_NEG.Length - 1) As Double
-                For i As Integer = 0 To CurrentIntegralX_NEG.Length - 1 Step 1
-                    ConvolutedCurrent_NEG(i) = ConvolveFunction(CurrentIntegralX_NEG(i), CInt(Me.ConvolutionFunction), sFitParameter.GetValueForIdentifier(FitParameterIdentifier.SystemBroadening, Identifiers, Values))
-                Next
-                ConvolutedCurrent_NEG.CopyTo(CurrentIntegralCache_NEG, 0)
-            End If
+          ###### NOT DEFINED ANYMORE
 #End If
 
     End Sub
@@ -507,7 +458,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' Energy sampling size in [eV] for the convolution with a Gauss function.
     ''' Used for calculation of broadening.
     ''' </summary>
-    Public Shared dE_BroadeningStepWidth As Double = 0.0000309016994374947424102D
+    Public Overridable Property dE_BroadeningStepWidth As Double = 0.0000309016994374947424102D
 
     ''' <summary>
     ''' Type of Broadening applied to the current.
@@ -551,8 +502,6 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' // *****************************************************************
     ''' // *                                                               *
     ''' // *      ( f * g ) (E) = int f(F) * g( E - F ) dF                 *
-    ''' // *                                                               *
-    ''' // * oder mit einer Lorentz-Kurve g(E) mit derselben Breite;       *
     ''' // *                                                               *
     ''' // *****************************************************************
     ''' </summary>
@@ -777,6 +726,8 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
             ' the requested value lies between two calculated points,
             ' so lets interpolate between these two points the values.
 
+            '##############################################
+            ' USING SPLINE INTERPOLATION NOW.... SEE BELOW
             ' linear interpolation
             'Dim val As Double = CurrentCache(IntN) - CurrentCache(IntN)
             'val = val * (n - IntN) / n
@@ -794,7 +745,10 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
             'End If
 
             'Return cNumericalMethods.CosineInterpolationCudafy(y1, y2, EvaluateAtX)
+            '##############################################
 
+            '##############################################
+            ' USING SPLINE INTERPOLATION NOW.... SEE BELOW
             '' Cubic Interpolation
             'Dim y0 As Double
             'Dim y1 As Double = CurrentCache(IntN)
@@ -820,6 +774,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
             'End If
 
             'Return cNumericalMethods.CubicInterpolationCudafy(y0, y1, y2, y3, EvaluateAtX)
+            '#####################################################
 
 
             ' Polynomial Interpolation
@@ -872,8 +827,8 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' <summary>
     ''' Fit-Function, depending on the Selected Fit-Data-Type
     ''' </summary>
-    Public Function FitFunctionPRECALC(ByVal VBias As Double,
-                                       ByRef InputParameters As cFitParameterGroupGroup) As Double
+    Public Overridable Function FitFunctionPRECALC(ByVal VBias As Double,
+                                                   ByRef InputParameters As cFitParameterGroupGroup) As Double
         Dim VBiasEff As Double = InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.GlobalXOffset.ToString).Value + VBias
         Dim ReturnVal As Double = 0
         ' take the current or the dI/dV-value
@@ -893,8 +848,8 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' <summary>
     ''' Fit-Function, depending on the Selected Fit-Data-Type
     ''' </summary>
-    Public Function FitFunctionDirect(ByVal VBias As Double,
-                                      ByRef InputParameters As cFitParameterGroupGroup) As Double
+    Public Overridable Function FitFunctionDirect(ByVal VBias As Double,
+                                                  ByRef InputParameters As cFitParameterGroupGroup) As Double
         Dim ReturnVal As Double = 0
         Dim VBiasEff As Double = InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.GlobalXOffset.ToString).Value + VBias
 
@@ -915,15 +870,59 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
 
 #End Region
 
+#Region "Convolution Integrand (CPU version)"
+
+    ''' <summary>
+    ''' // *****************************************************************
+    ''' // * Integrand des elastischen Kanals (EC) des Tunnelintegrals zur *
+    ''' // * Berechnung des Stroms I(V):                                   *
+    ''' // *                                                               *
+    ''' // *    Integr_EC = DOS_t(E) * DOS_s(E+eV) * [f(E) - f(E+eV)]      *
+    ''' // *****************************************************************
+    ''' </summary>
+    Public Overridable Function IntegrandEC(ByVal E As Double,
+                                            ByVal eV As Double,
+                                            ByRef InputParameters As cFitParameterGroupGroup) As Double
+        Return (FermiF_eV(E, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_sample.ToString).Value) - FermiF_eV(E + eV, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_tip.ToString).Value)) * (SampleDOS(E, InputParameters) * TipDOS(E + eV, InputParameters))
+    End Function
+
+    '// *****************************************************************
+    '// * Integrand  eines  inelastischen Kanals (IEC) des  Tunnelinte- *
+    '// * grals zur Berechnung des Stroms I(V):                         *
+    '// *                                                               *
+    '// * Intgr_IEC = DOS_t(E+E_iec)*DOS_s(E+eV)*f(E+E_iec)*[1-f(E+eV)] *
+    '// *           - DOS_t(E-E_iec)*DOS_s(E+eV)*f(E+eV)*[1-f(E-E_iec)] *
+    '// *                                                               *
+    '// * (siehe Aufschriebe)                                           *
+    '// *****************************************************************
+    Public Overridable Function IntegrandIEC(ByVal EPlusEIEC As Double,
+                                             ByVal EMinusEIEC As Double,
+                                             ByVal EPlusBias As Double,
+                                             ByRef InputParameters As cFitParameterGroupGroup) As Double
+        ' // ** Berechne Fermifunktionen der Spitze f(E + E_iec) sowie f(E - E_iec) und der Probe f(E + eV); **
+        Dim FermiTipEPEIEC As Double = FermiF_eV(EPlusEIEC, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_tip.ToString).Value)
+        Dim FermiTipEMEIEC As Double = FermiF_eV(EMinusEIEC, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_tip.ToString).Value)
+        Dim FermiSampleEPV As Double = FermiF_eV(EPlusBias, InputParameters.Group(Me.UseFitParameterGroupID).Parameter(FitParameterIdentifier.T_sample.ToString).Value)
+
+        '// ** Berechnung und Rueckgabe des Integrand; **
+        '// ** Benutze Vorausberechnete Funktionen um Rechenzeit zu sparen; **
+        Return SampleDOS(EPlusBias, InputParameters) _
+                * (TipDOS(EPlusEIEC, InputParameters) * FermiTipEPEIEC * (1.0 - FermiSampleEPV) _
+                - TipDOS(EMinusEIEC, InputParameters) * (1.0 - FermiTipEMEIEC) * FermiSampleEPV)
+    End Function
+
+#End Region
+
+
 #Region "Convolution Integral"
     ''' <summary>
     ''' Function to calculate the tunneling current I(Vbias)
     ''' </summary>
-    Public Function FuncI(ByVal VBias As Double,
-                          ByRef InputParameters As cFitParameterGroupGroup,
-                          ByVal MaxEIntegrationRangePos As Double,
-                          ByVal MaxEIntegrationRangeNeg As Double,
-                          ByVal ConvolutionIntegrationStepSize As Double) As Double
+    Public Overridable Function FuncI(ByVal VBias As Double,
+                                      ByRef InputParameters As cFitParameterGroupGroup,
+                                      ByVal MaxEIntegrationRangePos As Double,
+                                      ByVal MaxEIntegrationRangeNeg As Double,
+                                      ByVal ConvolutionIntegrationStepSize As Double) As Double
 
         'Return FuncICUDA(VBias, Identifiers, Values, MaxEIntegrationRangePos, MaxEIntegrationRangeNeg, ConvolutionIntegrationStepSize)
 
@@ -1047,13 +1046,14 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
         With XMLWriter
             ' Begin the element of the parameter description
             .WriteStartElement("CurrentIntegralConvolutionSettings") ' <CurrentIntegralConvolutionSettings>
-            .WriteAttributeString("CurrentPrecalculationInterpolationStepWidth", cFitFunction_TipSampleConvolutionBase.dE_BiasStepWidth.ToString(System.Globalization.CultureInfo.InvariantCulture))
+            .WriteAttributeString("CurrentPrecalculationInterpolationStepWidth", Me.dE_BiasStepWidth.ToString(System.Globalization.CultureInfo.InvariantCulture))
             .WriteAttributeString("BiasLimitUpperE", Me.CalculateForBiasRangeUpperE.ToString(System.Globalization.CultureInfo.InvariantCulture))
             .WriteAttributeString("BiasLimitLowerE", Me.CalculateForBiasRangeLowerE.ToString(System.Globalization.CultureInfo.InvariantCulture))
             .WriteAttributeString("ConvolutionIntegralEPos", Me.ConvolutionIntegralE_POS.ToString(System.Globalization.CultureInfo.InvariantCulture))
             .WriteAttributeString("ConvolutionIntegralENeg", Me.ConvolutionIntegralE_NEG.ToString(System.Globalization.CultureInfo.InvariantCulture))
             .WriteAttributeString("IntegrationEnergyStep", Me.ConvolutionIntegrationStepSize.ToString(System.Globalization.CultureInfo.InvariantCulture))
-            .WriteAttributeString("BroadeningStepWidth", cFitFunction_TipSampleConvolutionBase.dE_BroadeningStepWidth.ToString(System.Globalization.CultureInfo.InvariantCulture))
+            .WriteAttributeString("BroadeningStepWidth", Me.dE_BroadeningStepWidth.ToString(System.Globalization.CultureInfo.InvariantCulture))
+            .WriteAttributeString("FitDataType", Convert.ToInt32(Me.FitDataType).ToString(System.Globalization.CultureInfo.InvariantCulture))
             .WriteEndElement() ' <\CurrentIntegralConvolutionSettings>
         End With
 
@@ -1071,7 +1071,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
                         Select Case .Name
                             ' extract all the current integral settings
                             Case "CurrentPrecalculationInterpolationStepWidth"
-                                cFitFunction_TipSampleConvolutionBase.dE_BiasStepWidth = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                Me.dE_BiasStepWidth = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
                             Case "BiasLimitUpperE"
                                 Me.CalculateForBiasRangeUpperE = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
                             Case "BiasLimitLowerE"
@@ -1083,7 +1083,9 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
                             Case "ConvolutionIntegralENeg"
                                 Me.ConvolutionIntegralE_NEG = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
                             Case "BroadeningStepWidth"
-                                cFitFunction_TipSampleConvolutionBase.dE_BroadeningStepWidth = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                Me.dE_BroadeningStepWidth = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                            Case "FitDataType"
+                                Me.FitDataType = GetFitFunctionTypeFromInteger(Convert.ToInt32(.Value, System.Globalization.CultureInfo.InvariantCulture))
                         End Select
                     End While
                 End If

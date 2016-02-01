@@ -29,8 +29,8 @@
         Me._FitFunction = DirectCast(MyBase._FitFunction, cFitFunction_TipSampleConvolutionBase)
 
         ' Set the initial settings of the fit-function.
-        Me.txtSettings_BroadeningStepWidth.SetValue(cFitFunction_TipSampleConvolutionBase.dE_BroadeningStepWidth)
-        Me.txtSettings_CalculateValuesBiasInterpolationStepWidth.SetValue(cFitFunction_TipSampleConvolutionBase.dE_BiasStepWidth)
+        Me.txtSettings_BroadeningStepWidth.SetValue(Me._FitFunction.dE_BroadeningStepWidth)
+        Me.txtSettings_CalculateValuesBiasInterpolationStepWidth.SetValue(Me._FitFunction.dE_BiasStepWidth)
         Me.txtSettings_CalculateValuesBiasLowerRange.SetValue(Me._FitFunction.CalculateForBiasRangeLowerE)
         Me.txtSettings_CalculateValuesBiasUpperRange.SetValue(Me._FitFunction.CalculateForBiasRangeUpperE)
         Me.txtSettings_ConvolutionIntegralE_NEG.SetValue(Me._FitFunction.ConvolutionIntegralE_NEG)
@@ -147,7 +147,7 @@
     ''' Changes the input parameters for the fit-function.
     ''' </summary>
     Private Sub txtSettings_CalculateValuesBiasInterpolationStepWidth_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_CalculateValuesBiasInterpolationStepWidth.ValidValueChanged
-        cFitFunction_TipSampleConvolutionBase.dE_BiasStepWidth = source.DecimalValue
+        Me._FitFunction.dE_BiasStepWidth = source.DecimalValue
         Me._FitFunction.ForceNewPrecalculation()
         Me.RaiseParameterChangedEvent()
     End Sub
@@ -156,7 +156,7 @@
     ''' Changes the input parameters for the fit-function.
     ''' </summary>
     Private Sub txtSettings_BroadeningStepWidth_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_BroadeningStepWidth.ValidValueChanged
-        cFitFunction_TipSampleConvolutionBase.dE_BroadeningStepWidth = source.DecimalValue
+        Me._FitFunction.dE_BroadeningStepWidth = source.DecimalValue
         Me._FitFunction.ForceNewPrecalculation()
         Me.RaiseParameterChangedEvent()
     End Sub

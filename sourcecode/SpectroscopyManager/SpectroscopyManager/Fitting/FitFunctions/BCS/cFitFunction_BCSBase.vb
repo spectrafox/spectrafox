@@ -324,7 +324,7 @@ Public MustInherit Class cFitFunction_BCSBase
             Me.FitParameters.RemoveFitParameter(FitParameterIdentifiersToRemove(i))
         Next
 
-        ' Modify the Fit-Parameter-Array and add all inelastic channels
+        ' Modify the Fit-Parameter-Array and add all subgap resonances channels
         For i As Integer = 0 To Me.SubGapPeaks.Count - 1 Step 1
             ' add Fit-Parameters
             With Me.FitParameters
@@ -376,25 +376,6 @@ Public MustInherit Class cFitFunction_BCSBase
             SubGapPeakToModify = Me.SubGapPeaks(Me.SubGapPeaks.Count - 1)
         End If
 
-        '' Set the parameter
-        'Select Case Identifier
-
-        '    Case iFitFunction_SubGapPeaks.SubGapPeak.SGPIdentifier_XCenter(SubGapPeakIndex)
-        '        With SubGapPeakToModify.XCenter
-        '            .IsFixed = Parameter.IsFixed
-        '            .LockedToParameterIdentifier = Parameter.LockedToParameterIdentifier
-        '            .LowerBoundary = Parameter.LowerBoundary
-        '            .UpperBoundary = Parameter.UpperBoundary
-        '            .ChangeValue(Parameter.Value, False)
-        '        End With
-        '    Case iFitFunction_SubGapPeaks.SubGapPeak.SGPIdentifier_Amplitude(SubGapPeakIndex)
-        '        SubGapPeakToModify.Amplitude = Parameter
-        '    Case iFitFunction_SubGapPeaks.SubGapPeak.SGPIdentifier_Width(SubGapPeakIndex)
-        '        SubGapPeakToModify.Width = Parameter
-        '    Case iFitFunction_SubGapPeaks.SubGapPeak.SGPIdentifier_PosNegRatio(SubGapPeakIndex)
-        '        SubGapPeakToModify.PosNegRatio = Parameter
-
-        'End Select
     End Sub
 
     ''' <summary>

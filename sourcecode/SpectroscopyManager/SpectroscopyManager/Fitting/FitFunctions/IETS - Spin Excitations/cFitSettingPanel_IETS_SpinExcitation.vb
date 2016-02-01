@@ -1,15 +1,5 @@
 ﻿Public Class cFitSettingPanel_IETS_SpinExcitation
-    Inherits cFitSettingPanel
-
-    ''' <summary>
-    ''' Container for the Fit-Function
-    ''' </summary>
-    Private Shadows _FitFunction As New cFitFunction_IETS_SpinExcitation
-
-    ''' <summary>
-    ''' Initialization complete?
-    ''' </summary>
-    Public bReady As Boolean = False
+    Inherits cFitSettingPanel_TipSampleConvolution
 
 #Region "Constructor"
 
@@ -23,37 +13,43 @@
         Dim CurrentIdentifier As String
 
         ' apply the last settings
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Amplitude.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalYStretch.ToString
         Me.fpAmplitude.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.LinearSlope.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.LinearSlope.ToString
         Me.fpLinearSlope.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.D.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.D.ToString
         Me.fpIETS_D.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.E.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.E.ToString
         Me.fpIETS_E.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Temperature.ToString
-        Me.fpTemperature.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.T_tip.ToString
+        Me.fpTemperatureTip.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Y0.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.T_sample.ToString
+        Me.fpTemperatureSample.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
+
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.SystemBroadening.ToString
+        Me.fpSystemBroadening.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
+
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalYOffset.ToString
         Me.fpYOffset.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.XCenter.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalXOffset.ToString
         Me.fpXCenter.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.BField.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.BField.ToString
         Me.fpMagneticField.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.BAngleTheta.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.BAngleTheta.ToString
         Me.fpMagneticFieldAngleTheta.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.BAnglePhi.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.BAnglePhi.ToString
         Me.fpMagneticFieldAnglePhi.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
-        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.g.ToString
+        CurrentIdentifier = cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.g.ToString
         Me.fpIETS_gFactor.BindToFitParameter(Me._FitFunction.FitParameters.Parameter(CurrentIdentifier), Me._FitFunction.FitParametersGrouped)
 
         ' End of "Write the current parameter settings"
@@ -61,33 +57,27 @@
 
         '#############################################
         ' Register Parameter-Textboxes and Checkboxes
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Amplitude.ToString, Me.fpAmplitude)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.LinearSlope.ToString, Me.fpLinearSlope)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.XCenter.ToString, Me.fpXCenter)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Y0.ToString, Me.fpYOffset)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.D.ToString, Me.fpIETS_D)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.E.ToString, Me.fpIETS_E)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Temperature.ToString, Me.fpTemperature)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.BField.ToString, Me.fpMagneticField)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.BAngleTheta.ToString, Me.fpMagneticFieldAngleTheta)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.BAnglePhi.ToString, Me.fpMagneticFieldAnglePhi)
-        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.g.ToString, Me.fpIETS_gFactor)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalYStretch.ToString, Me.fpAmplitude)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.LinearSlope.ToString, Me.fpLinearSlope)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalXOffset.ToString, Me.fpXCenter)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalYOffset.ToString, Me.fpYOffset)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.SystemBroadening.ToString, Me.fpSystemBroadening)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.D.ToString, Me.fpIETS_D)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.E.ToString, Me.fpIETS_E)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.T_tip.ToString, Me.fpTemperatureTip)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.T_sample.ToString, Me.fpTemperatureSample)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.BField.ToString, Me.fpMagneticField)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.BAngleTheta.ToString, Me.fpMagneticFieldAngleTheta)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.BAnglePhi.ToString, Me.fpMagneticFieldAnglePhi)
+        MyBase.RegisterFitParameterSettingsBox(cFitFunction_IETS_SpinExcitation.FitParameterIdentifierSpinExc.g.ToString, Me.fpIETS_gFactor)
 
-        MyBase.RegisterLockedFitParameterOnMultipleFit(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.Y0.ToString, 0D)
+        MyBase.RegisterLockedFitParameterOnMultipleFit(cFitFunction_IETS_SpinExcitation.FitParameterIdentifier.GlobalYOffset.ToString, 0D)
         ' END: Registerin finished
         '#############################################
 
         '###################################
         ' Write the Data-Type Combobox
-        With Me.cbSignalType
-            .Items.Add(New KeyValuePair(Of cFitFunction_IETS_SpinExcitation.SignalTypes, String)(cFitFunction_IETS_SpinExcitation.SignalTypes.I, My.Resources.rFitFunction_IETS_SpinExcitation.SignalTypes_I))
-            .Items.Add(New KeyValuePair(Of cFitFunction_IETS_SpinExcitation.SignalTypes, String)(cFitFunction_IETS_SpinExcitation.SignalTypes.dIdV, My.Resources.rFitFunction_IETS_SpinExcitation.SignalTypes_dIdV))
-            .ValueMember = "Key"
-            .DisplayMember = "Value"
 
-            ' Select the initial signal type (should be dI/dV)
-            Me.SetSelectedSignalType(Me._FitFunction.SignalType)
-        End With
         ' Initialize the spin combobox
         With Me.cbSpin
             For i As Integer = 1 To 20 Step 1
@@ -97,13 +87,13 @@
             .DisplayMember = "Value"
 
             ' Select the initial spin
-            Me.SelectedSpinInOneHalfs = Me._FitFunction.SpinInOneHalfs
+            Me.SelectedSpinInOneHalfs = DirectCast(Me._FitFunction, cFitFunction_IETS_SpinExcitation).SpinInOneHalfs
         End With
+
         ' END: Write the Data-Type Combobox
         '###################################
 
-        Me.bReady = True
-        Return True
+        Return MyBase.BindFitParameters
     End Function
 #End Region
 
@@ -157,24 +147,6 @@
 #End Region
 
 #Region "Additional Settings, not belonging to a certain FitParameter"
-    ''' <summary>
-    ''' Constructor
-    ''' </summary>
-    Private Sub cFitSettingPanel_IETS_FitFunctionInitialized() Handles MyBase.FitFunctionInitialized
-        If Me.DesignMode Then Return
-        If MyBase._FitFunction Is Nothing Then Return
-
-        Me._FitFunction = DirectCast(MyBase._FitFunction, cFitFunction_IETS_SpinExcitation)
-
-        ' Set the initial settings of the fit-function.
-        Me.txtSettings_CalculateValuesBiasInterpolationStepWidth.SetValue(Me._FitFunction.dEInterpolation_CurrentPrecalculation)
-        Me.txtSettings_CalculateValuesBiasLowerRange.SetValue(Me._FitFunction.CalculateForBiasRangeLowerE)
-        Me.txtSettings_CalculateValuesBiasUpperRange.SetValue(Me._FitFunction.CalculateForBiasRangeUpperE)
-        Me.txtSettings_ConvolutionIntegralE_NEG.SetValue(Me._FitFunction.ConvolutionIntegralE_NEG)
-        Me.txtSettings_ConvolutionIntegralE_POS.SetValue(Me._FitFunction.ConvolutionIntegralE_POS)
-        Me.txtSettings_ConvolutionIntegrationStepSize.SetValue(Me._FitFunction.IntegrationEnergyStep)
-
-    End Sub
 
     ''' <summary>
     ''' Sets and gets the selected spin in the interface combobox.
@@ -197,99 +169,7 @@
         If Not Me.bReady Then Return
 
         ' the selected spin is always one larger in the index
-        Me._FitFunction.SpinInOneHalfs = Me.SelectedSpinInOneHalfs
-        Me.RaiseParameterChangedEvent()
-    End Sub
-
-    ''' <summary>
-    ''' Sets and gets the selected signal type in the interface combobox.
-    ''' </summary>
-    Public Function GetSelectedSignalType() As cFitFunction_IETS_SpinExcitation.SignalTypes
-        Try
-            If Me.cbSignalType.Items.Count <= 0 Then Return cFitFunction_IETS_SpinExcitation.SignalTypes.I
-            Return CType(Me.cbSignalType.Items(Me.cbSignalType.SelectedIndex), KeyValuePair(Of cFitFunction_IETS_SpinExcitation.SignalTypes, String)).Key
-        Catch ex As Exception
-            Return cFitFunction_IETS_SpinExcitation.SignalTypes.I
-        End Try
-    End Function
-
-    ''' <summary>
-    ''' Sets and gets the selected signal type in the interface combobox.
-    ''' </summary>
-    Public Sub SetSelectedSignalType(value As cFitFunction_IETS_SpinExcitation.SignalTypes)
-        If Me.cbSignalType.Items.Count <= 0 Then Return
-        Select Case value
-            Case cFitFunction_IETS_SpinExcitation.SignalTypes.I
-                Me.cbSignalType.SelectedIndex = 0
-            Case cFitFunction_IETS_SpinExcitation.SignalTypes.dIdV
-                Me.cbSignalType.SelectedIndex = 1
-        End Select
-    End Sub
-
-    ''' <summary>
-    ''' Change the selected signal type.
-    ''' </summary>
-    Private Sub cbSignalType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbSignalType.SelectedIndexChanged
-        If Not Me.bReady Then Return
-
-        ' get the selected signal type 
-        With Me.cbSignalType
-            Me._FitFunction.SignalType = GetSelectedSignalType()
-            Me.RaiseParameterChangedEvent()
-        End With
-    End Sub
-
-    ''' <summary>
-    ''' Changes the input parameters for the fit-function.
-    ''' </summary>
-    Private Sub txtSettings_ConvolutionIntegralE_POS_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_ConvolutionIntegralE_POS.ValidValueChanged
-        Me._FitFunction.ConvolutionIntegralE_POS = source.DecimalValue
-        Me._FitFunction.ForceNewPrecalculation()
-        Me.RaiseParameterChangedEvent()
-    End Sub
-
-    ''' <summary>
-    ''' Changes the input parameters for the fit-function.
-    ''' </summary>
-    Private Sub txtSettings_ConvolutionIntegralE_NEG_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_ConvolutionIntegralE_NEG.ValidValueChanged
-        Me._FitFunction.ConvolutionIntegralE_NEG = source.DecimalValue
-        Me._FitFunction.ForceNewPrecalculation()
-        Me.RaiseParameterChangedEvent()
-    End Sub
-
-    ''' <summary>
-    ''' Changes the input parameters for the fit-function.
-    ''' </summary>
-    Private Sub txtSettings_ConvolutionIntegrationStepSize_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_ConvolutionIntegrationStepSize.ValidValueChanged
-        Me._FitFunction.IntegrationEnergyStep = source.DecimalValue
-        Me._FitFunction.ForceNewPrecalculation()
-        Me.RaiseParameterChangedEvent()
-    End Sub
-
-    ''' <summary>
-    ''' Changes the input parameters for the fit-function.
-    ''' </summary>
-    Private Sub txtSettings_CalculateValuesBiasUpperRange_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_CalculateValuesBiasUpperRange.ValidValueChanged
-        Me._FitFunction.CalculateForBiasRangeUpperE = source.DecimalValue
-        Me._FitFunction.ForceNewPrecalculation()
-        Me.RaiseParameterChangedEvent()
-    End Sub
-
-    ''' <summary>
-    ''' Changes the input parameters for the fit-function.
-    ''' </summary>
-    Private Sub txtSettings_CalculateValuesBiasLowerRange_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_CalculateValuesBiasLowerRange.ValidValueChanged
-        Me._FitFunction.CalculateForBiasRangeLowerE = source.DecimalValue
-        Me._FitFunction.ForceNewPrecalculation()
-        Me.RaiseParameterChangedEvent()
-    End Sub
-
-    ''' <summary>
-    ''' Changes the input parameters for the fit-function.
-    ''' </summary>
-    Private Sub txtSettings_CalculateValuesBiasInterpolationStepWidth_TextChanged(ByRef source As NumericTextbox) Handles txtSettings_CalculateValuesBiasInterpolationStepWidth.ValidValueChanged
-        Me._FitFunction.dEInterpolation_CurrentPrecalculation = source.DecimalValue
-        Me._FitFunction.ForceNewPrecalculation()
+        DirectCast(Me._FitFunction, cFitFunction_IETS_SpinExcitation).SpinInOneHalfs = Me.SelectedSpinInOneHalfs
         Me.RaiseParameterChangedEvent()
     End Sub
 
