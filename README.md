@@ -11,13 +11,13 @@ SpectraFox is a free solution for managing, processing, and evaluating scientifi
 Recommended Version
 -------------------
 
-The recommended and most stable version is 2016.02.01.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
+The recommended and most stable version is 2016.02.02.00: [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable.exe)
 
 If you do not have administrator privileges, use the [low privilege installer](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe).
 
 Downloads for the latest *beta* version:
 [\[download\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-dev.exe)
-[\[low privilege installer\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-stable_lowpriv.exe)
+[\[low privilege installer\]](https://github.com/spectrafox/spectrafox/raw/master/setup/spectrafox-dev_lowpriv.exe)
 
 Requirements
 ------------
@@ -60,5 +60,5 @@ SpectraFox is currently available in english.
 Further Information and basic Help
 ----------------------------------
 
-* Everything related to the development of SpectraFox can be found on our [Public Repository](https://github.com/spectrafox/spectrafox)
-* [Documentation](https://github.com/spectrafox/spectrafox/wiki)
+* Everything related to the development of SpectraFox can be found on our [Public Repository](http://git.spectrafox.com)
+* [Documentation](https://wiki.spectrafox.com)
