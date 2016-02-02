@@ -61,4 +61,4 @@ Further Information and basic Help
 ----------------------------------
 
 * Everything related to the development of SpectraFox can be found on our [Public Repository](http://git.spectrafox.com)
-* [Documentation](https://wiki.spectrafox.com)
+* [Documentation](http://wiki.spectrafox.com)
