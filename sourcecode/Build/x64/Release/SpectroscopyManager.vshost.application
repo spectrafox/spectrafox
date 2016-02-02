@@ -7,18 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="SpectroscopyManager.exe.manifest" size="40191">
+    <dependentAssembly dependencyType="install" codebase="SpectroscopyManager.exe.manifest" size="40189">
       <assemblyIdentity name="SpectroscopyManager.exe" version="9.1.0.2" publicKeyToken="0000000000000000" language="en" processorArchitecture="amd64" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-<<<<<<< HEAD
-        <dsig:DigestValue>ZvNYrbK29oOsGoR8hW8LcrR1woIR7quU11atcMOMICg=</dsig:DigestValue>
-=======
-        <dsig:DigestValue>yiVnVCVoKRKaHojvDdtN+LAZ5xi4gzkcRv1kdw7dE9M=</dsig:DigestValue>
->>>>>>> 5e1d8a66b531b777c2f328a2aa0471dfd2e48ed5
+        <dsig:DigestValue>9GENLXRwFANkwB/Bgp4xZvYpEVJpWviG1FV9QAZBXtY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

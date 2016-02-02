@@ -167,7 +167,7 @@
         If ValuesPerPoint = 1 Then Return List(0).ToList
 
         ' Check, if all Lists have the same length
-        For Each DataList As List(Of Double) In List
+        For Each DataList As ICollection(Of Double) In List
             If DataList.Count <> List(0).Count Then
                 Throw New Exception("Lists do not have the same number of points!")
             End If
@@ -177,7 +177,7 @@
         For i As Integer = 0 To List(0).Count - 1 Step 1
             Dim dSum As Double = 0D
             Dim ValueCount As Integer = 0
-            For Each DataList As List(Of Double) In List
+            For Each DataList As ICollection(Of Double) In List
                 If Not Double.IsNaN(DataList(i)) Then
                     ValueCount += 1
                     dSum += DataList(i)
