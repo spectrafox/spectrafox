@@ -10,16 +10,36 @@ Public Class wFit_SingleDataSet
 
     Private bReady As Boolean = False
 
+#Region "Properties"
+
+    ''' <summary>
+    ''' Fit-model file to load after the initialization.
+    ''' </summary>
+    Public Property LoadFitModelFileAfterInit As String = String.Empty
+
+    ''' <summary>
+    ''' Shall the window be added automatically to the fit-queue,
+    ''' after the initialization of the fit-window.
+    ''' </summary>
+    Public Property AddWindowToFitQueueAfterInit As Boolean = False
+
+#End Region
+
+#Region "Events"
+
     ''' <summary>
     ''' Event that gets raised, if the fit finished.
     ''' </summary>
     Public Event FitFinishedEvent() Implements iFitWindow.FitFinishedEvent
+
+#End Region
 
 #Region "Spectroscopy-Table Object, Interface Function and Column-Selection"
     ''' <summary>
     ''' Sets the used Spectroscopy-Table and enables the Interface.
     ''' </summary>
     Public Sub SetSpectroscopyTable(ByRef SpectroscopyTable As cSpectroscopyTable) Handles MyBase.SpectroscopyTableFetchedThreadSafeCall
+
         Me.bReady = True
 
         ' Add the Spectroscopy-Table to the preview-display.
@@ -33,6 +53,18 @@ Public Class wFit_SingleDataSet
 
         ' Change the title of the window.
         Me.Text &= Me.CurrentSpectroscopyTable.FileNameWithoutPath
+
+        ' Check, if a fit-model shall be loaded automatically.
+        If Me.LoadFitModelFileAfterInit <> String.Empty Then
+            If IO.File.Exists(Me.LoadFitModelFileAfterInit) Then
+                Me.Import(Me.LoadFitModelFileAfterInit)
+            End If
+        End If
+
+        ' Check, if the window shall be added automatically to the fit-queue
+        If Me.AddWindowToFitQueueAfterInit Then
+            Me.AddWindowToFitQueue()
+        End If
 
     End Sub
 
@@ -1624,7 +1656,7 @@ Public Class wFit_SingleDataSet
     ''' <summary>
     ''' Button press to add this fit-window to the fit-queue.
     ''' </summary>
-    Private Sub btnAddFitToFitQueue_Click(sender As Object, e As EventArgs) Handles btnAddFitToFitQueue.Click
+    Private Sub AddWindowToFitQueue() Handles btnAddFitToFitQueue.Click
 
         ' Get the current fit-queue.
         Dim FitQueue As wFitQueue = wFitQueue.GetFitQueueWindow
@@ -1632,6 +1664,7 @@ Public Class wFit_SingleDataSet
         ' Change functionality depending on the membership in a fit-queue.
         ' Adds the fit to the fit-queue.
         Dim QueuePosition As Integer = FitQueue.AddFitToFitQueue(Me)
+
     End Sub
 
     ''' <summary>

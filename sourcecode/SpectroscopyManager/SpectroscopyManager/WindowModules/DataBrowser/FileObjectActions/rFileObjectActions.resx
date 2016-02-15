@@ -180,8 +180,11 @@
   <data name="MM_DataMultiplicationOtherColumn" xml:space="preserve">
     <value>using last settings: multiply two data columns</value>
   </data>
-  <data name="MM_DataNonLinearFit" xml:space="preserve">
+  <data name="MM_DataNonLinearFitTwoDataSets" xml:space="preserve">
     <value>two data sets: non linear data fitting</value>
+  </data>
+  <data name="MM_DataNonLinearFitWithLastSettings" xml:space="preserve">
+    <value>non-linear fit using predefined model</value>
   </data>
   <data name="MM_DataNormalization" xml:space="preserve">
     <value>using last settings: normalize</value>

@@ -581,6 +581,7 @@
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ColumnRenaming.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataAverageMultipleFiles.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataAverageSingleFile.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataNonLinearFittingWithLastSettings.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataRegaugerByParameters.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataReversion.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationFactor.vb" />

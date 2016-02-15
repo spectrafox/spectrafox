@@ -207,4 +207,7 @@ Please wait until the fit has finished before closing the window.</value>
   <data name="FitRunning_PleaseWaitWithWindowClose_Title" xml:space="preserve">
     <value>Window cannot be closed!</value>
   </data>
+  <data name="FitMultipleData_SelectFitModelToLoad" xml:space="preserve">
+    <value>select model to use for the fit</value>
+  </data>
 </root>

@@ -238,6 +238,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to select model to use for the fit.
+        '''</summary>
+        Friend Shared ReadOnly Property FitMultipleData_SelectFitModelToLoad() As String
+            Get
+                Return ResourceManager.GetString("FitMultipleData_SelectFitModelToLoad", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to A fit is currently running. Please cancel it, or wait until it is complete..
         '''</summary>
         Friend Shared ReadOnly Property FitRunning_PleaseWaitWithWindowClose() As String

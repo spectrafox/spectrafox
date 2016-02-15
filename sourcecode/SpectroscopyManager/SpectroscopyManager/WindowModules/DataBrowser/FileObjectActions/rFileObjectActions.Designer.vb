@@ -256,9 +256,18 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized string similar to two data sets: non linear data fitting.
         '''</summary>
-        Friend Shared ReadOnly Property MM_DataNonLinearFit() As String
+        Friend Shared ReadOnly Property MM_DataNonLinearFitTwoDataSets() As String
             Get
-                Return ResourceManager.GetString("MM_DataNonLinearFit", resourceCulture)
+                Return ResourceManager.GetString("MM_DataNonLinearFitTwoDataSets", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to non-linear fit using predefined model.
+        '''</summary>
+        Friend Shared ReadOnly Property MM_DataNonLinearFitWithLastSettings() As String
+            Get
+                Return ResourceManager.GetString("MM_DataNonLinearFitWithLastSettings", resourceCulture)
             End Get
         End Property
         

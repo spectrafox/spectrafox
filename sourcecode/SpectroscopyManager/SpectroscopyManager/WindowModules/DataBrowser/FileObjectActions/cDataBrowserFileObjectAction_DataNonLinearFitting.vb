@@ -86,7 +86,7 @@
     ''' </summary>
     Public Function MultipleFileActionMenuItem() As ToolStripMenuItem Implements iDataBrowser_FileObjectAction.MultipleFileActionMenuItem
         Dim M As New ToolStripMenuItem
-        M.Text = My.Resources.rFileObjectActions.MM_DataNonLinearFit
+        M.Text = My.Resources.rFileObjectActions.MM_DataNonLinearFitTwoDataSets
         M.Image = My.Resources.fit_16
         Return M
     End Function
