@@ -197,6 +197,18 @@
             It is possible to evaluate the derivative and partial derivative of univariate and multivariate functions respectively.
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.Differentiation.NumericalDerivative.#ctor">
+            <summary>
+            Initializes a NumericalDerivative class with the default 3 point center difference method.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Differentiation.NumericalDerivative.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Initialized a NumericalDerivative class.
+            </summary>
+            <param name="points">Number of points for finite difference derivatives.</param>
+            <param name="center">Location of the center with respect to other points. Value ranges from zero to points-1.</param>
+        </member>
         <member name="P:MathNet.Numerics.Differentiation.NumericalDerivative.StepSize">
             <summary>
             Sets and gets the finite difference step size. This value is for each function evaluation if relative stepsize types are used.
@@ -235,18 +247,6 @@
             If set to relative, dx = (1+abs(x))*h^(2/(order+1)). This provides accurate results when
             h is approximately equal to the square-root of machine accuracy, epsilon.
             </summary>
-        </member>
-        <member name="M:MathNet.Numerics.Differentiation.NumericalDerivative.#ctor">
-            <summary>
-            Initializes a NumericalDerivative class with the default 3 point center difference method.
-            </summary>
-        </member>
-        <member name="M:MathNet.Numerics.Differentiation.NumericalDerivative.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Initialized a NumericalDerivative class.
-            </summary>
-            <param name="points">Number of points for finite difference derivatives.</param>
-            <param name="center">Location of the center with respect to other points. Value ranges from zero to points-1.</param>
         </member>
         <member name="M:MathNet.Numerics.Differentiation.NumericalDerivative.EvaluateDerivative(System.Double[],System.Int32,System.Double)">
             <summary>
@@ -9862,6 +9862,230 @@
             Inverse integrand exponent; No scaling at all (used in all Numerical Recipes based implementations). [= InverseExponent | NoScaling]
             </summary>
         </member>
+        <member name="T:MathNet.Numerics.Integration.GaussLegendreRule">
+            <summary>
+            Approximates a definite integral using an Nth order Gauss-Legendre rule. Precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calulcated on the fly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.#ctor(System.Double,System.Double,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.Integration.GaussLegendreRule"/> class.
+            </summary>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calulcated on the fly.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.GetAbscissa(System.Int32)">
+            <summary>
+            Gettter for the ith abscissa.
+            </summary>
+            <param name="index">Index of the ith abscissa.</param>
+            <returns>The ith abscissa.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.GetWeight(System.Int32)">
+            <summary>
+            Getter for the ith weight.
+            </summary>
+            <param name="index">Index of the ith weight.</param>
+            <returns>The ith weight.</returns>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussLegendreRule.Order">
+            <summary>
+            Getter for the order.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussLegendreRule.IntervalBegin">
+            <summary>
+            Getter for the InvervalBegin.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussLegendreRule.IntervalEnd">
+            <summary>
+            Getter for the InvervalEnd.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.Map(MathNet.Numerics.Integration.GaussRule.GaussPoint,System.Double,System.Double)">
+            <summary>
+            Maps the non-negative abscissas/weights from the interval [-1, 1] to the interval [intervalBegin, intervalEnd].
+            </summary>
+            <param name="gaussPoint">Object containing the non-negative abscissas/weights, order, and intervalBegin/intervalEnd. The non-negative abscissas/weights are generated over the interval [-1,1] for the given order.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <returns>Object containing the abscissas/weights, order, and intervalBegin/intervalEnd.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.Integrate(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
+            <summary>
+            Approximates a definite integral using an Nth order Gauss-Legendre rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="invervalBegin">Where the interval starts, exclusive and finite.</param>
+            <param name="invervalEnd">Where the interval ends, exclusive and finite.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calulcated on the fly.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.Integrate(System.Func{System.Double,System.Double,System.Double},System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Approximates a 2-dimensional definite integral using an Nth order Gauss-Legendre rule over the rectangle [a,b] x [c,d].
+            </summary>
+            <param name="f">The 2-dimensional analytic smooth function to integrate.</param>
+            <param name="invervalBeginA">Where the interval starts for the first (inside) integral, exclusive and finite.</param>
+            <param name="invervalEndA">Where the interval ends for the first (inside) integral, exclusive and finite.</param>
+            <param name="invervalBeginB">Where the interval starts for the second (outside) integral, exclusive and finite.</param>
+            /// <param name="invervalEndB">Where the interval ends for the second (outside) integral, exclusive and finite.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calulcated on the fly.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.GaussRule.GaussLegendrePointFactory">
+            <summary>
+            Contains precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 and a method to calculate them on the fly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussLegendrePointFactory.GetGaussPoint(System.Int32)">
+            <summary>
+            Getter for the GaussPoint.
+            </summary>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. Precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calulcated on the fly.</param>
+            <returns>Object containing the non-negative abscissas/weights, order, and intervalBegin/intervalEnd. The non-negative abscissas/weights are generated over the interval [-1,1] for the given order.</returns>
+        </member>
+        <member name="F:MathNet.Numerics.Integration.GaussRule.GaussLegendrePointFactory.GaussLegendrePoints">
+            <summary>
+            Precomputed abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussLegendrePointFactory.GenerateGaussLegendrePoint(System.Int32,System.Double)">
+            <summary>
+            Computes the Gauss-Legendre abscissas/weights.
+            See <see cref="!:http://www.holoborodko.com/pavel/numerical-methods/numerical-integration/" >Pavel Holoborodko</see> for a description of the algorithm.
+            </summary>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule.</param>
+            <param name="eps">Required precision to compute the abscissas/weights. 1e-10 is usually fine.</param>
+            <returns>Object containing the non-negative abscissas/weights, order, and intervalBegin/intervalEnd. The non-negative abscissas/weights are generated over the interval [-1,1] for the given order.</returns>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.GaussRule.GaussPoint">
+            <summary>
+            Contains the abscissas/weights, order, and intervalBegin/intervalEnd.
+            </summary>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.DoubleExponentialTransformation">
+            <summary>
+            Analytic integration algorithm for smooth functions with no discontinuities
+            or derivative discontinuities and no poles inside the interval.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.Integration.DoubleExponentialTransformation.NumberOfMaximumLevels">
+            <summary>
+            Maximum number of iterations, until the asked
+            maximum error is (likely to be) satisfied.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.Integrate(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double)">
+            <summary>
+            Approximate the integral by the double exponential transformation
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.EvaluateAbcissas(System.Int32)">
+            <summary>
+            Compute the abscissa vector for a single level.
+            </summary>
+            <param name="level">The level to evaluate the abscissa vector for.</param>
+            <returns>Abscissa Vector.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.EvaluateWeights(System.Int32)">
+            <summary>
+            Compute the weight vector for a single level.
+            </summary>
+            <param name="level">The level to evaluate the weight vector for.</param>
+            <returns>Weight Vector.</returns>
+        </member>
+        <member name="F:MathNet.Numerics.Integration.DoubleExponentialTransformation.PrecomputedAbscissas">
+            <summary>
+            Precomputed abscissa vector per level.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.Integration.DoubleExponentialTransformation.PrecomputedWeights">
+            <summary>
+            Precomputed weight vector per level.
+            </summary>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.SimpsonRule">
+            <summary>
+            Approximation algorithm for definite integrals by Simpson's rule.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.SimpsonRule.IntegrateThreePoint(System.Func{System.Double,System.Double},System.Double,System.Double)">
+            <summary>
+            Direct 3-point approximation of the definite integral in the provided interval by Simpson's rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.SimpsonRule.IntegrateComposite(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
+            <summary>
+            Composite N-point approximation of the definite integral in the provided interval by Simpson's rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="numberOfPartitions">Even number of composite subdivision partitions.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule">
+            <summary>
+            Approximation algorithm for definite integrals by the Trapezium rule of the Newton-Cotes family.
+            </summary>
+            <remarks>
+            <a href="http://en.wikipedia.org/wiki/Trapezium_rule">Wikipedia - Trapezium Rule</a>
+            </remarks>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateTwoPoint(System.Func{System.Double,System.Double},System.Double,System.Double)">
+            <summary>
+            Direct 2-point approximation of the definite integral in the provided interval by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateComposite(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
+            <summary>
+            Composite N-point approximation of the definite integral in the provided interval by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="numberOfPartitions">Number of composite subdivision partitions.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateAdaptive(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double)">
+            <summary>
+            Adaptive approximation of the definite integral in the provided interval by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="targetError">The expected accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateAdaptiveTransformedOdd(System.Func{System.Double,System.Double},System.Double,System.Double,System.Collections.Generic.IEnumerable{System.Double[]},System.Collections.Generic.IEnumerable{System.Double[]},System.Double,System.Double)">
+            <summary>
+            Adaptive approximation of the definite integral by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="levelAbscissas">Abscissa vector per level provider.</param>
+            <param name="levelWeights">Weight vector per level provider.</param>
+            <param name="levelOneStep">First Level Step</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
         <member name="T:MathNet.Numerics.Interpolation.Barycentric">
             <summary>
             Barycentric Interpolation Algorithm.
@@ -12743,11 +12967,11 @@
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Double.Solvers.ILUTPPreconditioner"/> class with the specified settings.
             </summary>
             <param name="fillLevel">
-            The amount of fill that is allowed in the matrix. The value is a fraction of 
+            The amount of fill that is allowed in the matrix. The value is a fraction of
             the number of non-zero entries in the original matrix. Values should be positive.
             </param>
             <param name="dropTolerance">
-            The absolute drop tolerance which indicates below what absolute value an entry 
+            The absolute drop tolerance which indicates below what absolute value an entry
             will be dropped from the matrix. A drop tolerance of 0.0 means that no values
             will be dropped. Values should always be positive.
             </param>
@@ -12767,7 +12991,7 @@
             Values should always be positive and can be higher than 1.0. A value lower
             than 1.0 means that the eventual preconditioner matrix will have fewer
             non-zero entries as the original matrix. A value higher than 1.0 means that
-            the eventual preconditioner can have more non-zero values than the original 
+            the eventual preconditioner can have more non-zero values than the original
             matrix.
             </para>
             <para>
@@ -12786,7 +13010,7 @@
             <remarks>
             <para>
             The values should always be positive and can be larger than 1.0. A low value will
-            keep more small numbers in the preconditioner matrix. A high value will remove 
+            keep more small numbers in the preconditioner matrix. A high value will remove
             more small numbers from the preconditioner matrix.
             </para>
             <para>
@@ -12805,7 +13029,7 @@
             <remarks>
             <para>
             The pivot tolerance is used to calculate if pivoting is necessary. Pivoting
-            will take place if any of the values in a row is bigger than the 
+            will take place if any of the values in a row is bigger than the
             diagonal value of that row divided by the pivot tolerance, i.e. pivoting
             will take place if <b>row(i,j) > row(i,i) / PivotTolerance</b> for
             any <b>j</b> that is not equal to <b>i</b>.
@@ -12851,8 +13075,8 @@
             Initializes the preconditioner and loads the internal data structures.
             </summary>
             <param name="matrix">
-            The <see cref="T:MathNet.Numerics.LinearAlgebra.Double.Matrix"/> upon which this preconditioner is based. Note that the 
-            method takes a general matrix type. However internally the data is stored 
+            The <see cref="T:MathNet.Numerics.LinearAlgebra.Double.Matrix"/> upon which this preconditioner is based. Note that the
+            method takes a general matrix type. However internally the data is stored
             as a sparse matrix. Therefore it is not recommended to pass a dense matrix.
             </param>
             <exception cref="T:System.ArgumentNullException"> If <paramref name="matrix"/> is <see langword="null" />.</exception>
@@ -12958,7 +13182,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Solvers.ILUTPElementSorter.HeapSortIntegers(System.Int32[],System.Int32)">
             <summary>
-            Sort the given integers in a decreasing fashion using heapsort algorithm 
+            Sort the given integers in a decreasing fashion using heapsort algorithm
             </summary>
             <param name="values">Array of values to sort</param>
             <param name="count">Length of <paramref name="values"/></param>
@@ -16993,11 +17217,11 @@
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Solvers.ILUTPPreconditioner"/> class with the specified settings.
             </summary>
             <param name="fillLevel">
-            The amount of fill that is allowed in the matrix. The value is a fraction of 
+            The amount of fill that is allowed in the matrix. The value is a fraction of
             the number of non-zero entries in the original matrix. Values should be positive.
             </param>
             <param name="dropTolerance">
-            The absolute drop tolerance which indicates below what absolute value an entry 
+            The absolute drop tolerance which indicates below what absolute value an entry
             will be dropped from the matrix. A drop tolerance of 0.0 means that no values
             will be dropped. Values should always be positive.
             </param>
@@ -17017,7 +17241,7 @@
             Values should always be positive and can be higher than 1.0. A value lower
             than 1.0 means that the eventual preconditioner matrix will have fewer
             non-zero entries as the original matrix. A value higher than 1.0 means that
-            the eventual preconditioner can have more non-zero values than the original 
+            the eventual preconditioner can have more non-zero values than the original
             matrix.
             </para>
             <para>
@@ -17036,7 +17260,7 @@
             <remarks>
             <para>
             The values should always be positive and can be larger than 1.0. A low value will
-            keep more small numbers in the preconditioner matrix. A high value will remove 
+            keep more small numbers in the preconditioner matrix. A high value will remove
             more small numbers from the preconditioner matrix.
             </para>
             <para>
@@ -17055,7 +17279,7 @@
             <remarks>
             <para>
             The pivot tolerance is used to calculate if pivoting is necessary. Pivoting
-            will take place if any of the values in a row is bigger than the 
+            will take place if any of the values in a row is bigger than the
             diagonal value of that row divided by the pivot tolerance, i.e. pivoting
             will take place if <b>row(i,j) > row(i,i) / PivotTolerance</b> for
             any <b>j</b> that is not equal to <b>i</b>.
@@ -17101,8 +17325,8 @@
             Initializes the preconditioner and loads the internal data structures.
             </summary>
             <param name="matrix">
-            The <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Matrix"/> upon which this preconditioner is based. Note that the 
-            method takes a general matrix type. However internally the data is stored 
+            The <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Matrix"/> upon which this preconditioner is based. Note that the
+            method takes a general matrix type. However internally the data is stored
             as a sparse matrix. Therefore it is not recommended to pass a dense matrix.
             </param>
             <exception cref="T:System.ArgumentNullException"> If <paramref name="matrix"/> is <see langword="null" />.</exception>
@@ -17208,7 +17432,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Solvers.ILUTPElementSorter.HeapSortIntegers(System.Int32[],System.Int32)">
             <summary>
-            Sort the given integers in a decreasing fashion using heapsort algorithm 
+            Sort the given integers in a decreasing fashion using heapsort algorithm
             </summary>
             <param name="values">Array of values to sort</param>
             <param name="count">Length of <paramref name="values"/></param>
@@ -21240,11 +21464,11 @@
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Solvers.ILUTPPreconditioner"/> class with the specified settings.
             </summary>
             <param name="fillLevel">
-            The amount of fill that is allowed in the matrix. The value is a fraction of 
+            The amount of fill that is allowed in the matrix. The value is a fraction of
             the number of non-zero entries in the original matrix. Values should be positive.
             </param>
             <param name="dropTolerance">
-            The absolute drop tolerance which indicates below what absolute value an entry 
+            The absolute drop tolerance which indicates below what absolute value an entry
             will be dropped from the matrix. A drop tolerance of 0.0 means that no values
             will be dropped. Values should always be positive.
             </param>
@@ -21264,7 +21488,7 @@
             Values should always be positive and can be higher than 1.0. A value lower
             than 1.0 means that the eventual preconditioner matrix will have fewer
             non-zero entries as the original matrix. A value higher than 1.0 means that
-            the eventual preconditioner can have more non-zero values than the original 
+            the eventual preconditioner can have more non-zero values than the original
             matrix.
             </para>
             <para>
@@ -21283,7 +21507,7 @@
             <remarks>
             <para>
             The values should always be positive and can be larger than 1.0. A low value will
-            keep more small numbers in the preconditioner matrix. A high value will remove 
+            keep more small numbers in the preconditioner matrix. A high value will remove
             more small numbers from the preconditioner matrix.
             </para>
             <para>
@@ -21302,7 +21526,7 @@
             <remarks>
             <para>
             The pivot tolerance is used to calculate if pivoting is necessary. Pivoting
-            will take place if any of the values in a row is bigger than the 
+            will take place if any of the values in a row is bigger than the
             diagonal value of that row divided by the pivot tolerance, i.e. pivoting
             will take place if <b>row(i,j) > row(i,i) / PivotTolerance</b> for
             any <b>j</b> that is not equal to <b>i</b>.
@@ -21348,8 +21572,8 @@
             Initializes the preconditioner and loads the internal data structures.
             </summary>
             <param name="matrix">
-            The <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Matrix"/> upon which this preconditioner is based. Note that the 
-            method takes a general matrix type. However internally the data is stored 
+            The <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Matrix"/> upon which this preconditioner is based. Note that the
+            method takes a general matrix type. However internally the data is stored
             as a sparse matrix. Therefore it is not recommended to pass a dense matrix.
             </param>
             <exception cref="T:System.ArgumentNullException"> If <paramref name="matrix"/> is <see langword="null" />.</exception>
@@ -21455,7 +21679,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Solvers.ILUTPElementSorter.HeapSortIntegers(System.Int32[],System.Int32)">
             <summary>
-            Sort the given integers in a decreasing fashion using heapsort algorithm 
+            Sort the given integers in a decreasing fashion using heapsort algorithm
             </summary>
             <param name="values">Array of values to sort</param>
             <param name="count">Length of <paramref name="values"/></param>
@@ -25440,11 +25664,11 @@
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Solvers.ILUTPPreconditioner"/> class with the specified settings.
             </summary>
             <param name="fillLevel">
-            The amount of fill that is allowed in the matrix. The value is a fraction of 
+            The amount of fill that is allowed in the matrix. The value is a fraction of
             the number of non-zero entries in the original matrix. Values should be positive.
             </param>
             <param name="dropTolerance">
-            The absolute drop tolerance which indicates below what absolute value an entry 
+            The absolute drop tolerance which indicates below what absolute value an entry
             will be dropped from the matrix. A drop tolerance of 0.0 means that no values
             will be dropped. Values should always be positive.
             </param>
@@ -25464,7 +25688,7 @@
             Values should always be positive and can be higher than 1.0. A value lower
             than 1.0 means that the eventual preconditioner matrix will have fewer
             non-zero entries as the original matrix. A value higher than 1.0 means that
-            the eventual preconditioner can have more non-zero values than the original 
+            the eventual preconditioner can have more non-zero values than the original
             matrix.
             </para>
             <para>
@@ -25483,7 +25707,7 @@
             <remarks>
             <para>
             The values should always be positive and can be larger than 1.0. A low value will
-            keep more small numbers in the preconditioner matrix. A high value will remove 
+            keep more small numbers in the preconditioner matrix. A high value will remove
             more small numbers from the preconditioner matrix.
             </para>
             <para>
@@ -25502,7 +25726,7 @@
             <remarks>
             <para>
             The pivot tolerance is used to calculate if pivoting is necessary. Pivoting
-            will take place if any of the values in a row is bigger than the 
+            will take place if any of the values in a row is bigger than the
             diagonal value of that row divided by the pivot tolerance, i.e. pivoting
             will take place if <b>row(i,j) > row(i,i) / PivotTolerance</b> for
             any <b>j</b> that is not equal to <b>i</b>.
@@ -25548,8 +25772,8 @@
             Initializes the preconditioner and loads the internal data structures.
             </summary>
             <param name="matrix">
-            The <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Matrix"/> upon which this preconditioner is based. Note that the 
-            method takes a general matrix type. However internally the data is stored 
+            The <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Matrix"/> upon which this preconditioner is based. Note that the
+            method takes a general matrix type. However internally the data is stored
             as a sparse matrix. Therefore it is not recommended to pass a dense matrix.
             </param>
             <exception cref="T:System.ArgumentNullException"> If <paramref name="matrix"/> is <see langword="null" />.</exception>
@@ -25655,7 +25879,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Solvers.ILUTPElementSorter.HeapSortIntegers(System.Int32[],System.Int32)">
             <summary>
-            Sort the given integers in a decreasing fashion using heapsort algorithm 
+            Sort the given integers in a decreasing fashion using heapsort algorithm
             </summary>
             <param name="values">Array of values to sort</param>
             <param name="count">Length of <paramref name="values"/></param>
@@ -41665,6 +41889,7 @@
             <summary>
             Gets the magnitude (or absolute value) of a complex number.
             </summary>
+            <remarks>Assuming that magnitude of (inf,a) and (a,inf) and (inf,inf) is inf and (NaN,a), (a,NaN) and (NaN,NaN) is NaN</remarks>
             <returns>The magnitude of the current instance.</returns>
         </member>
         <member name="P:MathNet.Numerics.Complex32.MagnitudeSquared">
@@ -41894,12 +42119,27 @@
         </member>
         <member name="M:MathNet.Numerics.Complex32.op_Division(MathNet.Numerics.Complex32,MathNet.Numerics.Complex32)">
             <summary>Division operator. Divides a complex number by another.</summary>
+            <remarks>Enhanced Smith's algorithm for dividing two complex numbers </remarks>
+            <see cref="M:MathNet.Numerics.Complex32.InternalDiv(System.Single,System.Single,System.Single,System.Single,System.Boolean)"/>
             <returns>The result of the division.</returns>
             <param name="dividend">The dividend.</param>
             <param name="divisor">The divisor.</param>
         </member>
+        <member name="M:MathNet.Numerics.Complex32.InternalDiv(System.Single,System.Single,System.Single,System.Single,System.Boolean)">
+            <summary>
+             Helper method for dividing.
+            </summary>
+            <param name="a">Re first</param>
+            <param name="b">Im first</param>
+            <param name="c">Re second</param>
+            <param name="d">Im second</param>
+            <param name="swapped"></param>
+            <returns></returns>
+        </member>
         <member name="M:MathNet.Numerics.Complex32.op_Division(System.Single,MathNet.Numerics.Complex32)">
             <summary>Division operator. Divides a float value by a complex number.</summary>
+            <remarks>Algorithm based on Smith's algorithm</remarks>
+            <see cref="M:MathNet.Numerics.Complex32.InternalDiv(System.Single,System.Single,System.Single,System.Single,System.Boolean)"/> 
             <returns>The result of the division.</returns>
             <param name="dividend">The dividend.</param>
             <param name="divisor">The divisor.</param>
@@ -44581,6 +44821,226 @@
             <param name="b">The second Beta parameter, a positive real number.</param>
             <param name="x">The upper limit of the integral.</param>
             <returns>The regularized lower incomplete beta function.</returns>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpAn">
+            <summary>
+            **************************************
+            COEFFICIENTS FOR METHOD ErfImp       *
+            **************************************
+            </summary>
+            <summary> Polynomial coefficients for a numerator of ErfImp
+            calculation for Erf(x) in the interval [1e-10, 0.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpAd">
+            <summary> Polynomial coefficients for  adenominator of ErfImp
+            calculation for Erf(x) in the interval [1e-10, 0.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpBn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [0.5, 0.75].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpBd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [0.5, 0.75].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpCn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [0.75, 1.25].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpCd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [0.75, 1.25].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpDn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [1.25, 2.25].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpDd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [1.25, 2.25].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpEn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [2.25, 3.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpEd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [2.25, 3.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpFn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [3.5, 5.25].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpFd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [3.5, 5.25].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpGn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [5.25, 8].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpGd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [5.25, 8].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpHn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [8, 11.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpHd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [8, 11.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpIn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [11.5, 17].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpId">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [11.5, 17].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpJn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [17, 24].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpJd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [17, 24].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpKn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [24, 38].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpKd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [24, 38].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpLn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [38, 60].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpLd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [38, 60].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpMn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [60, 85].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpMd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [60, 85].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpNn">
+            <summary> Polynomial coefficients for a numerator in ErfImp
+            calculation for Erfc(x) in the interval [85, 110].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErfImpNd">
+            <summary> Polynomial coefficients for a denominator in ErfImp
+            calculation for Erfc(x) in the interval [85, 110].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpAn">
+            <summary>
+            **************************************
+            COEFFICIENTS FOR METHOD ErfInvImp    *
+            **************************************
+            </summary>
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0, 0.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpAd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0, 0.5].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpBn">
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.5, 0.75].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpBd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.5, 0.75].
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpCn">
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x less than 3.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpCd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x less than 3.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpDn">
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x between 3 and 6.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpDd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x between 3 and 6.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpEn">
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x between 6 and 18.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpEd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x between 6 and 18.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpFn">
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x between 18 and 44.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpFd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x between 18 and 44.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpGn">
+            <summary> Polynomial coefficients for a numerator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x greater than 44.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.SpecialFunctions.ErvInvImpGd">
+            <summary> Polynomial coefficients for a denominator of ErfInvImp
+            calculation for Erf^-1(z) in the interval [0.75, 1] with x greater than 44.
+            </summary>
         </member>
         <member name="M:MathNet.Numerics.SpecialFunctions.Erf(System.Double)">
             <summary>Calculates the error function.</summary>
@@ -48586,126 +49046,6 @@
             <returns>The parsed float number using the given culture information.</returns>
             <exception cref="T:System.FormatException" />
         </member>
-        <member name="T:MathNet.Numerics.Integration.DoubleExponentialTransformation">
-            <summary>
-            Analytic integration algorithm for smooth functions with no discontinuities
-            or derivative discontinuities and no poles inside the interval.
-            </summary>
-        </member>
-        <member name="F:MathNet.Numerics.Integration.DoubleExponentialTransformation.NumberOfMaximumLevels">
-            <summary>
-            Maximum number of iterations, until the asked
-            maximum error is (likely to be) satisfied.
-            </summary>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.Integrate(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double)">
-            <summary>
-            Approximate the integral by the double exponential transformation
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.EvaluateAbcissas(System.Int32)">
-            <summary>
-            Compute the abscissa vector for a single level.
-            </summary>
-            <param name="level">The level to evaluate the abscissa vector for.</param>
-            <returns>Abscissa Vector.</returns>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.EvaluateWeights(System.Int32)">
-            <summary>
-            Compute the weight vector for a single level.
-            </summary>
-            <param name="level">The level to evaluate the weight vector for.</param>
-            <returns>Weight Vector.</returns>
-        </member>
-        <member name="F:MathNet.Numerics.Integration.DoubleExponentialTransformation.PrecomputedAbscissas">
-            <summary>
-            Precomputed abscissa vector per level.
-            </summary>
-        </member>
-        <member name="F:MathNet.Numerics.Integration.DoubleExponentialTransformation.PrecomputedWeights">
-            <summary>
-            Precomputed weight vector per level.
-            </summary>
-        </member>
-        <member name="T:MathNet.Numerics.Integration.SimpsonRule">
-            <summary>
-            Approximation algorithm for definite integrals by Simpson's rule.
-            </summary>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.SimpsonRule.IntegrateThreePoint(System.Func{System.Double,System.Double},System.Double,System.Double)">
-            <summary>
-            Direct 3-point approximation of the definite integral in the provided interval by Simpson's rule.
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.SimpsonRule.IntegrateComposite(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
-            <summary>
-            Composite N-point approximation of the definite integral in the provided interval by Simpson's rule.
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <param name="numberOfPartitions">Even number of composite subdivision partitions.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
-        <member name="T:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule">
-            <summary>
-            Approximation algorithm for definite integrals by the Trapezium rule of the Newton-Cotes family.
-            </summary>
-            <remarks>
-            <a href="http://en.wikipedia.org/wiki/Trapezium_rule">Wikipedia - Trapezium Rule</a>
-            </remarks>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateTwoPoint(System.Func{System.Double,System.Double},System.Double,System.Double)">
-            <summary>
-            Direct 2-point approximation of the definite integral in the provided interval by the trapezium rule.
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateComposite(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
-            <summary>
-            Composite N-point approximation of the definite integral in the provided interval by the trapezium rule.
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <param name="numberOfPartitions">Number of composite subdivision partitions.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateAdaptive(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double)">
-            <summary>
-            Adaptive approximation of the definite integral in the provided interval by the trapezium rule.
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <param name="targetError">The expected accuracy of the approximation.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
-        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateAdaptiveTransformedOdd(System.Func{System.Double,System.Double},System.Double,System.Double,System.Collections.Generic.IEnumerable{System.Double[]},System.Collections.Generic.IEnumerable{System.Double[]},System.Double,System.Double)">
-            <summary>
-            Adaptive approximation of the definite integral by the trapezium rule.
-            </summary>
-            <param name="f">The analytic smooth function to integrate.</param>
-            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
-            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
-            <param name="levelAbscissas">Abscissa vector per level provider.</param>
-            <param name="levelWeights">Weight vector per level provider.</param>
-            <param name="levelOneStep">First Level Step</param>
-            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
-            <returns>Approximation of the finite integral in the given interval.</returns>
-        </member>
         <member name="T:MathNet.Numerics.Integrate">
             <summary>
             Numerical Integration (Quadrature).
@@ -48728,6 +49068,29 @@
             <param name="f">The analytic smooth function to integrate.</param>
             <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
             <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integrate.OnRectangle(System.Func{System.Double,System.Double,System.Double},System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Approximates a 2-dimensional definite integral using an Nth order Gauss-Legendre rule over the rectangle [a,b] x [c,d].
+            </summary>
+            <param name="f">The 2-dimensional analytic smooth function to integrate.</param>
+            <param name="invervalBeginA">Where the interval starts for the first (inside) integral, exclusive and finite.</param>
+            <param name="invervalEndA">Where the interval ends for the first (inside) integral, exclusive and finite.</param>
+            <param name="invervalBeginB">Where the interval starts for the second (outside) integral, exclusive and finite.</param>
+            /// <param name="invervalEndB">Where the interval ends for the second (outside) integral, exclusive and finite.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2,. . ., 20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calulcated on the fly.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integrate.OnRectangle(System.Func{System.Double,System.Double,System.Double},System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Approximates a 2-dimensional definite integral using an Nth order Gauss-Legendre rule over the rectangle [a,b] x [c,d].
+            </summary>
+            <param name="f">The 2-dimensional analytic smooth function to integrate.</param>
+            <param name="invervalBeginA">Where the interval starts for the first (inside) integral, exclusive and finite.</param>
+            <param name="invervalEndA">Where the interval ends for the first (inside) integral, exclusive and finite.</param>
+            <param name="invervalBeginB">Where the interval starts for the second (outside) integral, exclusive and finite.</param>
+            /// <param name="invervalEndB">Where the interval ends for the second (outside) integral, exclusive and finite.</param>
             <returns>Approximation of the finite integral in the given interval.</returns>
         </member>
         <member name="T:MathNet.Numerics.Interpolate">

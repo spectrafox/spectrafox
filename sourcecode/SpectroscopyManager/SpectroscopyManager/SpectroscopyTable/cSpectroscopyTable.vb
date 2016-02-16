@@ -240,28 +240,31 @@ Public Class cSpectroscopyTable
         ''' </summary>
         Public ReadOnly Property Monotonicity As Monotonicities
             Get
-                If Me._Values.Count <= 0 Then Return Monotonicities.None
+
+                Dim CurrentValueArray As ReadOnlyCollection(Of Double) = Me.Values
+
+                If CurrentValueArray.Count <= 0 Then Return Monotonicities.None
 
                 Dim Result As Monotonicities = Monotonicities.StrictRising
-                Dim CheckValue As Double = Me._Values(0)
+                Dim CheckValue As Double = CurrentValueArray(0)
 
                 ' Try find a non-NaN value in the column as the start value.
                 Dim j As Integer = 0
-                Do While Double.IsNaN(CheckValue) And j < Me._Values.Count
-                    CheckValue = Me._Values(j)
+                Do While Double.IsNaN(CheckValue) And j < CurrentValueArray.Count
+                    CheckValue = CurrentValueArray(j)
                     j += 1
                 Loop
                 If Double.IsNaN(CheckValue) Then Return Monotonicities.None
 
                 ' Check for monoton rising
-                For i As Integer = 1 To Me.Values.Count - 1 Step 1
-                    If Double.IsNaN(Me._Values(i)) Then Continue For
-                    If Me._Values(i) > CheckValue Then
+                For i As Integer = j + 1 To CurrentValueArray.Count - 1 Step 1
+                    If Double.IsNaN(CurrentValueArray(i)) Then Continue For
+                    If CurrentValueArray(i) > CheckValue Then
                         ' Strict Step
-                        CheckValue = Me._Values(i)
-                    ElseIf Me._Values(i) = CheckValue Then
+                        CheckValue = CurrentValueArray(i)
+                    ElseIf CurrentValueArray(i) = CheckValue Then
                         ' Ok... at least monoton, but not strict anymore.
-                        CheckValue = Me._Values(i)
+                        CheckValue = CurrentValueArray(i)
                         Result = Monotonicities.Rising
                     Else
                         Result = Monotonicities.None
@@ -274,22 +277,22 @@ Public Class cSpectroscopyTable
                     Result = Monotonicities.StrictFalling
 
                     ' Try find a non-NaN value in the column as the start value.
-                    CheckValue = Me._Values(0)
+                    CheckValue = CurrentValueArray(0)
                     j = 0
-                    Do While Double.IsNaN(CheckValue) And j < Me._Values.Count
-                        CheckValue = Me._Values(j)
+                    Do While Double.IsNaN(CheckValue) And j < CurrentValueArray.Count
+                        CheckValue = CurrentValueArray(j)
                         j += 1
                     Loop
                     If Double.IsNaN(CheckValue) Then Return Monotonicities.None
 
-                    For i As Integer = 1 To Me.Values.Count - 1 Step 1
-                        If Double.IsNaN(Me._Values(i)) Then Continue For
-                        If Me._Values(i) < CheckValue Then
+                    For i As Integer = j + 1 To CurrentValueArray.Count - 1 Step 1
+                        If Double.IsNaN(CurrentValueArray(i)) Then Continue For
+                        If CurrentValueArray(i) < CheckValue Then
                             ' Strict Step
-                            CheckValue = Me._Values(i)
+                            CheckValue = CurrentValueArray(i)
                         ElseIf Me._Values(i) = CheckValue Then
                             ' Ok... at least monoton, but not strict anymore.
-                            CheckValue = Me._Values(i)
+                            CheckValue = CurrentValueArray(i)
                             Result = Monotonicities.Falling
                         Else
                             Result = Monotonicities.None

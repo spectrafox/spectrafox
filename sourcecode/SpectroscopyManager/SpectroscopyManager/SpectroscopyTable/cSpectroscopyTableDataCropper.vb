@@ -95,6 +95,7 @@ Public Class cSpectroscopyTableDataCropper
                                              ByVal CropFromUpperValueIncl As Integer)
         Me.MinIndexIncl = CropUpToLowerValueIncl
         Me.MaxIndexIncl = CropFromUpperValueIncl
+        Me.ColumnNameOfColumnToCrop = ColumnName
 
         ' Start the Spectroscopy-TableFetcher
         Me.FetchDirect()
