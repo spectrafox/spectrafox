@@ -28,7 +28,7 @@ Partial Class mSpectroscopyTableViewer
         Me.tsTools = New System.Windows.Forms.ToolStrip()
         Me.tsbtnColumnSetup = New System.Windows.Forms.ToolStripButton()
         Me.tssRight = New System.Windows.Forms.ToolStripSeparator()
-        Me.btnTool_Zoom = New System.Windows.Forms.ToolStripButton()
+        Me.tsbtnTool_Zoom = New System.Windows.Forms.ToolStripButton()
         Me.tslblTools = New System.Windows.Forms.ToolStripLabel()
         Me.tsbtnPlotSetup = New System.Windows.Forms.ToolStripButton()
         Me.tssLeft1 = New System.Windows.Forms.ToolStripSeparator()
@@ -55,6 +55,8 @@ Partial Class mSpectroscopyTableViewer
         Me.ckbLogY = New System.Windows.Forms.CheckBox()
         Me.lblYAxis = New System.Windows.Forms.Label()
         Me.cbY = New SpectroscopyManager.ucSpectroscopyColumnSelector()
+        Me.tsbtnMeasureVertical = New System.Windows.Forms.ToolStripButton()
+        Me.tsbtnMeasureHorizontal = New System.Windows.Forms.ToolStripButton()
         Me.tsTools.SuspendLayout()
         Me.dpLeft.SuspendLayout()
         CType(Me.nudSymbolSize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,7 +90,7 @@ Partial Class mSpectroscopyTableViewer
         '
         Me.tsTools.BackColor = System.Drawing.Color.Transparent
         Me.tsTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-        Me.tsTools.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbtnColumnSetup, Me.tssRight, Me.btnTool_Zoom, Me.tslblTools, Me.tsbtnPlotSetup, Me.tssLeft1, Me.tslblInfobar})
+        Me.tsTools.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbtnColumnSetup, Me.tssRight, Me.tsbtnTool_Zoom, Me.tsbtnMeasureVertical, Me.tsbtnMeasureHorizontal, Me.tslblTools, Me.tsbtnPlotSetup, Me.tssLeft1, Me.tslblInfobar})
         Me.tsTools.Location = New System.Drawing.Point(0, 0)
         Me.tsTools.Name = "tsTools"
         Me.tsTools.Size = New System.Drawing.Size(539, 25)
@@ -110,15 +112,15 @@ Partial Class mSpectroscopyTableViewer
         Me.tssRight.Name = "tssRight"
         Me.tssRight.Size = New System.Drawing.Size(6, 25)
         '
-        'btnTool_Zoom
+        'tsbtnTool_Zoom
         '
-        Me.btnTool_Zoom.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.btnTool_Zoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.btnTool_Zoom.Image = Global.SpectroscopyManager.My.Resources.Resources.zoom_out_16
-        Me.btnTool_Zoom.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.btnTool_Zoom.Name = "btnTool_Zoom"
-        Me.btnTool_Zoom.Size = New System.Drawing.Size(23, 22)
-        Me.btnTool_Zoom.Text = "reset to the default scale"
+        Me.tsbtnTool_Zoom.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsbtnTool_Zoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbtnTool_Zoom.Image = Global.SpectroscopyManager.My.Resources.Resources.zoom_out_16
+        Me.tsbtnTool_Zoom.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtnTool_Zoom.Name = "tsbtnTool_Zoom"
+        Me.tsbtnTool_Zoom.Size = New System.Drawing.Size(23, 22)
+        Me.tsbtnTool_Zoom.Text = "reset to the default scale"
         '
         'tslblTools
         '
@@ -214,7 +216,7 @@ Partial Class mSpectroscopyTableViewer
         Me.cbLineColor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbLineColor.DropDownWidth = 151
         Me.cbLineColor.FormattingEnabled = True
-        Me.cbLineColor.Items.AddRange(New Object() {System.Drawing.Color.MidnightBlue, System.Drawing.Color.Black, System.Drawing.Color.Aqua, System.Drawing.Color.Aquamarine, System.Drawing.Color.Blue, System.Drawing.Color.BlueViolet, System.Drawing.Color.Brown, System.Drawing.Color.BurlyWood, System.Drawing.Color.CadetBlue, System.Drawing.Color.Chartreuse, System.Drawing.Color.Chocolate, System.Drawing.Color.Coral, System.Drawing.Color.CornflowerBlue, System.Drawing.Color.Crimson, System.Drawing.Color.Cyan, System.Drawing.Color.DarkBlue, System.Drawing.Color.DarkCyan, System.Drawing.Color.DarkGoldenrod, System.Drawing.Color.DarkGray, System.Drawing.Color.DarkGreen, System.Drawing.Color.DarkKhaki, System.Drawing.Color.DarkMagenta, System.Drawing.Color.DarkOliveGreen, System.Drawing.Color.DarkOrange, System.Drawing.Color.DarkOrchid, System.Drawing.Color.DarkRed, System.Drawing.Color.DarkSalmon, System.Drawing.Color.DarkSeaGreen, System.Drawing.Color.DarkSlateBlue, System.Drawing.Color.DarkSlateGray, System.Drawing.Color.DarkTurquoise, System.Drawing.Color.DarkViolet, System.Drawing.Color.DeepPink, System.Drawing.Color.DeepSkyBlue, System.Drawing.Color.DimGray, System.Drawing.Color.DodgerBlue, System.Drawing.Color.Firebrick, System.Drawing.Color.ForestGreen, System.Drawing.Color.Fuchsia, System.Drawing.Color.Gainsboro, System.Drawing.Color.Gold, System.Drawing.Color.Goldenrod, System.Drawing.Color.Gray, System.Drawing.Color.Green, System.Drawing.Color.GreenYellow, System.Drawing.Color.HotPink, System.Drawing.Color.IndianRed, System.Drawing.Color.Indigo, System.Drawing.Color.Khaki, System.Drawing.Color.LawnGreen, System.Drawing.Color.LightBlue, System.Drawing.Color.LightCoral, System.Drawing.Color.LightGreen, System.Drawing.Color.LightGray, System.Drawing.Color.LightPink, System.Drawing.Color.LightSalmon, System.Drawing.Color.LightSeaGreen, System.Drawing.Color.LightSkyBlue, System.Drawing.Color.LightSlateGray, System.Drawing.Color.LightSteelBlue, System.Drawing.Color.Lime, System.Drawing.Color.LimeGreen, System.Drawing.Color.Magenta, System.Drawing.Color.Maroon, System.Drawing.Color.MediumAquamarine, System.Drawing.Color.MediumBlue, System.Drawing.Color.MediumOrchid, System.Drawing.Color.MediumPurple, System.Drawing.Color.MediumSeaGreen, System.Drawing.Color.MediumSlateBlue, System.Drawing.Color.MediumSpringGreen, System.Drawing.Color.MediumTurquoise, System.Drawing.Color.MediumVioletRed, System.Drawing.Color.NavajoWhite, System.Drawing.Color.Navy, System.Drawing.Color.Olive, System.Drawing.Color.OliveDrab, System.Drawing.Color.Orange, System.Drawing.Color.OrangeRed, System.Drawing.Color.Orchid, System.Drawing.Color.PaleGreen, System.Drawing.Color.PaleTurquoise, System.Drawing.Color.PaleVioletRed, System.Drawing.Color.PeachPuff, System.Drawing.Color.Peru, System.Drawing.Color.Pink, System.Drawing.Color.Plum, System.Drawing.Color.PowderBlue, System.Drawing.Color.Purple, System.Drawing.Color.Red, System.Drawing.Color.RosyBrown, System.Drawing.Color.RoyalBlue, System.Drawing.Color.SaddleBrown, System.Drawing.Color.Salmon, System.Drawing.Color.SandyBrown, System.Drawing.Color.SeaGreen, System.Drawing.Color.Sienna, System.Drawing.Color.Silver, System.Drawing.Color.SkyBlue, System.Drawing.Color.SlateBlue, System.Drawing.Color.SlateGray, System.Drawing.Color.SpringGreen, System.Drawing.Color.SteelBlue, System.Drawing.Color.Tan, System.Drawing.Color.Teal, System.Drawing.Color.Thistle, System.Drawing.Color.Tomato, System.Drawing.Color.Turquoise, System.Drawing.Color.Violet, System.Drawing.Color.Wheat, System.Drawing.Color.Yellow, System.Drawing.Color.YellowGreen})
+        Me.cbLineColor.Items.AddRange(New Object() {System.Drawing.Color.Magenta, System.Drawing.Color.Black, System.Drawing.Color.Aqua, System.Drawing.Color.Aquamarine, System.Drawing.Color.Blue, System.Drawing.Color.BlueViolet, System.Drawing.Color.Brown, System.Drawing.Color.BurlyWood, System.Drawing.Color.CadetBlue, System.Drawing.Color.Chartreuse, System.Drawing.Color.Chocolate, System.Drawing.Color.Coral, System.Drawing.Color.CornflowerBlue, System.Drawing.Color.Crimson, System.Drawing.Color.Cyan, System.Drawing.Color.DarkBlue, System.Drawing.Color.DarkCyan, System.Drawing.Color.DarkGoldenrod, System.Drawing.Color.DarkGray, System.Drawing.Color.DarkGreen, System.Drawing.Color.DarkKhaki, System.Drawing.Color.DarkMagenta, System.Drawing.Color.DarkOliveGreen, System.Drawing.Color.DarkOrange, System.Drawing.Color.DarkOrchid, System.Drawing.Color.DarkRed, System.Drawing.Color.DarkSalmon, System.Drawing.Color.DarkSeaGreen, System.Drawing.Color.DarkSlateBlue, System.Drawing.Color.DarkSlateGray, System.Drawing.Color.DarkTurquoise, System.Drawing.Color.DarkViolet, System.Drawing.Color.DeepPink, System.Drawing.Color.DeepSkyBlue, System.Drawing.Color.DimGray, System.Drawing.Color.DodgerBlue, System.Drawing.Color.Firebrick, System.Drawing.Color.ForestGreen, System.Drawing.Color.Fuchsia, System.Drawing.Color.Gainsboro, System.Drawing.Color.Gold, System.Drawing.Color.Goldenrod, System.Drawing.Color.Gray, System.Drawing.Color.Green, System.Drawing.Color.GreenYellow, System.Drawing.Color.HotPink, System.Drawing.Color.IndianRed, System.Drawing.Color.Indigo, System.Drawing.Color.Khaki, System.Drawing.Color.LawnGreen, System.Drawing.Color.LightBlue, System.Drawing.Color.LightCoral, System.Drawing.Color.LightGreen, System.Drawing.Color.LightGray, System.Drawing.Color.LightPink, System.Drawing.Color.LightSalmon, System.Drawing.Color.LightSeaGreen, System.Drawing.Color.LightSkyBlue, System.Drawing.Color.LightSlateGray, System.Drawing.Color.LightSteelBlue, System.Drawing.Color.Lime, System.Drawing.Color.LimeGreen, System.Drawing.Color.Maroon, System.Drawing.Color.MediumAquamarine, System.Drawing.Color.MediumBlue, System.Drawing.Color.MediumOrchid, System.Drawing.Color.MediumPurple, System.Drawing.Color.MediumSeaGreen, System.Drawing.Color.MediumSlateBlue, System.Drawing.Color.MediumSpringGreen, System.Drawing.Color.MediumTurquoise, System.Drawing.Color.MediumVioletRed, System.Drawing.Color.MidnightBlue, System.Drawing.Color.NavajoWhite, System.Drawing.Color.Navy, System.Drawing.Color.Olive, System.Drawing.Color.OliveDrab, System.Drawing.Color.Orange, System.Drawing.Color.OrangeRed, System.Drawing.Color.Orchid, System.Drawing.Color.PaleGreen, System.Drawing.Color.PaleTurquoise, System.Drawing.Color.PaleVioletRed, System.Drawing.Color.PeachPuff, System.Drawing.Color.Peru, System.Drawing.Color.Pink, System.Drawing.Color.Plum, System.Drawing.Color.PowderBlue, System.Drawing.Color.Purple, System.Drawing.Color.Red, System.Drawing.Color.RosyBrown, System.Drawing.Color.RoyalBlue, System.Drawing.Color.SaddleBrown, System.Drawing.Color.Salmon, System.Drawing.Color.SandyBrown, System.Drawing.Color.SeaGreen, System.Drawing.Color.Sienna, System.Drawing.Color.Silver, System.Drawing.Color.SkyBlue, System.Drawing.Color.SlateBlue, System.Drawing.Color.SlateGray, System.Drawing.Color.SpringGreen, System.Drawing.Color.SteelBlue, System.Drawing.Color.Tan, System.Drawing.Color.Teal, System.Drawing.Color.Thistle, System.Drawing.Color.Tomato, System.Drawing.Color.Turquoise, System.Drawing.Color.Violet, System.Drawing.Color.Wheat, System.Drawing.Color.Yellow, System.Drawing.Color.YellowGreen})
         Me.cbLineColor.Location = New System.Drawing.Point(6, 240)
         Me.cbLineColor.Name = "cbLineColor"
         Me.cbLineColor.ShowBrightColors = False
@@ -422,6 +424,28 @@ Partial Class mSpectroscopyTableViewer
         Me.cbY.TurnOnLastFilterSaving = False
         Me.cbY.TurnOnLastSelectionSaving = False
         '
+        'tsbtnMeasureVertical
+        '
+        Me.tsbtnMeasureVertical.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsbtnMeasureVertical.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbtnMeasureVertical.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_vert_16
+        Me.tsbtnMeasureVertical.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtnMeasureVertical.Name = "tsbtnMeasureVertical"
+        Me.tsbtnMeasureVertical.Size = New System.Drawing.Size(23, 22)
+        Me.tsbtnMeasureVertical.Text = "measure vertical distance"
+        Me.tsbtnMeasureVertical.ToolTipText = "measure vertical distance"
+        '
+        'tsbtnMeasureHorizontal
+        '
+        Me.tsbtnMeasureHorizontal.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsbtnMeasureHorizontal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbtnMeasureHorizontal.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_16
+        Me.tsbtnMeasureHorizontal.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtnMeasureHorizontal.Name = "tsbtnMeasureHorizontal"
+        Me.tsbtnMeasureHorizontal.Size = New System.Drawing.Size(23, 22)
+        Me.tsbtnMeasureHorizontal.Text = "measure horizontal distance"
+        Me.tsbtnMeasureHorizontal.ToolTipText = "measure horizontal distance"
+        '
         'mSpectroscopyTableViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -475,9 +499,11 @@ Partial Class mSpectroscopyTableViewer
     Friend WithEvents tsTools As ToolStrip
     Friend WithEvents tsbtnColumnSetup As ToolStripButton
     Friend WithEvents tssRight As ToolStripSeparator
-    Friend WithEvents btnTool_Zoom As ToolStripButton
+    Friend WithEvents tsbtnTool_Zoom As ToolStripButton
     Friend WithEvents tslblTools As ToolStripLabel
     Friend WithEvents tsbtnPlotSetup As ToolStripButton
     Friend WithEvents tssLeft1 As ToolStripSeparator
     Friend WithEvents tslblInfobar As ToolStripLabel
+    Friend WithEvents tsbtnMeasureVertical As ToolStripButton
+    Friend WithEvents tsbtnMeasureHorizontal As ToolStripButton
 End Class

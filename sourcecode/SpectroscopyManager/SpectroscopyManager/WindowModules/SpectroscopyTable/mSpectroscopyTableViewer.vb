@@ -1142,6 +1142,11 @@ Public Class mSpectroscopyTableViewer
         End Get
         Set(value As SelectionModes)
             Me._PointSelectionMode = value
+
+            ' Enables or disables tools when the point selection mode changes.
+            Me.tsbtnMeasureHorizontal.Enabled = (Me._PointSelectionMode = SelectionModes.None)
+            Me.tsbtnMeasureVertical.Enabled = (Me._PointSelectionMode = SelectionModes.None)
+
             Me.Refresh()
             RaiseEvent PointSelectionModeChanged(Me._PointSelectionMode)
         End Set
@@ -1834,14 +1839,69 @@ Public Class mSpectroscopyTableViewer
 
 #Region "Tools in the Toolbar"
 
+#Region "Zooming"
     ''' <summary>
     ''' Reset the Zoom again.
     ''' </summary>
-    Private Sub btnTool_Zoom_Click(sender As Object, e As EventArgs) Handles btnTool_Zoom.Click
+    Private Sub tsbtnTool_Zoom_Click(sender As Object, e As EventArgs) Handles tsbtnTool_Zoom.Click
         With Me.zPreview
             .RestoreScale(.GraphPane)
         End With
     End Sub
+#End Region
+
+#Region "Measure distances"
+    ''' <summary>
+    ''' Measure a horizontal distance
+    ''' </summary>
+    Private Sub tsbtnMeasureHorizontal_Click(sender As Object, e As EventArgs) Handles tsbtnMeasureHorizontal.Click
+
+        ' Add the handler, and start the range selection.
+        AddHandler Me.PointSelectionChanged_XRange, AddressOf Me.MeasureDistance_HorizontalDistanceMeasured
+        Me.PointSelectionMode = SelectionModes.XRange
+
+    End Sub
+
+    ''' <summary>
+    ''' Measure a vertical distance
+    ''' </summary>
+    Private Sub tsbtnMeasureVertical_Click(sender As Object, e As EventArgs) Handles tsbtnMeasureVertical.Click
+
+        ' Add the handler, and start the range selection.
+        AddHandler Me.PointSelectionChanged_YRange, AddressOf Me.MeasureDistance_VerticalDistanceMeasured
+        Me.PointSelectionMode = SelectionModes.YRange
+
+    End Sub
+
+    ''' <summary>
+    ''' Callback, that shows the result of a distance measurement.
+    ''' </summary>
+    Private Sub MeasureDistance_HorizontalDistanceMeasured(LeftValue As Double, RightValue As Double)
+
+        ' Remove the handler again.
+        RemoveHandler Me.PointSelectionChanged_XRange, AddressOf Me.MeasureDistance_HorizontalDistanceMeasured
+        Me.PointSelectionMode = SelectionModes.None
+
+        ' Show the result in the status-label.
+        Me.tslblInfobar.Text = My.Resources.rSpectroscopyTableViewer.Tool_MeasureDistance_Result_DeltaX.Replace("%v", cUnits.GetFormatedValueString(RightValue - LeftValue))
+
+    End Sub
+
+    ''' <summary>
+    ''' Callback, that shows the result of a distance measurement.
+    ''' </summary>
+    Private Sub MeasureDistance_VerticalDistanceMeasured(HighValue As Double, LowValue As Double)
+
+        ' Remove the handler again.
+        RemoveHandler Me.PointSelectionChanged_YRange, AddressOf Me.MeasureDistance_VerticalDistanceMeasured
+        Me.PointSelectionMode = SelectionModes.None
+
+        ' Show the result in the status-label.
+        Me.tslblInfobar.Text = My.Resources.rSpectroscopyTableViewer.Tool_MeasureDistance_Result_DeltaY.Replace("%v", cUnits.GetFormatedValueString(HighValue - LowValue))
+
+    End Sub
+
+#End Region
 
 #End Region
 

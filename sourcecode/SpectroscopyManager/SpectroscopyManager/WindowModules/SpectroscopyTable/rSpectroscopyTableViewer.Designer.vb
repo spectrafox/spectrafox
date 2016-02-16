@@ -162,5 +162,23 @@ Namespace My.Resources
                 Return ResourceManager.GetString("StackOffsetGraphInformation", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to dx = %v.
+        '''</summary>
+        Friend Shared ReadOnly Property Tool_MeasureDistance_Result_DeltaX() As String
+            Get
+                Return ResourceManager.GetString("Tool_MeasureDistance_Result_DeltaX", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to dy = %v.
+        '''</summary>
+        Friend Shared ReadOnly Property Tool_MeasureDistance_Result_DeltaY() As String
+            Get
+                Return ResourceManager.GetString("Tool_MeasureDistance_Result_DeltaY", resourceCulture)
+            End Get
+        End Property
     End Class
 End Namespace

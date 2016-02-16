@@ -150,4 +150,10 @@
   <data name="StackOffsetGraphInformation" xml:space="preserve">
     <value>stack offset: %v</value>
   </data>
+  <data name="Tool_MeasureDistance_Result_DeltaX" xml:space="preserve">
+    <value>dx = %v</value>
+  </data>
+  <data name="Tool_MeasureDistance_Result_DeltaY" xml:space="preserve">
+    <value>dy = %v</value>
+  </data>
 </root>
