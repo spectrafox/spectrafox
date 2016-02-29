@@ -55,14 +55,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExpTreeLib.dll" size="130560">
-      <assemblyIdentity name="ExpTreeLib" version="3.0.2.28540" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExpTreeLib.dll" size="131584">
+      <assemblyIdentity name="ExpTreeLib" version="3.0.2.29337" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dPuSCqr16e/joyyY81UcU2UVJDGNKOSIBXgi5fM+fZA=</dsig:DigestValue>
+        <dsig:DigestValue>g/VsT/hFY1NJKkZXdTUH4LbcAsmzY7Vmqw3gZN8uff8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3587584">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3588096">
       <assemblyIdentity name="SpectroscopyManager" version="2016.2.16.1" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0ITyLq8I9egNQJ87ynDaMvRc6k6nDrz54+I63J1gubc=</dsig:DigestValue>
+        <dsig:DigestValue>tIbcHLuInt4KJivRmF62iMrIQE5N4GBaeDUMpf4P9xU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

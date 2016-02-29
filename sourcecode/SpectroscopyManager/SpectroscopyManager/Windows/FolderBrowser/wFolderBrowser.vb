@@ -138,7 +138,7 @@ Public Class wFolderBrowser
 
 #If DEBUG Then
         ' open automatically the data-browser in debug-mode, to save some time.
-        Me.btnBrowseFolder_Click(Nothing, Nothing)
+        Me.btnBrowseFolder_Click()
 #End If
     End Sub
 
@@ -681,6 +681,9 @@ Public Class wFolderBrowser
 
 #Region "   lv1_DoubleClick"
 
+    ''' <summary>
+    ''' Open the selected folder in the foldertree with a double click.
+    ''' </summary>
     Private Sub lv1_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lv1.DoubleClick
         Dim csi As CShItem = DirectCast(lv1.SelectedItems(0).Tag, CShItem)
         If csi.IsFolder Then
@@ -694,6 +697,7 @@ Public Class wFolderBrowser
             End Try
         End If
     End Sub
+
 #End Region
 
 #Region "   LabelEdit Handlers (Item Rename) From Calum"
@@ -1052,8 +1056,8 @@ CLEANUP:
     ''' <summary>
     ''' Open the Folder Browser for the selected path or the selected files
     ''' </summary>
-    Private Sub btnBrowseFolder_Click(sender As Object, e As EventArgs) Handles btnBrowseFolder.Click
-        
+    Private Sub btnBrowseFolder_Click() Handles btnBrowseFolder.Click
+
         ' Get a list of files to filter.
         Dim FilterFileList As New List(Of String)
         For i As Integer = 0 To Me.lv1.SelectedItems.Count - 1 Step 1
@@ -1222,6 +1226,24 @@ CLEANUP:
             ' Refresh the folder-history
             Me.RefreshFolderHistory()
         End If
+    End Sub
+
+#End Region
+
+#Region "React on KeyDown event for navigation with the keyboard."
+
+    ''' <summary>
+    ''' React on KeyDown event for navigation with the keyboard.
+    ''' </summary>
+    Private Sub dbDictionaryBrowser_TreeKeyDown(sender As Object, e As KeyEventArgs) Handles dbDictionaryBrowser.TreeKeyDown
+
+        Select Case e.KeyCode
+            Case Keys.Return
+                ' Open the currently selected folder in the DataBrowser.
+                Me.btnBrowseFolder_Click()
+
+        End Select
+
     End Sub
 
 #End Region

@@ -27,7 +27,7 @@ Partial Class wFolderBrowser
         Me.mnuRefreshView = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuFolderHistory = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.lv1 = New ListView_DoubleBuffered
+        Me.lv1 = New SpectroscopyManager.ListView_DoubleBuffered()
         Me.chName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chSize = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chLastModified = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)

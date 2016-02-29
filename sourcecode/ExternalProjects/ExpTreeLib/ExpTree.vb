@@ -1187,11 +1187,11 @@ XIT:    tv1.EndUpdate()
         Return SB.ToString
     End Function
 
-    'Public Event TreeKeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
+    Public Event TreeKeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
 
-    'Private Sub tv1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles tv1.KeyDown
-    '    Debug.WriteLine("KeyDown in ExpTree Char = " & e.KeyData.ToString)
-    '    If e.KeyData = Keys.Escape Then e.Handled = True
-    '    RaiseEvent TreeKeyDown(sender, e)
-    'End Sub
+    Private Sub tv1_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles tv1.KeyDown
+        '    Debug.WriteLine("KeyDown in ExpTree Char = " & e.KeyData.ToString)
+        If e.KeyData = Keys.Escape Then e.Handled = True
+        RaiseEvent TreeKeyDown(sender, e)
+    End Sub
 End Class
