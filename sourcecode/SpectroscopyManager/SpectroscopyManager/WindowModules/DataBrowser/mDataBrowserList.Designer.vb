@@ -62,7 +62,9 @@ Partial Class mDataBrowserList
         Me.mnuTools_OpenSpectroscopyFilesSeparately = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator4 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuTools_ExportWizard = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuTools_ShowSpectroscopyFilesTogetherInPreview = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator13 = New System.Windows.Forms.ToolStripSeparator()
+        Me.mnuTools_PlotSpectraTogether = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuTools_PlotSpectraTogetherAutomatic = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuTools_Visualization = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTools_DataManipulations = New System.Windows.Forms.ToolStripMenuItem()
@@ -360,7 +362,7 @@ Partial Class mDataBrowserList
         '
         'mnuMultipleSpectroscopyFileActions
         '
-        Me.mnuMultipleSpectroscopyFileActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuTools_OpenSpectroscopyFilesSeparately, Me.ToolStripSeparator4, Me.mnuTools_ExportWizard, Me.mnuTools_ShowSpectroscopyFilesTogetherInPreview, Me.ToolStripSeparator2, Me.mnuTools_Visualization, Me.mnuTools_DataManipulations, Me.mnuTools_NumericManipulations, Me.ToolStripSeparator3, Me.mnuTools_SpectroscopyDataCache})
+        Me.mnuMultipleSpectroscopyFileActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuTools_OpenSpectroscopyFilesSeparately, Me.ToolStripSeparator4, Me.mnuTools_ExportWizard, Me.ToolStripSeparator13, Me.mnuTools_PlotSpectraTogether, Me.mnuTools_PlotSpectraTogetherAutomatic, Me.ToolStripSeparator2, Me.mnuTools_Visualization, Me.mnuTools_DataManipulations, Me.mnuTools_NumericManipulations, Me.ToolStripSeparator3, Me.mnuTools_SpectroscopyDataCache})
         Me.mnuMultipleSpectroscopyFileActions.Enabled = False
         Me.mnuMultipleSpectroscopyFileActions.Image = Global.SpectroscopyManager.My.Resources.Resources.plot_16
         Me.mnuMultipleSpectroscopyFileActions.Name = "mnuMultipleSpectroscopyFileActions"
@@ -371,60 +373,73 @@ Partial Class mDataBrowserList
         '
         Me.mnuTools_OpenSpectroscopyFilesSeparately.Image = Global.SpectroscopyManager.My.Resources.Resources.plot_16
         Me.mnuTools_OpenSpectroscopyFilesSeparately.Name = "mnuTools_OpenSpectroscopyFilesSeparately"
-        Me.mnuTools_OpenSpectroscopyFilesSeparately.Size = New System.Drawing.Size(251, 22)
+        Me.mnuTools_OpenSpectroscopyFilesSeparately.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_OpenSpectroscopyFilesSeparately.Text = "open data files separately"
         '
         'ToolStripSeparator4
         '
         Me.ToolStripSeparator4.Name = "ToolStripSeparator4"
-        Me.ToolStripSeparator4.Size = New System.Drawing.Size(248, 6)
+        Me.ToolStripSeparator4.Size = New System.Drawing.Size(269, 6)
         '
         'mnuTools_ExportWizard
         '
         Me.mnuTools_ExportWizard.Image = Global.SpectroscopyManager.My.Resources.Resources.export_16
         Me.mnuTools_ExportWizard.Name = "mnuTools_ExportWizard"
-        Me.mnuTools_ExportWizard.Size = New System.Drawing.Size(251, 22)
+        Me.mnuTools_ExportWizard.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_ExportWizard.Text = "export files ..."
         '
-        'mnuTools_ShowSpectroscopyFilesTogetherInPreview
+        'ToolStripSeparator13
         '
-        Me.mnuTools_ShowSpectroscopyFilesTogetherInPreview.Name = "mnuTools_ShowSpectroscopyFilesTogetherInPreview"
-        Me.mnuTools_ShowSpectroscopyFilesTogetherInPreview.Size = New System.Drawing.Size(251, 22)
-        Me.mnuTools_ShowSpectroscopyFilesTogetherInPreview.Text = "show together in the preview plot"
+        Me.ToolStripSeparator13.Name = "ToolStripSeparator13"
+        Me.ToolStripSeparator13.Size = New System.Drawing.Size(269, 6)
+        '
+        'mnuTools_PlotSpectraTogether
+        '
+        Me.mnuTools_PlotSpectraTogether.Image = Global.SpectroscopyManager.My.Resources.Resources.smooth_16
+        Me.mnuTools_PlotSpectraTogether.Name = "mnuTools_PlotSpectraTogether"
+        Me.mnuTools_PlotSpectraTogether.Size = New System.Drawing.Size(272, 22)
+        Me.mnuTools_PlotSpectraTogether.Text = "plot selected files together"
+        '
+        'mnuTools_PlotSpectraTogetherAutomatic
+        '
+        Me.mnuTools_PlotSpectraTogetherAutomatic.CheckOnClick = True
+        Me.mnuTools_PlotSpectraTogetherAutomatic.Name = "mnuTools_PlotSpectraTogetherAutomatic"
+        Me.mnuTools_PlotSpectraTogetherAutomatic.Size = New System.Drawing.Size(272, 22)
+        Me.mnuTools_PlotSpectraTogetherAutomatic.Text = "always plot files together on selection"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(248, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(269, 6)
         '
         'mnuTools_Visualization
         '
         Me.mnuTools_Visualization.Name = "mnuTools_Visualization"
-        Me.mnuTools_Visualization.Size = New System.Drawing.Size(251, 22)
+        Me.mnuTools_Visualization.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_Visualization.Text = "visualization tools"
         '
         'mnuTools_DataManipulations
         '
         Me.mnuTools_DataManipulations.Name = "mnuTools_DataManipulations"
-        Me.mnuTools_DataManipulations.Size = New System.Drawing.Size(251, 22)
+        Me.mnuTools_DataManipulations.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_DataManipulations.Text = "data manipulations"
         '
         'mnuTools_NumericManipulations
         '
         Me.mnuTools_NumericManipulations.Name = "mnuTools_NumericManipulations"
-        Me.mnuTools_NumericManipulations.Size = New System.Drawing.Size(251, 22)
+        Me.mnuTools_NumericManipulations.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_NumericManipulations.Text = "numeric manipulations"
         '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
-        Me.ToolStripSeparator3.Size = New System.Drawing.Size(248, 6)
+        Me.ToolStripSeparator3.Size = New System.Drawing.Size(269, 6)
         '
         'mnuTools_SpectroscopyDataCache
         '
         Me.mnuTools_SpectroscopyDataCache.Image = Global.SpectroscopyManager.My.Resources.Resources.save_16
         Me.mnuTools_SpectroscopyDataCache.Name = "mnuTools_SpectroscopyDataCache"
-        Me.mnuTools_SpectroscopyDataCache.Size = New System.Drawing.Size(251, 22)
+        Me.mnuTools_SpectroscopyDataCache.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_SpectroscopyDataCache.Text = "persistent data storage"
         '
         'mnuMultipleScanImageFileActions
@@ -751,7 +766,7 @@ Partial Class mDataBrowserList
     Friend WithEvents cmnuSpectroscopy_SpectroscopyTableShowDetails As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmnuSpectroscopy_DataManipulations As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmnuSpectroscopy_NumericManipulations As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents mnuTools_ShowSpectroscopyFilesTogetherInPreview As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents mnuTools_PlotSpectraTogether As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmnuSpectroscopy_Header As System.Windows.Forms.ToolStripLabel
     Friend WithEvents ToolStripSeparator7 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents cmScanImageFile As System.Windows.Forms.ContextMenuStrip
@@ -781,4 +796,6 @@ Partial Class mDataBrowserList
     Friend WithEvents mnuFilter_SearchClear As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuSpecialTools As ToolStripMenuItem
     Friend WithEvents mnuSpecialTools_GridViewer As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator13 As ToolStripSeparator
+    Friend WithEvents mnuTools_PlotSpectraTogetherAutomatic As ToolStripMenuItem
 End Class

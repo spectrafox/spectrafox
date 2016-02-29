@@ -351,6 +351,11 @@ Public Class mDataBrowserList
         Me.timFileBufferCache_FlushTimer.Interval = 300000 ' 30000 = 5 * 60 * 1000 = 5 min
         Me.timFileBufferCache_FlushTimer.Start()
 
+        ' Restore some settings
+        With My.Settings
+            Me.mnuTools_PlotSpectraTogetherAutomatic.Checked = .DataBrowserList_PlotSelectedSpectraTogetherAutomatic
+        End With
+
         ' load the filter history
         Me.UpdateFilterHistory()
 
@@ -1388,6 +1393,12 @@ Public Class mDataBrowserList
             RaiseEvent SingleSpectroscopyTableSelected(SelectedSpectroscopyTables(0))
         ElseIf iCountSpectroscopyTables > 1 Then
             RaiseEvent MultipleSpectroscopyTableSelected(SelectedSpectroscopyTables.ToList)
+
+            ' Also raise the event to plot all in the preview window, if the setting box is checked.
+            If Me.mnuTools_PlotSpectraTogetherAutomatic.Checked Then
+                RaiseEvent MultipleSpectroscopyTableSelectedShowInPreview(SelectedSpectroscopyTables.ToList)
+            End If
+
         End If
         If iCountScanImages = 1 Then
             RaiseEvent SingleScanImageSelected(SelectedScanImages(0))
@@ -2196,13 +2207,29 @@ Public Class mDataBrowserList
 #End Region
 
 #Region "Show multiple selected spectroscopy-tables together in the preview window."
+
     ''' <summary>
     ''' Show multiple selected spectroscopy-tables together in the preview window.
     ''' So report the selection back to the hosting window.
     ''' </summary>
-    Private Sub mnuTools_ShowSpectroscopyFilesTogetherInPreview_Click(sender As Object, e As EventArgs) Handles mnuTools_ShowSpectroscopyFilesTogetherInPreview.Click
+    Private Sub mnuTools_PlotSpectraTogether_Click(sender As Object, e As EventArgs) Handles mnuTools_PlotSpectraTogether.Click
         RaiseEvent MultipleSpectroscopyTableSelectedShowInPreview(Me.FileObjectsSelected.Where(Function(obj) obj.FileType = cFileObject.FileTypes.SpectroscopyTable).ToList)
     End Sub
+
+    ''' <summary>
+    ''' Show multiple selected spectroscopy-tables together in the preview window.
+    ''' So report the selection back to the hosting window.
+    ''' </summary>
+    Private Sub mnuTools_PlotSpectraTogetherAutomatic_Click(sender As Object, e As EventArgs) Handles mnuTools_PlotSpectraTogetherAutomatic.Click
+        If Me.mnuTools_PlotSpectraTogetherAutomatic.Checked Then
+            Me.mnuTools_PlotSpectraTogether_Click(Me.mnuTools_PlotSpectraTogether, Nothing)
+        End If
+
+        ' Store settings
+        My.Settings.DataBrowserList_PlotSelectedSpectraTogetherAutomatic = Me.mnuTools_PlotSpectraTogetherAutomatic.Checked
+
+    End Sub
+
 #End Region
 
 #Region "Search for the scan-image closest to the spectroscopy-table"
@@ -2488,6 +2515,10 @@ Public Class mDataBrowserList
     Private Sub mnuSpecialTools_GridViewer_Click(sender As Object, e As EventArgs) Handles mnuSpecialTools_GridViewer.Click
         Dim GV As New wGridPlotter
         GV.Show(Me.oFileImporter)
+    End Sub
+
+    Private Sub VisibilityOfTheListEntriesChange(sender As Object, e As EventArgs) Handles panBrowserList.Resize
+
     End Sub
 
 #End Region

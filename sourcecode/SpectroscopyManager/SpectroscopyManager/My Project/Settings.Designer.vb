@@ -2325,6 +2325,18 @@ Namespace My
                 Return CType(Me("HelpFileURL"),String)
             End Get
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property DataBrowserList_PlotSelectedSpectraTogetherAutomatic() As Boolean
+            Get
+                Return CType(Me("DataBrowserList_PlotSelectedSpectraTogetherAutomatic"),Boolean)
+            End Get
+            Set
+                Me("DataBrowserList_PlotSelectedSpectraTogetherAutomatic") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

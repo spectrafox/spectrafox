@@ -163,6 +163,7 @@ Public Class wDataBrowserModular
 #End Region
 
 #Region "SpectroscopyTable or Scan-Image selection -> mediator between the List module and Preview-Boxes"
+
     Delegate Sub _SpectroscopyTableList_SingleSpectroscopyTableSelected(ByRef SelectedSpectroscopyTable As cSpectroscopyTable)
     ''' <summary>
     ''' Selection of a Single SpectroscopyTable in Spectroscopy-Table-Filelist Changed.
