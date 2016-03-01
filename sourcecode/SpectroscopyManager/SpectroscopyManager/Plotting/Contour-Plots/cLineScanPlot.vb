@@ -59,9 +59,6 @@
         If TargetWidth <= 0 Then Throw New ArgumentOutOfRangeException("TargetWidth", "The target width of the image has to be > 0")
         If Me.lSpectroscopyTables.Count <= 0 Then Return New Bitmap(1, 1)
 
-        ' Check, if all SpectroscopyTables have the same amount of data
-        Dim ValueCountX As Integer = -1
-
         ' Create the label dimensions
         Dim LabelFrameBottomHeight As Integer = Convert.ToInt32(0.09 * TargetHeight)
 
@@ -86,29 +83,33 @@
         ' Save the first cropped XColumn separately: needed for Axes generation
         Dim FirstXColumnWithoutCroppedValues As List(Of Double) = Nothing
         Dim FirstXColumn As cSpectroscopyTable.DataColumn = Nothing
+        ' Check, if all SpectroscopyTables have the same boundaries, which we plot in the x-axis
+        Dim FirstXColumnMax As Double = Double.NaN
+        Dim FirstXColumnMin As Double = Double.NaN
 
         ' Create Value-Matrix to Plot,
-        ' but allways check, if the datacolumns have correct dimensions.
+        ' but always check, if the datacolumns have correct dimensions.
         For i As Integer = 0 To Me.lSpectroscopyTables.Count - 1 Step 1
 
             ' Get local identifiers for the current X and Value Column
             Dim CurrentXColumnCropped As List(Of Double) = Me.lSpectroscopyTables(i).Column(ColumnNameX).GetValuesWithoutNaNValues
             Dim CurrentValueColumnCropped As List(Of Double) = Me.lSpectroscopyTables(i).Column(ColumnNameValues).GetValuesWithoutNaNValues '.GetColumnWithoutValuesWhereSourceColumnIsNaN(Me.lSpectroscopyTables(i).Column(ColumnNameX))
 
-            If ValueCountX > 0 Then
-                If CurrentXColumnCropped.Count <> ValueCountX Then
+            If Not Double.IsNaN(FirstXColumnMax) AndAlso Not Double.IsNaN(FirstXColumnMin) Then
+                If CurrentXColumnCropped.Max <> FirstXColumnMax OrElse CurrentXColumnCropped.Min <> FirstXColumnMin Then
                     Me.oFastImage = New cFastImage(My.Resources.cancel_25)
-                    Throw New ArgumentOutOfRangeException("ValueCountX", "The individual spectra have a differnt point counts, or a different crop range.")
+                    Throw New ArgumentOutOfRangeException("FirstXColumnMax", My.Resources.rLineScanViewer.Error_DifferentRangeInXDetected.Replace("%max", FirstXColumnMax.ToString).Replace("%min", FirstXColumnMax.ToString))
                 End If
-                If CurrentValueColumnCropped.Count <> ValueCountX Then
+                If CurrentValueColumnCropped.Count <> CurrentXColumnCropped.Count Then
                     Me.oFastImage = New cFastImage(My.Resources.cancel_25)
-                    Throw New ArgumentOutOfRangeException("ValueCountX", "The individual spectra have a differnt point counts, or a different crop range.")
+                    Throw New ArgumentOutOfRangeException("X vs Y count difference", "Mismatch between X and Y column count.")
                 End If
             Else
                 ' This is the first Spectroscopy-Table in the list.
-                ValueCountX = CurrentXColumnCropped.Count
                 FirstXColumnWithoutCroppedValues = CurrentXColumnCropped
                 FirstXColumn = Me.lSpectroscopyTables(i).Column(ColumnNameX)
+                FirstXColumnMax = FirstXColumnWithoutCroppedValues.Max
+                FirstXColumnMin = FirstXColumnWithoutCroppedValues.Min
             End If
 
             ' Create hight-value-array.
@@ -199,8 +200,8 @@
             DrawSurface.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
 
             ' Get the Axis-Range
-            Dim LeftValue As Double = FirstXColumnWithoutCroppedValues.Min
-            Dim RightValue As Double = FirstXColumnWithoutCroppedValues.Max
+            Dim LeftValue As Double = FirstXColumnMin
+            Dim RightValue As Double = FirstXColumnMax
             If LeftValue > RightValue Then
                 Dim TmpLeft As Double = LeftValue
                 LeftValue = RightValue

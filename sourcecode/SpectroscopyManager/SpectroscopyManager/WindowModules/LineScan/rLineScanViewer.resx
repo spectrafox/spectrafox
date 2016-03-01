@@ -131,4 +131,14 @@ Please crop the column to a strictly monotonic range.</value>
   <data name="ErrorDrawing_Title" xml:space="preserve">
     <value>drawing failed</value>
   </data>
+  <data name="Error_DifferentRangeInXDetected" xml:space="preserve">
+    <value>A mismatch of the value range between several datasets has been detected.
+The plotted data must have the same maximum and minimum values in the x-axis.
+
+Max: %max
+Min: %min</value>
+  </data>
+  <data name="Error_DifferentRangeInXDetected_Title" xml:space="preserve">
+    <value>range mismatch</value>
+  </data>
 </root>

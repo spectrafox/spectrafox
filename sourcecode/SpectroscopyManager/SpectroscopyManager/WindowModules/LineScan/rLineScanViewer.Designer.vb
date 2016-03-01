@@ -84,6 +84,28 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to A mismatch of the value range between several datasets has been detected.
+        '''The plotted data must have the same maximum and minimum values in the x-axis.
+        '''
+        '''Max: %max
+        '''Min: %min.
+        '''</summary>
+        Friend Shared ReadOnly Property Error_DifferentRangeInXDetected() As String
+            Get
+                Return ResourceManager.GetString("Error_DifferentRangeInXDetected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to range mismatch.
+        '''</summary>
+        Friend Shared ReadOnly Property Error_DifferentRangeInXDetected_Title() As String
+            Get
+                Return ResourceManager.GetString("Error_DifferentRangeInXDetected_Title", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to An error occured while drawing the line-scan plot:
         '''.
         '''</summary>
