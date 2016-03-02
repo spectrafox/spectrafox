@@ -427,18 +427,22 @@ Public Class mDataBrowserListEntry
 
                 ' Send Abort-Image, if the Columns were not found.
                 Dim PreviewImage As Image
-                If Me._FileObject.SpectroscopyTable.Columns.ContainsKey(Me.PreviewImageSettings.SpectroscopyTable_ColumnNameX) And
-                   Me._FileObject.SpectroscopyTable.Columns.ContainsKey(Me.PreviewImageSettings.SpectroscopyTable_ColumnNameY) Then
-                    PreviewImage = Me._FileObject.GetSpectroscopyTablePreviewImage(Me.PreviewImageSettings.SpectroscopyTable_ColumnNameX,
-                                                                                   Me.PreviewImageSettings.SpectroscopyTable_ColumnNameY,
-                                                                                   Me.tmpFetch_PreviewImageSize.Width,
-                                                                                   Me.tmpFetch_PreviewImageSize.Height,
-                                                                                   Me.PreviewImageSettings.SpectroscopyTable_LogX,
-                                                                                   Me.PreviewImageSettings.SpectroscopyTable_LogY,
-                                                                                   Me.PreviewImageSettings.SpectroscopyTable_EnablePointReduction)
-                Else
-                    PreviewImage = My.Resources.columns_do_not_exist
-                End If
+                With Me.PreviewImageSettings
+                    Dim XCol As String = .GetFirstExistingColumnName_X(Me._FileObject.SpectroscopyTable.GetColumnNameList)
+                    Dim YCol As String = .GetFirstExistingColumnName_Y(Me._FileObject.SpectroscopyTable.GetColumnNameList)
+                    If Me._FileObject.SpectroscopyTable.Columns.ContainsKey(XCol) AndAlso
+                        Me._FileObject.SpectroscopyTable.Columns.ContainsKey(YCol) Then
+                        PreviewImage = Me._FileObject.GetSpectroscopyTablePreviewImage(XCol,
+                                                                                       YCol,
+                                                                                       Me.tmpFetch_PreviewImageSize.Width,
+                                                                                       Me.tmpFetch_PreviewImageSize.Height,
+                                                                                       .SpectroscopyTable_LogX,
+                                                                                       .SpectroscopyTable_LogY,
+                                                                                       .SpectroscopyTable_EnablePointReduction)
+                    Else
+                        PreviewImage = My.Resources.columns_do_not_exist
+                    End If
+                End With
 
                 ' Create new ListEntry
                 Me._ListEntry = New ListEntry
@@ -646,7 +650,8 @@ Public Class mDataBrowserListEntry
                 ' Show Spectroscopy-Table Details
                 Dim DataExplorer As New wDataExplorer_SpectroscopyTable
                 DataExplorer.Show(Me._FileObject)
-                DataExplorer.SetInitialColumnSelection(Me.PreviewImageSettings.SpectroscopyTable_ColumnNameX, Me.PreviewImageSettings.SpectroscopyTable_ColumnNameY)
+                DataExplorer.SetInitialColumnSelection(Me.PreviewImageSettings.GetFirstExistingColumnName_X(Me._FileObject.GetColumnNameList),
+                                                       Me.PreviewImageSettings.GetFirstExistingColumnName_Y(Me._FileObject.GetColumnNameList))
 
             Case cFileObject.FileTypes.ScanImage
                 ' Show ScanImage Details

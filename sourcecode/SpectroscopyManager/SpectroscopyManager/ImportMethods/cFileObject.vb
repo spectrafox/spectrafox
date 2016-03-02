@@ -889,27 +889,48 @@ Public Class cFileObject
                         oLine.Line.IsVisible = False
                         oLine.Symbol.Fill = New ZedGraph.Fill(Color.Black)
                         .Title.Text = ""
-                        .XAxis.Title.Text = ""
-                        '.XAxis.Title.Text = Me.Column(XColumnIndex).AxisTitle
-                        If ScaleXLog Then
-                            .XAxis.Type = ZedGraph.AxisType.Log
-                        Else
-                            .XAxis.Type = ZedGraph.AxisType.Linear
-                        End If
-                        .YAxis.Title.Text = ""
-                        '.YAxis.Title.Text = Me.Column(YColumnIndex).AxisTitle
-                        If ScaleYLog Then
-                            .YAxis.Type = ZedGraph.AxisType.Log
-                        Else
-                            .YAxis.Type = ZedGraph.AxisType.Linear
-                        End If
+
+                        '#################
+                        ' X axis settings
+                        With .XAxis
+                            .Scale.IsVisible = False
+                            With .Title
+                                .Text = oSpectroscopyTable.Column(XColumnName).AxisTitle
+                                .FontSpec.Size = 32
+                                .Gap = 0
+                            End With
+                            If ScaleXLog Then
+                                .Type = ZedGraph.AxisType.Log
+                            Else
+                                .Type = ZedGraph.AxisType.Linear
+                            End If
+                        End With
+
+                        '#################
+                        ' Y axis settings
+                        With .YAxis
+                            .Scale.IsVisible = False
+                            With .Title
+                                .Text = oSpectroscopyTable.Column(YColumnName).AxisTitle
+                                .FontSpec.Size = 32
+                                .Gap = 0
+                            End With
+                            If ScaleYLog Then
+                                .Type = ZedGraph.AxisType.Log
+                            Else
+                                .Type = ZedGraph.AxisType.Linear
+                            End If
+
+                        End With
                         .AxisChange()
                     End With
+
+                    ' Security checks of the image.
                     If Width <= 0 Then Width = 1
                     If Height <= 0 Then Height = 1
 
                     ' Set the new output image
-                    OutputImage = oGraph.GetImage(Width, Height, 96, True)
+                    OutputImage = oGraph.GetImage(Width, Height, 150, False)
 
                     ' Save the new output image to the cache.
                     Me.SetPreviewImageStorage(CacheImageKey, OutputImage)

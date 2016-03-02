@@ -582,5 +582,17 @@
     <Setting Name="DataBrowserList_PlotSelectedSpectraTogetherAutomatic" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="LastPreviewImageList_ColumnNameX_2nd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastPreviewImageList_ColumnNameX_3rd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastPreviewImageList_ColumnNameY_2nd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastPreviewImageList_ColumnNameY_3rd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

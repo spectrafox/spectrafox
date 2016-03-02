@@ -2337,6 +2337,54 @@ Namespace My
                 Me("DataBrowserList_PlotSelectedSpectraTogetherAutomatic") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastPreviewImageList_ColumnNameX_2nd() As String
+            Get
+                Return CType(Me("LastPreviewImageList_ColumnNameX_2nd"),String)
+            End Get
+            Set
+                Me("LastPreviewImageList_ColumnNameX_2nd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastPreviewImageList_ColumnNameX_3rd() As String
+            Get
+                Return CType(Me("LastPreviewImageList_ColumnNameX_3rd"),String)
+            End Get
+            Set
+                Me("LastPreviewImageList_ColumnNameX_3rd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastPreviewImageList_ColumnNameY_2nd() As String
+            Get
+                Return CType(Me("LastPreviewImageList_ColumnNameY_2nd"),String)
+            End Get
+            Set
+                Me("LastPreviewImageList_ColumnNameY_2nd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastPreviewImageList_ColumnNameY_3rd() As String
+            Get
+                Return CType(Me("LastPreviewImageList_ColumnNameY_3rd"),String)
+            End Get
+            Set
+                Me("LastPreviewImageList_ColumnNameY_3rd") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

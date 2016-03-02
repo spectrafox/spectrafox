@@ -451,8 +451,12 @@ Public Class mDataBrowserList
             ' Preview-images
             Me._CurrentPreviewImageSettings = New PreviewImageSettings
             Me._CurrentPreviewImageSettings.ScanImage_Channel = .LastPreviewImageList_ChannelName
-            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX = .LastPreviewImageList_ColumnNameX
-            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY = .LastPreviewImageList_ColumnNameY
+            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_1st = .LastPreviewImageList_ColumnNameX
+            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_2nd = .LastPreviewImageList_ColumnNameX_2nd
+            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_3rd = .LastPreviewImageList_ColumnNameX_3rd
+            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_1st = .LastPreviewImageList_ColumnNameY
+            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_2nd = .LastPreviewImageList_ColumnNameY_2nd
+            Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_3rd = .LastPreviewImageList_ColumnNameY_3rd
             Me._CurrentPreviewImageSettings.SpectroscopyTable_LogX = .ListPreviewImage_LogX
             Me._CurrentPreviewImageSettings.SpectroscopyTable_LogY = .ListPreviewImage_LogY
             Me._CurrentPreviewImageSettings.SpectroscopyTable_EnablePointReduction = .ListPreviewImage_ReducePoints
@@ -1861,8 +1865,47 @@ Public Class mDataBrowserList
     ''' list-entries to show the preview image.
     ''' </summary>
     Public Structure PreviewImageSettings
-        Public SpectroscopyTable_ColumnNameX As String
-        Public SpectroscopyTable_ColumnNameY As String
+        Public SpectroscopyTable_ColumnNameX_1st As String
+        Public SpectroscopyTable_ColumnNameX_2nd As String
+        Public SpectroscopyTable_ColumnNameX_3rd As String
+        Public SpectroscopyTable_ColumnNameY_1st As String
+        Public SpectroscopyTable_ColumnNameY_2nd As String
+        Public SpectroscopyTable_ColumnNameY_3rd As String
+
+        ''' <summary>
+        ''' Returns the first ColumnName that matches the
+        ''' selected preview image ColumnName (1st, 2nd, 3rd.)
+        ''' in the list of all X columns.
+        ''' 
+        ''' If 1st matches, it returns the first. Then checks for 2nd, etc.
+        ''' If None matches, it returns an empty string.
+        ''' </summary>
+        Public Function GetFirstExistingColumnName_X(ByVal ListOfColumnNamesToBeChecked As List(Of String)) As String
+
+            If ListOfColumnNamesToBeChecked.Contains(Me.SpectroscopyTable_ColumnNameX_1st) Then Return Me.SpectroscopyTable_ColumnNameX_1st
+            If ListOfColumnNamesToBeChecked.Contains(Me.SpectroscopyTable_ColumnNameX_2nd) Then Return Me.SpectroscopyTable_ColumnNameX_2nd
+            If ListOfColumnNamesToBeChecked.Contains(Me.SpectroscopyTable_ColumnNameX_3rd) Then Return Me.SpectroscopyTable_ColumnNameX_3rd
+
+            Return String.Empty
+        End Function
+
+        ''' <summary>
+        ''' Returns the first ColumnName that matches the
+        ''' selected preview image ColumnName (1st, 2nd, 3rd.)
+        ''' in the list of all X columns.
+        ''' 
+        ''' If 1st matches, it returns the first. Then checks for 2nd, etc.
+        ''' If None matches, it returns an empty string.
+        ''' </summary>
+        Public Function GetFirstExistingColumnName_Y(ByVal ListOfColumnNamesToBeChecked As List(Of String)) As String
+
+            If ListOfColumnNamesToBeChecked.Contains(Me.SpectroscopyTable_ColumnNameY_1st) Then Return Me.SpectroscopyTable_ColumnNameY_1st
+            If ListOfColumnNamesToBeChecked.Contains(Me.SpectroscopyTable_ColumnNameY_2nd) Then Return Me.SpectroscopyTable_ColumnNameY_2nd
+            If ListOfColumnNamesToBeChecked.Contains(Me.SpectroscopyTable_ColumnNameY_3rd) Then Return Me.SpectroscopyTable_ColumnNameY_3rd
+
+            Return String.Empty
+        End Function
+
         Public SpectroscopyTable_LogX As Boolean
         Public SpectroscopyTable_LogY As Boolean
         Public SpectroscopyTable_EnablePointReduction As Boolean
@@ -1894,12 +1937,17 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' Applies the Settings to the Preview-Images:
     ''' </summary>
-    Private Sub PreviewImageSettingsChanged_SpectroscopyTable(sender As System.Object, e As System.EventArgs) _
-        Handles mnuPreview_cbSpectroscopyColumnX.SelectedIndexChanged,
-        mnuPreview_cbSpectroscopyColumnY.SelectedIndexChanged,
+    Private Sub PreviewImageSettingsChanged_SpectroscopyTable(sender As System.Object, e As System.EventArgs) Handles _
+        mnuPreview_cbSpectroscopyColumnX_1st.SelectedIndexChanged,
+        mnuPreview_cbSpectroscopyColumnX_2nd.SelectedIndexChanged,
+        mnuPreview_cbSpectroscopyColumnX_3rd.SelectedIndexChanged,
+        mnuPreview_cbSpectroscopyColumnY_1st.SelectedIndexChanged,
+        mnuPreview_cbSpectroscopyColumnY_2nd.SelectedIndexChanged,
+        mnuPreview_cbSpectroscopyColumnY_3rd.SelectedIndexChanged,
         mnuPreview_Spectroscopy_LogX.CheckedChanged,
         mnuPreview_Spectroscopy_LogY.CheckedChanged,
         mnuPreview_Spectroscopy_PointReduction.CheckedChanged
+
         If Not Me.bReady Then Return
 
         ' Create new preview-image settings-object.
@@ -1907,8 +1955,12 @@ Public Class mDataBrowserList
 
         With Me._CurrentPreviewImageSettings
 
-            .SpectroscopyTable_ColumnNameX = Convert.ToString(mnuPreview_cbSpectroscopyColumnX.SelectedItem)
-            .SpectroscopyTable_ColumnNameY = Convert.ToString(mnuPreview_cbSpectroscopyColumnY.SelectedItem)
+            .SpectroscopyTable_ColumnNameX_1st = Convert.ToString(mnuPreview_cbSpectroscopyColumnX_1st.SelectedItem)
+            .SpectroscopyTable_ColumnNameX_2nd = Convert.ToString(mnuPreview_cbSpectroscopyColumnX_2nd.SelectedItem)
+            .SpectroscopyTable_ColumnNameX_3rd = Convert.ToString(mnuPreview_cbSpectroscopyColumnX_3rd.SelectedItem)
+            .SpectroscopyTable_ColumnNameY_1st = Convert.ToString(mnuPreview_cbSpectroscopyColumnY_1st.SelectedItem)
+            .SpectroscopyTable_ColumnNameY_2nd = Convert.ToString(mnuPreview_cbSpectroscopyColumnY_2nd.SelectedItem)
+            .SpectroscopyTable_ColumnNameY_3rd = Convert.ToString(mnuPreview_cbSpectroscopyColumnY_3rd.SelectedItem)
             .SpectroscopyTable_LogX = mnuPreview_Spectroscopy_LogX.Checked
             .SpectroscopyTable_LogY = mnuPreview_Spectroscopy_LogY.Checked
             .SpectroscopyTable_EnablePointReduction = mnuPreview_Spectroscopy_PointReduction.Checked
@@ -1922,8 +1974,12 @@ Public Class mDataBrowserList
             .ListPreviewImage_LogX = Me._CurrentPreviewImageSettings.SpectroscopyTable_LogX
             .ListPreviewImage_LogY = Me._CurrentPreviewImageSettings.SpectroscopyTable_LogY
             .ListPreviewImage_ReducePoints = Me._CurrentPreviewImageSettings.SpectroscopyTable_EnablePointReduction
-            .LastPreviewImageList_ColumnNameX = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX
-            .LastPreviewImageList_ColumnNameY = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY
+            .LastPreviewImageList_ColumnNameX = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_1st
+            .LastPreviewImageList_ColumnNameX_2nd = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_2nd
+            .LastPreviewImageList_ColumnNameX_3rd = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_3rd
+            .LastPreviewImageList_ColumnNameY = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_1st
+            .LastPreviewImageList_ColumnNameY_2nd = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_2nd
+            .LastPreviewImageList_ColumnNameY_3rd = Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_3rd
 
             .Save()
         End With
@@ -1954,8 +2010,12 @@ Public Class mDataBrowserList
 
         With Me._CurrentPreviewImageSettings
 
-            .SpectroscopyTable_ColumnNameX = Convert.ToString(mnuPreview_cbSpectroscopyColumnX.SelectedItem)
-            .SpectroscopyTable_ColumnNameY = Convert.ToString(mnuPreview_cbSpectroscopyColumnY.SelectedItem)
+            .SpectroscopyTable_ColumnNameX_1st = Convert.ToString(mnuPreview_cbSpectroscopyColumnX_1st.SelectedItem)
+            .SpectroscopyTable_ColumnNameX_2nd = Convert.ToString(mnuPreview_cbSpectroscopyColumnX_2nd.SelectedItem)
+            .SpectroscopyTable_ColumnNameX_3rd = Convert.ToString(mnuPreview_cbSpectroscopyColumnX_3rd.SelectedItem)
+            .SpectroscopyTable_ColumnNameY_1st = Convert.ToString(mnuPreview_cbSpectroscopyColumnY_1st.SelectedItem)
+            .SpectroscopyTable_ColumnNameY_2nd = Convert.ToString(mnuPreview_cbSpectroscopyColumnY_2nd.SelectedItem)
+            .SpectroscopyTable_ColumnNameY_3rd = Convert.ToString(mnuPreview_cbSpectroscopyColumnY_3rd.SelectedItem)
             .SpectroscopyTable_LogX = mnuPreview_Spectroscopy_LogX.Checked
             .SpectroscopyTable_LogY = mnuPreview_Spectroscopy_LogY.Checked
             .SpectroscopyTable_EnablePointReduction = mnuPreview_Spectroscopy_PointReduction.Checked
@@ -1994,14 +2054,29 @@ Public Class mDataBrowserList
         Me.mnuPreview_Spectroscopy_LogY.Checked = Me._CurrentPreviewImageSettings.SpectroscopyTable_LogY
         Me.mnuPreview_Spectroscopy_PointReduction.Checked = Me._CurrentPreviewImageSettings.SpectroscopyTable_EnablePointReduction
 
+        ' Clear the preview-image names
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.Items.Clear()
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.Items.Clear()
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.Items.Clear()
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.Items.Clear()
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.Items.Clear()
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.Items.Clear()
+
         ' Add the Filter-Columns to the Comboboxes
-        Me.mnuPreview_cbSpectroscopyColumnX.Items.Clear()
-        Me.mnuPreview_cbSpectroscopyColumnY.Items.Clear()
-        Me.mnuPreview_cbSpectroscopyColumnX.Items.AddRange(Me.ListOfPreviewImageColumns.ToArray)
-        Me.mnuPreview_cbSpectroscopyColumnY.Items.AddRange(Me.ListOfPreviewImageColumns.ToArray)
+        Dim PreviewImageColumnNameArray As String() = Me.ListOfPreviewImageColumns.ToArray
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.Items.AddRange(PreviewImageColumnNameArray)
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.Items.AddRange(PreviewImageColumnNameArray)
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.Items.AddRange(PreviewImageColumnNameArray)
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.Items.AddRange(PreviewImageColumnNameArray)
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.Items.AddRange(PreviewImageColumnNameArray)
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.Items.AddRange(PreviewImageColumnNameArray)
         For Each ColumnName As String In Me.ListOfPreviewImageColumns
-            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnX.SelectedItem = ColumnName
-            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnY.SelectedItem = ColumnName
+            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_1st = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnX_1st.SelectedItem = ColumnName
+            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_2nd = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnX_2nd.SelectedItem = ColumnName
+            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_3rd = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnX_3rd.SelectedItem = ColumnName
+            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_1st = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnY_1st.SelectedItem = ColumnName
+            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_2nd = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnY_2nd.SelectedItem = ColumnName
+            If Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_3rd = ColumnName Then Me.mnuPreview_cbSpectroscopyColumnY_3rd.SelectedItem = ColumnName
         Next
 
         ' Add Filter-Channels to the Combobox
@@ -2148,11 +2223,11 @@ Public Class mDataBrowserList
             End If
         End If
 
-        For Each FileObject As FileListEntry In FileList
+        For Each FileEntry As FileListEntry In FileList
             Dim Window As New wDataExplorer_SpectroscopyTable
-            Window.Show(FileObject.FileObject)
-            Window.SetInitialColumnSelection(Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX,
-                                             Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY)
+            Window.Show(FileEntry.FileObject)
+            Window.SetInitialColumnSelection(Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX_1st,
+                                             Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY_1st)
         Next
     End Sub
 
@@ -2195,7 +2270,8 @@ Public Class mDataBrowserList
                 ' Show Spectroscopy-Table Details
                 Dim DataExplorer As New wDataExplorer_SpectroscopyTable
                 DataExplorer.Show(Me._CurrentContextMenuFileObject)
-                DataExplorer.SetInitialColumnSelection(Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX, Me._CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY)
+                DataExplorer.SetInitialColumnSelection(Me._CurrentPreviewImageSettings.GetFirstExistingColumnName_X(Me._CurrentContextMenuFileObject.GetColumnNameList),
+                                                       Me._CurrentPreviewImageSettings.GetFirstExistingColumnName_Y(Me._CurrentContextMenuFileObject.GetColumnNameList))
 
             Case cFileObject.FileTypes.ScanImage
                 ' Show ScanImage Details
@@ -2515,10 +2591,6 @@ Public Class mDataBrowserList
     Private Sub mnuSpecialTools_GridViewer_Click(sender As Object, e As EventArgs) Handles mnuSpecialTools_GridViewer.Click
         Dim GV As New wGridPlotter
         GV.Show(Me.oFileImporter)
-    End Sub
-
-    Private Sub VisibilityOfTheListEntriesChange(sender As Object, e As EventArgs) Handles panBrowserList.Resize
-
     End Sub
 
 #End Region

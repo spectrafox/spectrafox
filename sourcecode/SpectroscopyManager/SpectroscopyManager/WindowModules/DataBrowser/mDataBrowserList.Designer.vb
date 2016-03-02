@@ -49,11 +49,17 @@ Partial Class mDataBrowserList
         Me.mnuFilter_SearchClear = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuPreviewSettings = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuPreview_XTitle = New System.Windows.Forms.ToolStripLabel()
-        Me.mnuPreview_cbSpectroscopyColumnX = New System.Windows.Forms.ToolStripComboBox()
+        Me.mnuPreview_cbSpectroscopyColumnX_1st = New System.Windows.Forms.ToolStripComboBox()
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd = New System.Windows.Forms.ToolStripComboBox()
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd = New System.Windows.Forms.ToolStripComboBox()
         Me.mnuPreview_Spectroscopy_LogX = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator14 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuPreview_YTitle = New System.Windows.Forms.ToolStripLabel()
-        Me.mnuPreview_cbSpectroscopyColumnY = New System.Windows.Forms.ToolStripComboBox()
+        Me.mnuPreview_cbSpectroscopyColumnY_1st = New System.Windows.Forms.ToolStripComboBox()
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd = New System.Windows.Forms.ToolStripComboBox()
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd = New System.Windows.Forms.ToolStripComboBox()
         Me.mnuPreview_Spectroscopy_LogY = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator15 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuPreview_Spectroscopy_PointReduction = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuPreview_ChannelTitle = New System.Windows.Forms.ToolStripLabel()
@@ -283,7 +289,7 @@ Partial Class mDataBrowserList
         '
         'mnuPreviewSettings
         '
-        Me.mnuPreviewSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuPreview_XTitle, Me.mnuPreview_cbSpectroscopyColumnX, Me.mnuPreview_Spectroscopy_LogX, Me.mnuPreview_YTitle, Me.mnuPreview_cbSpectroscopyColumnY, Me.mnuPreview_Spectroscopy_LogY, Me.mnuPreview_Spectroscopy_PointReduction, Me.ToolStripSeparator9, Me.mnuPreview_ChannelTitle, Me.mnuPreview_cbScanImageChannel})
+        Me.mnuPreviewSettings.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuPreview_XTitle, Me.mnuPreview_cbSpectroscopyColumnX_1st, Me.mnuPreview_cbSpectroscopyColumnX_2nd, Me.mnuPreview_cbSpectroscopyColumnX_3rd, Me.mnuPreview_Spectroscopy_LogX, Me.ToolStripSeparator14, Me.mnuPreview_YTitle, Me.mnuPreview_cbSpectroscopyColumnY_1st, Me.mnuPreview_cbSpectroscopyColumnY_2nd, Me.mnuPreview_cbSpectroscopyColumnY_3rd, Me.mnuPreview_Spectroscopy_LogY, Me.ToolStripSeparator15, Me.mnuPreview_Spectroscopy_PointReduction, Me.ToolStripSeparator9, Me.mnuPreview_ChannelTitle, Me.mnuPreview_cbScanImageChannel})
         Me.mnuPreviewSettings.Image = Global.SpectroscopyManager.My.Resources.Resources.settings_16
         Me.mnuPreviewSettings.Name = "mnuPreviewSettings"
         Me.mnuPreviewSettings.Size = New System.Drawing.Size(28, 20)
@@ -293,57 +299,99 @@ Partial Class mDataBrowserList
         '
         Me.mnuPreview_XTitle.Image = Global.SpectroscopyManager.My.Resources.Resources.x_16
         Me.mnuPreview_XTitle.Name = "mnuPreview_XTitle"
-        Me.mnuPreview_XTitle.Size = New System.Drawing.Size(176, 16)
-        Me.mnuPreview_XTitle.Text = "data table preview X column:"
+        Me.mnuPreview_XTitle.Size = New System.Drawing.Size(224, 16)
+        Me.mnuPreview_XTitle.Text = "preview column (1st, 2nd, 3rd choice):"
         '
-        'mnuPreview_cbSpectroscopyColumnX
+        'mnuPreview_cbSpectroscopyColumnX_1st
         '
-        Me.mnuPreview_cbSpectroscopyColumnX.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.mnuPreview_cbSpectroscopyColumnX.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.mnuPreview_cbSpectroscopyColumnX.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.mnuPreview_cbSpectroscopyColumnX.Name = "mnuPreview_cbSpectroscopyColumnX"
-        Me.mnuPreview_cbSpectroscopyColumnX.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.Name = "mnuPreview_cbSpectroscopyColumnX_1st"
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.Size = New System.Drawing.Size(171, 23)
+        '
+        'mnuPreview_cbSpectroscopyColumnX_2nd
+        '
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.Name = "mnuPreview_cbSpectroscopyColumnX_2nd"
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.Size = New System.Drawing.Size(171, 23)
+        '
+        'mnuPreview_cbSpectroscopyColumnX_3rd
+        '
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.Name = "mnuPreview_cbSpectroscopyColumnX_3rd"
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.Size = New System.Drawing.Size(171, 23)
         '
         'mnuPreview_Spectroscopy_LogX
         '
         Me.mnuPreview_Spectroscopy_LogX.CheckOnClick = True
         Me.mnuPreview_Spectroscopy_LogX.Name = "mnuPreview_Spectroscopy_LogX"
-        Me.mnuPreview_Spectroscopy_LogX.Size = New System.Drawing.Size(236, 22)
+        Me.mnuPreview_Spectroscopy_LogX.Size = New System.Drawing.Size(284, 22)
         Me.mnuPreview_Spectroscopy_LogX.Text = "logarithmic x scale"
+        '
+        'ToolStripSeparator14
+        '
+        Me.ToolStripSeparator14.Name = "ToolStripSeparator14"
+        Me.ToolStripSeparator14.Size = New System.Drawing.Size(281, 6)
         '
         'mnuPreview_YTitle
         '
         Me.mnuPreview_YTitle.Image = Global.SpectroscopyManager.My.Resources.Resources.y_16
         Me.mnuPreview_YTitle.Name = "mnuPreview_YTitle"
-        Me.mnuPreview_YTitle.Size = New System.Drawing.Size(176, 16)
-        Me.mnuPreview_YTitle.Text = "data table preview Y column:"
+        Me.mnuPreview_YTitle.Size = New System.Drawing.Size(224, 16)
+        Me.mnuPreview_YTitle.Text = "preview column (1st, 2nd, 3rd choice):"
         '
-        'mnuPreview_cbSpectroscopyColumnY
+        'mnuPreview_cbSpectroscopyColumnY_1st
         '
-        Me.mnuPreview_cbSpectroscopyColumnY.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.mnuPreview_cbSpectroscopyColumnY.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.mnuPreview_cbSpectroscopyColumnY.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.mnuPreview_cbSpectroscopyColumnY.Name = "mnuPreview_cbSpectroscopyColumnY"
-        Me.mnuPreview_cbSpectroscopyColumnY.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.Name = "mnuPreview_cbSpectroscopyColumnY_1st"
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.Size = New System.Drawing.Size(171, 23)
+        '
+        'mnuPreview_cbSpectroscopyColumnY_2nd
+        '
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.Name = "mnuPreview_cbSpectroscopyColumnY_2nd"
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.Size = New System.Drawing.Size(171, 23)
+        '
+        'mnuPreview_cbSpectroscopyColumnY_3rd
+        '
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.BackColor = System.Drawing.Color.WhiteSmoke
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.Name = "mnuPreview_cbSpectroscopyColumnY_3rd"
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.Size = New System.Drawing.Size(171, 23)
         '
         'mnuPreview_Spectroscopy_LogY
         '
         Me.mnuPreview_Spectroscopy_LogY.CheckOnClick = True
         Me.mnuPreview_Spectroscopy_LogY.Name = "mnuPreview_Spectroscopy_LogY"
-        Me.mnuPreview_Spectroscopy_LogY.Size = New System.Drawing.Size(236, 22)
+        Me.mnuPreview_Spectroscopy_LogY.Size = New System.Drawing.Size(284, 22)
         Me.mnuPreview_Spectroscopy_LogY.Text = "logarithmic y scale"
+        '
+        'ToolStripSeparator15
+        '
+        Me.ToolStripSeparator15.Name = "ToolStripSeparator15"
+        Me.ToolStripSeparator15.Size = New System.Drawing.Size(281, 6)
         '
         'mnuPreview_Spectroscopy_PointReduction
         '
         Me.mnuPreview_Spectroscopy_PointReduction.CheckOnClick = True
         Me.mnuPreview_Spectroscopy_PointReduction.Name = "mnuPreview_Spectroscopy_PointReduction"
-        Me.mnuPreview_Spectroscopy_PointReduction.Size = New System.Drawing.Size(236, 22)
+        Me.mnuPreview_Spectroscopy_PointReduction.Size = New System.Drawing.Size(284, 22)
         Me.mnuPreview_Spectroscopy_PointReduction.Text = "point reduction enabled"
         '
         'ToolStripSeparator9
         '
         Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
-        Me.ToolStripSeparator9.Size = New System.Drawing.Size(233, 6)
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(281, 6)
         '
         'mnuPreview_ChannelTitle
         '
@@ -774,8 +822,8 @@ Partial Class mDataBrowserList
     Friend WithEvents cmnuScanImage_Header As System.Windows.Forms.ToolStripLabel
     Friend WithEvents ToolStripSeparator8 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents mnuPreview_XTitle As System.Windows.Forms.ToolStripLabel
-    Friend WithEvents mnuPreview_cbSpectroscopyColumnX As System.Windows.Forms.ToolStripComboBox
-    Friend WithEvents mnuPreview_cbSpectroscopyColumnY As System.Windows.Forms.ToolStripComboBox
+    Friend WithEvents mnuPreview_cbSpectroscopyColumnX_1st As System.Windows.Forms.ToolStripComboBox
+    Friend WithEvents mnuPreview_cbSpectroscopyColumnY_1st As System.Windows.Forms.ToolStripComboBox
     Friend WithEvents mnuPreview_Spectroscopy_LogY As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuPreview_Spectroscopy_LogX As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator9 As System.Windows.Forms.ToolStripSeparator
@@ -798,4 +846,10 @@ Partial Class mDataBrowserList
     Friend WithEvents mnuSpecialTools_GridViewer As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator13 As ToolStripSeparator
     Friend WithEvents mnuTools_PlotSpectraTogetherAutomatic As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator14 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator15 As ToolStripSeparator
+    Friend WithEvents mnuPreview_cbSpectroscopyColumnX_2nd As ToolStripComboBox
+    Friend WithEvents mnuPreview_cbSpectroscopyColumnX_3rd As ToolStripComboBox
+    Friend WithEvents mnuPreview_cbSpectroscopyColumnY_2nd As ToolStripComboBox
+    Friend WithEvents mnuPreview_cbSpectroscopyColumnY_3rd As ToolStripComboBox
 End Class

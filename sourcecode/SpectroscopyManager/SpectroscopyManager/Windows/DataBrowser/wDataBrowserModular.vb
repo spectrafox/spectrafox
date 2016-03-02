@@ -179,8 +179,8 @@ Public Class wDataBrowserModular
         Else
             ' Fill Spectrum in Preview Box
             Me.pbPreviewBox.SetSinglePreviewImage(SpectroscopyTable,
-                                                  Me.DataBrowserList.CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameX,
-                                                  Me.DataBrowserList.CurrentPreviewImageSettings.SpectroscopyTable_ColumnNameY,
+                                                  Me.DataBrowserList.CurrentPreviewImageSettings.GetFirstExistingColumnName_X(SpectroscopyTable.GetColumnNameList),
+                                                  Me.DataBrowserList.CurrentPreviewImageSettings.GetFirstExistingColumnName_Y(SpectroscopyTable.GetColumnNameList),
                                                   True)
 
             '' Set Point-Marks in the Preview-Window of the ScanImage,

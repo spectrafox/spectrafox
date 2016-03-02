@@ -1246,6 +1246,29 @@ CLEANUP:
 
     End Sub
 
+    ''' <summary>
+    ''' React on KeyDown event for navigation with the keyboard.
+    ''' </summary>
+    Private Sub lv1_KeyDown(sender As Object, e As KeyEventArgs) Handles lv1.KeyDown
+
+        Select Case e.KeyCode
+            Case Keys.Return
+                ' Open the folder, if it is a folder that is selected.
+                If Me.lv1.SelectedItems.Count = 1 Then
+                    Dim csi As CShItem = DirectCast(lv1.SelectedItems(0).Tag, CShItem)
+                    If csi.IsFolder Then
+                        Me.dbDictionaryBrowser.ExpandANode(csi)
+                        SetWorkingDirectory(csi.Path)
+                    End If
+                ElseIf Me.lv1.SelectedItems.Count = 0 Then
+                    ' Open the currently selected folder in the DataBrowser.
+                    Me.btnBrowseFolder_Click()
+                End If
+
+        End Select
+
+    End Sub
+
 #End Region
 
 End Class
