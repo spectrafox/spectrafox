@@ -134,6 +134,14 @@ Public Class cFileImportCreatecDAT
                         .ScanAngle = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
                     Case "memo"
                         .Comment &= sPropertyValue & vbCrLf
+                    Case "FBLogIset"
+                        .ZControllerSetpoint = Double.Parse(sPropertyValue.Trim, Globalization.CultureInfo.InvariantCulture)
+                        If GainPreamplifier <> 0 Then .ZControllerSetpoint = .ZControllerSetpoint / GainPreamplifier * 0.001
+                        .ZControllerSetpointUnit = "A"
+                    Case "FBIntegral"
+                        .ZControllerIntegralGain = Double.Parse(sPropertyValue.Trim, Globalization.CultureInfo.InvariantCulture)
+                    Case "FBProp"
+                        .ZControllerProportionalGain = Double.Parse(sPropertyValue.Trim, Globalization.CultureInfo.InvariantCulture)
                 End Select
             End With
         Loop

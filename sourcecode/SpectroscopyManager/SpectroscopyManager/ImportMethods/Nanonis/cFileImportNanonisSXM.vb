@@ -10,6 +10,7 @@ Public Class cFileImportNanonisSXM
     Public Function ImportSXM(ByRef FullFileNamePlusPath As String,
                               ByVal FetchOnlyFileHeader As Boolean,
                               Optional ByRef ReaderBuffer As String = "") As cScanImage Implements iFileImport_ScanImage.ImportScanImage
+
         ' Create New ScanImage object
         Dim oScanImage As New cScanImage
         oScanImage.FullFileName = FullFileNamePlusPath
@@ -66,7 +67,47 @@ Public Class cFileImportNanonisSXM
                     sHeader = sLine
                     ReadNextTag = False ' Already read the next tag
                 Case "Z-CONTROLLER"
-                    oScanImage.ZControllerSettings &= sLine & vbCrLf & cFileImport.ReadASCIILineFromBinaryStream(br, ReaderBuffer).Trim
+
+                    ' Read out the controller settings:
+                    ' First line is the header line, second the parameter line.
+                    Dim SetpointParameterString As String = cFileImport.ReadASCIILineFromBinaryStream(br, ReaderBuffer).Trim
+                    oScanImage.ZControllerSettingsRawString &= sLine & vbCrLf & SetpointParameterString
+
+                    If SetpointParameterString <> String.Empty Then
+                        ' Interpret the contoller settings parameter line.
+                        Dim SetpointParameters As String() = SetpointParameterString.Split(ControlChars.Tab)
+
+                        ' Read "Double String" by RegEx: as interpreter of units
+                        Dim RegExUnitValue As New Regex("(?<Value>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)\s(?<Unit>.?)", RegexOptions.Compiled)
+                        Dim M As Match
+
+                        If SetpointParameters.Length >= 6 Then
+                            oScanImage.ZControllerName = SetpointParameters(0)
+                            oScanImage.ZControllerOn = (SetpointParameters(1) = "1")
+
+                            M = RegExUnitValue.Match(SetpointParameters(2))
+                            If M.Success Then
+                                oScanImage.ZControllerSetpoint = Double.Parse(M.Groups("Value").Value, Globalization.CultureInfo.InvariantCulture)
+                                oScanImage.ZControllerSetpointUnit = M.Groups("Unit").Value
+                            End If
+                            M = RegExUnitValue.Match(SetpointParameters(3))
+                            If M.Success Then oScanImage.ZControllerProportionalGain = Double.Parse(M.Groups("Value").Value, Globalization.CultureInfo.InvariantCulture)
+                            M = RegExUnitValue.Match(SetpointParameters(4))
+                            If M.Success Then oScanImage.ZControllerIntegralGain = Double.Parse(M.Groups("Value").Value, Globalization.CultureInfo.InvariantCulture)
+                            M = RegExUnitValue.Match(SetpointParameters(5))
+                            If M.Success Then oScanImage.ZControllerTimeConstant = Double.Parse(M.Groups("Value").Value, Globalization.CultureInfo.InvariantCulture)
+                        End If
+                    End If
+
+                Case "Multipass-Config"
+                    ' Multipass-Config, read until next settings-name starts.
+                    While Not sLine.StartsWith(":")
+                        oScanImage.MultiPassConfig &= sLine & vbCrLf
+                        sLine = cFileImport.ReadASCIILineFromBinaryStream(br, ReaderBuffer).Trim
+                    End While
+                    sHeader = sLine
+                    ReadNextTag = False ' Already read the next tag
+
                 Case "REC_DATE"
                     TimeString &= " " & sLine
                 Case "REC_TIME"
@@ -80,7 +121,6 @@ Public Class cFileImportNanonisSXM
                 Case "BIAS"
                     oScanImage.Bias = Double.Parse(sLine, Globalization.CultureInfo.InvariantCulture)
                 Case "SCAN_RANGE"
-                    ' Read two parameters: use regex since separation is not unique
                     Dim oRegEx As New Regex("(?<XValue>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)\s*?(?<YValue>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)", RegexOptions.Compiled)
                     Dim oMatch As Match = oRegEx.Match(sLine)
 

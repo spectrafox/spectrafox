@@ -420,8 +420,10 @@ Public Class mDataBrowserListEntry
     Private Function ListEntryFetcher() As Object
 
         Try
-            ' Fetch a Spectroscopy-Table
             If Me._FileObject.FileType = cFileObject.FileTypes.SpectroscopyTable Then
+                '############################
+                ' Fetch a Spectroscopy-Table
+                '############################
 
                 ' Load the Preview-Image, if the columns could be found in the Table.
 
@@ -457,8 +459,11 @@ Public Class mDataBrowserListEntry
                     Me._ListEntry.BackColor = Color.LightGray
                 End With
 
-                ' Fetch a ScanImage-Table
+                
             ElseIf Me._FileObject.FileType = cFileObject.FileTypes.ScanImage Then
+                '##########################
+                ' Fetch a ScanImage-Table
+                '##########################
 
                 ' Load the Preview-Image, with the first Channel
                 ' Send Abort-Image, if the Columns were not found.

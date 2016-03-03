@@ -110,5 +110,15 @@ Namespace My.Resources
                 Return ResourceManager.GetString("FileImportError_title", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to %xp x %yp
+        '''setpoint: %sp.
+        '''</summary>
+        Friend Shared ReadOnly Property ScanImage_MeasurementDimensions() As String
+            Get
+                Return ResourceManager.GetString("ScanImage_MeasurementDimensions", resourceCulture)
+            End Get
+        End Property
     End Class
 End Namespace

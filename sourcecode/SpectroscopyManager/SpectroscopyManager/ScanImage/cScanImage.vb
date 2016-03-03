@@ -110,7 +110,48 @@ Public Class cScanImage
     <DescriptionAttribute("Shows the properties of the Z-controller."),
         CategoryAttribute("Z-Controller"),
         ReadOnlyAttribute(True)>
-    Public Property ZControllerSettings As String
+    Public Property ZControllerSettingsRawString As String
+
+    <DescriptionAttribute("Shows the name of the Z-controller."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerName As String
+
+    <DescriptionAttribute("Shows the setpoint of the Z-controller."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerSetpoint As Double
+
+    <DescriptionAttribute("Shows the unit of the Z-controller."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerSetpointUnit As String
+
+    <DescriptionAttribute("Shows if the Z-controller has been switched on."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerOn As Boolean
+
+    <DescriptionAttribute("Shows the proportional gain settings (unit: m)."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerProportionalGain As Double
+
+    <DescriptionAttribute("Shows the integral gain settings (m/s)."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerIntegralGain As Double
+
+    <DescriptionAttribute("Shows the time constant of the integral gain (s)."),
+        CategoryAttribute("Z-Controller"),
+        ReadOnlyAttribute(True)>
+    Public Property ZControllerTimeConstant As Double
+
+    <DescriptionAttribute("Shows the multi-pass configuration."),
+        CategoryAttribute("multi pass configuration"),
+        ReadOnlyAttribute(True)>
+    Public Property MultiPassConfig As String
+
 
     <DescriptionAttribute("Comment of the user."),
         CategoryAttribute("User Input"),

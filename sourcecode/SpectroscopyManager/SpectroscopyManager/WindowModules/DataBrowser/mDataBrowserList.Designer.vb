@@ -134,7 +134,7 @@ Partial Class mDataBrowserList
         Me.mnuRefreshList.Name = "mnuRefreshList"
         Me.mnuRefreshList.ShortcutKeys = System.Windows.Forms.Keys.F5
         Me.mnuRefreshList.Size = New System.Drawing.Size(28, 20)
-        Me.mnuRefreshList.ToolTipText = "refresh the list and scan for changed files"
+        Me.mnuRefreshList.ToolTipText = "scan the project folder for now or changed files"
         '
         'mnuSorting
         '
@@ -147,7 +147,7 @@ Partial Class mDataBrowserList
         'mnuSort_ByFileName
         '
         Me.mnuSort_ByFileName.Name = "mnuSort_ByFileName"
-        Me.mnuSort_ByFileName.Size = New System.Drawing.Size(134, 22)
+        Me.mnuSort_ByFileName.Size = New System.Drawing.Size(152, 22)
         Me.mnuSort_ByFileName.Text = "file name"
         '
         'mnuSort_ByFileDate
@@ -155,38 +155,38 @@ Partial Class mDataBrowserList
         Me.mnuSort_ByFileDate.Checked = True
         Me.mnuSort_ByFileDate.CheckState = System.Windows.Forms.CheckState.Checked
         Me.mnuSort_ByFileDate.Name = "mnuSort_ByFileDate"
-        Me.mnuSort_ByFileDate.Size = New System.Drawing.Size(134, 22)
+        Me.mnuSort_ByFileDate.Size = New System.Drawing.Size(152, 22)
         Me.mnuSort_ByFileDate.Text = "file date"
         '
         'mnuSort_ByRecordDate
         '
         Me.mnuSort_ByRecordDate.Name = "mnuSort_ByRecordDate"
-        Me.mnuSort_ByRecordDate.Size = New System.Drawing.Size(134, 22)
+        Me.mnuSort_ByRecordDate.Size = New System.Drawing.Size(152, 22)
         Me.mnuSort_ByRecordDate.Text = "record date"
         '
         'mnuSort_BySelection
         '
         Me.mnuSort_BySelection.Name = "mnuSort_BySelection"
-        Me.mnuSort_BySelection.Size = New System.Drawing.Size(134, 22)
+        Me.mnuSort_BySelection.Size = New System.Drawing.Size(152, 22)
         Me.mnuSort_BySelection.Text = "selection"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(131, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
         '
         'mnuSort_ASC
         '
         Me.mnuSort_ASC.Checked = True
         Me.mnuSort_ASC.CheckState = System.Windows.Forms.CheckState.Checked
         Me.mnuSort_ASC.Name = "mnuSort_ASC"
-        Me.mnuSort_ASC.Size = New System.Drawing.Size(134, 22)
+        Me.mnuSort_ASC.Size = New System.Drawing.Size(152, 22)
         Me.mnuSort_ASC.Text = "ascending"
         '
         'mnuSort_DESC
         '
         Me.mnuSort_DESC.Name = "mnuSort_DESC"
-        Me.mnuSort_DESC.Size = New System.Drawing.Size(134, 22)
+        Me.mnuSort_DESC.Size = New System.Drawing.Size(152, 22)
         Me.mnuSort_DESC.Text = "decending"
         '
         'mnuFilter
@@ -309,6 +309,7 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbSpectroscopyColumnX_1st.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbSpectroscopyColumnX_1st.Name = "mnuPreview_cbSpectroscopyColumnX_1st"
         Me.mnuPreview_cbSpectroscopyColumnX_1st.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnX_1st.ToolTipText = "primary choice for the column to be used in the preview image"
         '
         'mnuPreview_cbSpectroscopyColumnX_2nd
         '
@@ -317,6 +318,8 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbSpectroscopyColumnX_2nd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbSpectroscopyColumnX_2nd.Name = "mnuPreview_cbSpectroscopyColumnX_2nd"
         Me.mnuPreview_cbSpectroscopyColumnX_2nd.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnX_2nd.ToolTipText = "second choice for the column to be used in the preview image" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(used only, if the " &
+    "primary choice is not found in the data file)"
         '
         'mnuPreview_cbSpectroscopyColumnX_3rd
         '
@@ -325,6 +328,8 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbSpectroscopyColumnX_3rd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbSpectroscopyColumnX_3rd.Name = "mnuPreview_cbSpectroscopyColumnX_3rd"
         Me.mnuPreview_cbSpectroscopyColumnX_3rd.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnX_3rd.ToolTipText = "third choice for the column to be used in the preview image" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(used only, if the p" &
+    "rimary and the secondary choices are not found in the data file)"
         '
         'mnuPreview_Spectroscopy_LogX
         '
@@ -352,6 +357,7 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbSpectroscopyColumnY_1st.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbSpectroscopyColumnY_1st.Name = "mnuPreview_cbSpectroscopyColumnY_1st"
         Me.mnuPreview_cbSpectroscopyColumnY_1st.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnY_1st.ToolTipText = "primary choice for the column to be used in the preview image" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'mnuPreview_cbSpectroscopyColumnY_2nd
         '
@@ -360,6 +366,8 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbSpectroscopyColumnY_2nd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbSpectroscopyColumnY_2nd.Name = "mnuPreview_cbSpectroscopyColumnY_2nd"
         Me.mnuPreview_cbSpectroscopyColumnY_2nd.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnY_2nd.ToolTipText = "second choice for the column to be used in the preview image" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(used only, if the " &
+    "primary choice is not found in the data file)"
         '
         'mnuPreview_cbSpectroscopyColumnY_3rd
         '
@@ -368,6 +376,8 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbSpectroscopyColumnY_3rd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbSpectroscopyColumnY_3rd.Name = "mnuPreview_cbSpectroscopyColumnY_3rd"
         Me.mnuPreview_cbSpectroscopyColumnY_3rd.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbSpectroscopyColumnY_3rd.ToolTipText = "third choice for the column to be used in the preview image" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(used only, if the p" &
+    "rimary and the secondary choices are not found in the data file)"
         '
         'mnuPreview_Spectroscopy_LogY
         '
@@ -387,6 +397,8 @@ Partial Class mDataBrowserList
         Me.mnuPreview_Spectroscopy_PointReduction.Name = "mnuPreview_Spectroscopy_PointReduction"
         Me.mnuPreview_Spectroscopy_PointReduction.Size = New System.Drawing.Size(284, 22)
         Me.mnuPreview_Spectroscopy_PointReduction.Text = "point reduction enabled"
+        Me.mnuPreview_Spectroscopy_PointReduction.ToolTipText = "dynamically reduces the number of points that are plotted in the preview images" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) &
+    "(use, if you experience a bad performance during the preview image creation)"
         '
         'ToolStripSeparator9
         '
@@ -407,6 +419,7 @@ Partial Class mDataBrowserList
         Me.mnuPreview_cbScanImageChannel.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.mnuPreview_cbScanImageChannel.Name = "mnuPreview_cbScanImageChannel"
         Me.mnuPreview_cbScanImageChannel.Size = New System.Drawing.Size(171, 23)
+        Me.mnuPreview_cbScanImageChannel.ToolTipText = "channel to be plotted in preview images of 2D data"
         '
         'mnuMultipleSpectroscopyFileActions
         '
@@ -416,6 +429,7 @@ Partial Class mDataBrowserList
         Me.mnuMultipleSpectroscopyFileActions.Name = "mnuMultipleSpectroscopyFileActions"
         Me.mnuMultipleSpectroscopyFileActions.Size = New System.Drawing.Size(160, 20)
         Me.mnuMultipleSpectroscopyFileActions.Text = "spectroscopy data tools"
+        Me.mnuMultipleSpectroscopyFileActions.ToolTipText = "these tools apply to the current selection of spectroscopy data files"
         '
         'mnuTools_OpenSpectroscopyFilesSeparately
         '
@@ -498,6 +512,7 @@ Partial Class mDataBrowserList
         Me.mnuMultipleScanImageFileActions.Name = "mnuMultipleScanImageFileActions"
         Me.mnuMultipleScanImageFileActions.Size = New System.Drawing.Size(97, 20)
         Me.mnuMultipleScanImageFileActions.Text = "image tools"
+        Me.mnuMultipleScanImageFileActions.ToolTipText = "these tools apply to the current selection of image data files"
         '
         'mnuTools_OpenScanImagesSeparately
         '
@@ -526,6 +541,8 @@ Partial Class mDataBrowserList
         Me.mnuSpecialTools.Name = "mnuSpecialTools"
         Me.mnuSpecialTools.Size = New System.Drawing.Size(100, 20)
         Me.mnuSpecialTools.Text = "special tools"
+        Me.mnuSpecialTools.ToolTipText = "special tools which do not apply to the current selection," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "but handle the files " &
+    "in the project folder itself"
         '
         'mnuSpecialTools_GridViewer
         '

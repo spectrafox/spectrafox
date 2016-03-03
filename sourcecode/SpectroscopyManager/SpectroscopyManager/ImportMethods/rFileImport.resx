@@ -134,4 +134,8 @@ message:
   <data name="FileImport_WritingCacheFile" xml:space="preserve">
     <value>writing cache file ...</value>
   </data>
+  <data name="ScanImage_MeasurementDimensions" xml:space="preserve">
+    <value>%xp x %yp
+setpoint: %sp</value>
+  </data>
 </root>

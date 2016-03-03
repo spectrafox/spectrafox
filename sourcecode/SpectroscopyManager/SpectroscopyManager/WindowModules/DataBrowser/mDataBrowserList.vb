@@ -2593,6 +2593,10 @@ Public Class mDataBrowserList
         GV.Show(Me.oFileImporter)
     End Sub
 
+    Private Sub VisibilityOfTheListEntriesChange(sender As Object, e As EventArgs) Handles panBrowserList.Resize
+
+    End Sub
+
 #End Region
 
 #End Region

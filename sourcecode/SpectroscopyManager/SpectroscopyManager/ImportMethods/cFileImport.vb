@@ -1025,9 +1025,10 @@ Public Class cFileImport
             FileObject.RecordDate = TargetScanImage.RecordDate
 
             ' Set properties of the BaseFileObject
-            FileObject.MeasurementDimensions = cUnits.GetPrefix(TargetScanImage.ScanRange_X).Value.ToString("N2") & cUnits.GetPrefix(TargetScanImage.ScanRange_X).Key & "m x " &
-                                               cUnits.GetPrefix(TargetScanImage.ScanRange_Y).Value.ToString("N2") & cUnits.GetPrefix(TargetScanImage.ScanRange_Y).Key & "m" & vbCrLf &
-                                               TargetScanImage.ScanPixels_X & "px x " & TargetScanImage.ScanPixels_Y & "px"
+            FileObject.MeasurementDimensions = My.Resources.rFileImport.ScanImage_MeasurementDimensions _
+                                                        .Replace("%xp", cUnits.GetFormatedValueString(TargetScanImage.ScanRange_X, 2)) _
+                                                        .Replace("%yp", cUnits.GetFormatedValueString(TargetScanImage.ScanRange_Y, 2)) _
+                                                        .Replace("%sp", cUnits.GetFormatedValueString(TargetScanImage.ZControllerSetpoint, 2) & TargetScanImage.ZControllerSetpointUnit)
             FileObject._SourceFileComment = TargetScanImage.Comment
 
             ' Set Base-FileObject-Reference
