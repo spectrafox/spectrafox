@@ -88,6 +88,7 @@ Public Class cFileImportNanonisSXM
                             M = RegExUnitValue.Match(SetpointParameters(2))
                             If M.Success Then
                                 oScanImage.ZControllerSetpoint = Double.Parse(M.Groups("Value").Value, Globalization.CultureInfo.InvariantCulture)
+                                oScanImage.Current = oScanImage.ZControllerSetpoint
                                 oScanImage.ZControllerSetpointUnit = M.Groups("Unit").Value
                             End If
                             M = RegExUnitValue.Match(SetpointParameters(3))

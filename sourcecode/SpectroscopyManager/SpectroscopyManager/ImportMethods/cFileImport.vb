@@ -1028,7 +1028,8 @@ Public Class cFileImport
             FileObject.MeasurementDimensions = My.Resources.rFileImport.ScanImage_MeasurementDimensions _
                                                         .Replace("%xp", cUnits.GetFormatedValueString(TargetScanImage.ScanRange_X, 2)) _
                                                         .Replace("%yp", cUnits.GetFormatedValueString(TargetScanImage.ScanRange_Y, 2)) _
-                                                        .Replace("%sp", cUnits.GetFormatedValueString(TargetScanImage.ZControllerSetpoint, 2) & TargetScanImage.ZControllerSetpointUnit)
+                                                        .Replace("%spc", cUnits.GetFormatedValueString(TargetScanImage.ZControllerSetpoint, 1) & TargetScanImage.ZControllerSetpointUnit) _
+                                                        .Replace("%spb", cUnits.GetFormatedValueString(TargetScanImage.Bias, 1))
             FileObject._SourceFileComment = TargetScanImage.Comment
 
             ' Set Base-FileObject-Reference

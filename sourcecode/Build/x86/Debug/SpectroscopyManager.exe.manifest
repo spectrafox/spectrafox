@@ -146,7 +146,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>5b6GVneqNhuTUD/UqGZGakxnOR6aJ0VDfA3OT3yUpOs=</dsig:DigestValue>
+        <dsig:DigestValue>LLl6w/XG2HfIfpNLFG1V3YIaAzs4odUtx6KzyxI2sPY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -183,13 +183,13 @@
       <dsig:DigestValue>jscz51ICL5gqMl5h1QAD/Lp6ZFGqJtAs1wdkIhoHrp8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="changelog_stable.html" size="34264">
+  <file name="changelog_stable.html" size="34354">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>KkoEajC2WKzxAUZKlUxqGDh7RrR43elDt31hOO6EpXs=</dsig:DigestValue>
+      <dsig:DigestValue>NPh1Au5WjD3eFobsM3a8D6/rzoM374E6lqKqVxcAQ7Y=</dsig:DigestValue>
     </hash>
   </file>
   <file name="ColorSchemes\alpine colors.sfc" size="3162">

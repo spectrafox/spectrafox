@@ -136,6 +136,6 @@ message:
   </data>
   <data name="ScanImage_MeasurementDimensions" xml:space="preserve">
     <value>%xp x %yp
-setpoint: %sp</value>
+%spc, %spbV</value>
   </data>
 </root>

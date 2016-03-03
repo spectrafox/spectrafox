@@ -113,7 +113,7 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to %xp x %yp
-        '''setpoint: %sp.
+        '''%spc, %spbV.
         '''</summary>
         Friend Shared ReadOnly Property ScanImage_MeasurementDimensions() As String
             Get
