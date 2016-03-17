@@ -1,6 +1,6 @@
 ﻿Imports System.Threading
 
-Public Class cSpectroscopyTableDataRenormalizer
+Public Class cSpectroscopyTableDataRegaugeByNumericDerivative
     Inherits cSpectroscopyTableDataDeriver
 
 #Region "Properties"

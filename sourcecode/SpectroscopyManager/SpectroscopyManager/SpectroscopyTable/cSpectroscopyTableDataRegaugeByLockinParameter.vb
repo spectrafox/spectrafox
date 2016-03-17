@@ -1,9 +1,10 @@
 ﻿Imports System.Threading
 
-Public Class cSpectroscopyTableDataRenormalizerByParameter
+Public Class cSpectroscopyTableDataRegaugeByLockinParameter
     Inherits cSpectroscopyTableFetcher
 
 #Region "Properties"
+
     ''' <summary>
     ''' Object for storing the renormalized Column
     ''' </summary>
@@ -30,6 +31,7 @@ Public Class cSpectroscopyTableDataRenormalizerByParameter
 
     Private _RenormalizedColumnTargetName As String
     Private _ColumnNameToRenormalize As String
+
 #End Region
 
 #Region "Events"
@@ -52,11 +54,11 @@ Public Class cSpectroscopyTableDataRenormalizerByParameter
     ''' <summary>
     ''' Starts the renormalization with the given parameters for the selected column.
     ''' </summary>
-    Public Sub RenormalizeColumnWithoutFetch(ByVal ColumnNameToRenormalize As String,
-                                             ByVal BiasModulation As Double,
-                                             ByVal LockInSensitivityRange As Double,
-                                             ByVal CurrentAmplifierGain As Integer,
-                                             Optional ByVal RenormalizedColumnTargetName As String = "Renormalized Result")
+    Public Sub RenormalizeColumnWithoutFetch_Async(ByVal ColumnNameToRenormalize As String,
+                                                   ByVal BiasModulation As Double,
+                                                   ByVal LockInSensitivityRange As Double,
+                                                   ByVal CurrentAmplifierGain As Integer,
+                                                   Optional ByVal RenormalizedColumnTargetName As String = "re-gauged data")
         Me._ColumnNameToRenormalize = ColumnNameToRenormalize
 
         Me._RenormalizedColumnTargetName = RenormalizedColumnTargetName
@@ -75,15 +77,15 @@ Public Class cSpectroscopyTableDataRenormalizerByParameter
             Return Me.RenormalizationWithFetchRunning
         End Get
     End Property
-    
+
     ''' <summary>
-    ''' Starts the Renormalization for selected Column-Name, and starting the Spectroscopy-Table-Fetch before initializing the Renormalization.
+    ''' Starts the re-gauging procedure for the selected column-name, and starting the Spectroscopy-Table-Fetch before initializing the re-gauge.
     ''' </summary>
-    Public Sub RenormalizeColumnWITHFetch(ByVal ColumnNameToRenormalize As String,
-                                          ByVal BiasModulation As Double,
-                                          ByVal LockInSensitivityRange As Double,
-                                          ByVal CurrentAmplifierGain As Integer,
-                                          Optional ByVal ColumnTargetName As String = "Renormalized Result")
+    Public Sub RenormalizeColumnWITHFetch_Async(ByVal ColumnNameToRenormalize As String,
+                                                ByVal BiasModulation As Double,
+                                                ByVal LockInSensitivityRange As Double,
+                                                ByVal CurrentAmplifierGain As Integer,
+                                                Optional ByVal ColumnTargetName As String = "re-gauged data")
         Me._ColumnNameToRenormalize = ColumnNameToRenormalize
 
         Me._RenormalizedColumnTargetName = ColumnTargetName
@@ -100,19 +102,42 @@ Public Class cSpectroscopyTableDataRenormalizerByParameter
 
 
     ''' <summary>
-    ''' Function that catches the Fetched-Complete-Event and starts the renormalization.
+    ''' Function that catches the Fetched-Complete-Event and starts the gauging.
     ''' </summary>
     Private Sub FetchCompleteHandler(ByRef SpectroscopyTable As cSpectroscopyTable) Handles MyBase.FileFetchedComplete
         If Not RenormalizationWithFetchRunning Then Return
         RenormalizationWithFetchRunning = False
 
-        ' Start the renormalization using the Fetched Data.
-        ' Start the Renormalization using the Smoothed and derivated Data.
-        Me.RenormalizeColumnWithoutFetch(Me._ColumnNameToRenormalize,
-                                         Me._RenormalizationParameter_BiasModulation,
-                                         Me._RenormalizationParameter_LockInSensitivity,
-                                         Me._RenormalizationParameter_AmplifierGain,
-                                         Me._RenormalizedColumnTargetName)
+        ' Start the renormalization using the fetched data.
+        Me.RenormalizeColumnWithoutFetch_Async(Me._ColumnNameToRenormalize,
+                                               Me._RenormalizationParameter_BiasModulation,
+                                               Me._RenormalizationParameter_LockInSensitivity,
+                                               Me._RenormalizationParameter_AmplifierGain,
+                                               Me._RenormalizedColumnTargetName)
+
+    End Sub
+
+    ''' <summary>
+    ''' Starts the re-gauging procedure for the selected column-name, and starting the Spectroscopy-Table-Fetch before initializing the re-gauge.
+    ''' </summary>
+    Public Sub RenormalizeColumnWITHFetch_Direct(ByVal ColumnNameToRenormalize As String,
+                                                ByVal BiasModulation As Double,
+                                                ByVal LockInSensitivityRange As Double,
+                                                ByVal CurrentAmplifierGain As Integer,
+                                                Optional ByVal ColumnTargetName As String = "re-gauged data")
+        Me._ColumnNameToRenormalize = ColumnNameToRenormalize
+
+        Me._RenormalizedColumnTargetName = ColumnTargetName
+
+        Me._RenormalizationParameter_AmplifierGain = CurrentAmplifierGain
+        Me._RenormalizationParameter_LockInSensitivity = LockInSensitivityRange
+        Me._RenormalizationParameter_BiasModulation = BiasModulation
+
+        ' Fetch the file
+        Me.FetchDirect()
+
+        ' Start the renormalization
+        Me.SpectroscopyFileRenormalizer(Me.CurrentSpectroscopyTable)
 
     End Sub
 

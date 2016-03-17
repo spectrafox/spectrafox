@@ -141,7 +141,7 @@
         If FileObject.FileType <> cFileObject.FileTypes.SpectroscopyTable Then Return True
 
         ' Create tool.
-        Dim Tool As New cSpectroscopyTableDataRenormalizer(FileObject)
+        Dim Tool As New cSpectroscopyTableDataRegaugeByNumericDerivative(FileObject)
 
         ' Fetch the file.
         Tool.RenormalizeColumnWITHDerivation_Direct(My.Settings.LastRenormalization_SourceColumnX,

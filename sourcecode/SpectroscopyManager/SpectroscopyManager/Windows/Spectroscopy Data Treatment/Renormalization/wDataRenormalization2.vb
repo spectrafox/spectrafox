@@ -6,13 +6,13 @@
     ''' Object for data regauging of the Selected Spectroscopy Files
     ''' using the numeric derivative.
     ''' </summary>
-    Private WithEvents DataRegaugerByFit As cSpectroscopyTableDataRenormalizer
+    Private WithEvents DataRegaugerByFit As cSpectroscopyTableDataRegaugeByNumericDerivative
 
     ''' <summary>
     ''' Object for data regauging of the selected Spectroscopy Files
     ''' using entered parameters
     ''' </summary>
-    Private WithEvents DataRegaugerByParameters As cSpectroscopyTableDataRegaugeByGivenParameters
+    Private WithEvents DataRegaugerByParameters As cSpectroscopyTableDataRegaugeByFitParameters
 
     ''' <summary>
     ''' Determines for the save-button which output to use.
@@ -42,12 +42,12 @@
         Me.pbTargetData.SetSinglePreviewImage(SpectroscopyTable)
 
         ' Create new DataRenormalizer Object
-        Me.DataRegaugerByFit = New cSpectroscopyTableDataRenormalizer(Me._FileObject)
+        Me.DataRegaugerByFit = New cSpectroscopyTableDataRegaugeByNumericDerivative(Me._FileObject)
         ' Load the Spectroscopy-Table-File using Background-Class.
         Me.DataRegaugerByFit.CurrentSpectroscopyTable = SpectroscopyTable
 
         ' Create new DataRegaugeByParameter Object
-        Me.DataRegaugerByParameters = New cSpectroscopyTableDataRegaugeByGivenParameters(Me._FileObject)
+        Me.DataRegaugerByParameters = New cSpectroscopyTableDataRegaugeByFitParameters(Me._FileObject)
         ' Load the Spectroscopy-Table-File using Background-Class.
         Me.DataRegaugerByParameters.CurrentSpectroscopyTable = SpectroscopyTable
 

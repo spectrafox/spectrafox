@@ -2,10 +2,14 @@
     Inherits wFormBaseExpectsIndividualSpectroscopyTableFileObjectOnLoad
 
 #Region "Properties"
+
+    Private bReady As Boolean = False
+
     ''' <summary>
-    ''' Object for Data Multiplication of the Selected Spectroscopy Files
+    ''' Object for regauging the selected file by known lockin parameters.
     ''' </summary>
-    Private WithEvents DataRenormalizer As cSpectroscopyTableDataRenormalizerByParameter
+    Private WithEvents DataRenormalizer As cSpectroscopyTableDataRegaugeByLockinParameter
+
 #End Region
 
 #Region "Form Contructor"
@@ -26,9 +30,15 @@
     ''' Set the Spectroscopy-File to the display.
     ''' </summary>
     Public Sub SpectroscopyTableFetched(ByRef SpectroscopyTable As cSpectroscopyTable) Handles MyBase.SpectroscopyTableFetchedThreadSafeCall
+
         ' Set Preview-Images:
         Me.pbBeforeRegauging.SetSinglePreviewImage(SpectroscopyTable)
         Me.pbAfterRegauging.SetSinglePreviewImage(SpectroscopyTable)
+
+        ' Create new DataRenormalizer Object
+        Me.DataRenormalizer = New cSpectroscopyTableDataRegaugeByLockinParameter(Me._FileObject)
+        ' Set the currently loaded SpectroscopyFile to the Renormalizer-Object.
+        Me.DataRenormalizer.CurrentSpectroscopyTable = SpectroscopyTable
 
         ' Set Columns
         Me.csSourceColumn.InitializeColumns(SpectroscopyTable.GetColumnList)
@@ -43,9 +53,10 @@
             Me.txtNewColumnName.Text = .LastRenormalizationByParameter_NewColumnName
         End With
 
-        ' Create new DataMultiplier Object
-        Me.DataRenormalizer = New cSpectroscopyTableDataRenormalizerByParameter(Me._FileObject)
-        Me.DataRenormalizer.FetchAsync()
+        Me.bReady = True
+
+        ' disable selection of columns
+        Me.pbAfterRegauging.AllowAdjustingXColumn = False
     End Sub
 
 #End Region
@@ -55,19 +66,22 @@
     ''' Set the X Column of the Before-Data to the After-PreviewBox
     ''' </summary>
     Private Sub BeforeSelectedColumnChanged() Handles pbBeforeRegauging.SelectedIndexChanged
+        If Not Me.bReady Then Return
+        Me.bReady = False
         Me.pbAfterRegauging.cbX.SelectedColumnName = Me.pbBeforeRegauging.cbX.SelectedColumnName
         Me.csSourceColumn.SelectedColumnName = Me.pbBeforeRegauging.cbY.SelectedColumnName
+        Me.bReady = True
     End Sub
 
     ''' <summary>
     ''' Set the Y Column of the Before- and After-PreviewBox to the selected multiplication Column
     ''' </summary>
     Private Sub SelectedMultiplicationColumnChanged() Handles csSourceColumn.SelectedIndexChanged
-        Me.pbAfterRegauging.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
+        If Not Me.bReady Then Return
+        Me.bReady = False
         Me.pbBeforeRegauging.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
-
-        ' Set ColumnTitle to Smoothed Selected ColumnTitle
-        'Me.txtNewColumnName.Text = My.Resources.ColumnTemplate_Smoothed.Replace("%%", Me.oSpectroscopyTable.Column(Me.csColumnToSmooth.SelectedColumnIndex).Name)
+        Me.pbAfterRegauging.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
+        Me.bReady = True
     End Sub
 #End Region
 
@@ -86,11 +100,11 @@
         End If
 
         ' Send Re-Gauging command to Background-Class
-        Me.DataRenormalizer.RenormalizeColumnWithoutFetch(Me.csSourceColumn.SelectedColumnName,
-                                                          Me.txtBiasModulation.DecimalValue,
-                                                          Me.txtLockInSensitivity.DecimalValue,
-                                                          CInt(Me.nudAmplifierGain.Value),
-                                                          Me.txtNewColumnName.Text)
+        Me.DataRenormalizer.RenormalizeColumnWithoutFetch_Async(Me.csSourceColumn.SelectedColumnName,
+                                                                Me.txtBiasModulation.DecimalValue,
+                                                                Me.txtLockInSensitivity.DecimalValue,
+                                                                CInt(Me.nudAmplifierGain.Value),
+                                                                Me.txtNewColumnName.Text)
     End Sub
 
     ''' <summary>

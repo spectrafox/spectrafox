@@ -1,6 +1,6 @@
 ﻿Imports System.Threading
 
-Public Class cSpectroscopyTableDataRegaugeByGivenParameters
+Public Class cSpectroscopyTableDataRegaugeByFitParameters
     Inherits cSpectroscopyTableFetcher
 
 #Region "Properties"

@@ -119,6 +119,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to regauge by known lock-in parameters.
+        '''</summary>
+        Friend Shared ReadOnly Property CM_DataRegauging_ByLockinParameter() As String
+            Get
+                Return ResourceManager.GetString("CM_DataRegauging_ByLockinParameter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to reverse.
         '''</summary>
         Friend Shared ReadOnly Property CM_DataReversion() As String
@@ -286,6 +295,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property MM_DataRegauging_ByFit() As String
             Get
                 Return ResourceManager.GetString("MM_DataRegauging_ByFit", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to using last settings: regauge by known lock-in parameters.
+        '''</summary>
+        Friend Shared ReadOnly Property MM_DataRegauging_ByLockinParameters() As String
+            Get
+                Return ResourceManager.GetString("MM_DataRegauging_ByLockinParameters", resourceCulture)
             End Get
         End Property
         

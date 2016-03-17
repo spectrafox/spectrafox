@@ -1,7 +1,8 @@
 ﻿Partial Public Class cNumericalMethods
 
     ''' <summary>
-    ''' Re-gauge dIdV-data by using the usually known data-acuisition-parameters.
+    ''' Re-gauge dIdV-data by using the usually known data-acuisition-parameters of the lock-in amplifier.
+    ''' The modulation amplitude is given in RMS. So it is multiplied by Sqrt[2].
     ''' 
     ''' RenormalizeByNumbers[dIdVSignalFromLockIn_, Vmod_, SensitivityRange_, AmplifierGain_] := dIdVSignalFromLockIn*SensitivityRange/Vmod/10^(AmplifierGain);
     ''' </summary>
@@ -10,13 +11,24 @@
                                                                  ByVal LockInSensitivity As Double,
                                                                  ByVal AmplifierGain As Integer) As List(Of Double)
         Dim OutColumn As New List(Of Double)(InColumn.Count)
+        Dim Sqrt2 As Double = Math.Sqrt(2)
+
         For i As Integer = 0 To InColumn.Count - 1 Step 1
-            If Double.IsNaN(InColumn(i)) Or BiasModulationAmplitude = 0 Then
+            If Double.IsNaN(InColumn(i)) OrElse BiasModulationAmplitude = 0 Then
                 OutColumn.Add(Double.NaN)
             Else
-                OutColumn.Add(InColumn(i) * LockInSensitivity / BiasModulationAmplitude / Math.Pow(10, AmplifierGain))
+                OutColumn.Add(InColumn(i) * LockInSensitivity / (BiasModulationAmplitude * Sqrt2) / Math.Pow(10, AmplifierGain))
             End If
         Next
+
+        'For i As Integer = 0 To InColumn.Count - 1 Step 1
+        '    If Double.IsNaN(InColumn(i)) Or BiasModulationAmplitude = 0 Then
+        '        OutColumn.Add(Double.NaN)
+        '    Else
+        '        OutColumn.Add(InColumn(i) * LockInSensitivity / BiasModulationAmplitude / Math.Pow(10, AmplifierGain))
+        '    End If
+        'Next
+
         Return OutColumn
     End Function
 

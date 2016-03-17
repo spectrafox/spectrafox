@@ -135,6 +135,9 @@
   <data name="CM_DataRegauging_ByFit" xml:space="preserve">
     <value>regauge to numeric derivative</value>
   </data>
+  <data name="CM_DataRegauging_ByLockinParameter" xml:space="preserve">
+    <value>regauge by known lock-in parameters</value>
+  </data>
   <data name="CM_DataReversion" xml:space="preserve">
     <value>reverse</value>
   </data>
@@ -191,6 +194,9 @@
   </data>
   <data name="MM_DataRegauging_ByFit" xml:space="preserve">
     <value>using last settings: regauge to numeric derivative</value>
+  </data>
+  <data name="MM_DataRegauging_ByLockinParameters" xml:space="preserve">
+    <value>using last settings: regauge by known lock-in parameters</value>
   </data>
   <data name="MM_DataRegauging_ByParameters" xml:space="preserve">
     <value>using last settings: regauge by parameters</value>

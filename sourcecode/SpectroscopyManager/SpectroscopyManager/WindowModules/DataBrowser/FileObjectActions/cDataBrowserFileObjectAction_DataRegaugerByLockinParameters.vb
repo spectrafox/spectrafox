@@ -1,4 +1,4 @@
-﻿Public Class cDataBrowserFileObjectAction_DataRegaugerByParameters
+﻿Public Class cDataBrowserFileObjectAction_DataRegaugerByLockinParameters
     Implements iDataBrowser_FileObjectAction
 
 #Region "Class abilities"
@@ -16,7 +16,7 @@
     ''' </summary>
     Public ReadOnly Property CanHandleSingleFileObjects As Boolean Implements iDataBrowser_FileObjectAction.CanHandleSingleFileObjects
         Get
-            Return False
+            Return True
         End Get
     End Property
 
@@ -44,7 +44,7 @@
     ''' </summary>
     Public ReadOnly Property QuickButtonToolTip As String Implements iDataBrowser_FileObjectAction.QuickButtonToolTip
         Get
-            Return My.Resources.rFileObjectActions.TT_DataRegauging_ByFit
+            Return String.Empty
         End Get
     End Property
 
@@ -53,7 +53,7 @@
     ''' </summary>
     Public ReadOnly Property CategoryOfSingleFileActionMenu As mDataBrowserList.APISingleFileToolsMenuCategories Implements iDataBrowser_FileObjectAction.CategoryOfSingleFileActionMenu
         Get
-            Return mDataBrowserList.APISingleFileToolsMenuCategories.None
+            Return mDataBrowserList.APISingleFileToolsMenuCategories.SpectroscopyFiles_NumericManipulations
         End Get
     End Property
 
@@ -61,7 +61,10 @@
     ''' Menu button for the single file action context menu.
     ''' </summary>
     Public Function SingleFileActionMenuItem() As ToolStripMenuItem Implements iDataBrowser_FileObjectAction.SingleFileActionMenuItem
-        Return Nothing
+        Dim M As New ToolStripMenuItem
+        M.Text = My.Resources.rFileObjectActions.CM_DataRegauging_ByLockinParameter
+        M.Image = My.Resources.regauge_16
+        Return M
     End Function
 
     ''' <summary>
@@ -78,7 +81,7 @@
     ''' </summary>
     Public Function MultipleFileActionMenuItem() As ToolStripMenuItem Implements iDataBrowser_FileObjectAction.MultipleFileActionMenuItem
         Dim M As New ToolStripMenuItem
-        M.Text = My.Resources.rFileObjectActions.MM_DataRegauging_ByParameters
+        M.Text = My.Resources.rFileObjectActions.MM_DataRegauging_ByLockinParameters
         M.Image = My.Resources.regauge_16
         Return M
     End Function
@@ -93,7 +96,12 @@
     Public Function MultipleFileActionCheckSettings() As Boolean Implements iDataBrowser_FileObjectAction.MultipleFileActionCheckSettings
         ' Check, if Settings had been saved.
         With My.Settings
-            If .LastRenormalization_TargetColumnY = String.Empty Then
+            If .LastRenormalizationByParameter_AmplifierGain = -1 Or
+              .LastRenormalizationByParameter_LockInBiasModulation = 0 Or
+              .LastRenormalizationByParameter_LockInSensitivity = 0 Or
+              .LastRenormalizationByParameter_NewColumnName = String.Empty Or
+              .LastRenormalizationByParameter_SourceColumn = String.Empty Or
+              .LastRenormalizationByParameter_SourceColumnX = String.Empty Then
                 Return False
             End If
         End With
@@ -127,13 +135,14 @@
         If FileObject.FileType <> cFileObject.FileTypes.SpectroscopyTable Then Return True
 
         ' Create tool.
-        Dim Tool As New cSpectroscopyTableDataRegaugeByFitParameters(FileObject)
+        Dim Tool As New cSpectroscopyTableDataRegaugeByLockinParameter(FileObject)
 
         ' Fetch the file.
-        Tool.RegaugeColumnByParameters_Direct(My.Settings.LastRenormalization_TargetColumnY,
-                                              My.Settings.LastRenormalization_Parameter_y0,
-                                              My.Settings.LastRenormalization_Parameter_m)
-        Tool.SaveRegaugedColumnToFileObject(My.Settings.LastRenormalization_RenormColumnName)
+        Tool.RenormalizeColumnWITHFetch_Direct(My.Settings.LastRenormalizationByParameter_SourceColumn,
+                                               My.Settings.LastRenormalizationByParameter_LockInBiasModulation,
+                                               My.Settings.LastRenormalizationByParameter_LockInSensitivity,
+                                               My.Settings.LastRenormalizationByParameter_AmplifierGain)
+        Tool.SaveRenormalizedColumnToFileObject(My.Settings.LastRenormalizationByParameter_NewColumnName)
         Return True
     End Function
 
@@ -169,7 +178,9 @@
     ''' Action for a single file object.
     ''' </summary>
     Public Function SingleFileAction(ByRef FileObject As cFileObject) As Boolean Implements iDataBrowser_FileObjectAction.SingleFileAction
-        Return False
+        Dim Tool As New wDataRenormalizationByParameters
+        Tool.Show(FileObject)
+        Return True
     End Function
 #End Region
 
