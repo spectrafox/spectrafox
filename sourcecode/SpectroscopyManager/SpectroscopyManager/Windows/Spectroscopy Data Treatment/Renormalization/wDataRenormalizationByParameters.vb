@@ -47,6 +47,7 @@
         With My.Settings
             Me.pbBeforeRegauging.cbX.SelectedColumnName = .LastRenormalizationByParameter_SourceColumnX
             Me.pbBeforeRegauging.cbY.SelectedColumnName = .LastRenormalizationByParameter_SourceColumn
+            Me.csSourceColumn.SelectedColumnName = .LastRenormalizationByParameter_SourceColumn
             Me.txtBiasModulation.SetValue(.LastRenormalizationByParameter_LockInBiasModulation)
             Me.txtLockInSensitivity.SetValue(.LastRenormalizationByParameter_LockInSensitivity)
             Me.nudAmplifierGain.Value = .LastRenormalizationByParameter_AmplifierGain

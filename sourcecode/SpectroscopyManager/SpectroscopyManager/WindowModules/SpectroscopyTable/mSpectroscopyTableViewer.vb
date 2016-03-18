@@ -1435,7 +1435,8 @@ Public Class mSpectroscopyTableViewer
 
             End Select
 
-            ' Create location and size of rectangle.
+            ' Create location and size of the selected rectangle.
+            Dim TopLeft As New Point
             Dim width As Integer
             Dim height As Integer
 
@@ -1458,26 +1459,25 @@ Public Class mSpectroscopyTableViewer
                         height = 0
                         width = CInt(GPane.Chart.Rect.Width)
                 End Select
+
+                ' Catch wrong drawing directions
+                If width >= 0 Then
+                    TopLeft.X = Convert.ToInt32(StartPointScreenCoordinate.X)
+                Else
+                    TopLeft.X = Convert.ToInt32(MousePoint.X)
+                    width = -width
+                End If
+                If height >= 0 Then
+                    TopLeft.Y = Convert.ToInt32(StartPointScreenCoordinate.Y)
+                Else
+                    TopLeft.Y = Convert.ToInt32(MousePoint.Y)
+                    height = -height
+                End If
+
             Catch ex As Exception
                 Debug.WriteLine("#ERROR: mSpectroscopyTableViewer: point selection error: " & ex.Message)
                 Return False
             End Try
-
-            Dim TopLeft As New Point
-
-            ' Catch wrong drawing directions
-            If width >= 0 Then
-                TopLeft.X = Convert.ToInt32(StartPointScreenCoordinate.X)
-            Else
-                TopLeft.X = Convert.ToInt32(MousePoint.X)
-                width = -width
-            End If
-            If height >= 0 Then
-                TopLeft.Y = Convert.ToInt32(StartPointScreenCoordinate.Y)
-            Else
-                TopLeft.Y = Convert.ToInt32(MousePoint.Y)
-                height = -height
-            End If
 
             ' Refresh the rest of the GraphPane
             Me.zPreview.Refresh()
