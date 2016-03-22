@@ -84,8 +84,7 @@ Public Class cSpectroscopyTableDataNormalizer
                                                   ByVal ColumnNameToNormalize As String,
                                                   ByVal LeftLimitValueOfAverageInterval As Double,
                                                   ByVal RightLimitValueOfAverageInterval As Double,
-                                                  ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                  ByVal SmoothParameter As Integer,
+                                                  ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                   Optional ByVal NormalizedColumnTargetName As String = "Normalized Result")
         Me.ColumnNameConsideredAsX = ColumnNameConsideredAsX
         Me.ColumnNameConsideredAsY = ColumnNameToNormalize
@@ -98,8 +97,7 @@ Public Class cSpectroscopyTableDataNormalizer
 
         ' Send SpectroscopyTable to ThreadPoolQueue of the DataSmoother
         Me.SmoothColumnWITHAutomaticFetching_Async(ColumnNameToNormalize,
-                                             SmoothProcedure,
-                                             SmoothParameter)
+                                                   SmoothProcedure)
     End Sub
 
     ''' <summary>
@@ -126,8 +124,7 @@ Public Class cSpectroscopyTableDataNormalizer
                                                     ByVal ColumnNameToNormalize As String,
                                                     ByVal LeftLimitValueOfAverageInterval As Double,
                                                     ByVal RightLimitValueOfAverageInterval As Double,
-                                                    ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                    ByVal SmoothParameter As Integer,
+                                                    ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                     Optional ByVal NormalizedColumnTargetName As String = "Normalized Result")
         Me.ColumnNameConsideredAsX = ColumnNameConsideredAsX
         Me.ColumnNameConsideredAsY = ColumnNameToNormalize
@@ -138,8 +135,7 @@ Public Class cSpectroscopyTableDataNormalizer
 
         ' Fetch the file and smooth it.
         Me.SmoothColumnWITHFetching_Direct(ColumnNameToNormalize,
-                                           SmoothProcedure,
-                                           SmoothParameter)
+                                           SmoothProcedure)
 
         ' Normalize
         Me.SpectroscopyFileNormalizer(Me.oSpectroscopyTable)

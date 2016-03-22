@@ -43,8 +43,8 @@
             'Me.pbSourcePreview.cbX.SelectedColumnName = .LastDerivative_SourceColumnX
             Me.pbSourcePreview.cbY.SelectedColumnName = .LastDerivative_SourceColumn
             Me.nudDerivativeOrder.Value = .LastDerivative_DerivativeOrder
-            Me.dsDataSmoother.SelectedSmoothingMethod = CType(.LastDerivative_SmoothingMethod, cNumericalMethods.SmoothingMethod)
-            Me.dsDataSmoother.SmoothingParameter = .LastDerivative_SmoothParameter
+            Me.dsDataSmoother.SelectedSmoothingMethodType = cNumericalMethods.GetSmoothingMethodFromString(.LastDerivative_SmoothingMethod)
+            Me.dsDataSmoother.SetSmoothingSettings(.LastDerivative_SmoothingOptions)
             Me.txtNewColumnName.Text = .LastDerivative_NewColumnName
         End With
 
@@ -94,10 +94,11 @@
         End If
 
         ' Send derivation command to Background-Class
-        Me.DataDeriver.DerivateColumnWITHSmoothing_Async(Me.pbSourcePreview.cbX.SelectedColumnName, Me.csColumn.SelectedColumnName,
-                                                   Me.dsDataSmoother.SelectedSmoothingMethod, Me.dsDataSmoother.SmoothingParameter,
-                                                   Me.txtNewColumnName.Text,
-                                                   CInt(Me.nudDerivativeOrder.Value))
+        Me.DataDeriver.DerivateColumnWITHSmoothing_Async(Me.pbSourcePreview.cbX.SelectedColumnName,
+                                                         Me.csColumn.SelectedColumnName,
+                                                         Me.dsDataSmoother.GetSmoothingMethod,
+                                                         Me.txtNewColumnName.Text,
+                                                         CInt(Me.nudDerivativeOrder.Value))
 
     End Sub
 
@@ -165,8 +166,8 @@
         ' Saves the Chosen Parameters to the Settings.
         With My.Settings
             .LastDerivative_DerivativeOrder = CInt(Me.nudDerivativeOrder.Value)
-            .LastDerivative_SmoothingMethod = Me.dsDataSmoother.SelectedSmoothingMethod
-            .LastDerivative_SmoothParameter = Me.dsDataSmoother.SmoothingParameter
+            .LastDerivative_SmoothingMethod = Me.dsDataSmoother.SelectedSmoothingMethodType.ToString
+            .LastDerivative_SmoothingOptions = Me.dsDataSmoother.GetSmoothingSettings
             .LastDerivative_SourceColumnX = Me.pbSourcePreview.cbX.SelectedColumnName
             .LastDerivative_SourceColumn = Me.pbSourcePreview.cbY.SelectedColumnName
             .LastDerivative_NewColumnName = Me.txtNewColumnName.Text

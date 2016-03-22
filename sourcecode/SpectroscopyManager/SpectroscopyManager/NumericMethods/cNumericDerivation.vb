@@ -47,8 +47,7 @@
     End Function
 
     ''' <summary>
-    ''' Calculates the Numerical Derivative of the given X and Y Column.
-    ''' Returns a KeyValuePair with Key=X, Value=Y.
+    ''' Calculates the numerical derivative of the given X and Y column.
     ''' </summary>
     Public Shared Function NumericalDerivative(ByRef InDataColumnX As cSpectroscopyTable.DataColumn,
                                                ByRef InDataColumnY As cSpectroscopyTable.DataColumn) As List(Of Double)

@@ -243,9 +243,7 @@ Partial Class wDataNumericDerivative
         '
         Me.dsDataSmoother.Location = New System.Drawing.Point(17, 71)
         Me.dsDataSmoother.Name = "dsDataSmoother"
-        Me.dsDataSmoother.SelectedSmoothingMethod = SpectroscopyManager.cNumericalMethods.SmoothingMethod.SavitzkyGolay
         Me.dsDataSmoother.Size = New System.Drawing.Size(252, 194)
-        Me.dsDataSmoother.SmoothingParameter = 5
         Me.dsDataSmoother.TabIndex = 9
         '
         'Label3

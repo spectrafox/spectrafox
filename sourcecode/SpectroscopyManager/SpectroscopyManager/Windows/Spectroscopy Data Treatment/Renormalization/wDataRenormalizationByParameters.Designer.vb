@@ -29,11 +29,11 @@ Partial Class wDataRenormalizationByParameters
         Me.btnSaveColumn = New System.Windows.Forms.Button()
         Me.btnApplyRegauging = New System.Windows.Forms.Button()
         Me.btnCloseWindow = New System.Windows.Forms.Button()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.pbBeforeRegauging = New SpectroscopyManager.mSpectroscopyTableViewer()
+        Me.gbBefore = New System.Windows.Forms.GroupBox()
+        Me.pbBefore = New SpectroscopyManager.mSpectroscopyTableViewer()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.pbAfterRegauging = New SpectroscopyManager.mSpectroscopyTableViewer()
+        Me.gbAfter = New System.Windows.Forms.GroupBox()
+        Me.pbAfter = New SpectroscopyManager.mSpectroscopyTableViewer()
         Me.csSourceColumn = New SpectroscopyManager.ucSpectroscopyColumnSelector()
         Me.grpSettings = New System.Windows.Forms.GroupBox()
         Me.txtBiasModulation = New SpectroscopyManager.NumericTextbox()
@@ -43,12 +43,12 @@ Partial Class wDataRenormalizationByParameters
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.lblDescription = New System.Windows.Forms.Label()
-        Me.GroupBox1.SuspendLayout()
+        Me.gbBefore.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.gbAfter.SuspendLayout()
         Me.grpSettings.SuspendLayout()
         CType(Me.nudAmplifierGain, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -116,41 +116,41 @@ Partial Class wDataRenormalizationByParameters
         Me.btnCloseWindow.Text = "close"
         Me.btnCloseWindow.UseVisualStyleBackColor = True
         '
-        'GroupBox1
+        'gbBefore
         '
-        Me.GroupBox1.Controls.Add(Me.pbBeforeRegauging)
-        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox1.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(624, 351)
-        Me.GroupBox1.TabIndex = 12
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "before re-gauging"
+        Me.gbBefore.Controls.Add(Me.pbBefore)
+        Me.gbBefore.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gbBefore.Location = New System.Drawing.Point(0, 0)
+        Me.gbBefore.Name = "gbBefore"
+        Me.gbBefore.Size = New System.Drawing.Size(624, 351)
+        Me.gbBefore.TabIndex = 12
+        Me.gbBefore.TabStop = False
+        Me.gbBefore.Text = "before re-gauging"
         '
-        'pbBeforeRegauging
+        'pbBefore
         '
-        Me.pbBeforeRegauging.AllowAdjustingXColumn = True
-        Me.pbBeforeRegauging.AllowAdjustingYColumn = True
-        Me.pbBeforeRegauging.AutomaticallyRestoreScaleAfterRedraw = True
-        Me.pbBeforeRegauging.CallbackDataPointSelected = Nothing
-        Me.pbBeforeRegauging.CallbackXRangeSelected = Nothing
-        Me.pbBeforeRegauging.CallbackXValueSelected = Nothing
-        Me.pbBeforeRegauging.CallbackXYRangeSelected = Nothing
-        Me.pbBeforeRegauging.CallbackXYValueSelected = Nothing
-        Me.pbBeforeRegauging.CallbackYRangeSelected = Nothing
-        Me.pbBeforeRegauging.CallbackYValueSelected = Nothing
-        Me.pbBeforeRegauging.ClearPointSelectionModeAfterSelection = False
-        Me.pbBeforeRegauging.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pbBeforeRegauging.Location = New System.Drawing.Point(3, 16)
-        Me.pbBeforeRegauging.MultipleSpectraStackOffset = 0R
-        Me.pbBeforeRegauging.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.One
-        Me.pbBeforeRegauging.Name = "pbBeforeRegauging"
-        Me.pbBeforeRegauging.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
-        Me.pbBeforeRegauging.ShowColumnSelectors = True
-        Me.pbBeforeRegauging.Size = New System.Drawing.Size(618, 332)
-        Me.pbBeforeRegauging.TabIndex = 20
-        Me.pbBeforeRegauging.TurnOnLastFilterSaving_Y = True
-        Me.pbBeforeRegauging.TurnOnLastSelectionSaving_Y = False
+        Me.pbBefore.AllowAdjustingXColumn = True
+        Me.pbBefore.AllowAdjustingYColumn = True
+        Me.pbBefore.AutomaticallyRestoreScaleAfterRedraw = True
+        Me.pbBefore.CallbackDataPointSelected = Nothing
+        Me.pbBefore.CallbackXRangeSelected = Nothing
+        Me.pbBefore.CallbackXValueSelected = Nothing
+        Me.pbBefore.CallbackXYRangeSelected = Nothing
+        Me.pbBefore.CallbackXYValueSelected = Nothing
+        Me.pbBefore.CallbackYRangeSelected = Nothing
+        Me.pbBefore.CallbackYValueSelected = Nothing
+        Me.pbBefore.ClearPointSelectionModeAfterSelection = False
+        Me.pbBefore.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pbBefore.Location = New System.Drawing.Point(3, 16)
+        Me.pbBefore.MultipleSpectraStackOffset = 0R
+        Me.pbBefore.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.One
+        Me.pbBefore.Name = "pbBefore"
+        Me.pbBefore.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
+        Me.pbBefore.ShowColumnSelectors = True
+        Me.pbBefore.Size = New System.Drawing.Size(618, 332)
+        Me.pbBefore.TabIndex = 20
+        Me.pbBefore.TurnOnLastFilterSaving_Y = True
+        Me.pbBefore.TurnOnLastSelectionSaving_Y = False
         '
         'SplitContainer1
         '
@@ -163,50 +163,50 @@ Partial Class wDataRenormalizationByParameters
         '
         'SplitContainer1.Panel1
         '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.GroupBox1)
+        Me.SplitContainer1.Panel1.Controls.Add(Me.gbBefore)
         '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.GroupBox2)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.gbAfter)
         Me.SplitContainer1.Size = New System.Drawing.Size(624, 704)
         Me.SplitContainer1.SplitterDistance = 351
         Me.SplitContainer1.TabIndex = 13
         '
-        'GroupBox2
+        'gbAfter
         '
-        Me.GroupBox2.Controls.Add(Me.pbAfterRegauging)
-        Me.GroupBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GroupBox2.Location = New System.Drawing.Point(0, 0)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(624, 349)
-        Me.GroupBox2.TabIndex = 13
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "after re-gauging:"
+        Me.gbAfter.Controls.Add(Me.pbAfter)
+        Me.gbAfter.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gbAfter.Location = New System.Drawing.Point(0, 0)
+        Me.gbAfter.Name = "gbAfter"
+        Me.gbAfter.Size = New System.Drawing.Size(624, 349)
+        Me.gbAfter.TabIndex = 13
+        Me.gbAfter.TabStop = False
+        Me.gbAfter.Text = "after re-gauging:"
         '
-        'pbAfterRegauging
+        'pbAfter
         '
-        Me.pbAfterRegauging.AllowAdjustingXColumn = True
-        Me.pbAfterRegauging.AllowAdjustingYColumn = True
-        Me.pbAfterRegauging.AutomaticallyRestoreScaleAfterRedraw = True
-        Me.pbAfterRegauging.CallbackDataPointSelected = Nothing
-        Me.pbAfterRegauging.CallbackXRangeSelected = Nothing
-        Me.pbAfterRegauging.CallbackXValueSelected = Nothing
-        Me.pbAfterRegauging.CallbackXYRangeSelected = Nothing
-        Me.pbAfterRegauging.CallbackXYValueSelected = Nothing
-        Me.pbAfterRegauging.CallbackYRangeSelected = Nothing
-        Me.pbAfterRegauging.CallbackYValueSelected = Nothing
-        Me.pbAfterRegauging.ClearPointSelectionModeAfterSelection = False
-        Me.pbAfterRegauging.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.pbAfterRegauging.Location = New System.Drawing.Point(3, 16)
-        Me.pbAfterRegauging.MultipleSpectraStackOffset = 0R
-        Me.pbAfterRegauging.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-        Me.pbAfterRegauging.Name = "pbAfterRegauging"
-        Me.pbAfterRegauging.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
-        Me.pbAfterRegauging.ShowColumnSelectors = True
-        Me.pbAfterRegauging.Size = New System.Drawing.Size(618, 330)
-        Me.pbAfterRegauging.TabIndex = 30
-        Me.pbAfterRegauging.TurnOnLastFilterSaving_Y = False
-        Me.pbAfterRegauging.TurnOnLastSelectionSaving_Y = False
+        Me.pbAfter.AllowAdjustingXColumn = True
+        Me.pbAfter.AllowAdjustingYColumn = True
+        Me.pbAfter.AutomaticallyRestoreScaleAfterRedraw = True
+        Me.pbAfter.CallbackDataPointSelected = Nothing
+        Me.pbAfter.CallbackXRangeSelected = Nothing
+        Me.pbAfter.CallbackXValueSelected = Nothing
+        Me.pbAfter.CallbackXYRangeSelected = Nothing
+        Me.pbAfter.CallbackXYValueSelected = Nothing
+        Me.pbAfter.CallbackYRangeSelected = Nothing
+        Me.pbAfter.CallbackYValueSelected = Nothing
+        Me.pbAfter.ClearPointSelectionModeAfterSelection = False
+        Me.pbAfter.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.pbAfter.Location = New System.Drawing.Point(3, 16)
+        Me.pbAfter.MultipleSpectraStackOffset = 0R
+        Me.pbAfter.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
+        Me.pbAfter.Name = "pbAfter"
+        Me.pbAfter.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
+        Me.pbAfter.ShowColumnSelectors = True
+        Me.pbAfter.Size = New System.Drawing.Size(618, 330)
+        Me.pbAfter.TabIndex = 30
+        Me.pbAfter.TurnOnLastFilterSaving_Y = False
+        Me.pbAfter.TurnOnLastSelectionSaving_Y = False
         '
         'csSourceColumn
         '
@@ -346,12 +346,12 @@ Partial Class wDataRenormalizationByParameters
         Me.Controls.SetChildIndex(Me.grpSettings, 0)
         Me.Controls.SetChildIndex(Me.btnApplyRegauging, 0)
         Me.Controls.SetChildIndex(Me.lblDescription, 0)
-        Me.GroupBox1.ResumeLayout(False)
+        Me.gbBefore.ResumeLayout(False)
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
-        Me.GroupBox2.ResumeLayout(False)
+        Me.gbAfter.ResumeLayout(False)
         Me.grpSettings.ResumeLayout(False)
         Me.grpSettings.PerformLayout()
         CType(Me.nudAmplifierGain, System.ComponentModel.ISupportInitialize).EndInit()
@@ -363,14 +363,14 @@ Partial Class wDataRenormalizationByParameters
     Friend WithEvents txtNewColumnName As System.Windows.Forms.TextBox
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents csSourceColumn As SpectroscopyManager.ucSpectroscopyColumnSelector
-    Friend WithEvents pbBeforeRegauging As SpectroscopyManager.mSpectroscopyTableViewer
+    Friend WithEvents pbBefore As SpectroscopyManager.mSpectroscopyTableViewer
     Friend WithEvents btnSaveColumn As System.Windows.Forms.Button
     Friend WithEvents btnApplyRegauging As System.Windows.Forms.Button
     Friend WithEvents btnCloseWindow As System.Windows.Forms.Button
-    Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
+    Friend WithEvents gbBefore As System.Windows.Forms.GroupBox
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
-    Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
-    Friend WithEvents pbAfterRegauging As SpectroscopyManager.mSpectroscopyTableViewer
+    Friend WithEvents gbAfter As System.Windows.Forms.GroupBox
+    Friend WithEvents pbAfter As SpectroscopyManager.mSpectroscopyTableViewer
     Friend WithEvents grpSettings As System.Windows.Forms.GroupBox
     Friend WithEvents lblDescription As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label

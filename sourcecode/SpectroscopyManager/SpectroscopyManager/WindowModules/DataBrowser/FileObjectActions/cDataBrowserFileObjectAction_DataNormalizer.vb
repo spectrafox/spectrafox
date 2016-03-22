@@ -100,10 +100,11 @@
     Public Function MultipleFileActionCheckSettings() As Boolean Implements iDataBrowser_FileObjectAction.MultipleFileActionCheckSettings
         ' Check, if Settings had been saved.
         With My.Settings
-            If .LastNormalization_NewColumnName = String.Empty Or
-               .LastNormalization_ColumnX = String.Empty Or
-               .LastNormalization_ColumnToNormalize = String.Empty Or
-               .LastNormalization_SmoothNeighbors = 0 Then
+            If .LastNormalization_NewColumnName = String.Empty OrElse
+               .LastNormalization_ColumnX = String.Empty OrElse
+               .LastNormalization_ColumnToNormalize = String.Empty OrElse
+               .LastNormalization_SmoothMethod = String.Empty OrElse
+               .LastNormalization_SmoothOptions = String.Empty Then
                 Return False
             End If
         End With
@@ -140,13 +141,16 @@
         ' Create tool.
         Dim Tool As New cSpectroscopyTableDataNormalizer(FileObject)
 
+        ' Create the Smoothing method.
+        Dim SmoothingMethod As iNumericSmoothingFunction = cNumericalMethods.GetSmoothingMethodByType(cNumericalMethods.GetSmoothingMethodFromString(My.Settings.LastNormalization_SmoothMethod))
+        SmoothingMethod.CurrentSmoothingSettings = My.Settings.LastNormalization_SmoothOptions
+
         ' Fetch the file.
         Tool.NormalizeColumnWITHSmoothing_Direct(My.Settings.LastNormalization_ColumnX,
                                                 My.Settings.LastNormalization_ColumnToNormalize,
                                                 My.Settings.LastNormalization_LeftPoint,
                                                 My.Settings.LastNormalization_RightPoint,
-                                                DirectCast(My.Settings.LastNormalization_SmoothMethod, cNumericalMethods.SmoothingMethod),
-                                                My.Settings.LastNormalization_SmoothNeighbors,
+                                                SmoothingMethod,
                                                 My.Settings.LastNormalization_NewColumnName)
         Tool.SaveNormalizedColumnToFileObject(My.Settings.LastNormalization_NewColumnName)
         Tool = Nothing

@@ -159,40 +159,17 @@ http://www.iue.tuwien.ac.at/phd/rottinger/node60.html</value>
 Please perform this action first on a single spectrum, so that
 the choosed settings can be saved.</value>
   </data>
-  <data name="SmoothingDescription_AdjacentAverage" xml:space="preserve">
-    <value>Takes the simple average value between the given number of adjacent datapoints.
-This filter often flattens the height and width of sharp features. E.g., for Kondo-resonances you should chose a different method.</value>
-  </data>
-  <data name="SmoothingMethod_AdjacentAverage" xml:space="preserve">
-    <value>Adjacent Average</value>
-  </data>
   <data name="Title_SelectionNecessary" xml:space="preserve">
     <value>Selection Necessary</value>
   </data>
   <data name="Title_SettingsMissing" xml:space="preserve">
     <value>Settings missing</value>
   </data>
-  <data name="SmoothingDescription_SavitzkyGolay" xml:space="preserve">
-    <value>The Savitzky–Golay smoothing filter is a type of filter first described in 1964 by Abraham Savitzky and Marcel J. E. Golay.
-
-The Savitzky–Golay method performs a local polynomial regression on a series of values to determine the smoothed value for each point.
-
-Its main advantage is that it preserve sharp features of the source data, such as relative maxima, minima and the width of these features.</value>
-  </data>
-  <data name="SmoothingMethod_SavitzkyGolay" xml:space="preserve">
-    <value>Savitzky Golay</value>
-  </data>
   <data name="ColumnTemplate_Smoothed" xml:space="preserve">
     <value>Smoothed Data of %%</value>
   </data>
   <data name="Template_AdditionalMore" xml:space="preserve">
     <value>... (%% more)</value>
-  </data>
-  <data name="SmoothingPropertyName_AdjacentAverage" xml:space="preserve">
-    <value>Smooth over neighbors #:</value>
-  </data>
-  <data name="SmoothingPropertyName_SavitzkyGolay" xml:space="preserve">
-    <value>Smooth over neighbors #:</value>
   </data>
   <data name="ColumnTemplate_AveragedMultiple" xml:space="preserve">
     <value>Averaged Data of %c% from %n% files</value>

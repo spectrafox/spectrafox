@@ -237,9 +237,7 @@ Partial Class wDataNormalization
         Me.dsDataSmoother.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dsDataSmoother.Location = New System.Drawing.Point(3, 16)
         Me.dsDataSmoother.Name = "dsDataSmoother"
-        Me.dsDataSmoother.SelectedSmoothingMethod = SpectroscopyManager.cNumericalMethods.SmoothingMethod.SavitzkyGolay
         Me.dsDataSmoother.Size = New System.Drawing.Size(288, 172)
-        Me.dsDataSmoother.SmoothingParameter = 5
         Me.dsDataSmoother.TabIndex = 1
         '
         'GroupBox3

@@ -1,63 +1,70 @@
 ﻿Public Class mDataSmoothing
 
+    ''' <summary>
+    ''' A list that contains all available smoothing methods.
+    ''' </summary>
+    Public SmoothingMethods As New Dictionary(Of Type, iNumericSmoothingFunction)
+
     Public Sub New()
 
         ' Dieser Aufruf ist für den Designer erforderlich.
         InitializeComponent()
 
+        ' Loads a list with all smoothing methods.
+        Dim SmoothingMethodTypes As List(Of Type) = cNumericalMethods.GetAllLoadableSmoothingMethods
+
         ' Fügen Sie Initialisierungen nach dem InitializeComponent()-Aufruf hinzu.
         With Me.cbMethods
             .Items.Clear()
-            .ValueMember = "Value"
-            .DisplayMember = "Key"
-            .Items.Add(New KeyValuePair(Of String, cNumericalMethods.SmoothingMethod)(My.Resources.SmoothingMethod_SavitzkyGolay, cNumericalMethods.SmoothingMethod.SavitzkyGolay))
-            .Items.Add(New KeyValuePair(Of String, cNumericalMethods.SmoothingMethod)(My.Resources.SmoothingMethod_AdjacentAverage, cNumericalMethods.SmoothingMethod.AdjacentAverageSmooth))
-            .SelectedIndex = 0
+            .ValueMember = "Key"
+            .DisplayMember = "Value"
+
+            For Each SmoothingMethodType As Type In SmoothingMethodTypes
+
+                ' Create a new instance of this method.
+                Me.SmoothingMethods.Add(SmoothingMethodType, cNumericalMethods.GetSmoothingMethodByType(SmoothingMethodType))
+
+                ' Add a list entry to the interface.
+                .Items.Add(New KeyValuePair(Of Type, String)(SmoothingMethodType, Me.SmoothingMethods(SmoothingMethodType).Name))
+
+            Next
+
+            If Me.cbMethods.Items.Count > 0 Then
+                .SelectedIndex = 0
+            End If
         End With
     End Sub
 
     ''' <summary>
-    ''' Constructor
-    ''' </summary>
-    Private Sub mDataSmoothing_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-       
-    End Sub
-
-    ''' <summary>
-    ''' Change the description of the Smoothing Method.
+    ''' Change the description and the settings-panel of the smoothing method.
     ''' </summary>
     Private Sub cbMethods_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles cbMethods.SelectedIndexChanged
-        If Me.cbMethods.SelectedItem Is Nothing Then Return
-        
-        ' Show Description of Smoothing Method:
-        Me.txtDescription.Text = cNumericalMethods.GetSmoothingDescriptionFromType(Me.SelectedSmoothingMethod)
 
-        ' Write Property-Name and set Maximum Values for the Smoothing Property:
-        Select Case Me.SelectedSmoothingMethod
-            Case cNumericalMethods.SmoothingMethod.AdjacentAverageSmooth
-                Me.lblPropertyName.Text = My.Resources.SmoothingPropertyName_AdjacentAverage
-                Me.udSmoothProperties.Maximum = 500
-                Me.udSmoothProperties.Minimum = 1
-                Me.udSmoothProperties.Value = 3
-            Case cNumericalMethods.SmoothingMethod.SavitzkyGolay
-                Me.lblPropertyName.Text = My.Resources.SmoothingPropertyName_SavitzkyGolay
-                Me.udSmoothProperties.Maximum = 12
-                Me.udSmoothProperties.Minimum = 2
-                Me.udSmoothProperties.Value = 5
-        End Select
+        If Me.cbMethods.SelectedItem Is Nothing Then Return
+
+        ' Get the selected smoothing method.
+        Dim SM As iNumericSmoothingFunction = Me.GetSmoothingMethod
+
+        ' Show the description of the smoothing method:
+        Me.txtDescription.Text = SM.Description
+
+        ' Show the settings-control
+        Me.tpSettings.Controls.Clear()
+        Me.tpSettings.Controls.Add(SM.SmoothingOptions)
+
     End Sub
 
     ''' <summary>
-    ''' Set/Get selected Smoothing Method
+    ''' Set/Get selected smoothing method.
     ''' </summary>
-    Public Property SelectedSmoothingMethod() As cNumericalMethods.SmoothingMethod
+    Public Property SelectedSmoothingMethodType() As Type
         Get
-            If Me.cbMethods.SelectedItem Is Nothing Then Return cNumericalMethods.SmoothingMethod.AdjacentAverageSmooth
-            Return DirectCast(Me.cbMethods.SelectedItem, KeyValuePair(Of String, cNumericalMethods.SmoothingMethod)).Value
+            If Me.cbMethods.SelectedItem Is Nothing Then Return Nothing
+            Return DirectCast(Me.cbMethods.SelectedItem, KeyValuePair(Of Type, String)).Key
         End Get
-        Set(value As cNumericalMethods.SmoothingMethod)
-            For Each Method As KeyValuePair(Of String, cNumericalMethods.SmoothingMethod) In Me.cbMethods.Items
-                If Method.Value = value Then
+        Set(value As Type)
+            For Each Method As KeyValuePair(Of Type, String) In Me.cbMethods.Items
+                If Method.Key = value Then
                     Me.cbMethods.SelectedItem = Method
                 End If
             Next
@@ -65,16 +72,27 @@
     End Property
 
     ''' <summary>
-    ''' Set/Get selected NeighborNumber
+    ''' Returns the currently selected smoothing method with all parameters set up.
     ''' </summary>
-    Public Property SmoothingParameter() As Integer
-        Get
-            Return Convert.ToInt32(Me.udSmoothProperties.Value)
-        End Get
-        Set(value As Integer)
-            Me.udSmoothProperties.Value = value
-        End Set
-    End Property
+    Public Function GetSmoothingMethod() As iNumericSmoothingFunction
+        Dim SmoothingMethodType As Type = Me.SelectedSmoothingMethodType
 
+        If SmoothingMethodType Is Nothing Then Return Nothing
+        Return Me.SmoothingMethods(SmoothingMethodType)
+    End Function
+
+    ''' <summary>
+    ''' Sets the current settings-string of the smoothing options.
+    ''' </summary>
+    Public Sub SetSmoothingSettings(ByVal SettingsString As String)
+        Me.GetSmoothingMethod.CurrentSmoothingSettings = SettingsString
+    End Sub
+
+    ''' <summary>
+    ''' Sets the current settings-string of the smoothing options.
+    ''' </summary>
+    Public Function GetSmoothingSettings() As String
+        Return Me.GetSmoothingMethod.CurrentSmoothingSettings
+    End Function
 
 End Class

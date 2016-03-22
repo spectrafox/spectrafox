@@ -905,3 +905,8 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\o
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.exe.manifest
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.application
 D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x86\Release\LowPrivilegeSetup.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cNumericSmoothingPanel_AdjacentAverageSmooth.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.rSmoothing.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cNumericSmoothingPanel_SavitzkyGolay.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.rAFMForceCurrentDeconvolution.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wAFMForceCurrentDeconvolution.resources

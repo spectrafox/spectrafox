@@ -166,9 +166,7 @@ Partial Class wDataSmoothing
         Me.dsDataSmoother.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dsDataSmoother.Location = New System.Drawing.Point(778, 1)
         Me.dsDataSmoother.Name = "dsDataSmoother"
-        Me.dsDataSmoother.SelectedSmoothingMethod = SpectroscopyManager.cNumericalMethods.SmoothingMethod.SavitzkyGolay
         Me.dsDataSmoother.Size = New System.Drawing.Size(288, 334)
-        Me.dsDataSmoother.SmoothingParameter = 5
         Me.dsDataSmoother.TabIndex = 0
         '
         'wDataSmoothing

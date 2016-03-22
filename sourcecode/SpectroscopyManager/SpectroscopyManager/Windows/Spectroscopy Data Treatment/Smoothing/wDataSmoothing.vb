@@ -49,12 +49,12 @@
 
         Me.bReady = True
 
-        ' Load Properties From Settings if possible!
+        ' Load Properties from settings if possible!
         With My.Settings
             'Me.csColumnToSmooth.SelectedColumnName = .LastSmoothing_ColumnToSmooth
             Me.pbBeforeSmoothing.cbY.SelectedColumnName = .LastSmoothing_ColumnToSmooth
-            Me.dsDataSmoother.SelectedSmoothingMethod = DirectCast(.LastSmoothing_SmoothMethod, cNumericalMethods.SmoothingMethod)
-            Me.dsDataSmoother.SmoothingParameter = .LastSmoothing_SmoothNeighbors
+            Me.dsDataSmoother.SelectedSmoothingMethodType = cNumericalMethods.GetSmoothingMethodFromString(.LastSmoothing_SmoothMethod)
+            Me.dsDataSmoother.SetSmoothingSettings(.LastSmoothing_SmoothOptions)
             Me.txtNewColumnName.Text = .LastSmoothing_SmoothedColumnName
         End With
 
@@ -91,8 +91,7 @@
 
         ' Send Smoothing Command to Background-Class
         Me.DataSmoother.SmoothColumnWithoutFetching_Async(Me.csColumnToSmooth.SelectedColumnName,
-                                                          Me.dsDataSmoother.SelectedSmoothingMethod,
-                                                          Me.dsDataSmoother.SmoothingParameter,
+                                                          Me.dsDataSmoother.GetSmoothingMethod,
                                                           Me.txtNewColumnName.Text)
     End Sub
 
@@ -156,8 +155,8 @@
     Private Sub FormIsClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Saves the Chosen Parameters to the Settings.
         With My.Settings
-            .LastSmoothing_SmoothMethod = Convert.ToInt32(Me.dsDataSmoother.SelectedSmoothingMethod)
-            .LastSmoothing_SmoothNeighbors = Me.dsDataSmoother.SmoothingParameter
+            .LastSmoothing_SmoothMethod = Me.dsDataSmoother.SelectedSmoothingMethodType.ToString
+            .LastSmoothing_SmoothOptions = Me.dsDataSmoother.GetSmoothingSettings
             .LastSmoothing_ColumnX = Me.pbBeforeSmoothing.cbX.SelectedColumnName
             .LastSmoothing_ColumnToSmooth = Me.csColumnToSmooth.SelectedColumnName
             .LastSmoothing_SmoothedColumnName = Me.txtNewColumnName.Text

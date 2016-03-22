@@ -65,6 +65,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to force and current deconvolution.
+        '''</summary>
+        Friend Shared ReadOnly Property CM_AFMDeconvolutionForce() As String
+            Get
+                Return ResourceManager.GetString("CM_AFMDeconvolutionForce", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to crop.
         '''</summary>
         Friend Shared ReadOnly Property CM_CropFile() As String
@@ -169,6 +178,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property CM_RenameColumns() As String
             Get
                 Return ResourceManager.GetString("CM_RenameColumns", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to using last settings: force and current deconvolution.
+        '''</summary>
+        Friend Shared ReadOnly Property MM_AFMDeconvolutionForce() As String
+            Get
+                Return ResourceManager.GetString("MM_AFMDeconvolutionForce", resourceCulture)
             End Get
         End Property
         

@@ -48,8 +48,8 @@
         With My.Settings
             Me.pbBeforeNormalization.cbX.SelectedColumnName = .LastNormalization_ColumnX
             Me.csColumnToNormalize.SelectedColumnName = .LastNormalization_ColumnToNormalize
-            Me.dsDataSmoother.SelectedSmoothingMethod = DirectCast(.LastNormalization_SmoothMethod, cNumericalMethods.SmoothingMethod)
-            Me.dsDataSmoother.SmoothingParameter = .LastNormalization_SmoothNeighbors
+            Me.dsDataSmoother.SelectedSmoothingMethodType = cNumericalMethods.GetSmoothingMethodFromString(.LastNormalization_SmoothMethod)
+            Me.dsDataSmoother.SetSmoothingSettings(.LastNormalization_SmoothOptions)
             'Me.txtNewColumnName.Text = .LastNormalization_NewColumnName
             Me.txtLeftValue.SetValue(.LastNormalization_LeftPoint)
             Me.txtRightValue.SetValue(.LastNormalization_RightPoint)
@@ -118,12 +118,11 @@
 
         ' Send Normalization Command to Background-Class
         Me.DataNormalizer.NormalizeColumnWITHSmoothing_Async(Me.pbBeforeNormalization.cbX.SelectedColumnName,
-                                                       Me.pbBeforeNormalization.cbY.SelectedColumnName,
-                                                       Me.LeftLimit,
-                                                       Me.RightLimit,
-                                                       Me.dsDataSmoother.SelectedSmoothingMethod,
-                                                       Me.dsDataSmoother.SmoothingParameter,
-                                                       Me.txtNewColumnName.Text)
+                                                             Me.pbBeforeNormalization.cbY.SelectedColumnName,
+                                                             Me.LeftLimit,
+                                                             Me.RightLimit,
+                                                             Me.dsDataSmoother.GetSmoothingMethod,
+                                                             Me.txtNewColumnName.Text)
     End Sub
 
     ''' <summary>
@@ -245,8 +244,8 @@
         With My.Settings
             .LastNormalization_LeftPoint = Me.LeftLimit
             .LastNormalization_RightPoint = Me.RightLimit
-            .LastNormalization_SmoothMethod = Convert.ToInt32(Me.dsDataSmoother.SelectedSmoothingMethod)
-            .LastNormalization_SmoothNeighbors = Me.dsDataSmoother.SmoothingParameter
+            .LastNormalization_SmoothMethod = Me.dsDataSmoother.SelectedSmoothingMethodType.ToString
+            .LastNormalization_SmoothOptions = Me.dsDataSmoother.GetSmoothingSettings
             .LastNormalization_ColumnX = Me.pbBeforeNormalization.cbX.SelectedColumnName
             .LastNormalization_ColumnToNormalize = Me.pbBeforeNormalization.cbY.SelectedColumnName
             .Save()

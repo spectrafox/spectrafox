@@ -35,11 +35,8 @@
     <Setting Name="LastRenormalization_SaveDerived" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="LastRenormalization_SmoothMethod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LastRenormalization_SmoothNeighbors" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+    <Setting Name="LastRenormalization_SmoothMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastSmoothing_ColumnX" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
@@ -47,11 +44,8 @@
     <Setting Name="LastSmoothing_ColumnToSmooth" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastSmoothing_SmoothMethod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LastSmoothing_SmoothNeighbors" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+    <Setting Name="LastSmoothing_SmoothMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastSmoothing_SmoothedColumnName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Smoothed Data</Value>
@@ -92,17 +86,14 @@
     <Setting Name="LastNormalization_ColumnToNormalize" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="LastNormalization_SmoothMethod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="LastNormalization_SmoothMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastNormalization_LeftPoint" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="LastNormalization_RightPoint" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LastNormalization_SmoothNeighbors" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="LastNormalization_NewColumnName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Normalized Data</Value>
@@ -323,11 +314,8 @@
     <Setting Name="LastDerivative_DerivativeOrder" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
-    <Setting Name="LastDerivative_SmoothParameter" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
-    </Setting>
-    <Setting Name="LastDerivative_SmoothingMethod" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="LastDerivative_SmoothingMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastDerivative_NewColumnName" Type="System.String" Scope="User">
       <Value Profile="(Default)">derivative of data</Value>
@@ -592,6 +580,57 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LastPreviewImageList_ColumnNameY_3rd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AFMDeconvolution_ResonanceFrequency" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="AFMDeconvolution_SpringConstant" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1800</Value>
+    </Setting>
+    <Setting Name="AFMDeconvolution_OscillationAmplitude" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">3E-11</Value>
+    </Setting>
+    <Setting Name="AFMDeconvolution_LastColumn_ZRel" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AFMDeconvolution_LastColumn_ForceGradient" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AFMDeconvolution_LastColumn_CurrentSignal" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Smoothing_AdjacentAverage_LastNeighbors" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="Smoothing_SavitzkyGolay_LastNeighbors" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="LastSmoothing_SmoothOptions" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastDerivative_SmoothingOptions" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastRenormalization_SmoothOptions" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastNormalization_SmoothOptions" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AFMDeconvolution_RemoveFrequencyShiftOffset" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="AFMDeconvolution_OutputName_Force" Type="System.String" Scope="User">
+      <Value Profile="(Default)">deconvoluted force</Value>
+    </Setting>
+    <Setting Name="AFMDeconvolution_OutputName_Current" Type="System.String" Scope="User">
+      <Value Profile="(Default)">deconvoluted current</Value>
+    </Setting>
+    <Setting Name="AFMDeconvolution_LastSmoothMethod" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AFMDeconvolution_LastSmoothSettings" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

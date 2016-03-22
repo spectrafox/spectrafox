@@ -100,14 +100,15 @@
     Public Function MultipleFileActionCheckSettings() As Boolean Implements iDataBrowser_FileObjectAction.MultipleFileActionCheckSettings
         ' Check, if Settings had been saved.
         With My.Settings
-            If .LastRenormalization_DerivedColumnName = String.Empty Or
-              .LastRenormalization_RenormColumnName = String.Empty Or
-              .LastRenormalization_SmoothedColumnName = String.Empty Or
-              .LastRenormalization_SmoothNeighbors = 0 Or
-              .LastRenormalization_SourceColumnX = String.Empty Or
-              .LastRenormalization_SourceColumnY = String.Empty Or
-              .LastRenormalization_TargetColumnX = String.Empty Or
-              .LastRenormalization_TargetColumnY = String.Empty Then
+            If .LastRenormalization_DerivedColumnName = String.Empty OrElse
+              .LastRenormalization_RenormColumnName = String.Empty OrElse
+              .LastRenormalization_SmoothedColumnName = String.Empty OrElse
+              .LastRenormalization_SourceColumnX = String.Empty OrElse
+              .LastRenormalization_SourceColumnY = String.Empty OrElse
+              .LastRenormalization_TargetColumnX = String.Empty OrElse
+              .LastRenormalization_TargetColumnY = String.Empty OrElse
+              .LastRenormalization_SmoothMethod = String.Empty OrElse
+              .LastRenormalization_SmoothOptions = String.Empty Then
                 Return False
             End If
         End With
@@ -143,11 +144,14 @@
         ' Create tool.
         Dim Tool As New cSpectroscopyTableDataRegaugeByNumericDerivative(FileObject)
 
+        ' Create the Smoothing method.
+        Dim SmoothingMethod As iNumericSmoothingFunction = cNumericalMethods.GetSmoothingMethodByType(cNumericalMethods.GetSmoothingMethodFromString(My.Settings.LastRenormalization_SmoothMethod))
+        SmoothingMethod.CurrentSmoothingSettings = My.Settings.LastRenormalization_SmoothOptions
+
         ' Fetch the file.
         Tool.RenormalizeColumnWITHDerivation_Direct(My.Settings.LastRenormalization_SourceColumnX,
                                                     My.Settings.LastRenormalization_SourceColumnY,
-                                                    DirectCast(My.Settings.LastRenormalization_SmoothMethod, cNumericalMethods.SmoothingMethod),
-                                                    My.Settings.LastRenormalization_SmoothNeighbors,
+                                                    SmoothingMethod,
                                                     My.Settings.LastRenormalization_TargetColumnX,
                                                     My.Settings.LastRenormalization_TargetColumnY,
                                                     My.Settings.LastRenormalization_UseBoundaries,

@@ -84,8 +84,7 @@ Public Class cSpectroscopyTableDataDeriver
     ''' </summary>
     Public Sub DerivateColumnWITHSmoothing_Async(ByVal DerivationColumnNameConsideredAsX As String,
                                                ByVal ColumnNameConsideredAsTreatmentValues As String,
-                                               ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                               ByVal SmoothParameter As Integer,
+                                               ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                Optional ByVal DerivatedColumnTargetName As String = "Derivative Result",
                                                Optional ByVal DerivativeOrder As Integer = 1)
         Me.DerivationColumnNameConsideredAsX = DerivationColumnNameConsideredAsX
@@ -97,8 +96,7 @@ Public Class cSpectroscopyTableDataDeriver
 
         ' Send SpectroscopyTable to ThreadPoolQueue of the DataSmoother
         Me.SmoothColumnWITHAutomaticFetching_Async(ColumnNameConsideredAsTreatmentValues,
-                                             SmoothProcedure,
-                                             SmoothParameter)
+                                                   SmoothProcedure)
     End Sub
 
     ''' <summary>
@@ -121,8 +119,7 @@ Public Class cSpectroscopyTableDataDeriver
     ''' </summary>
     Public Sub DerivateColumnWITHSmoothing_Direct(ByVal DerivationColumnNameConsideredAsX As String,
                                                   ByVal ColumnNameConsideredAsTreatmentValues As String,
-                                                  ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                  ByVal SmoothParameter As Integer,
+                                                  ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                   Optional ByVal DerivatedColumnTargetName As String = "Derivative Result",
                                                   Optional ByVal DerivativeOrder As Integer = 1)
         Me.DerivationColumnNameConsideredAsX = DerivationColumnNameConsideredAsX
@@ -132,8 +129,7 @@ Public Class cSpectroscopyTableDataDeriver
 
         ' Fetch and Smooth the file in advance
         Me.SmoothColumnWITHFetching_Direct(ColumnNameConsideredAsTreatmentValues,
-                                           SmoothProcedure,
-                                           SmoothParameter)
+                                           SmoothProcedure)
 
         Me._SourceData = Me.SmoothedColumn
 

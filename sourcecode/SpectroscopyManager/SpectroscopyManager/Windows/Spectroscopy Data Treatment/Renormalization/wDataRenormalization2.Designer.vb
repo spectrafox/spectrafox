@@ -278,9 +278,7 @@ Partial Class wDataRenormalization2
         '
         Me.dsDataSmoothing.Location = New System.Drawing.Point(427, 65)
         Me.dsDataSmoothing.Name = "dsDataSmoothing"
-        Me.dsDataSmoothing.SelectedSmoothingMethod = SpectroscopyManager.cNumericalMethods.SmoothingMethod.SavitzkyGolay
         Me.dsDataSmoothing.Size = New System.Drawing.Size(239, 284)
-        Me.dsDataSmoothing.SmoothingParameter = 5
         Me.dsDataSmoothing.TabIndex = 7
         '
         'lblDescription

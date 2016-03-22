@@ -28,8 +28,7 @@ Public Class cSpectroscopyTableDataSmoother
 
 
     Private SmoothColumnName As String = ""
-    Private SmoothMethod As cNumericalMethods.SmoothingMethod
-    Private SmoothParameter As Integer
+    Private SmoothMethod As iNumericSmoothingFunction
     Private SmoothColumnTargetName As String
 #End Region
 
@@ -54,11 +53,9 @@ Public Class cSpectroscopyTableDataSmoother
     ''' Starts the Smooth for the selected File and the selected Columns.
     ''' </summary>
     Public Sub SmoothColumnWithoutFetching_Async(ByVal SmoothColumnName As String,
-                                                 ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                 ByVal SmoothParameter As Integer,
+                                                 ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                  Optional ByVal SmoothedColumnTargetName As String = "Smoothed Result")
         Me.SmoothColumnName = SmoothColumnName
-        Me.SmoothParameter = SmoothParameter
         Me.SmoothMethod = SmoothProcedure
         Me.SmoothColumnTargetName = SmoothedColumnTargetName
 
@@ -79,11 +76,9 @@ Public Class cSpectroscopyTableDataSmoother
     ''' procedure, before initializing the derivation.
     ''' </summary>
     Public Sub SmoothColumnWITHAutomaticFetching_Async(ByVal SmoothColumnName As String,
-                                                       ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                       ByVal SmoothParameter As Integer,
+                                                       ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                        Optional ByVal SmoothedColumnTargetName As String = "Smoothed Result")
         Me.SmoothColumnName = SmoothColumnName
-        Me.SmoothParameter = SmoothParameter
         Me.SmoothMethod = SmoothProcedure
         Me.SmoothColumnTargetName = SmoothedColumnTargetName
 
@@ -103,7 +98,6 @@ Public Class cSpectroscopyTableDataSmoother
         ' Start the Smoothing using the Fetched Data.
         Me.SmoothColumnWithoutFetching_Async(Me.SmoothColumnName,
                                              Me.SmoothMethod,
-                                             Me.SmoothParameter,
                                              Me.SmoothColumnTargetName)
     End Sub
 
@@ -113,11 +107,9 @@ Public Class cSpectroscopyTableDataSmoother
     ''' This function is executed directly.
     ''' </summary>
     Public Sub SmoothColumnWITHFetching_Direct(ByVal SmoothColumnName As String,
-                                               ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                               ByVal SmoothParameter As Integer,
+                                               ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                Optional ByVal SmoothedColumnTargetName As String = "Smoothed Result")
         Me.SmoothColumnName = SmoothColumnName
-        Me.SmoothParameter = SmoothParameter
         Me.SmoothMethod = SmoothProcedure
         Me.SmoothColumnTargetName = SmoothedColumnTargetName
 
@@ -141,18 +133,10 @@ Public Class cSpectroscopyTableDataSmoother
 
         '################################
         ' Start Smoooooothing Procedure.
-
         Me._SmoothedColumn = New cSpectroscopyTable.DataColumn
 
         ' Depending on selected Smoothing Method, start Smoothing
-        Select Case Me.SmoothMethod
-            Case cNumericalMethods.SmoothingMethod.AdjacentAverageSmooth
-                Me._SmoothedColumn.SetValueList(cNumericalMethods.AdjacentAverageSmooth(SpectroscopyTable.Column(Me.SmoothColumnName).Values, Me.SmoothParameter))
-            Case cNumericalMethods.SmoothingMethod.SavitzkyGolay
-                Me._SmoothedColumn.SetValueList(cNumericalMethods.SavitzkyGolaySmooth(SpectroscopyTable.Column(Me.SmoothColumnName).Values, Me.SmoothParameter))
-            Case Else
-                Me._SmoothedColumn.SetValueList(SpectroscopyTable.Column(Me.SmoothColumnName).Values.ToList)
-        End Select
+        Me._SmoothedColumn.SetValueList(Me.SmoothMethod.Smooth(SpectroscopyTable.Column(Me.SmoothColumnName).Values))
         Me._SmoothedColumn.UnitSymbol = SpectroscopyTable.Column(Me.SmoothColumnName).UnitSymbol
         Me._SmoothedColumn.Name = Me.SmoothColumnTargetName
 

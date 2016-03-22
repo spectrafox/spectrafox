@@ -53,8 +53,8 @@
 
         ' Load Properties From Settings if possible!
         With My.Settings
-            Me.dsDataSmoothing.SelectedSmoothingMethod = DirectCast(.LastRenormalization_SmoothMethod, cNumericalMethods.SmoothingMethod)
-            Me.dsDataSmoothing.SmoothingParameter = .LastRenormalization_SmoothNeighbors
+            Me.dsDataSmoothing.SelectedSmoothingMethodType = cNumericalMethods.GetSmoothingMethodFromString(.LastRenormalization_SmoothMethod)
+            Me.dsDataSmoothing.SetSmoothingSettings(.LastRenormalization_SmoothOptions)
             Me.ckbSaveDerivedData.Checked = .LastRenormalization_SaveDerived
             Me.ckbSaveSmoothedData.Checked = .LastRenormalization_SaveSmoothed
             Me.txtDerivedDataColumnName.Text = .LastRenormalization_DerivedColumnName
@@ -99,8 +99,7 @@
         ' Send renormalization command to background-class
         Me.DataRegaugerByFit.RenormalizeColumnWITHDerivation_Async(Me.pbSourceData.cbX.SelectedColumnName,
                                                                   Me.pbSourceData.cbY.SelectedColumnName,
-                                                                  Me.dsDataSmoothing.SelectedSmoothingMethod,
-                                                                  Me.dsDataSmoothing.SmoothingParameter,
+                                                                  Me.dsDataSmoothing.GetSmoothingMethod,
                                                                   Me.pbTargetData.cbX.SelectedColumnName,
                                                                   Me.pbTargetData.cbY.SelectedColumnName,
                                                                   Me.gbRegaugeRange.Checked,
@@ -321,8 +320,8 @@
             .LastRenormalization_SaveDerived = Me.ckbSaveDerivedData.Checked
             .LastRenormalization_SaveSmoothed = Me.ckbSaveSmoothedData.Checked
             .LastRenormalization_SmoothedColumnName = Me.txtSmoothedDataColumnName.Text
-            .LastRenormalization_SmoothMethod = Convert.ToInt32(Me.dsDataSmoothing.SelectedSmoothingMethod)
-            .LastRenormalization_SmoothNeighbors = Me.dsDataSmoothing.SmoothingParameter
+            .LastRenormalization_SmoothMethod = Me.dsDataSmoothing.SelectedSmoothingMethodType.ToString
+            .LastRenormalization_SmoothOptions = Me.dsDataSmoothing.GetSmoothingSettings
             .LastRenormalization_SourceColumnX = Me.pbSourceData.cbX.SelectedColumnName
             .LastRenormalization_SourceColumnY = Me.pbSourceData.cbY.SelectedColumnName
             .LastRenormalization_TargetColumnX = Me.pbTargetData.cbX.SelectedColumnName

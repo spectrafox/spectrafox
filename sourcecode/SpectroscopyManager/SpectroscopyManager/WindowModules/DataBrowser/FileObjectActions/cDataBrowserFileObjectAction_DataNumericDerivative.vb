@@ -100,8 +100,10 @@
     Public Function MultipleFileActionCheckSettings() As Boolean Implements iDataBrowser_FileObjectAction.MultipleFileActionCheckSettings
         ' Check, if Settings had been saved.
         With My.Settings
-            If .LastDerivative_NewColumnName = String.Empty Or
-               .LastDerivative_SourceColumnX = String.Empty Or
+            If .LastDerivative_NewColumnName = String.Empty OrElse
+               .LastDerivative_SourceColumnX = String.Empty OrElse
+               .LastDerivative_SmoothingMethod = String.Empty OrElse
+               .LastDerivative_SmoothingOptions = String.Empty OrElse
                .LastDerivative_SourceColumn = String.Empty Then
                 Return False
             End If
@@ -138,11 +140,14 @@
         ' Create tool.
         Dim Tool As New cSpectroscopyTableDataDeriver(FileObject)
 
+        ' Create the Smoothing method.
+        Dim SmoothingMethod As iNumericSmoothingFunction = cNumericalMethods.GetSmoothingMethodByType(cNumericalMethods.GetSmoothingMethodFromString(My.Settings.LastDerivative_SmoothingMethod))
+        SmoothingMethod.CurrentSmoothingSettings = My.Settings.LastDerivative_SmoothingOptions
+
         ' Fetch the file.
         Tool.DerivateColumnWITHSmoothing_Direct(My.Settings.LastDerivative_SourceColumnX,
                                                 My.Settings.LastDerivative_SourceColumn,
-                                                CType(My.Settings.LastDerivative_SmoothingMethod, cNumericalMethods.SmoothingMethod),
-                                                My.Settings.LastDerivative_SmoothParameter,
+                                                SmoothingMethod,
                                                 My.Settings.LastDerivative_NewColumnName)
         Tool.SaveDerivatedColumnToFileObject(My.Settings.LastDerivative_NewColumnName)
         Return True

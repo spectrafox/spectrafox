@@ -548,6 +548,27 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="NumericMethods\cNumericFunctions.vb" />
+    <Compile Include="NumericMethods\Smoothing\Adjacent Average\cNumericSmoothingPanel_AdjacentAverageSmooth.Designer.vb">
+      <DependentUpon>cNumericSmoothingPanel_AdjacentAverageSmooth.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NumericMethods\Smoothing\Adjacent Average\cNumericSmoothingPanel_AdjacentAverageSmooth.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NumericMethods\Smoothing\Adjacent Average\cNumericSmoothing_AdjacentAverageSmooth.vb" />
+    <Compile Include="NumericMethods\Smoothing\NoSmooth\cNumericSmoothing_NoSmooth.vb" />
+    <Compile Include="NumericMethods\Smoothing\Savitzky Golay\cNumericSmoothingPanel_SavitzkyGolay.Designer.vb">
+      <DependentUpon>cNumericSmoothingPanel_SavitzkyGolay.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NumericMethods\Smoothing\Savitzky Golay\cNumericSmoothingPanel_SavitzkyGolay.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="NumericMethods\Smoothing\Savitzky Golay\cNumericSmoothing_SavitzkyGolay.vb" />
+    <Compile Include="NumericMethods\Smoothing\iNumericSmoothingFunction.vb" />
+    <Compile Include="NumericMethods\Smoothing\rSmoothing.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rSmoothing.resx</DependentUpon>
+    </Compile>
     <Compile Include="Plotting\Performance-Classes\cFastImage.vb" />
     <Compile Include="PluginInterface\cPluginService.vb" />
     <Compile Include="PluginInterface\iPluginInterface.vb" />
@@ -567,6 +588,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rScanImageFilters.resx</DependentUpon>
     </Compile>
+    <Compile Include="SpectroscopyTable\cSpectroscopyTableAFMForceCurrentDeconvolution.vb" />
     <Compile Include="SpectroscopyTable\cSpectroscopyTableColumnRenamer.vb" />
     <Compile Include="SpectroscopyTable\cSpectroscopyTableDataAverager.vb" />
     <Compile Include="SpectroscopyTable\cSpectroscopyTableDataReverter.vb" />
@@ -578,6 +600,7 @@
     <Compile Include="SpectroscopyTable\cSpectroscopyTableDataRegaugeByLockinParameter.vb" />
     <Compile Include="SpectroscopyTable\cSpectroscopyTableDataSummerTwoSets.vb" />
     <Compile Include="SpectroscopyTable\cSpectroscopyTableFetcherMultiple.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_AFMDeconvolutionForce.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ColumnRenaming.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataAverageMultipleFiles.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataAverageSingleFile.vb" />
@@ -680,6 +703,17 @@
       <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\rAFMForceCurrentDeconvolution.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rAFMForceCurrentDeconvolution.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\wAFMForceCurrentDeconvolution.Designer.vb">
+      <DependentUpon>wAFMForceCurrentDeconvolution.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\wAFMForceCurrentDeconvolution.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummationTwoSets.Designer.vb">
@@ -1221,6 +1255,17 @@
     <EmbeddedResource Include="MyControls\ManagerControls\ucFilteredListComboBoxSelector.resx">
       <DependentUpon>ucFilteredListComboBoxSelector.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="NumericMethods\Smoothing\Adjacent Average\cNumericSmoothingPanel_AdjacentAverageSmooth.resx">
+      <DependentUpon>cNumericSmoothingPanel_AdjacentAverageSmooth.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NumericMethods\Smoothing\rSmoothing.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rSmoothing.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NumericMethods\Smoothing\Savitzky Golay\cNumericSmoothingPanel_SavitzkyGolay.resx">
+      <DependentUpon>cNumericSmoothingPanel_SavitzkyGolay.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ScanImage\rScanImage.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1284,6 +1329,14 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.resx">
       <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\rAFMForceCurrentDeconvolution.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rAFMForceCurrentDeconvolution.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\wAFMForceCurrentDeconvolution.resx">
+      <DependentUpon>wAFMForceCurrentDeconvolution.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\MultiplicationAndSummation\wDataSummationTwoSets.resx">
       <DependentUpon>wDataSummationTwoSets.vb</DependentUpon>

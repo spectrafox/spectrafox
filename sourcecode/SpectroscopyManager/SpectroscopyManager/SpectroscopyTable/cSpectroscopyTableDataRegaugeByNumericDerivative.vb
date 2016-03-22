@@ -128,8 +128,7 @@ Public Class cSpectroscopyTableDataRegaugeByNumericDerivative
     ''' </summary>
     Public Sub RenormalizeColumnWITHDerivation_Async(ByVal DerivationColumnNameConsideredAsX As String,
                                                      ByVal DerivationColumnNameConsideredAsTreatmentValues As String,
-                                                     ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                     ByVal SmoothParameter As Integer,
+                                                     ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                      ByVal RenormalizationColumnNameConsideredAsX As String,
                                                      ByVal RenormalizationColumnNameConsideredAsRenormalizationTarget As String,
                                                      ByVal UseBoundaries As Boolean,
@@ -150,8 +149,7 @@ Public Class cSpectroscopyTableDataRegaugeByNumericDerivative
         ' Send SpectroscopyTable to ThreadPoolQueue of the DataSmoother
         Me.DerivateColumnWITHSmoothing_Async(DerivationColumnNameConsideredAsX,
                                              DerivationColumnNameConsideredAsTreatmentValues,
-                                             SmoothProcedure,
-                                             SmoothParameter)
+                                             SmoothProcedure)
     End Sub
 
     ''' <summary>
@@ -174,8 +172,7 @@ Public Class cSpectroscopyTableDataRegaugeByNumericDerivative
     ''' </summary>
     Public Sub RenormalizeColumnWITHDerivation_Direct(ByVal DerivationColumnNameConsideredAsX As String,
                                                       ByVal DerivationColumnNameConsideredAsTreatmentValues As String,
-                                                      ByVal SmoothProcedure As cNumericalMethods.SmoothingMethod,
-                                                      ByVal SmoothParameter As Integer,
+                                                      ByVal SmoothProcedure As iNumericSmoothingFunction,
                                                       ByVal RenormalizationColumnNameConsideredAsX As String,
                                                       ByVal RenormalizationColumnNameConsideredAsRenormalizationTarget As String,
                                                       ByVal UseBoundaries As Boolean,
@@ -194,8 +191,7 @@ Public Class cSpectroscopyTableDataRegaugeByNumericDerivative
         ' Fetch, Smooth and Derive column directly.
         Me.DerivateColumnWITHSmoothing_Direct(DerivationColumnNameConsideredAsX,
                                               DerivationColumnNameConsideredAsTreatmentValues,
-                                              SmoothProcedure,
-                                              SmoothParameter)
+                                              SmoothProcedure)
 
         ' Renormalize
         Me.SpectroscopyFileRenormalizer(Me.CurrentSpectroscopyTable)

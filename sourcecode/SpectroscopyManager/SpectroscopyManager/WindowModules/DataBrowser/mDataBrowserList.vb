@@ -303,6 +303,7 @@ Public Class mDataBrowserList
         SpectroscopyFiles_DataManipulations
         SpectroscopyFiles_NumericManipulations
         SpectroscopyFiles_AdditionalDataStorage
+        SpectroscopyFiles_AtomicForceMicroscopyTools
 
         ScanImageFiles_NoCategory
         ScanImageFiles_AdditionalDataStorage
@@ -320,6 +321,7 @@ Public Class mDataBrowserList
         SpectroscopyFiles_NoCategory
         SpectroscopyFiles_DataManipulations
         SpectroscopyFiles_NumericManipulations
+        SpectroscopyFiles_AtomicForceMicroscopyTools
     End Enum
 
 #End Region
@@ -387,6 +389,8 @@ Public Class mDataBrowserList
                             Me.cmnuSpectroscopy_DataManipulations.DropDownItems.Add(MI)
                         Case APISingleFileToolsMenuCategories.SpectroscopyFiles_NumericManipulations
                             Me.cmnuSpectroscopy_NumericManipulations.DropDownItems.Add(MI)
+                        Case APISingleFileToolsMenuCategories.SpectroscopyFiles_AtomicForceMicroscopyTools
+                            Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.DropDownItems.Add(MI)
 
                     End Select
 
@@ -418,6 +422,8 @@ Public Class mDataBrowserList
                             Me.mnuTools_NumericManipulations.DropDownItems.Add(MI)
                         Case APIMultipleFilesToolsMenuCategories.SpectroscopyFiles_AdditionalDataStorage
                             Me.mnuTools_SpectroscopyDataCache.DropDownItems.Add(MI)
+                        Case APIMultipleFilesToolsMenuCategories.SpectroscopyFiles_AtomicForceMicroscopyTools
+                            Me.mnuTools_AtomicForceMicroscopyTools.DropDownItems.Add(MI)
 
                         Case APIMultipleFilesToolsMenuCategories.ScanImageFiles_NoCategory
                             Me.mnuMultipleScanImageFileActions.DropDownItems.Add(MI)

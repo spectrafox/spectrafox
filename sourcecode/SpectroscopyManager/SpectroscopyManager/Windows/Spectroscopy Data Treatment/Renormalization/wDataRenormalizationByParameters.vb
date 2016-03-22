@@ -32,8 +32,8 @@
     Public Sub SpectroscopyTableFetched(ByRef SpectroscopyTable As cSpectroscopyTable) Handles MyBase.SpectroscopyTableFetchedThreadSafeCall
 
         ' Set Preview-Images:
-        Me.pbBeforeRegauging.SetSinglePreviewImage(SpectroscopyTable)
-        Me.pbAfterRegauging.SetSinglePreviewImage(SpectroscopyTable)
+        Me.pbBefore.SetSinglePreviewImage(SpectroscopyTable)
+        Me.pbAfter.SetSinglePreviewImage(SpectroscopyTable)
 
         ' Create new DataRenormalizer Object
         Me.DataRenormalizer = New cSpectroscopyTableDataRegaugeByLockinParameter(Me._FileObject)
@@ -45,8 +45,8 @@
 
         ' Load Properties from Settings if possible!
         With My.Settings
-            Me.pbBeforeRegauging.cbX.SelectedColumnName = .LastRenormalizationByParameter_SourceColumnX
-            Me.pbBeforeRegauging.cbY.SelectedColumnName = .LastRenormalizationByParameter_SourceColumn
+            Me.pbBefore.cbX.SelectedColumnName = .LastRenormalizationByParameter_SourceColumnX
+            Me.pbBefore.cbY.SelectedColumnName = .LastRenormalizationByParameter_SourceColumn
             Me.csSourceColumn.SelectedColumnName = .LastRenormalizationByParameter_SourceColumn
             Me.txtBiasModulation.SetValue(.LastRenormalizationByParameter_LockInBiasModulation)
             Me.txtLockInSensitivity.SetValue(.LastRenormalizationByParameter_LockInSensitivity)
@@ -57,7 +57,7 @@
         Me.bReady = True
 
         ' disable selection of columns
-        Me.pbAfterRegauging.AllowAdjustingXColumn = False
+        Me.pbAfter.AllowAdjustingXColumn = False
     End Sub
 
 #End Region
@@ -66,11 +66,11 @@
     ''' <summary>
     ''' Set the X Column of the Before-Data to the After-PreviewBox
     ''' </summary>
-    Private Sub BeforeSelectedColumnChanged() Handles pbBeforeRegauging.SelectedIndexChanged
+    Private Sub BeforeSelectedColumnChanged() Handles pbBefore.SelectedIndexChanged
         If Not Me.bReady Then Return
         Me.bReady = False
-        Me.pbAfterRegauging.cbX.SelectedColumnName = Me.pbBeforeRegauging.cbX.SelectedColumnName
-        Me.csSourceColumn.SelectedColumnName = Me.pbBeforeRegauging.cbY.SelectedColumnName
+        Me.pbAfter.cbX.SelectedColumnName = Me.pbBefore.cbX.SelectedColumnName
+        Me.csSourceColumn.SelectedColumnName = Me.pbBefore.cbY.SelectedColumnName
         Me.bReady = True
     End Sub
 
@@ -80,8 +80,8 @@
     Private Sub SelectedMultiplicationColumnChanged() Handles csSourceColumn.SelectedIndexChanged
         If Not Me.bReady Then Return
         Me.bReady = False
-        Me.pbBeforeRegauging.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
-        Me.pbAfterRegauging.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
+        Me.pbBefore.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
+        Me.pbAfter.cbY.SelectedColumnName = Me.csSourceColumn.SelectedColumnName
         Me.bReady = True
     End Sub
 #End Region
@@ -118,15 +118,15 @@
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
 
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataRenormalizer.CurrentSpectroscopyTable.Column(Me.pbBeforeRegauging.cbX.SelectedColumnName))
+        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataRenormalizer.CurrentSpectroscopyTable.Column(Me.pbBefore.cbX.SelectedColumnName))
         OutputSpectroscopyTable.AddNonPersistentColumn(Column)
 
         ' Set Output Spectroscopy Table to Preview-Box.
-        Me.pbAfterRegauging.SetSinglePreviewImage(OutputSpectroscopyTable)
+        Me.pbAfter.SetSinglePreviewImage(OutputSpectroscopyTable)
 
         ' Set Out-Preview-Box Columns to TargetBox-Columns
-        Me.pbAfterRegauging.cbX.SelectedColumnName = Me.pbBeforeRegauging.cbX.SelectedColumnName
-        Me.pbAfterRegauging.cbY.SelectedColumnName = Column.Name
+        Me.pbAfter.cbX.SelectedColumnName = Me.pbBefore.cbX.SelectedColumnName
+        Me.pbAfter.cbY.SelectedColumnName = Column.Name
 
         ' Activate Save-Button
         Me.SetSaveButton(True)
@@ -172,8 +172,8 @@
             .LastRenormalizationByParameter_LockInBiasModulation = Me.txtBiasModulation.DecimalValue
             .LastRenormalizationByParameter_LockInSensitivity = Me.txtLockInSensitivity.DecimalValue
             .LastRenormalizationByParameter_AmplifierGain = CInt(Me.nudAmplifierGain.Value)
-            .LastRenormalizationByParameter_SourceColumnX = Me.pbBeforeRegauging.cbX.SelectedColumnName
-            .LastRenormalizationByParameter_SourceColumn = Me.pbBeforeRegauging.cbY.SelectedColumnName
+            .LastRenormalizationByParameter_SourceColumnX = Me.pbBefore.cbX.SelectedColumnName
+            .LastRenormalizationByParameter_SourceColumn = Me.pbBefore.cbY.SelectedColumnName
             .LastRenormalizationByParameter_NewColumnName = Me.txtNewColumnName.Text
             .Save()
         End With

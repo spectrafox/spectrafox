@@ -100,10 +100,11 @@
     Public Function MultipleFileActionCheckSettings() As Boolean Implements iDataBrowser_FileObjectAction.MultipleFileActionCheckSettings
         ' Check, if Settings had been saved.
         With My.Settings
-            If .LastSmoothing_SmoothedColumnName = String.Empty Or
-                .LastSmoothing_ColumnToSmooth = String.Empty Or
-                .LastSmoothing_ColumnX = String.Empty Or
-                .LastSmoothing_SmoothNeighbors = 0 Then
+            If .LastSmoothing_SmoothedColumnName = String.Empty OrElse
+                .LastSmoothing_ColumnToSmooth = String.Empty OrElse
+                .LastSmoothing_SmoothMethod = String.Empty OrElse
+                .LastSmoothing_SmoothOptions = String.Empty OrElse
+                .LastSmoothing_ColumnX = String.Empty Then
                 Return False
             End If
         End With
@@ -139,10 +140,13 @@
         ' Create tool.
         Dim Tool As New cSpectroscopyTableDataSmoother(FileObject)
 
+        ' Create the Smoothing method.
+        Dim SmoothingMethod As iNumericSmoothingFunction = cNumericalMethods.GetSmoothingMethodByType(cNumericalMethods.GetSmoothingMethodFromString(My.Settings.LastSmoothing_SmoothMethod))
+        SmoothingMethod.CurrentSmoothingSettings = My.Settings.LastSmoothing_SmoothOptions
+
         ' Fetch the file.
         Tool.SmoothColumnWITHFetching_Direct(My.Settings.LastSmoothing_ColumnToSmooth,
-                                             DirectCast(My.Settings.LastSmoothing_SmoothMethod, cNumericalMethods.SmoothingMethod),
-                                             My.Settings.LastSmoothing_SmoothNeighbors)
+                                             SmoothingMethod)
         Tool.SaveSmoothedColumnToFileObject(My.Settings.LastSmoothing_SmoothedColumnName)
         Return True
     End Function

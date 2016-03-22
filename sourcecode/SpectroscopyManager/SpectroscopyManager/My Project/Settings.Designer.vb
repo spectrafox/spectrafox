@@ -188,25 +188,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property LastRenormalization_SmoothMethod() As Integer
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastRenormalization_SmoothMethod() As String
             Get
-                Return CType(Me("LastRenormalization_SmoothMethod"),Integer)
+                Return CType(Me("LastRenormalization_SmoothMethod"),String)
             End Get
             Set
                 Me("LastRenormalization_SmoothMethod") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property LastRenormalization_SmoothNeighbors() As Integer
-            Get
-                Return CType(Me("LastRenormalization_SmoothNeighbors"),Integer)
-            End Get
-            Set
-                Me("LastRenormalization_SmoothNeighbors") = value
             End Set
         End Property
         
@@ -236,25 +224,13 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property LastSmoothing_SmoothMethod() As Integer
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastSmoothing_SmoothMethod() As String
             Get
-                Return CType(Me("LastSmoothing_SmoothMethod"),Integer)
+                Return CType(Me("LastSmoothing_SmoothMethod"),String)
             End Get
             Set
                 Me("LastSmoothing_SmoothMethod") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property LastSmoothing_SmoothNeighbors() As Integer
-            Get
-                Return CType(Me("LastSmoothing_SmoothNeighbors"),Integer)
-            End Get
-            Set
-                Me("LastSmoothing_SmoothNeighbors") = value
             End Set
         End Property
         
@@ -416,10 +392,10 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property LastNormalization_SmoothMethod() As Integer
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastNormalization_SmoothMethod() As String
             Get
-                Return CType(Me("LastNormalization_SmoothMethod"),Integer)
+                Return CType(Me("LastNormalization_SmoothMethod"),String)
             End Get
             Set
                 Me("LastNormalization_SmoothMethod") = value
@@ -447,18 +423,6 @@ Namespace My
             End Get
             Set
                 Me("LastNormalization_RightPoint") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property LastNormalization_SmoothNeighbors() As Integer
-            Get
-                Return CType(Me("LastNormalization_SmoothNeighbors"),Integer)
-            End Get
-            Set
-                Me("LastNormalization_SmoothNeighbors") = value
             End Set
         End Property
         
@@ -1340,22 +1304,10 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
-        Public Property LastDerivative_SmoothParameter() As Integer
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastDerivative_SmoothingMethod() As String
             Get
-                Return CType(Me("LastDerivative_SmoothParameter"),Integer)
-            End Get
-            Set
-                Me("LastDerivative_SmoothParameter") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property LastDerivative_SmoothingMethod() As Integer
-            Get
-                Return CType(Me("LastDerivative_SmoothingMethod"),Integer)
+                Return CType(Me("LastDerivative_SmoothingMethod"),String)
             End Get
             Set
                 Me("LastDerivative_SmoothingMethod") = value
@@ -2383,6 +2335,210 @@ Namespace My
             End Get
             Set
                 Me("LastPreviewImageList_ColumnNameY_3rd") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property AFMDeconvolution_ResonanceFrequency() As Double
+            Get
+                Return CType(Me("AFMDeconvolution_ResonanceFrequency"),Double)
+            End Get
+            Set
+                Me("AFMDeconvolution_ResonanceFrequency") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1800")>  _
+        Public Property AFMDeconvolution_SpringConstant() As Double
+            Get
+                Return CType(Me("AFMDeconvolution_SpringConstant"),Double)
+            End Get
+            Set
+                Me("AFMDeconvolution_SpringConstant") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("3E-11")>  _
+        Public Property AFMDeconvolution_OscillationAmplitude() As Double
+            Get
+                Return CType(Me("AFMDeconvolution_OscillationAmplitude"),Double)
+            End Get
+            Set
+                Me("AFMDeconvolution_OscillationAmplitude") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property AFMDeconvolution_LastColumn_ZRel() As String
+            Get
+                Return CType(Me("AFMDeconvolution_LastColumn_ZRel"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_LastColumn_ZRel") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property AFMDeconvolution_LastColumn_ForceGradient() As String
+            Get
+                Return CType(Me("AFMDeconvolution_LastColumn_ForceGradient"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_LastColumn_ForceGradient") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property AFMDeconvolution_LastColumn_CurrentSignal() As String
+            Get
+                Return CType(Me("AFMDeconvolution_LastColumn_CurrentSignal"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_LastColumn_CurrentSignal") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property Smoothing_AdjacentAverage_LastNeighbors() As Integer
+            Get
+                Return CType(Me("Smoothing_AdjacentAverage_LastNeighbors"),Integer)
+            End Get
+            Set
+                Me("Smoothing_AdjacentAverage_LastNeighbors") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
+        Public Property Smoothing_SavitzkyGolay_LastNeighbors() As Integer
+            Get
+                Return CType(Me("Smoothing_SavitzkyGolay_LastNeighbors"),Integer)
+            End Get
+            Set
+                Me("Smoothing_SavitzkyGolay_LastNeighbors") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastSmoothing_SmoothOptions() As String
+            Get
+                Return CType(Me("LastSmoothing_SmoothOptions"),String)
+            End Get
+            Set
+                Me("LastSmoothing_SmoothOptions") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastDerivative_SmoothingOptions() As String
+            Get
+                Return CType(Me("LastDerivative_SmoothingOptions"),String)
+            End Get
+            Set
+                Me("LastDerivative_SmoothingOptions") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastRenormalization_SmoothOptions() As String
+            Get
+                Return CType(Me("LastRenormalization_SmoothOptions"),String)
+            End Get
+            Set
+                Me("LastRenormalization_SmoothOptions") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastNormalization_SmoothOptions() As String
+            Get
+                Return CType(Me("LastNormalization_SmoothOptions"),String)
+            End Get
+            Set
+                Me("LastNormalization_SmoothOptions") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property AFMDeconvolution_RemoveFrequencyShiftOffset() As Boolean
+            Get
+                Return CType(Me("AFMDeconvolution_RemoveFrequencyShiftOffset"),Boolean)
+            End Get
+            Set
+                Me("AFMDeconvolution_RemoveFrequencyShiftOffset") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("deconvoluted force")>  _
+        Public Property AFMDeconvolution_OutputName_Force() As String
+            Get
+                Return CType(Me("AFMDeconvolution_OutputName_Force"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_OutputName_Force") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("deconvoluted current")>  _
+        Public Property AFMDeconvolution_OutputName_Current() As String
+            Get
+                Return CType(Me("AFMDeconvolution_OutputName_Current"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_OutputName_Current") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property AFMDeconvolution_LastSmoothMethod() As String
+            Get
+                Return CType(Me("AFMDeconvolution_LastSmoothMethod"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_LastSmoothMethod") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property AFMDeconvolution_LastSmoothSettings() As String
+            Get
+                Return CType(Me("AFMDeconvolution_LastSmoothSettings"),String)
+            End Get
+            Set
+                Me("AFMDeconvolution_LastSmoothSettings") = value
             End Set
         End Property
     End Class

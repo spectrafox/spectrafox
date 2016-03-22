@@ -111,6 +111,8 @@ Partial Class mDataBrowserList
         Me.lblProgressHeading = New System.Windows.Forms.Label()
         Me.pbProgress = New System.Windows.Forms.ProgressBar()
         Me.panBrowserList = New SpectroscopyManager.VirtualVerticalPanel()
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuTools_AtomicForceMicroscopyTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnu.SuspendLayout()
         Me.ssStatus.SuspendLayout()
         Me.cmSpectroscopyFile.SuspendLayout()
@@ -147,7 +149,7 @@ Partial Class mDataBrowserList
         'mnuSort_ByFileName
         '
         Me.mnuSort_ByFileName.Name = "mnuSort_ByFileName"
-        Me.mnuSort_ByFileName.Size = New System.Drawing.Size(152, 22)
+        Me.mnuSort_ByFileName.Size = New System.Drawing.Size(134, 22)
         Me.mnuSort_ByFileName.Text = "file name"
         '
         'mnuSort_ByFileDate
@@ -155,38 +157,38 @@ Partial Class mDataBrowserList
         Me.mnuSort_ByFileDate.Checked = True
         Me.mnuSort_ByFileDate.CheckState = System.Windows.Forms.CheckState.Checked
         Me.mnuSort_ByFileDate.Name = "mnuSort_ByFileDate"
-        Me.mnuSort_ByFileDate.Size = New System.Drawing.Size(152, 22)
+        Me.mnuSort_ByFileDate.Size = New System.Drawing.Size(134, 22)
         Me.mnuSort_ByFileDate.Text = "file date"
         '
         'mnuSort_ByRecordDate
         '
         Me.mnuSort_ByRecordDate.Name = "mnuSort_ByRecordDate"
-        Me.mnuSort_ByRecordDate.Size = New System.Drawing.Size(152, 22)
+        Me.mnuSort_ByRecordDate.Size = New System.Drawing.Size(134, 22)
         Me.mnuSort_ByRecordDate.Text = "record date"
         '
         'mnuSort_BySelection
         '
         Me.mnuSort_BySelection.Name = "mnuSort_BySelection"
-        Me.mnuSort_BySelection.Size = New System.Drawing.Size(152, 22)
+        Me.mnuSort_BySelection.Size = New System.Drawing.Size(134, 22)
         Me.mnuSort_BySelection.Text = "selection"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(131, 6)
         '
         'mnuSort_ASC
         '
         Me.mnuSort_ASC.Checked = True
         Me.mnuSort_ASC.CheckState = System.Windows.Forms.CheckState.Checked
         Me.mnuSort_ASC.Name = "mnuSort_ASC"
-        Me.mnuSort_ASC.Size = New System.Drawing.Size(152, 22)
+        Me.mnuSort_ASC.Size = New System.Drawing.Size(134, 22)
         Me.mnuSort_ASC.Text = "ascending"
         '
         'mnuSort_DESC
         '
         Me.mnuSort_DESC.Name = "mnuSort_DESC"
-        Me.mnuSort_DESC.Size = New System.Drawing.Size(152, 22)
+        Me.mnuSort_DESC.Size = New System.Drawing.Size(134, 22)
         Me.mnuSort_DESC.Text = "decending"
         '
         'mnuFilter
@@ -423,7 +425,7 @@ Partial Class mDataBrowserList
         '
         'mnuMultipleSpectroscopyFileActions
         '
-        Me.mnuMultipleSpectroscopyFileActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuTools_OpenSpectroscopyFilesSeparately, Me.ToolStripSeparator4, Me.mnuTools_ExportWizard, Me.ToolStripSeparator13, Me.mnuTools_PlotSpectraTogether, Me.mnuTools_PlotSpectraTogetherAutomatic, Me.ToolStripSeparator2, Me.mnuTools_Visualization, Me.mnuTools_DataManipulations, Me.mnuTools_NumericManipulations, Me.ToolStripSeparator3, Me.mnuTools_SpectroscopyDataCache})
+        Me.mnuMultipleSpectroscopyFileActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuTools_OpenSpectroscopyFilesSeparately, Me.ToolStripSeparator4, Me.mnuTools_ExportWizard, Me.ToolStripSeparator13, Me.mnuTools_PlotSpectraTogether, Me.mnuTools_PlotSpectraTogetherAutomatic, Me.ToolStripSeparator2, Me.mnuTools_Visualization, Me.mnuTools_DataManipulations, Me.mnuTools_NumericManipulations, Me.mnuTools_AtomicForceMicroscopyTools, Me.ToolStripSeparator3, Me.mnuTools_SpectroscopyDataCache})
         Me.mnuMultipleSpectroscopyFileActions.Enabled = False
         Me.mnuMultipleSpectroscopyFileActions.Image = Global.SpectroscopyManager.My.Resources.Resources.plot_16
         Me.mnuMultipleSpectroscopyFileActions.Name = "mnuMultipleSpectroscopyFileActions"
@@ -610,9 +612,9 @@ Partial Class mDataBrowserList
         '
         'cmSpectroscopyFile
         '
-        Me.cmSpectroscopyFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuSpectroscopy_Header, Me.ToolStripSeparator7, Me.cmnuSpectroscopy_SpectroscopyTableShowDetails, Me.cmnuSpectroscopy_ShowNearestScanImage, Me.cmnuSpectroscopy_OpenExportWizard, Me.ToolStripSeparator11, Me.cmnuSpectroscopy_CopyDataToClipboardOriginCompatible, Me.cmnuSpectroscopy_CopyDataToClipboard, Me.ToolStripSeparator6, Me.cmnuSpectroscopy_DataManipulations, Me.cmnuSpectroscopy_NumericManipulations})
+        Me.cmSpectroscopyFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuSpectroscopy_Header, Me.ToolStripSeparator7, Me.cmnuSpectroscopy_SpectroscopyTableShowDetails, Me.cmnuSpectroscopy_ShowNearestScanImage, Me.cmnuSpectroscopy_OpenExportWizard, Me.ToolStripSeparator11, Me.cmnuSpectroscopy_CopyDataToClipboardOriginCompatible, Me.cmnuSpectroscopy_CopyDataToClipboard, Me.ToolStripSeparator6, Me.cmnuSpectroscopy_DataManipulations, Me.cmnuSpectroscopy_NumericManipulations, Me.cmnuSpectroscopy_AtomicForceMicroscopyTools})
         Me.cmSpectroscopyFile.Name = "dgvContextMenu"
-        Me.cmSpectroscopyFile.Size = New System.Drawing.Size(282, 194)
+        Me.cmSpectroscopyFile.Size = New System.Drawing.Size(282, 216)
         '
         'cmnuSpectroscopy_Header
         '
@@ -758,6 +760,18 @@ Partial Class mDataBrowserList
         Me.panBrowserList.TabIndex = 1
         Me.panBrowserList.VirtualHeightOfThePanel = 100
         '
+        'cmnuSpectroscopy_AtomicForceMicroscopyTools
+        '
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Name = "cmnuSpectroscopy_AtomicForceMicroscopyTools"
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Size = New System.Drawing.Size(281, 22)
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Text = "atomic force microscopy tools"
+        '
+        'mnuTools_AtomicForceMicroscopyTools
+        '
+        Me.mnuTools_AtomicForceMicroscopyTools.Name = "mnuTools_AtomicForceMicroscopyTools"
+        Me.mnuTools_AtomicForceMicroscopyTools.Size = New System.Drawing.Size(272, 22)
+        Me.mnuTools_AtomicForceMicroscopyTools.Text = "atomic force microscopy tools"
+        '
         'mDataBrowserList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -869,4 +883,6 @@ Partial Class mDataBrowserList
     Friend WithEvents mnuPreview_cbSpectroscopyColumnX_3rd As ToolStripComboBox
     Friend WithEvents mnuPreview_cbSpectroscopyColumnY_2nd As ToolStripComboBox
     Friend WithEvents mnuPreview_cbSpectroscopyColumnY_3rd As ToolStripComboBox
+    Friend WithEvents mnuTools_AtomicForceMicroscopyTools As ToolStripMenuItem
+    Friend WithEvents cmnuSpectroscopy_AtomicForceMicroscopyTools As ToolStripMenuItem
 End Class
