@@ -90,6 +90,71 @@
     End Function
 
     ''' <summary>
+    ''' Gets from the prefix the double factor representing this prefix.
+    ''' E.g. µ -> 1E-6
+    ''' Input can be any unit string.
+    ''' Output returns the unit symbol without the prefix, and the factor.
+    ''' </summary>
+    Public Shared Function GetFactorFromPrefix(ByVal UnitString As String) As KeyValuePair(Of String, Double)
+        ' Check for a valid value range.
+        If UnitString.Length < 1 Then Return New KeyValuePair(Of String, Double)(UnitString, 1)
+
+        ' Get a default value.
+        Dim PrefixFactor As Double = 1
+
+        ' Extract the first letter of the unit.
+        Dim FirstLetterOfUnit As String = UnitString.Substring(0, 1)
+        Dim NoValidPrefixFound As Boolean = False
+
+        Select Case FirstLetterOfUnit
+            Case "y"
+                PrefixFactor = Math.Pow(10, -24)
+            Case "z"
+                PrefixFactor = Math.Pow(10, -21)
+            Case "a"
+                PrefixFactor = Math.Pow(10, -18)
+            Case "f"
+                PrefixFactor = Math.Pow(10, -15)
+            Case "p"
+                PrefixFactor = Math.Pow(10, -12)
+            Case "n"
+                PrefixFactor = Math.Pow(10, -9)
+            Case "u", "µ"
+                PrefixFactor = Math.Pow(10, -6)
+            Case "m"
+                PrefixFactor = Math.Pow(10, -3)
+            Case "c"
+                PrefixFactor = Math.Pow(10, -2)
+            Case "d"
+                PrefixFactor = Math.Pow(10, -1)
+            Case "k"
+                PrefixFactor = Math.Pow(10, 3)
+            Case "M"
+                PrefixFactor = Math.Pow(10, 6)
+            Case "G"
+                PrefixFactor = Math.Pow(10, 9)
+            Case "T"
+                PrefixFactor = Math.Pow(10, 12)
+            Case "P"
+                PrefixFactor = Math.Pow(10, 15)
+            Case "E"
+                PrefixFactor = Math.Pow(10, 18)
+            Case "Z"
+                PrefixFactor = Math.Pow(10, 21)
+            Case Else
+                PrefixFactor = 1
+                NoValidPrefixFound = True
+        End Select
+
+        ' Stripe the unit prefix.
+        If Not NoValidPrefixFound Then
+            UnitString = UnitString.Substring(1, UnitString.Length - 1)
+        End If
+
+        Return New KeyValuePair(Of String, Double)(UnitString, PrefixFactor)
+    End Function
+
+    ''' <summary>
     ''' Returns the Unit-Type by a given Unit-Type-String.
     ''' </summary>
     Public Shared Function GetUnitTypeFromTypeString(ByVal Symbol As String) As UnitType

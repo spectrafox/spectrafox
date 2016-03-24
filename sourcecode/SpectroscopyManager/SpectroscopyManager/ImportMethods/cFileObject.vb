@@ -1236,7 +1236,7 @@ Public Class cFileObject
                 If bFileIdentified Then Exit For
 
                 ' Check the file-extension
-                If ImportRoutine.FileExtension = oFile.Extension.ToLower Then
+                If oFile.Extension.EndsWith(ImportRoutine.FileExtension) Then
                     ' Check, if the file can be interpreted by the import routine
                     If ImportRoutine.IdentifyFile(oFile.FullName, ReaderBuffer) Then
                         tImportRoutineType = ImportRoutine.GetType
@@ -1250,7 +1250,7 @@ Public Class cFileObject
             For Each ImportRoutine As iFileImport_ScanImage In ImportRoutines_ScanImages
                 If bFileIdentified Then Exit For
                 ' Check the file-extension
-                If ImportRoutine.FileExtension = oFile.Extension.ToLower Then
+                If oFile.Extension.EndsWith(ImportRoutine.FileExtension) Then
                     ' Check, if the file can be interpreted by the import routine
                     If ImportRoutine.IdentifyFile(oFile.FullName, ReaderBuffer) Then
                         tImportRoutineType = ImportRoutine.GetType

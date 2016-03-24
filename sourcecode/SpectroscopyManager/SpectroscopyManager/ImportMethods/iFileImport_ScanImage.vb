@@ -18,6 +18,7 @@
     ''' </summary>
     Function ImportScanImage(ByRef FullFileNamePlusPath As String,
                              ByVal FetchOnlyFileHeader As Boolean,
-                             Optional ByRef ReaderBuffer As String = "") As cScanImage
+                             Optional ByRef ReaderBuffer As String = "",
+                             Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cScanImage
 
 End Interface

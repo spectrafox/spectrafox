@@ -162,7 +162,7 @@ Public Class mScanImageViewer
             Me.oScanImagesPending = Nothing
 
             ' Write Scan-Channels to Combobox and select first:
-            Me.cbChannel.InitializeColumns(cScanImage.GetCommonColumns(Me.oScanImages))
+            Me.cbChannel.InitializeColumns(cScanImage.GetCommonColumns(Me.oScanImages), ScanChannelName)
             Me.UpdateSelectedScanChannelName()
 
         End If

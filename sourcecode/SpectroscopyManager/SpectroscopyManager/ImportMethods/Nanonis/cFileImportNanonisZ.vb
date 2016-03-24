@@ -6,11 +6,17 @@ Public Class cFileImportNanonisZ
     Implements iFileImport_SpectroscopyTable
 
     ''' <summary>
+    ''' Regex for parsing the column header.
+    ''' </summary>
+    Private ColumnHeaderRegex As New Regex("(?<ColumnName>.*?)\s\((?<Unit>[a-zA-Z]*?)\)", RegexOptions.Compiled)
+
+    ''' <summary>
     ''' Imports the Z-Spectroscopy-File into a Spectroscopy Table
     ''' </summary>
     Public Function Import(ByRef FullFileNamePlusPath As String,
                            ByVal FetchOnlyFileHeader As Boolean,
-                           Optional ByRef ReaderBuffer As String = "") As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
+                           Optional ByRef ReaderBuffer As String = "",
+                           Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
         ' Create New SpectroscopyTable
         Dim oSpectroscopyTable As New cSpectroscopyTable
         oSpectroscopyTable.FullFileName = FullFileNamePlusPath
@@ -188,8 +194,7 @@ Public Class cFileImportNanonisZ
             Dim oColumn As New cSpectroscopyTable.DataColumn
 
             ' Using Regular-Expression the unit and the Column-Name get extracted.
-            Dim oRegEx As New Regex("(?<ColumnName>.*?)\s\((?<Unit>[a-zA-Z]*?)\)", RegexOptions.Compiled)
-            Dim oMatch As Match = oRegEx.Match(SplittedLine(i))
+            Dim oMatch As Match = ColumnHeaderRegex.Match(SplittedLine(i))
 
             ' If the Column could be identified:
             If oMatch.Success Then

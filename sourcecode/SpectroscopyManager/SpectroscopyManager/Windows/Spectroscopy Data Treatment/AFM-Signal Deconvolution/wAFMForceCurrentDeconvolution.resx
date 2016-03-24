@@ -122,7 +122,7 @@
 You can use this tool to deconvolute the current and the force from the bare signals of the AFM.
 
 For further details, see:
-- Sader and Jarvis, Appl. Phys. Lett. 84, 1802 (2004)
+- Sader and Jarvis, Appl. Phys. Lett. 84, 1801 (2004)
 - Sader and Sugimoto, Appl. Phys. Lett. 97, 043502 (2010)</value>
   </data>
   <data name="csColumn_CurrentSignal.SelectedColumnNames" mimetype="application/x-microsoft.net.object.binary.base64">

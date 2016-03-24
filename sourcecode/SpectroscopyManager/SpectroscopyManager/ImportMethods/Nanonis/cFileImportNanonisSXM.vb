@@ -5,11 +5,17 @@ Public Class cFileImportNanonisSXM
     Implements iFileImport_ScanImage
 
     ''' <summary>
+    ''' Regex for parsing the scan channel names.
+    ''' </summary>
+    Private ScanChannelHeaderRegex As New Regex("(?<Number>\d*)\s*(?<Name>[\[\]\%_\w]*)\s*(?<Unit>\w*)\s*(?<Direction>\w*)\s*(?<Calibration>[+\-]?\d*?\.\d*?E[+\-]\d*)\s*(?<Offset>[+\-]?\d*?\.\d*?E[+\-]\d*)", RegexOptions.Compiled)
+
+    ''' <summary>
     ''' Imports the ScanImage of an SXM-File into an Image-Object
     ''' </summary>
     Public Function ImportSXM(ByRef FullFileNamePlusPath As String,
                               ByVal FetchOnlyFileHeader As Boolean,
-                              Optional ByRef ReaderBuffer As String = "") As cScanImage Implements iFileImport_ScanImage.ImportScanImage
+                              Optional ByRef ReaderBuffer As String = "",
+                              Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cScanImage Implements iFileImport_ScanImage.ImportScanImage
 
         ' Create New ScanImage object
         Dim oScanImage As New cScanImage
@@ -164,8 +170,7 @@ Public Class cFileImportNanonisSXM
                         ' Create and Save new Channels
                         Dim oChannel As New cScanImage.ScanChannel
                         With oChannel
-                            Dim oRegEx As New Regex("(?<Number>\d*)\s*(?<Name>[\[\]\%_\w]*)\s*(?<Unit>\w*)\s*(?<Direction>\w*)\s*(?<Calibration>[+\-]?\d*?\.\d*?E[+\-]\d*)\s*(?<Offset>[+\-]?\d*?\.\d*?E[+\-]\d*)", RegexOptions.Compiled)
-                            Dim oMatch As Match = oRegEx.Match(sLine)
+                            Dim oMatch As Match = ScanChannelHeaderRegex.Match(sLine)
 
                             ' Write all Parameters of the Channel in the properties
                             If oMatch.Success Then

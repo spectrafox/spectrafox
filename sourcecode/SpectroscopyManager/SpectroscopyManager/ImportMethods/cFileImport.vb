@@ -180,10 +180,14 @@ Public Class cFileImport
         If Me._FileBuffer_Full Is Nothing Then Me._FileBuffer_Full = New Dictionary(Of String, cFileObject)
         diFileList = Me._FileBuffer_Full
 
-        ' make a reference to a directory
+        ' make a reference to a directory, and fetch all files and folders
         Dim oDirectoryInfo As New DirectoryInfo(Path)
         Dim fiFileList As FileInfo() = oDirectoryInfo.GetFiles()
         Dim diDirectoryList As DirectoryInfo() = oDirectoryInfo.GetDirectories()
+
+        ' Create a list that allows to ignore other files after a successfull file fetch.
+        ' This is necessary for file-formats that consist out of multiple files.
+        Dim lFilesToIgnoreDuringImport As New List(Of String)
 
         ' Get all available import filters:
         Dim ImportRoutines_SpectroscopyTables As List(Of iFileImport_SpectroscopyTable) = cFileImport.GetAllImportRoutines_SpectroscopyTable
@@ -248,8 +252,8 @@ Public Class cFileImport
 
 
             '############## FILE FILTER SECTION ###############
-
             If IsFileImportException(oFile) Then Continue For
+            If lFilesToIgnoreDuringImport.Contains(oFile.FullName) Then Continue For
 
             ' Filter here for the selected names, because people use filters
             ' to save time, and to not load all files in the folder.
@@ -281,10 +285,10 @@ Public Class cFileImport
                 Select Case oFileObject.FileType
                     Case cFileObject.FileTypes.SpectroscopyTable
                         Dim oSpectroscopyTable As cSpectroscopyTable = Nothing
-                        cFileImport.GetSpectroscopyFile(oFileObject, oSpectroscopyTable, True)
+                        cFileImport.GetSpectroscopyFile(oFileObject, oSpectroscopyTable, True, lFilesToIgnoreDuringImport)
                     Case cFileObject.FileTypes.ScanImage
                         Dim oScanImage As cScanImage = Nothing
-                        cFileImport.GetScanImageFile(oFileObject, oScanImage, True)
+                        cFileImport.GetScanImageFile(oFileObject, oScanImage, True, lFilesToIgnoreDuringImport)
                 End Select
 
                 ' Add the file-object to the output list, if we do not have to overwrite it.
@@ -843,9 +847,10 @@ Public Class cFileImport
     ''' </summary>
     Public Shared Function GetSpectroscopyFile(ByRef FileObject As cFileObject,
                                                ByRef TargetSpectroscopyTable As cSpectroscopyTable,
-                                               Optional ByVal FetchOnlyFileHeader As Boolean = False) As Boolean
+                                               Optional ByVal FetchOnlyFileHeader As Boolean = False,
+                                               Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As Boolean
 
-        ' Check, if the File still exists
+        ' Check, if the file still exists
         If Not System.IO.File.Exists(FileObject.FullFileNameInclPath) Then Return False
 
         ' Check, if the file is a Spectroscopy Table
@@ -861,7 +866,7 @@ Public Class cFileImport
             FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , {ImportRoutine}.ToList,)
 
             ' Start the import:
-            TargetSpectroscopyTable = ImportRoutine.ImportSpectroscopyTable(FileObject.FullFileNameInclPath, FetchOnlyFileHeader)
+            TargetSpectroscopyTable = ImportRoutine.ImportSpectroscopyTable(FileObject.FullFileNameInclPath, FetchOnlyFileHeader, , FilesToIgnoreAfterThisImport)
             FileObject.SpectroscopyTable = TargetSpectroscopyTable
 
             '' Get again the FULL FileObject
@@ -989,7 +994,8 @@ Public Class cFileImport
     ''' </summary>
     Public Shared Function GetScanImageFile(ByRef FileObject As cFileObject,
                                             ByRef TargetScanImage As cScanImage,
-                                            Optional ByVal FetchOnlyFileHeader As Boolean = False) As Boolean
+                                            Optional ByVal FetchOnlyFileHeader As Boolean = False,
+                                            Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As Boolean
 
         ' Check, if the File still exists
         If Not System.IO.File.Exists(FileObject.FullFileNameInclPath) Then Return False
@@ -1007,7 +1013,7 @@ Public Class cFileImport
             FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , , {ImportRoutine}.ToList)
 
             ' Start the import:
-            TargetScanImage = ImportRoutine.ImportScanImage(FileObject.FullFileNameInclPath, FetchOnlyFileHeader)
+            TargetScanImage = ImportRoutine.ImportScanImage(FileObject.FullFileNameInclPath, FetchOnlyFileHeader, , FilesToIgnoreAfterThisImport)
             FileObject.ScanImage = TargetScanImage
 
             '' Get again the FULL FileObject

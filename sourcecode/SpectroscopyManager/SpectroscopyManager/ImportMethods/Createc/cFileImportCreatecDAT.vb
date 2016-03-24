@@ -23,7 +23,8 @@ Public Class cFileImportCreatecDAT
     ''' </summary>
     Public Function ImportDAT(ByRef FullFileNamePlusPath As String,
                               ByVal FetchOnlyFileHeader As Boolean,
-                              Optional ByRef ReaderBuffer As String = "") As cScanImage Implements iFileImport_ScanImage.ImportScanImage
+                              Optional ByRef ReaderBuffer As String = "",
+                              Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cScanImage Implements iFileImport_ScanImage.ImportScanImage
         ' STMAFM-specific Parameters:
         Dim STMAFMVersion As STMAFM_Version
 
