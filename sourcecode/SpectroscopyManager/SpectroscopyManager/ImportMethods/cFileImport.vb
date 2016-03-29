@@ -1137,6 +1137,7 @@ Public Class cFileImport
 #End Region
 
 #Region "Helper Functions"
+
     ''' <summary>
     ''' Reads as long as not Linefeed is found from the Binary-Stream.
     ''' </summary>
@@ -1155,20 +1156,29 @@ Public Class cFileImport
     End Function
 
     ''' <summary>
+    ''' Reads as long as not Linefeed is found from the Binary-Stream.
+    ''' </summary>
+    ''' <param name="br">BinaryReader pointing to the Stream-Object</param>
+    ''' <returns>String with the extracted line.</returns>
+    Public Shared Function ReadASCIIFromBinaryStreamUntilSign(ByRef br As BinaryReader,
+                                                              ByVal EndMarker As Char,
+                                                              Optional ByRef out As String = "") As String
+        out = String.Empty
+        Dim ch1 As Char
+        If EndMarker = ch1 Then ch1 = ControlChars.Cr
+        ' Read Until end of Stream, or Line-Feed.
+        Do Until br.BaseStream.Position = br.BaseStream.Length Or ch1 = EndMarker
+            ch1 = br.ReadChar()
+            out &= ch1
+        Loop
+        Return out
+    End Function
+
+    ''' <summary>
     ''' Reverses the order of a given Byte-Array.
     ''' </summary>
     ''' <returns>InputBytes-Array in Reversed Order.</returns>
     Public Shared Function ReverseBytes(ByRef InputBytes As Byte()) As Byte()
-        'Dim TMPByte As Byte
-        'Dim LengthOfInArray As Integer = InputBytes.Length - 1
-        'Dim LengthOfInArrayHalf As Integer = LengthOfInArray \ 2
-
-        'For ctr As Integer = 0 To LengthOfInArrayHalf Step 1
-        '    TMPByte = InputBytes(ctr)
-        '    InputBytes(ctr) = InputBytes(LengthOfInArray)
-        '    InputBytes(LengthOfInArray) = TMPByte
-        '    LengthOfInArray -= 1
-        'Next
         Return InputBytes.Reverse.ToArray
     End Function
 #End Region

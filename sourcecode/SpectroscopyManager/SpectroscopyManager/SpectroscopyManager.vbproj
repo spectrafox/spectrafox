@@ -502,6 +502,10 @@
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotec.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecCUR.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecImages.vb" />
+    <Compile Include="ImportMethods\Nanotec\cFileImportNanotecSTP.vb" />
+    <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrix.vb" />
+    <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrixCurve.vb" />
+    <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrixImage.vb" />
     <Compile Include="ImportMethods\rFileImport.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2018,7 +2022,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fitting\FitProcedures\old\" />
-    <Folder Include="ImportMethods\Omicron-Matrix\" />
     <Folder Include="Windows\OldWindows_not_included\" />
     <Folder Include="Windows\Spectroscopy Data Treatment\Inversion\" />
   </ItemGroup>

@@ -2,8 +2,10 @@
 Imports System.Text.RegularExpressions
 Imports System.Globalization
 
+''' <summary>
+''' Base class for file-imports regarding Omicron Matrix files.
+''' </summary>
 Public Class cFileImportOmicronMatrix
-    Implements iFileImport_SpectroscopyTable
 
     ''' <summary>
     ''' Different identifiers of the Omicron-files.
@@ -15,152 +17,203 @@ Public Class cFileImportOmicronMatrix
     ''' <summary>
     ''' Regular expression to extract the curve name of the spectroscopy file from the file extension.
     ''' </summary>
-    Private SpectroscopyFileExtension As New Regex("^.(?<curve>.*?\(?\))_mtrx$", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+    Protected SpectroscopyFileExtension As New Regex("^.(?<curve>.*?\(?\))_mtrx$", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+
+    ''' <summary>
+    ''' Regex to recognize a SpectroscopyFile of the Omicron Matrix system.
+    ''' It is setup by four parts. "20140823-115152--3_1.Aux1(V)_mtrx"
+    ''' basename: 20140823-115152
+    ''' nocurve: 3
+    ''' nopass: 1
+    ''' curve: Aux1
+    ''' unit: V
+    ''' </summary>
+    Protected SpectroscopyFileRegex As New Regex("^(?<basename>.*?)--(?<nocurve>\d+)_(?<nopass>\d+)\.(?<curve>\w*?)\((?<unit>.*?)\)_mtrx$", RegexOptions.Compiled Or RegexOptions.Singleline Or RegexOptions.IgnoreCase)
+
+    ''' <summary>
+    ''' Structure that stores the contents of a filename.
+    ''' </summary>
+    Public Structure SpectroscopyFileName
+        Public BaseName As String
+        Public CurveNumber As String
+        Public PassNumber As String
+        Public CurveName As String
+        Public DataUnit As String
+    End Structure
+
+    ''' <summary>
+    ''' Uses a regular expression to split up the filename of a Omicron Matrix spectroscopy file.
+    ''' </summary>
+    Public Function GetSpectroscopyFileNameComponents(ByVal FileNameWithoutPath As String) As SpectroscopyFileName
+        Dim SpectroscopyFileMatch As Match = SpectroscopyFileRegex.Match(FileNameWithoutPath)
+        Dim FileNameComponents As New SpectroscopyFileName
+        If SpectroscopyFileMatch.Groups.Count > 1 Then
+            FileNameComponents.BaseName = SpectroscopyFileMatch.Groups.Item("basename").Value
+            FileNameComponents.CurveNumber = SpectroscopyFileMatch.Groups.Item("nocurve").Value
+            FileNameComponents.PassNumber = SpectroscopyFileMatch.Groups.Item("nopass").Value
+            FileNameComponents.CurveName = SpectroscopyFileMatch.Groups.Item("curve").Value
+            FileNameComponents.DataUnit = SpectroscopyFileMatch.Groups.Item("unit").Value
+        End If
+        Return FileNameComponents
+    End Function
 
     ''' <summary>
     ''' Regular expression to extract the scan image name of the scan image file from the extension.
     ''' </summary>
-    Private ScanImageFileExtension As New Regex("^.(?<curve>.[^\(\)]*?)_mtrx$", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+    Protected ScanImageFileExtension As New Regex("^\.(?<channel>\w*?)_mtrx$", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
 
     ''' <summary>
-    ''' Imports the spectroscopy-file into a SpectroscopyTable object.
+    ''' Regex to recognize a ScanImage of the Omicron Matrix system.
+    ''' It is setup by four parts. "20140823-115152--1_1.Z_mtrx"
+    ''' basename: 20140823-115152
+    ''' nocurve: 1
+    ''' nopass: 1
+    ''' channel: Z
     ''' </summary>
-    Public Function ImportBias(ByRef FullFileNamePlusPath As String,
-                               ByVal FetchOnlyFileHeader As Boolean,
-                               Optional ByRef ReaderBuffer As String = "",
-                               Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
+    Protected ScanImageFileRegex As New Regex("^(?<basename>.*?)--(?<nocurve>\d+)_(?<nopass>\d+)\.(?<channel>\w*?)_mtrx$", RegexOptions.Compiled Or RegexOptions.Singleline Or RegexOptions.IgnoreCase)
 
-        ' Check, if the ignore list is nothing. If yes, then create a new list.
-        If FilesToIgnoreAfterThisImport Is Nothing Then FilesToIgnoreAfterThisImport = New List(Of String)
+    ''' <summary>
+    ''' Structure that stores the contents of a filename.
+    ''' </summary>
+    Public Structure ScanImageFileName
+        Public BaseName As String
+        Public CurveNumber As String
+        Public PassNumber As String
+        Public ChannelName As String
+    End Structure
 
-        ' First get the file base name from the individual file name.
-        Dim FileName As String = IO.Path.GetFileName(FullFileNamePlusPath)
-        Dim FileExtension As String = IO.Path.GetExtension(FileName)
+    ''' <summary>
+    ''' Uses a regular expression to split up the filename of a Omicron Matrix scan image file.
+    ''' </summary>
+    Public Function GetScanImageFileNameComponents(ByVal FileNameWithoutPath As String) As ScanImageFileName
+        Dim ScanImageFileMatch As Match = ScanImageFileRegex.Match(FileNameWithoutPath)
+        Dim FileNameComponents As New ScanImageFileName
+        If ScanImageFileMatch.Groups.Count > 1 Then
+            FileNameComponents.BaseName = ScanImageFileMatch.Groups.Item("basename").Value
+            FileNameComponents.CurveNumber = ScanImageFileMatch.Groups.Item("nocurve").Value
+            FileNameComponents.PassNumber = ScanImageFileMatch.Groups.Item("nopass").Value
+            FileNameComponents.ChannelName = ScanImageFileMatch.Groups.Item("channel").Value
+        End If
+        Return FileNameComponents
+    End Function
 
-        ' Get the curve name
-        Dim CurveNameMatch As Match = SpectroscopyFileExtension.Match(FileExtension)
-        Dim CurveName As String = String.Empty
-        If CurveNameMatch.Groups.Count > 1 Then
-            CurveName = CurveNameMatch.Groups.Item("curve").Value
+
+    ''' <summary>
+    ''' Maximum length of a string.
+    ''' Used to check for a valid readout.
+    ''' </summary>
+    Public Const MaxStringLength As Integer = 10000
+
+    ''' <summary>
+    ''' Reads a Matrix-String. It consists out of a length as UInt32,
+    ''' and is followed by the string in UTF16 format.
+    ''' </summary>
+    ''' <param name="br">BinaryReader pointing to the Stream-Object</param>
+    ''' <returns>String with the extracted line.</returns>
+    Public Shared Function ReadString(ByRef br As BinaryReader) As String
+        Dim out As String = String.Empty
+
+        ' Get the length of the string. It is written before the string.
+        Dim LengthOfString As UInteger = br.ReadUInt32
+
+        ' Check for a valid string length.
+        If LengthOfString > MaxStringLength Then
+            Debug.WriteLine("MatrixReader_ReadString: string not readable... too long")
+            Return out
         End If
 
-        ' Create new SpectroscopyTable
-        Dim oSpectroscopyTable As New cSpectroscopyTable
-        oSpectroscopyTable.FullFileName = FullFileNamePlusPath
-
-        ' Load StreamReader
-        Dim sr As New FileStream(FullFileNamePlusPath, FileMode.Open)
-
-        ReaderBuffer = ""
-
-        ' Buffers
-        Dim LastFourChars(3) As Char
-        Dim Int32Buffer(3) As Byte
-        Dim Int64Buffer(7) As Byte
-
-        Dim ExpectedNumber As UInt32
-        Dim RecordedNumber As UInt32
-        Dim RecordTimeTicks As ULong
-        Dim RecordTime As Date
-        Dim Data As List(Of Integer)
-
-        ' Read the header up to the position of the data, which is announced by "ATAD".
-        Do Until sr.Position = sr.Length Or LastFourChars = "ATAD"
-
-            ' Move the identifier buffer by one byte.
-            LastFourChars(0) = LastFourChars(1)
-            LastFourChars(1) = LastFourChars(2)
-            LastFourChars(2) = LastFourChars(3)
-            LastFourChars(3) = Convert.ToChar(sr.ReadByte)
-
-            Select Case LastFourChars
-
-                Case "ATAD"
-
-                    ' Abort reading of the header. From here on the data starts.
-                    'If FetchOnlyFileHeader Then
-                    '    Exit Do
-                    'Else
-
-                    ' Jump over the first 4 bytes!
-                    sr.Seek(4, SeekOrigin.Current)
-
-                    ' read the data
-                    Data = New List(Of Integer)
-                    Do Until sr.Position = sr.Length
-                        sr.Read(Int32Buffer, 0, 4)
-                        Data.Add(BitConverter.ToInt32(Int32Buffer, 0))
-                    Loop
-                    'End If
-
-                Case "TLKB"
-                    ' Timestamp of the file. The next 8 bytes.
-                    sr.Read(Int64Buffer, 0, 8)
-                    Array.Reverse(Int64Buffer)
-                    RecordTimeTicks = BitConverter.ToUInt64(Int64Buffer, 0)
-                    'RecordTime = Convert.ToDateTime(RecordTimeTicks)
-
-                Case "CSED"
-                    ' The next 24 bytes are unknown.
-                    sr.Seek(24, SeekOrigin.Current)
-                    ' The next 4 bytes are UINT32-LE as point number.
-                    sr.Read(Int32Buffer, 0, 4)
-                    ExpectedNumber = BitConverter.ToUInt32(Int32Buffer, 0)
-                    sr.Read(Int32Buffer, 0, 4)
-                    RecordedNumber = BitConverter.ToUInt32(Int32Buffer, 0)
-
-            End Select
-
+        ' Now read the 16bit per character string.
+        Dim ch1 As String
+        ' Read until end of stream, or the length of the stream is reached.
+        Do Until br.BaseStream.Position = br.BaseStream.Length Or out.Length >= LengthOfString
+            ch1 = br.ReadChar
+            out &= ch1
         Loop
-
-        sr.Close()
-        sr.Dispose()
-
-        ' File Exists, so set the property.
-        oSpectroscopyTable._bFileExists = True
-
-        Return oSpectroscopyTable
+        Return out
     End Function
 
     ''' <summary>
-    ''' File-Extension
+    ''' Reads a UInt32 value. Announced by "GNOL".
     ''' </summary>
-    Public ReadOnly Property FileExtension As String Implements iFileImport_SpectroscopyTable.FileExtension
-        Get
-            Return "_mtrx"
-        End Get
-    End Property
+    Public Shared Function ReadUInt32(ByRef br As BinaryReader) As UInt32
 
-    ''' <summary>
-    ''' Checks, if the given file is a known Omicron-Matrix File-Type
-    ''' </summary>
-    Public Function IdentifyFile(ByRef FullFileNamePlusPath As String,
-                                 Optional ByRef ReaderBuffer As String = "") As Boolean Implements iFileImport_SpectroscopyTable.IdentifyFile
-
-        ' Load StreamReader and read first identifier.
-        ' Is the only one needed for Identification.
-        Dim sr As New StreamReader(FullFileNamePlusPath)
-        Dim Buffer(DataFileIdentifier.Length - 1) As Char
-        sr.ReadBlock(Buffer, 0, DataFileIdentifier.Length)
-        sr.Close()
-        sr.Dispose()
-
-        ' All Omicron data files start with the DataFileIdentifier.
-        ' If we stumble upon this identifier, we can start loading the file.
-        ' For the individual we can then load the parameter file separately.
-        If Buffer = DataFileIdentifier Then
-
-            ' Now check, if the file is a SpectroscopyFile.
-            ' This is done from the file-extension, which should contain
-            ' the curve name, e.g. I(V)_mtrx.
-            Dim FileExtension As String = IO.Path.GetExtension(FullFileNamePlusPath)
-            If SpectroscopyFileExtension.IsMatch(FileExtension) Then
-                Return True
-            End If
-
+        ' Now read 4 chars and check for the identifier.
+        Dim Identifier As String = br.ReadChars(4)
+        If Identifier = "GNOL" Then
+            Return br.ReadUInt32
+        Else
+            Return Nothing
         End If
 
-        Return False
+    End Function
+
+    ''' <summary>
+    ''' Reads a Boolean value (32bit). Announced by "LOOB".
+    ''' </summary>
+    Public Shared Function ReadBool(ByRef br As BinaryReader) As Boolean
+
+        ' Now read 4 chars and check for the identifier.
+        Dim Identifier As String = br.ReadChars(4)
+        If Identifier = "LOOB" Then
+            Return Convert.ToBoolean(br.ReadUInt32)
+        Else
+            Return Nothing
+        End If
+
+    End Function
+
+    ''' <summary>
+    ''' Reads a double value. Announced by "BUOD".
+    ''' </summary>
+    Public Shared Function ReadDouble(ByRef br As BinaryReader) As Double
+
+        ' Now read 4 chars and check for the identifier.
+        Dim Identifier As String = br.ReadChars(4)
+        If Identifier = "BUOD" Then
+            Return br.ReadDouble
+        Else
+            Return Nothing
+        End If
+
+    End Function
+
+    ''' <summary>
+    ''' Reads a string announced by an identifier value. Announced by "GRTS".
+    ''' </summary>
+    Public Shared Function ReadStringByIdentifier(ByRef br As BinaryReader) As String
+
+        ' Now read 4 chars and check for the identifier.
+        Dim Identifier As String = br.ReadChars(4)
+        If Identifier = "GRTS" Then
+            Return ReadString(br)
+        Else
+            Return Nothing
+        End If
+
+    End Function
+
+    ''' <summary>
+    ''' Reads the next value, and outputs it as string.
+    ''' The data is interpreted by the identifier.
+    ''' </summary>
+    Public Shared Function ReadObject(ByRef br As BinaryReader) As String
+
+        ' Now read 4 chars and check for the identifier.
+        Dim Identifier As String = Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte)
+        Select Case Identifier
+            Case "GNOL"
+                Return br.ReadUInt32.ToString
+            Case "LOOB"
+                Return Convert.ToBoolean(br.ReadUInt32).ToString
+            Case "BUOD"
+                Return br.ReadDouble().ToString
+            Case "GRTS"
+                Return ReadString(br)
+            Case Else
+                Return Nothing
+        End Select
+
+
     End Function
 
 End Class

@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3656192">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3668480">
       <assemblyIdentity name="SpectroscopyManager" version="2016.3.23.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4uSkL1K8oPe/vI0yQT93VYorWLNHTRjTuX8S59ItONQ=</dsig:DigestValue>
+        <dsig:DigestValue>gT9E2xzx1/kdWi910v+dXrDRlXrwwEr0IBc/i/jDypE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -174,22 +174,22 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="1217">
+  <file name="changelog_dev.html" size="1458">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>RmcgMug9V0rc1j0WgiFIRI6pcvJBauA4sQclGkU+JA4=</dsig:DigestValue>
+      <dsig:DigestValue>ZjnVU6hjc2Qs/rOPzpH/7F55rADLAdR6Gz09r+28Mio=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="changelog_stable.html" size="34925">
+  <file name="changelog_stable.html" size="35029">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>ULJLOSKzVLKvRzceK0bfry0gOaOtNn7k8E81Sd3+8As=</dsig:DigestValue>
+      <dsig:DigestValue>nu3zpavxoBjpZkajpl4njGQz24LnTLHEhVNZjtj/AMQ=</dsig:DigestValue>
     </hash>
   </file>
   <file name="ColorSchemes\alpine colors.sfc" size="3162">
