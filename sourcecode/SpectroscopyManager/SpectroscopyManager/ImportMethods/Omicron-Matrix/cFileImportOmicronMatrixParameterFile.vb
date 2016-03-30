@@ -50,14 +50,14 @@ Public Class cFileImportOmicronMatrixParameterFile
     ''' Here all spectra are stored, and all the changes of parameters
     ''' from the initial parameter set are stored.
     ''' </summary>
-    Protected _ActionsByTime As New List(Of KeyValuePair(Of Date, String))
+    Protected _ActionsByTime As New List(Of KeyValuePair(Of Date, KeyValuePair(Of String, String)))
 
     ''' <summary>
     ''' List of all actions performed by the user over time.
     ''' Here all spectra are stored, and all the changes of parameters
     ''' from the initial parameter set are stored.
     ''' </summary>
-    Public ReadOnly Property ActionsByTime As List(Of KeyValuePair(Of Date, String))
+    Public ReadOnly Property ActionsByTime As List(Of KeyValuePair(Of Date, KeyValuePair(Of String, String)))
         Get
             Return Me._ActionsByTime
         End Get
@@ -66,118 +66,16 @@ Public Class cFileImportOmicronMatrixParameterFile
     ''' <summary>
     ''' List of all measurements described in the Matrix file.
     ''' </summary>
-    Protected _Measurements As New List(Of Measurement)
+    Protected _Measurements As New List(Of MeasurementDetails)
 
     ''' <summary>
     ''' List of all measurements described in the Matrix file.
     ''' </summary>
-    Public ReadOnly Property Measurements As List(Of Measurement)
+    Public ReadOnly Property Measurements As List(Of MeasurementDetails)
         Get
             Return Me._Measurements
         End Get
     End Property
-
-#End Region
-
-#Region "Transferfunction definition"
-
-    ''' <summary>
-    ''' Types of possible data transfer functions.
-    ''' </summary>
-    Public Enum TransferFunctions
-        Unknown
-        Linear1D
-        MultiLinear1D
-    End Enum
-
-    ''' <summary>
-    ''' Structure that stores the scaling information of the values.
-    ''' </summary>
-    Public Structure ZScalingStruct
-        Public TransferFunction As TransferFunctions
-        Public Factor_1 As Double
-        Public Offset_1 As Double
-        Public NeutralFactor_2 As Double
-        Public Offset_2 As Double
-        Public Prefactor_2 As Double
-        Public Preoffset_2 As Double
-        Public Raw1_2 As Double
-        Public Whole_2 As Double
-        Public ChannelNumber As Integer
-        Public ChannelName As String
-    End Structure
-
-    ''' <summary>
-    ''' Returns the TransferFunction by the name in the file.
-    ''' </summary>
-    Public Shared Function GetTransferFunctionByName(ByVal Name As String) As TransferFunctions
-        Select Case Name
-            Case "TFF_Linear1D"
-                Return TransferFunctions.Linear1D
-            Case "TFF_MultiLinear1D"
-                Return TransferFunctions.MultiLinear1D
-            Case Else
-                Return TransferFunctions.Unknown
-        End Select
-    End Function
-
-#End Region
-
-#Region "Measurement Details"
-
-    ''' <summary>
-    ''' Class that contains all details of a measurement.
-    ''' E.g. Data types, channels, etc.
-    ''' </summary>
-    Public Class Measurement
-
-        ''' <summary>
-        ''' Data types of all channels
-        ''' </summary>
-        Public DataTypeList As New Dictionary(Of String, String)
-
-        ''' <summary>
-        ''' Channellist in the format (ChannelID, (Name, Unit)
-        ''' </summary>
-        Public Channels As New Dictionary(Of Integer, KeyValuePair(Of String, String))
-
-        ''' <summary>
-        ''' Block Storage List. Format: (ChannelIndex, StorageString)
-        ''' </summary>
-        Public BlockStorage As New Dictionary(Of Integer, String)
-
-        ''' <summary>
-        ''' Transferfunctions for this measurement.
-        ''' </summary>
-        Public TransferFunctionProperties As New Dictionary(Of String, Double)
-
-    End Class
-
-#End Region
-
-#Region "Transfer function"
-
-    ''' <summary>
-    ''' Calculates from the given Integer value the correct double value,
-    ''' using the current transfer function stored in <code>TransferFunction</code>.
-    ''' </summary>
-    Public Function GetValueByTransferFunction(ByVal Value As Integer, ByVal ZScaling As ZScalingStruct) As Double
-        Dim DoubleValue As Double = Convert.ToDouble(Value)
-        Select Case ZScaling.TransferFunction
-            Case TransferFunctions.Linear1D
-                ' // use linear1d: p = (r - n)/f
-                Return (DoubleValue - ZScaling.Offset_1) / ZScaling.Factor_1
-            Case TransferFunctions.MultiLinear1D
-                ' // use multilinear1d:
-                ' // p = (r - n)*(r0 - n0)/(fn * f0)
-                ' //= (r - n)*s.whole_2
-                Return (DoubleValue - ZScaling.Preoffset_2) * ZScaling.Whole_2
-            Case TransferFunctions.Unknown
-                Return DoubleValue
-            Case Else
-                Return DoubleValue
-        End Select
-    End Function
 
 #End Region
 
@@ -348,7 +246,7 @@ Public Class cFileImportOmicronMatrixParameterFile
 
                             Dim FileNameDescribed As String = ReadString(BlockReader)
                             FO._FilesDescribed.Add(FileNameDescribed)
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, String)(CurrentBlock.Time, FileNameDescribed))
+                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(FileNameDescribed, FileNameDescribed)))
 
                         End Using
 
@@ -369,8 +267,8 @@ Public Class cFileImportOmicronMatrixParameterFile
                             BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
                             Dim PropertyValue As String = ReadObject(BlockReader)
-                            Dim Key As String = PropertyInstance & ":" & PropertyName & "[" & PropertyUnit & "]" & "=" & PropertyValue
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, String)(CurrentBlock.Time, Key))
+                            Dim Key As New KeyValuePair(Of String, String)("EEPA:" & PropertyInstance & "." & PropertyName & "[" & PropertyUnit & "]", PropertyValue)
+                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, Key))
 
                         End Using
 
@@ -381,7 +279,7 @@ Public Class cFileImportOmicronMatrixParameterFile
                         Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
                             Dim Mark As String = ReadString(BlockReader)
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, String)(CurrentBlock.Time, Mark))
+                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(Mark, Mark)))
 
                         End Using
 
@@ -396,7 +294,8 @@ Public Class cFileImportOmicronMatrixParameterFile
                         Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
                             ' Create a new measurement object.
-                            Dim Measurement As New Measurement
+                            Dim Measurement As New MeasurementDetails
+                            Measurement.Time = CurrentBlock.Time
 
                             '#########################
 
@@ -405,6 +304,8 @@ Public Class cFileImportOmicronMatrixParameterFile
 
                             ' Get storage for the new identifiers.
                             Dim SubLastFourChars As String = String.Empty
+
+                            Dim ScanHeader As New List(Of Int32)
 
                             ' Read the whole subset of parameters
                             Do Until BlockReader.BaseStream.Position = BlockReader.BaseStream.Length
@@ -483,25 +384,32 @@ Public Class cFileImportOmicronMatrixParameterFile
                                         ' Header of the curves.
                                         ' Who knows what's in there?
 
-                                        Dim ListOfInteger As New List(Of UInt32)
+
 
                                         Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
                                         Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
 
                                             While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
-                                                ListOfInteger.Add(SubBlockReader.ReadUInt32)
-
+                                                ScanHeader.Add(SubBlockReader.ReadInt32)
                                             End While
-
-
 
                                         End Using
 
                                     Case "NACS"
                                         ' Data of the curves.
                                         ' Read the subblock.
+
+                                        Dim ListOfInteger As New List(Of UInt32)
+
                                         Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
                                         Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
+
+                                            'SubBlockReader.BaseStream.Seek(2, SeekOrigin.Current)
+
+                                            For i As Integer = 0 To 204 Step 1
+
+                                                ListOfInteger.Add(SubBlockReader.ReadUInt32)
+                                            Next
 
                                         End Using
 
@@ -519,26 +427,73 @@ Public Class cFileImportOmicronMatrixParameterFile
                                                 SubBlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
                                                 ' Now comes the channel number and channel name
-                                                Dim ChannelNumber As UInt32 = SubBlockReader.ReadUInt32
+                                                Dim ChannelNumber As Integer = CInt(SubBlockReader.ReadUInt32)
                                                 Dim TransferFunction As String = ReadString(SubBlockReader)
                                                 Dim Unit As String = ReadString(SubBlockReader)
-                                                Dim A As Integer = CInt(SubBlockReader.ReadUInt32)
+                                                Dim PropertyCount As Integer = CInt(SubBlockReader.ReadUInt32)
                                                 Dim PropertyName As String
                                                 Dim PropertyValue As Double
-                                                Dim Key As String
+                                                'Dim Key As String
 
-                                                For i As Integer = 0 To A - 1 Step 1
+                                                Dim TFF As New TransferFunction
+                                                TFF.ChannelNumber = ChannelNumber
+                                                TFF.TransferFunctionType = GetTransferFunctionByName(TransferFunction)
+                                                TFF.Unit = Unit
+
+                                                For i As Integer = 0 To PropertyCount - 1 Step 1
                                                     PropertyName = ReadString(SubBlockReader)
                                                     PropertyValue = ReadDouble(SubBlockReader)
-                                                    Key = "XFER:Channel:" & ChannelNumber.ToString & "::" & PropertyName
-                                                    Measurement.TransferFunctionProperties.Add(Key, PropertyValue)
+
+                                                    '' Create a general entry for the transferfunction property.
+                                                    'Key = "XFER:Channel:" & ChannelNumber.ToString & "::" & PropertyName
+                                                    'Measurement.TransferFunctionProperties.Add(Key, PropertyValue)
+
+                                                    ' Create a specific entry in the Transferfunction object.
+                                                    Select Case PropertyName
+                                                        Case "NeutralFactor"
+                                                            TFF.NeutralFactor_2 = PropertyValue
+                                                        Case "Offset"
+                                                            TFF.Offset = PropertyValue
+                                                        Case "PreFactor"
+                                                            TFF.Prefactor_2 = PropertyValue
+                                                        Case "PreOffset"
+                                                            TFF.Preoffset_2 = PropertyValue
+                                                        Case "Raw_1"
+                                                            TFF.Raw1_2 = PropertyValue
+                                                        Case "Factor"
+                                                            TFF.Factor_1 = PropertyValue
+                                                    End Select
                                                 Next
+
+                                                ' perform some additional calculations for the multilinear transferfunction
+
+                                                If TFF.TransferFunctionType = TransferFunctionTypes.MultiLinear1D AndAlso (TFF.NeutralFactor_2 * TFF.Prefactor_2) <> 0 Then
+                                                    TFF.Whole_2 = (TFF.Raw1_2 - TFF.Preoffset_2) / (TFF.NeutralFactor_2 * TFF.Prefactor_2)
+                                                End If
+
+                                                ' Catch an unknown transferfunction,
+                                                ' and replace it by a dummy one.
+                                                If TFF.TransferFunctionType = TransferFunctionTypes.Unknown Then
+                                                    TFF.TransferFunctionType = TransferFunctionTypes.Linear1D
+                                                    TFF.Factor_1 = 1
+                                                    TFF.Offset = 0
+                                                    TFF.Unit = String.Empty
+                                                End If
+
+                                                ' Add the TFF object to the list of Transferfunctions.
+                                                Measurement.TransferFunctions.Add(ChannelNumber, TFF)
 
                                             End While
 
                                         End Using
+
+
+
                                 End Select
                             Loop
+
+                            ' Add the measurement to the list of measurements
+                            FO._Measurements.Add(Measurement)
 
                         End Using
 
@@ -583,6 +538,85 @@ Public Class cFileImportOmicronMatrixParameterFile
         End Try
 
         Return FO
+    End Function
+
+#End Region
+
+#Region "Data Extraction Function"
+
+    ''' <summary>
+    ''' Returns the position of the property (e.g. the filename) in the ActionList.
+    ''' </summary>
+    ''' <return>Returns -1, if not found!</return>
+    Public Function GetPositionOfPropertyValueInActionList(ByVal Value As String) As Integer
+
+        Dim SearchLimit As Integer = Me._ActionsByTime.Count - 1
+        For i As Integer = 0 To SearchLimit Step 1
+            If Value = Me._ActionsByTime(i).Value.Key Then
+                Return i
+            End If
+        Next
+
+        Return -1
+
+    End Function
+
+    ''' <summary>
+    ''' Returns the entry being chronologically earlier in the list of actions,
+    ''' that starts with a specific value.
+    ''' Used, e.g., for finding properties of spectra.
+    ''' </summary>
+    ''' <return>-1 if not found</return>
+    Public Function GetPositionOfPropertyValueBeforePosition(ByVal ValueStartsWith As String,
+                                                             ByVal SearchPosition As Integer) As Integer
+
+        If SearchPosition >= 0 Then
+
+            ' Go through earlier entries
+            For i As Integer = SearchPosition To 0 Step -1
+                If Me._ActionsByTime(i).Value.Key.StartsWith(ValueStartsWith) Then
+                    Return i
+                End If
+            Next
+
+        End If
+
+        Return -1
+
+    End Function
+
+    ''' <summary>
+    ''' Searches in the action list for the filename, and returns the
+    ''' measurement settings, that are lying earlier in time.
+    ''' </summary>
+    ''' <return>Nothing, if not found.</return>
+    Public Function GetMeasurementSettingsRelatedToFileName(ByVal FileName As String) As MeasurementDetails
+
+        ' First get the file record time.
+        Dim FilePositionInActionList As Integer = Me.GetPositionOfPropertyValueInActionList(FileName)
+
+        If FilePositionInActionList >= 0 Then
+
+            ' Now lets get the entry of the file for getting the date.
+            Dim FileRecordDate As Date = Me._ActionsByTime(FilePositionInActionList).Key
+
+            ' From the date we now search the measurement earlier in time.
+            Dim IndexOfTimeBefore As Integer = -1
+            For i As Integer = 0 To Me._Measurements.Count - 1 Step 1
+                If Me._Measurements(i).Time <= FileRecordDate AndAlso
+                   (IndexOfTimeBefore < 0 OrElse (IndexOfTimeBefore >= 0 AndAlso Me._Measurements(i).Time > Me._Measurements(IndexOfTimeBefore).Time)) Then
+                    IndexOfTimeBefore = i
+                End If
+            Next
+
+            ' If there is a measurement before, then return this measurement.
+            If IndexOfTimeBefore >= 0 Then
+                Return Me._Measurements(IndexOfTimeBefore)
+            End If
+
+        End If
+
+        Return Nothing
     End Function
 
 #End Region

@@ -100,6 +100,122 @@ Public Class cFileImportOmicronMatrix
 
 #End Region
 
+#Region "Transferfunction definition"
+
+    ''' <summary>
+    ''' Types of possible data transfer functions.
+    ''' </summary>
+    Public Enum TransferFunctionTypes
+        Unknown
+        Linear1D
+        MultiLinear1D
+    End Enum
+
+    ''' <summary>
+    ''' Structure that stores the scaling information of the values.
+    ''' </summary>
+    Public Structure TransferFunction
+        Public TransferFunctionType As TransferFunctionTypes
+        Public Factor_1 As Double
+        Public Offset As Double
+        Public NeutralFactor_2 As Double
+        Public Prefactor_2 As Double
+        Public Preoffset_2 As Double
+        Public Raw1_2 As Double
+        Public Whole_2 As Double
+        Public ChannelNumber As Integer
+        Public ChannelName As String
+        Public Unit As String
+    End Structure
+
+    ''' <summary>
+    ''' Returns the TransferFunction by the name in the file.
+    ''' </summary>
+    Public Shared Function GetTransferFunctionByName(ByVal Name As String) As TransferFunctionTypes
+        Select Case Name
+            Case "TFF_Linear1D"
+                Return TransferFunctionTypes.Linear1D
+            Case "TFF_MultiLinear1D"
+                Return TransferFunctionTypes.MultiLinear1D
+            Case Else
+                Return TransferFunctionTypes.Unknown
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' Calculates from the given Integer value the correct double value,
+    ''' using the current transfer function stored in <code>TransferFunction</code>.
+    ''' </summary>
+    Public Shared Function GetValueByTransferFunction(ByVal Value As Integer, ByVal ZScaling As TransferFunction) As Double
+        Dim DoubleValue As Double = Convert.ToDouble(Value)
+        Select Case ZScaling.TransferFunctionType
+            Case TransferFunctionTypes.Linear1D
+                ' // use linear1d: p = (r - n)/f
+                Return (DoubleValue - ZScaling.Offset) / ZScaling.Factor_1
+            Case TransferFunctionTypes.MultiLinear1D
+                ' // use multilinear1d:
+                ' // p = (r - n)*(r0 - n0)/(fn * f0)
+                ' //= (r - n)*s.whole_2
+                Return (DoubleValue - ZScaling.Preoffset_2) * ZScaling.Whole_2
+            Case TransferFunctionTypes.Unknown
+                Return DoubleValue
+            Case Else
+                Return DoubleValue
+        End Select
+    End Function
+
+#End Region
+
+#Region "Measurement Details"
+
+    ''' <summary>
+    ''' Class that contains all details of a measurement.
+    ''' E.g. Data types, channels, etc.
+    ''' </summary>
+    Public Class MeasurementDetails
+
+        ''' <summary>
+        ''' Date of the measurement.
+        ''' </summary>
+        Public Time As Date
+
+        ''' <summary>
+        ''' Data types of all channels
+        ''' </summary>
+        Public DataTypeList As New Dictionary(Of String, String)
+
+        ''' <summary>
+        ''' Channellist in the format (ChannelID, (Name, Unit)
+        ''' </summary>
+        Public Channels As New Dictionary(Of Integer, KeyValuePair(Of String, String))
+
+        ''' <summary>
+        ''' Block Storage List. Format: (ChannelIndex, StorageString)
+        ''' </summary>
+        Public BlockStorage As New Dictionary(Of Integer, String)
+
+        ''' <summary>
+        ''' Transferfunction dictionary (ChannelID, Transferfunction)
+        ''' </summary>
+        Public TransferFunctions As New Dictionary(Of Integer, TransferFunction)
+
+        ''' <summary>
+        ''' Returns the ChannelID by the ChannelName from the list of channels.
+        ''' </summary>
+        ''' <return>-1 if not found</return>
+        Public Function GetChannelIDFromMeasurement(ChannelName As String) As Integer
+            For Each ChannelKV As KeyValuePair(Of Integer, KeyValuePair(Of String, String)) In Me.Channels
+                If ChannelKV.Value.Key = ChannelName Then
+                    Return ChannelKV.Key
+                End If
+            Next
+            Return -1
+        End Function
+
+    End Class
+
+#End Region
+
 #Region "File Control, e.g. Datablocks, etc."
 
     ''' <summary>
