@@ -7,7 +7,16 @@ Public Class cFileImportOmicronMatrixCurve
     Implements iFileImport_SpectroscopyTable
 
     ''' <summary>
-    ''' Imports the spectroscopy-file into a SpectroscopyTable object.
+    ''' Imports Omicron Matrix spectroscopy files.
+    ''' 
+    ''' Created for SpectraFox by Michael Ruby.
+    ''' 
+    ''' We acknowledge the Gwyddion source code
+    ''' for the Matrix scan image file import routine,
+    ''' which was released under GPL by the following people:
+    ''' 
+    ''' Copyright (C) 2008, Philipp Rahe, David Necas
+    ''' *  E-mail: hquerquadrat@gmail.com
     ''' </summary>
     Public Function ImportBias(ByRef FullFileNamePlusPath As String,
                                ByVal FetchOnlyFileHeader As Boolean,
@@ -24,6 +33,32 @@ Public Class cFileImportOmicronMatrixCurve
 
         ' Get the base name of the file.
         Dim BaseFileNameComponents As SpectroscopyFileName = Me.GetSpectroscopyFileNameComponents(FileName)
+
+        '################################################################
+        ' First of all, search for the parameter file, if it is present.
+        ' It consists out of the "base name"+"_0001.mtrx".
+        Dim ParameterFile As cFileImportOmicronMatrixParameterFile
+        For Each oFile As FileInfo In FileListInDirectory
+            If oFile.Name = BaseFileNameComponents.BaseName & "_0001.mtrx" Then
+                ' Parameter-File found.
+
+                ReaderBuffer = ""
+
+                ' Get the parameter file.
+                ParameterFile = cFileImportOmicronMatrixParameterFile.ReadParameterFile(oFile.FullName)
+
+                ' Check, if the file has been interpreted correctly
+                If ParameterFile IsNot Nothing Then
+
+                    ' Apply the parameters to the current file.
+
+                End If
+
+                ' Exit the loop, since we have found the file.
+                Exit For
+            End If
+        Next
+        '#######################################################
 
         ' Create new SpectroscopyTable object.
         Dim oSpectroscopyTable As New cSpectroscopyTable
@@ -50,104 +85,116 @@ Public Class cFileImportOmicronMatrixCurve
                 ' Now Using BinaryReader to obtain Image-Data
                 Dim br As New BinaryReader(fs, System.Text.Encoding.Default)
 
-                ReaderBuffer = ""
+                ' Stores the data
+                Dim Data As List(Of Double) = Nothing
 
-                ' Buffers
-                Dim LastFourChars(3) As Char
-                Dim Int32Buffer(3) As Byte
-                Dim Int64Buffer(7) As Byte
+                Try
 
-                Dim ExpectedNumber As UInt32
-                Dim RecordedNumber As UInt32
-                Dim RecordTimeTicks As ULong
-                Dim Data As New List(Of Double)
+                    ' Buffers
+                    Dim LastFourChars As String = String.Empty
+                    ReaderBuffer = ""
 
-                ' Read the header up to the position of the data, which is announced by "ATAD".
-                Do Until fs.Position = fs.Length Or LastFourChars = "ATAD"
+                    Dim ExpectedNumber As UInt32
+                    Dim RecordedNumber As UInt32
+                    Dim RecordTimeTicks As ULong
 
-                    ' Move the identifier buffer by one byte.
-                    LastFourChars(0) = LastFourChars(1)
-                    LastFourChars(1) = LastFourChars(2)
-                    LastFourChars(2) = LastFourChars(3)
-                    LastFourChars(3) = Convert.ToChar(fs.ReadByte)
+                    ' Read the header up to the position of the data, which is announced by "ATAD".
+                    Do Until fs.Position = fs.Length
 
-                    Select Case LastFourChars
+                        ' Move the identifier buffer by one byte.
+                        LastFourChars = GetLastFourCharsByProceedingOneByte(br, LastFourChars)
 
-                        Case "ATAD"
-                            ' This announces that the data is following.
+                        Select Case LastFourChars
 
-                            ' Abort reading of the header. From here on the data starts.
-                            If FetchOnlyFileHeader Then
-                                Exit Do
-                            End If
+                            Case "TLKB"
+                                ' BKLT: This announces the timestamp at which the file has been recorded.
 
-                            ' Jump over the first 4 bytes!
-                            fs.Seek(4, SeekOrigin.Current)
+                                ' BLOCK READING NOT WORKING HERE???
+                                'Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                'Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                            ' read the data
-                            Do Until fs.Position = fs.Length
-                                fs.Read(Int32Buffer, 0, 4)
-                                Data.Add(BitConverter.ToInt32(Int32Buffer, 0))
-                            Loop
+                                '    ' Store the time as record time.
+                                '    oSpectroscopyTable.RecordDate = CurrentBlock.Time
 
-                        Case "TLKB"
-                            ' This announces the timestamp at which the file has been recorded.
+                                'End Using
 
-                            ' Jump over the first 4 bytes!
-                            fs.Seek(4, SeekOrigin.Current)
+                                ' Jump over the first 4 bytes!
+                                fs.Seek(4, SeekOrigin.Current)
 
-                            ' Timestamp of the file. The next 8 bytes.
-                            fs.Read(Int64Buffer, 0, 8)
-                            RecordTimeTicks = BitConverter.ToUInt64(Int64Buffer, 0)
-                            oSpectroscopyTable.RecordDate = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(RecordTimeTicks).ToLocalTime()
+                                ' Timestamp of the file. The next 8 bytes.
+                                RecordTimeTicks = br.ReadUInt64
+                                oSpectroscopyTable.RecordDate = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(RecordTimeTicks).ToLocalTime()
 
-                        Case "CSED"
-                            ' This announces the number of points in the curve.
+                            Case "CSED"
+                                ' DESC: This is the descriptor of the file.
+                                ' E.g. it announces the number of points in the curve.
 
-                            ' The next 24 bytes are unknown.
-                            fs.Seek(24, SeekOrigin.Current)
+                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                            ' The next 4 bytes are UINT32-LE as point number.
-                            fs.Read(Int32Buffer, 0, 4)
-                            ExpectedNumber = BitConverter.ToUInt32(Int32Buffer, 0)
-                            fs.Read(Int32Buffer, 0, 4)
-                            RecordedNumber = BitConverter.ToUInt32(Int32Buffer, 0)
-                            oSpectroscopyTable.MeasurementPoints = Convert.ToInt32(RecordedNumber)
+                                    ' The next 20 bytes are unknown.
+                                    BlockReader.BaseStream.Seek(20, SeekOrigin.Current)
 
-                    End Select
+                                    ' The next 4 bytes are UINT32-LE as point number.
+                                    ExpectedNumber = BlockReader.ReadUInt32
+                                    RecordedNumber = BlockReader.ReadUInt32
+                                    oSpectroscopyTable.MeasurementPoints = Convert.ToInt32(RecordedNumber)
 
-                Loop
+                                End Using
 
-                br.Close()
-                fs.Close()
-                br.Dispose()
-                fs.Dispose()
+                            Case "ATAD"
+                                ' DATA: This announces that the data is following.
 
-                ' Set some extra columns
-                With DataCol
-                    .IsSpectraFoxGenerated = False
-                    .Name = CurrentFileNameComponents.CurveName
-                    .UnitSymbol = CurrentFileNameComponents.DataUnit
-                    .UnitType = cUnits.GetUnitTypeFromSymbol(CurrentFileNameComponents.DataUnit)
-                    .SetValueList(Data)
-                End With
+                                ' Abort reading of the header. From here on the data starts.
+                                If FetchOnlyFileHeader Then
+                                    Exit Do
+                                End If
 
-                ' Finally add the datacolumn to the SpectroscopyTable
-                oSpectroscopyTable.AddNonPersistentColumn(DataCol)
+                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                ' Ignore this file for further imports, since we already imported it.
-                FilesToIgnoreAfterThisImport.Add(oFile.FullName)
+                                    ' Create the data storage, using the length information obtained before
+                                    Data = New List(Of Double)(oSpectroscopyTable.MeasurementPoints)
 
-            End If
-            '#######################################################
+                                    ' read the data
+                                    Dim Value As Int32
+                                    While BlockReader.BaseStream.Position < BlockReader.BaseStream.Length
+                                        Value = BlockReader.ReadInt32
+                                        Data.Add(Value)
+                                    End While
 
-            '#######################################################
-            ' Also search for the parameter file, if it is present.
-            ' It consists out of the "base name"+"_0001.mtrx".
-            If oFile.Name = BaseFileNameComponents.BaseName & "_0001.mtrx" Then
-                ' Parameter-File found.
-                'ParameterFileName = oFile.FullName
+                                End Using
 
+                        End Select
+
+                    Loop
+                Catch ex As Exception
+                    Debug.WriteLine("cFileImportOmicronMatrixCurveFile: Error reading spectroscopy file: " & ex.Message)
+                Finally
+                    br.Close()
+                    fs.Close()
+                    br.Dispose()
+                    fs.Dispose()
+                End Try
+
+                ' Add the data column, if all the data exist.
+                If Data IsNot Nothing Then
+
+                    ' Set some extra columns
+                    With DataCol
+                        .IsSpectraFoxGenerated = False
+                        .Name = CurrentFileNameComponents.CurveName
+                        .UnitSymbol = CurrentFileNameComponents.DataUnit
+                        .UnitType = cUnits.GetUnitTypeFromSymbol(CurrentFileNameComponents.DataUnit)
+                        .SetValueList(Data)
+                    End With
+
+                    ' Finally add the datacolumn to the SpectroscopyTable
+                    oSpectroscopyTable.AddNonPersistentColumn(DataCol)
+
+                    ' Ignore this file for further imports, since we already imported it.
+                    FilesToIgnoreAfterThisImport.Add(oFile.FullName)
+                End If
 
             End If
             '#######################################################

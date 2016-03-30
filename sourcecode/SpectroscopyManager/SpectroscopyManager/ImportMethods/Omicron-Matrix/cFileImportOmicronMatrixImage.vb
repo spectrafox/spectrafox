@@ -3,8 +3,16 @@ Imports System.Text.RegularExpressions
 Imports System.Globalization
 
 ''' <summary>
-''' Created with the help of Gwyddion Matrix file import.
-''' Released under terms of the GPL.
+''' Imports Omicron Matrix image files.
+''' 
+''' Created for SpectraFox by Michael Ruby.
+''' 
+''' We acknowledge the Gwyddion source code
+''' for the Matrix scan image file import routine,
+''' which was released under GPL by the following people:
+''' 
+''' Copyright (C) 2008, Philipp Rahe, David Necas
+''' *  E-mail: hquerquadrat@gmail.com
 ''' </summary>
 Public Class cFileImportOmicronMatrixImage
     Inherits cFileImportOmicronMatrix
@@ -30,6 +38,32 @@ Public Class cFileImportOmicronMatrixImage
         ' Get the base name of the file.
         Dim BaseFileNameComponents As ScanImageFileName = Me.GetScanImageFileNameComponents(FileName)
 
+        '################################################################
+        ' First of all, search for the parameter file, if it is present.
+        ' It consists out of the "base name"+"_0001.mtrx".
+        Dim ParameterFile As cFileImportOmicronMatrixParameterFile
+        For Each oFile As FileInfo In FileListInDirectory
+            If oFile.Name = BaseFileNameComponents.BaseName & "_0001.mtrx" Then
+                ' Parameter-File found.
+
+                ReaderBuffer = ""
+
+                ' Get the parameter file.
+                ParameterFile = cFileImportOmicronMatrixParameterFile.ReadParameterFile(oFile.FullName)
+
+                ' Check, if the file has been interpreted correctly
+                If ParameterFile IsNot Nothing Then
+
+                    ' Apply the parameters to the current file.
+
+                End If
+
+                ' Exit the loop, since we have found the file.
+                Exit For
+            End If
+        Next
+        '#######################################################
+
         ' Create new ScanImage object.
         Dim oScanImage As New cScanImage
         oScanImage.FullFileName = FullFileNamePlusPath
@@ -50,13 +84,6 @@ Public Class cFileImportOmicronMatrixImage
                 Dim ChannelFW As New cScanImage.ScanChannel
                 Dim ChannelBW As New cScanImage.ScanChannel
 
-                ReaderBuffer = ""
-
-                ' Buffers
-                Dim LastFourChars(3) As Char
-                Dim Int32Buffer(3) As Byte
-                Dim Int64Buffer(7) As Byte
-
                 Dim ExpectedNumber As UInt32
                 Dim RecordedNumber As UInt32
                 Dim RecordTimeTicks As ULong
@@ -70,56 +97,76 @@ Public Class cFileImportOmicronMatrixImage
 
                 Try
 
+                    ' Buffers
+                    Dim LastFourChars As String = String.Empty
+                    ReaderBuffer = ""
+
                     ' Read the header up to the position of the data, which is announced by "ATAD".
                     Do Until fs.Position = fs.Length Or LastFourChars = "ATAD"
 
                         ' Move the identifier buffer by one byte.
-                        LastFourChars(0) = LastFourChars(1)
-                        LastFourChars(1) = LastFourChars(2)
-                        LastFourChars(2) = LastFourChars(3)
-                        LastFourChars(3) = Convert.ToChar(fs.ReadByte)
+                        LastFourChars = GetLastFourCharsByProceedingOneByte(br, LastFourChars)
 
                         Select Case LastFourChars
 
+                            Case "TLKB"
+                                ' BKLT: This announces the timestamp at which the file has been recorded.
+
+                                ' BLOCK READING NOT WORKING HERE???
+                                'Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                'Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+
+                                '    ' Store the time as record time.
+                                '    oSpectroscopyTable.RecordDate = CurrentBlock.Time
+
+                                'End Using
+
+                                ' Jump over the first 4 bytes!
+                                fs.Seek(4, SeekOrigin.Current)
+
+                                ' Timestamp of the file. The next 8 bytes.
+                                RecordTimeTicks = br.ReadUInt64
+                                oScanImage.RecordDate = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(RecordTimeTicks).ToLocalTime()
+
+                            Case "CSED"
+                                ' DESC: This is the descriptor of the file.
+                                ' E.g. it announces the number of points in the curve.
+
+                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+
+
+                                    ' The next 20 bytes are unknown.
+                                    BlockReader.BaseStream.Seek(20, SeekOrigin.Current)
+
+                                    ' The next 4 bytes are UINT32-LE as point number.
+                                    ExpectedNumber = BlockReader.ReadUInt32
+                                    RecordedNumber = BlockReader.ReadUInt32
+
+                                End Using
+
                             Case "ATAD"
-                                ' This announces that the data is following.
+                                ' DATA: This announces that the data is following.
 
                                 ' Abort reading of the header. From here on the data starts.
                                 If FetchOnlyFileHeader Then
                                     Exit Do
                                 End If
 
-                                ' Jump over the first 4 bytes!
-                                fs.Seek(4, SeekOrigin.Current)
+                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                                ' read the data
-                                Do Until fs.Position = fs.Length
-                                    fs.Read(Int32Buffer, 0, 4)
-                                    Data.Add(BitConverter.ToInt32(Int32Buffer, 0))
-                                Loop
+                                    ' Create the data storage, using the length information obtained before
+                                    Data = New List(Of Double)(CInt(RecordedNumber))
 
-                            Case "TLKB"
-                                ' This announces the timestamp at which the file has been recorded.
+                                    ' read the data
+                                    Dim Value As Int32
+                                    While BlockReader.BaseStream.Position < BlockReader.BaseStream.Length
+                                        Value = BlockReader.ReadInt32
+                                        Data.Add(Value)
+                                    End While
 
-                                ' Jump over the first 4 bytes!
-                                fs.Seek(4, SeekOrigin.Current)
-
-                                ' Timestamp of the file. The next 8 bytes.
-                                fs.Read(Int64Buffer, 0, 8)
-                                RecordTimeTicks = BitConverter.ToUInt64(Int64Buffer, 0)
-                                oScanImage.RecordDate = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(RecordTimeTicks).ToLocalTime()
-
-                            Case "CSED"
-                                ' This announces the number of points in the curve.
-
-                                ' The next 24 bytes are unknown.
-                                fs.Seek(24, SeekOrigin.Current)
-
-                                ' The next 4 bytes are UINT32-LE as point number.
-                                fs.Read(Int32Buffer, 0, 4)
-                                ExpectedNumber = BitConverter.ToUInt32(Int32Buffer, 0)
-                                fs.Read(Int32Buffer, 0, 4)
-                                RecordedNumber = BitConverter.ToUInt32(Int32Buffer, 0)
+                                End Using
 
                         End Select
 
@@ -129,9 +176,9 @@ Public Class cFileImportOmicronMatrixImage
                     Debug.WriteLine("cFileImportOmicronMatrixImage: Error reading data file: " & ex.Message)
                 Finally
                     br.Close()
-                fs.Close()
-                br.Dispose()
-                fs.Dispose()
+                    fs.Close()
+                    br.Dispose()
+                    fs.Dispose()
                 End Try
 
                 ' Set some extra columns
@@ -187,169 +234,6 @@ Public Class cFileImportOmicronMatrixImage
 
                 ' Ignore this file for further imports, since we already imported it.
                 FilesToIgnoreAfterThisImport.Add(oFile.FullName)
-
-            End If
-            '#######################################################
-
-            '#######################################################
-            ' Also search for the parameter file, if it is present.
-            ' It consists out of the "base name"+"_0001.mtrx".
-            If oFile.Name = BaseFileNameComponents.BaseName & "_0001.mtrx" Then
-                ' Parameter-File found.
-
-                ReaderBuffer = ""
-
-                ' Buffers
-                Dim LastFourChars(3) As Char
-                Dim Int32Buffer(3) As Byte
-                Dim Int64Buffer(7) As Byte
-
-                ' Load StreamReader with the Big Endian Encoding
-                Dim fs As New FileStream(oFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
-                ' Now Using BinaryReader to obtain Image-Data
-                Dim br As New BinaryReader(fs, System.Text.Encoding.Unicode)
-
-                ' Array with all extracted properties.
-                Dim PropertyArray As New Dictionary(Of String, String)
-
-                Try
-
-                    ' Read the whole parameter file.
-                    Do Until fs.Position = fs.Length
-
-                        ' Move the identifier buffer by one byte.
-                        LastFourChars(0) = LastFourChars(1)
-                        LastFourChars(1) = LastFourChars(2)
-                        LastFourChars(2) = LastFourChars(3)
-                        LastFourChars(3) = Convert.ToChar(fs.ReadByte)
-
-                        Select Case LastFourChars
-
-                            Case "ATEM"
-                                ' Some general Matrix related settings.
-
-                                ' Jump over the first 12 bytes!
-                                fs.Seek(12, SeekOrigin.Current)
-                                ' read the settings
-                                PropertyArray.Add("ATEM:SoftwareName", ReadString(br))
-                                PropertyArray.Add("ATEM:MatrixVersion", ReadString(br))
-                                ' Jump over the next 4 bytes!
-                                fs.Seek(4, SeekOrigin.Current)
-                                ' read the next settings
-                                PropertyArray.Add("ATEM:MatrixProfile", ReadString(br))
-                                PropertyArray.Add("ATEM:UserName", ReadString(br))
-
-                            Case "DPXE"
-                                ' Project description and files
-
-                                ' Jump over the next 16 bytes!
-                                fs.Seek(16, SeekOrigin.Current)
-
-                                ' Read 7 strings
-                                For i As Integer = 1 To 7 Step 1
-                                    PropertyArray.Add("DPXE:Property" & i.ToString, ReadString(br))
-                                Next
-
-                            Case "LNEG"
-                                ' Project description and files
-
-                                ' Jump over the next 4 bytes!
-                                fs.Seek(4, SeekOrigin.Current)
-
-                                ' Read 3 strings
-                                For i As Integer = 1 To 3 Step 1
-                                    PropertyArray.Add("LNEG:Property" & i.ToString, ReadString(br))
-                                Next
-
-                            Case "TSNI"
-                                ' configuration of instances
-
-                                ' Jump over the first 4 bytes!
-                                fs.Seek(4, SeekOrigin.Current)
-
-                                ' Get the number of stored parameters.
-                                Dim ParameterCount As UInt32 = br.ReadUInt32
-
-                                For i As UInteger = 1 To ParameterCount Step 1
-
-                                    Dim S1 As String = ReadString(br)
-                                    Dim S2 As String = ReadString(br)
-                                    Dim S3 As String = ReadString(br)
-
-                                    Dim Key As String = "TSNI:" & S1 & "::" & S2 & " (" & S3 & ")."
-
-                                    Dim PropertyCount As Integer = Convert.ToInt32(br.ReadUInt32)
-
-                                    While PropertyCount > 0
-
-                                        Dim t1 As String = ReadString(br)
-                                        Dim t2 As String = ReadString(br)
-                                        Dim Key2 As String = Key & t1
-
-                                        PropertyArray.Add(Key2, t2)
-
-                                        PropertyCount -= 1
-                                    End While
-
-                                Next
-
-                            Case "APEE"
-                                ' Configuration of experiment
-                                ' altered values are recorded in PMOD
-                                ' the most important parts are in XYScanner
-
-                                ' Jump over the first 16 bytes!
-                                fs.Seek(16, SeekOrigin.Current)
-
-                                Dim PropertyCount As Integer = Convert.ToInt32(br.ReadUInt32)
-                                Dim GroupItemNumber As Integer
-                                Dim CheckSub As Boolean
-                                Dim Prop As String
-                                Dim Unit As String
-
-                                While PropertyCount > 0
-
-                                    ' Get the sub instruction.
-                                    Dim Instruction As String = ReadString(br)
-                                    If Instruction = "XYScanner" Then
-                                        CheckSub = True
-                                    Else
-                                        CheckSub = False
-                                    End If
-
-                                    ' Get the number of group items.
-                                    GroupItemNumber = Convert.ToInt32(br.ReadUInt32)
-                                    While GroupItemNumber > 0
-
-                                        ' Read the property and the unit
-                                        Prop = ReadString(br)
-                                        Unit = ReadString(br)
-
-                                        ' Jump over the next 4 bytes!
-                                        fs.Seek(4, SeekOrigin.Current)
-
-                                        PropertyArray.Add("EEPA:" & Instruction & "." & Prop & "[" & Unit & "]", ReadObject(br))
-
-                                        GroupItemNumber -= 1
-                                    End While
-
-
-
-                                    PropertyCount -= 1
-                                End While
-
-                        End Select
-
-                    Loop
-
-                Catch ex As Exception
-                    Debug.WriteLine("cFileImportOmicronMatrixImage: Error reading parameter file: " & ex.Message)
-                Finally
-                    br.Close()
-                    fs.Close()
-                    br.Dispose()
-                    fs.Dispose()
-                End Try
 
             End If
             '#######################################################

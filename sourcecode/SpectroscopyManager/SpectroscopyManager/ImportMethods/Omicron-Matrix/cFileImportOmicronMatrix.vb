@@ -7,12 +7,13 @@ Imports System.Globalization
 ''' </summary>
 Public Class cFileImportOmicronMatrix
 
+#Region "Filename analysis and interpretation"
+
     ''' <summary>
     ''' Different identifiers of the Omicron-files.
     ''' </summary>
     Public Const FileIdentifier As String = "ONTMATRX0101"
     Public Const DataFileIdentifier As String = "ONTMATRX0101TLKB"
-    Public Const ParameterFileIdentifier As String = "ONTMATRX0101ATEM"
 
     ''' <summary>
     ''' Regular expression to extract the curve name of the spectroscopy file from the file extension.
@@ -97,12 +98,125 @@ Public Class cFileImportOmicronMatrix
         Return FileNameComponents
     End Function
 
+#End Region
+
+#Region "File Control, e.g. Datablocks, etc."
+
+    ''' <summary>
+    ''' Structure that represents a data-block containing no timestamp.
+    ''' </summary>
+    Public Structure DataBlockWithoutTime
+        Public Identifier As String
+        Public Position As Int64
+        Public Length As UInt32
+        Public Content As Byte()
+    End Structure
+
+    ''' <summary>
+    ''' Structure that represents a data-block containing a timestamp.
+    ''' </summary>
+    Public Structure DataBlockWithTime
+        Public Identifier As String
+        Public Position As Int64
+        Public Length As UInt32
+        Public TimeStamp As UInt64
+        Public Time As Date
+        Public Content As Byte()
+    End Structure
+
+    ''' <summary>
+    ''' Goes to the beginning of the data block.
+    ''' </summary>
+    Public Shared Sub GotoBlock(ByRef br As BinaryReader, Block As DataBlockWithoutTime)
+        br.BaseStream.Position = Block.Position
+    End Sub
+
+    ''' <summary>
+    ''' Goes to the beginning of the data block.
+    ''' </summary>
+    Public Shared Sub GotoBlock(ByRef br As BinaryReader, Block As DataBlockWithTime)
+        br.BaseStream.Position = Block.Position
+    End Sub
+
+    ''' <summary>
+    ''' Goes to the data block end of a timeless block.
+    ''' </summary>
+    Public Shared Sub GotoBlockEnd(ByRef br As BinaryReader, Block As DataBlockWithoutTime)
+        br.BaseStream.Position = Block.Position + Block.Length + 4
+    End Sub
+
+    ''' <summary>
+    ''' Goes to the data block end of a timestamp block.
+    ''' </summary>
+    Public Shared Sub GotoBlockEnd(ByRef br As BinaryReader, Block As DataBlockWithTime)
+        br.BaseStream.Position = Block.Position + Block.Length + 12
+    End Sub
+
+    ''' <summary>
+    ''' Reads the next block of data, given by the length of the parameter.
+    ''' </summary>
+    <DebuggerStepThrough>
+    Public Shared Function ReadBlock(ByRef br As BinaryReader, BlockLength As UInt32) As Byte()
+        Return br.ReadBytes(CInt(BlockLength))
+    End Function
+
+    ''' <summary>
+    ''' Creates a new data block, with the content of the data-block itself.
+    ''' The 4 byte identifier should already be read!
+    ''' </summary>
+    Public Shared Function ReadBlockWithoutTime(ByRef br As BinaryReader, Identifier As String) As DataBlockWithoutTime
+        Dim DB As New DataBlockWithoutTime
+        With DB
+            .Identifier = Identifier
+            .Position = br.BaseStream.Position
+            ' After each parameter the length of the following block is stored!
+            ' Style: "XXXX"+4byte length of the block
+            .Length = br.ReadUInt32
+            .Content = ReadBlock(br, .Length)
+        End With
+        Return DB
+    End Function
+
+    ''' <summary>
+    ''' Creates a new data block, with the content of the data-block itself.
+    ''' The 4 byte identifier should already be read!
+    ''' </summary>
+    Public Shared Function ReadBlockWithTime(ByRef br As BinaryReader, Identifier As String) As DataBlockWithTime
+        Dim DB As New DataBlockWithTime
+        With DB
+            .Identifier = Identifier
+            .Position = br.BaseStream.Position
+            ' After each parameter the length of the following block is stored!
+            ' Style: "XXXX"+4byte length of the block
+            .Length = br.ReadUInt32
+            ' For some entries the timestamp is stored after the 4 bytes.
+            ' In the HEX-editor they always look like "8døS...."
+            .TimeStamp = br.ReadUInt64
+            .Time = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(.TimeStamp).ToLocalTime()
+            .Content = ReadBlock(br, .Length)
+        End With
+        Return DB
+    End Function
+
+    ''' <summary>
+    ''' Returns a BinaryReader for the specific data block.
+    ''' </summary>
+    Public Shared Function GetBinaryReaderForBlockContent(DataBlock As DataBlockWithoutTime) As BinaryReader
+        Return New BinaryReader(New MemoryStream(DataBlock.Content), System.Text.Encoding.Unicode)
+    End Function
+
+    ''' <summary>
+    ''' Returns a BinaryReader for the specific data block.
+    ''' </summary>
+    Public Shared Function GetBinaryReaderForBlockContent(DataBlock As DataBlockWithTime) As BinaryReader
+        Return New BinaryReader(New MemoryStream(DataBlock.Content), System.Text.Encoding.Unicode)
+    End Function
 
     ''' <summary>
     ''' Maximum length of a string.
     ''' Used to check for a valid readout.
     ''' </summary>
-    Public Const MaxStringLength As Integer = 10000
+    Protected Const MaxStringLength As Integer = 10000
 
     ''' <summary>
     ''' Reads a Matrix-String. It consists out of a length as UInt32,
@@ -111,25 +225,21 @@ Public Class cFileImportOmicronMatrix
     ''' <param name="br">BinaryReader pointing to the Stream-Object</param>
     ''' <returns>String with the extracted line.</returns>
     Public Shared Function ReadString(ByRef br As BinaryReader) As String
-        Dim out As String = String.Empty
 
         ' Get the length of the string. It is written before the string.
-        Dim LengthOfString As UInteger = br.ReadUInt32
+        Dim LengthOfString As Integer = CInt(br.ReadUInt32)
 
         ' Check for a valid string length.
         If LengthOfString > MaxStringLength Then
             Debug.WriteLine("MatrixReader_ReadString: string not readable... too long")
-            Return out
+            Return String.Empty
         End If
 
-        ' Now read the 16bit per character string.
-        Dim ch1 As String
-        ' Read until end of stream, or the length of the stream is reached.
-        Do Until br.BaseStream.Position = br.BaseStream.Length Or out.Length >= LengthOfString
-            ch1 = br.ReadChar
-            out &= ch1
-        Loop
+        ' Read the whole string.
+        Dim out As String = br.ReadChars(LengthOfString)
+
         Return out
+
     End Function
 
     ''' <summary>
@@ -138,7 +248,7 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function ReadUInt32(ByRef br As BinaryReader) As UInt32
 
         ' Now read 4 chars and check for the identifier.
-        Dim Identifier As String = br.ReadChars(4)
+        Dim Identifier As String = Read4Bytes(br)
         If Identifier = "GNOL" Then
             Return br.ReadUInt32
         Else
@@ -153,7 +263,7 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function ReadBool(ByRef br As BinaryReader) As Boolean
 
         ' Now read 4 chars and check for the identifier.
-        Dim Identifier As String = br.ReadChars(4)
+        Dim Identifier As String = Read4Bytes(br)
         If Identifier = "LOOB" Then
             Return Convert.ToBoolean(br.ReadUInt32)
         Else
@@ -168,9 +278,9 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function ReadDouble(ByRef br As BinaryReader) As Double
 
         ' Now read 4 chars and check for the identifier.
-        Dim Identifier As String = br.ReadChars(4)
+        Dim Identifier As String = Read4Bytes(br)
         If Identifier = "BUOD" Then
-            Return br.ReadDouble
+            Return br.ReadDouble()
         Else
             Return Nothing
         End If
@@ -183,7 +293,7 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function ReadStringByIdentifier(ByRef br As BinaryReader) As String
 
         ' Now read 4 chars and check for the identifier.
-        Dim Identifier As String = br.ReadChars(4)
+        Dim Identifier As String = Read4Bytes(br)
         If Identifier = "GRTS" Then
             Return ReadString(br)
         Else
@@ -199,21 +309,54 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function ReadObject(ByRef br As BinaryReader) As String
 
         ' Now read 4 chars and check for the identifier.
-        Dim Identifier As String = Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte)
+        Dim Identifier As String = Read4Bytes(br)
         Select Case Identifier
             Case "GNOL"
-                Return br.ReadUInt32.ToString
+                Dim Int As UInt32 = br.ReadUInt32
+                Return Int.ToString(System.Globalization.CultureInfo.InvariantCulture)
             Case "LOOB"
-                Return Convert.ToBoolean(br.ReadUInt32).ToString
+                Dim Int As UInt32 = br.ReadUInt32
+                Dim Bool As Boolean = Convert.ToBoolean(Int)
+                Return Bool.ToString(System.Globalization.CultureInfo.InvariantCulture)
             Case "BUOD"
-                Return br.ReadDouble().ToString
+                Dim Val As Double = br.ReadDouble
+                Return Val.ToString(System.Globalization.CultureInfo.InvariantCulture)
             Case "GRTS"
-                Return ReadString(br)
+                Dim S As String = ReadString(br)
+                Return S
             Case Else
                 Return Nothing
         End Select
 
+    End Function
+
+    ''' <summary>
+    ''' Function that returns the last four chars by proceeding by one byte.
+    ''' Requires a String with less than four chars long.
+    ''' </summary>
+    Public Shared Function GetLastFourCharsByProceedingOneByte(ByRef br As BinaryReader, ByVal StringSoFar As String) As String
+
+        Dim LastFourChars(3) As Char
+        StringSoFar.CopyTo(0, LastFourChars, 0, StringSoFar.Length)
+
+        ' Move the identifier buffer by one byte.
+        LastFourChars(0) = LastFourChars(1)
+        LastFourChars(1) = LastFourChars(2)
+        LastFourChars(2) = LastFourChars(3)
+        LastFourChars(3) = Convert.ToChar(br.ReadByte)
+
+        Return LastFourChars
 
     End Function
+
+    ''' <summary>
+    ''' Reads exactly four bytes and returns them as char.
+    ''' This is used for the identifier strings, e.g. "LOOB", etc.
+    ''' </summary>
+    Public Shared Function Read4Bytes(ByRef br As BinaryReader) As String
+        Return Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte)
+    End Function
+
+#End Region
 
 End Class

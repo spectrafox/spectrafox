@@ -506,6 +506,7 @@
     <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrix.vb" />
     <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrixCurve.vb" />
     <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrixImage.vb" />
+    <Compile Include="ImportMethods\Omicron-Matrix\cFileImportOmicronMatrixParameterFile.vb" />
     <Compile Include="ImportMethods\rFileImport.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
