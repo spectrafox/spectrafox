@@ -131,6 +131,12 @@ You may abort it manually, if you want to quit.</value>
   <data name="MultipleFileActions_Processing" xml:space="preserve">
     <value>processing requested actions ... please wait</value>
   </data>
+  <data name="ProgressBox_FileProcessHeading" xml:space="preserve">
+    <value>The requested function is applied to the selected files ... please wait!</value>
+  </data>
+  <data name="ProgressBox_FolderScanHeading" xml:space="preserve">
+    <value>The data folder is being scanned for compatible files ... please wait!</value>
+  </data>
   <data name="RefreshTimer_CountDown" xml:space="preserve">
     <value>time to next list-refresh: %t s</value>
   </data>

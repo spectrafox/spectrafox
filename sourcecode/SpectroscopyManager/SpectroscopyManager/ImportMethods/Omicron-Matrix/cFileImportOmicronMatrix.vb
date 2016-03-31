@@ -572,7 +572,7 @@ Public Class cFileImportOmicronMatrix
             SpectroscopyLocation = New STSLocation
             With SpectroscopyLocation
                 .XCoord = Convert.ToDouble(M.Groups.Item("xcoord").Value, Globalization.CultureInfo.InvariantCulture)
-                .YCoord = Convert.ToDouble(M.Groups.Item("xcoord").Value, Globalization.CultureInfo.InvariantCulture)
+                .YCoord = Convert.ToDouble(M.Groups.Item("ycoord").Value, Globalization.CultureInfo.InvariantCulture)
                 .XPoint = Convert.ToInt32(M.Groups.Item("xpoint").Value, Globalization.CultureInfo.InvariantCulture)
                 .YPoint = Convert.ToInt32(M.Groups.Item("ypoint").Value, Globalization.CultureInfo.InvariantCulture)
             End With
@@ -605,6 +605,7 @@ Public Class cFileImportOmicronMatrix
         Public Setpoint As Double = 0
         Public SetpointUnit As String = ""
         Public ProportionalGain As Double = 0
+        Public BiasVoltage As Double = 0
 
         ''' <summary>
         ''' Raster time in seconds.
@@ -668,38 +669,61 @@ Public Class cFileImportOmicronMatrix
                                                     ByVal Value As String)
 
         ' Check, if the property deals with the XYScanner.
-        ' If not then skip the function.
-        If ExpConfig.Category <> "EEPA" AndAlso ExpConfig.Instruction <> "XYScanner" Then Return
+        If ExpConfig.Category = "EEPA" AndAlso ExpConfig.Instruction = "XYScanner" Then
 
-        Select Case ExpConfig.Prop
+            Select Case ExpConfig.Prop
 
-            Case "Height"
-                XY.Height = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Width"
-                XY.Width = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Points", "X_Points"
-                XY.XPoints = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Lines", "Y_Points"
-                XY.YPoints = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Raster_Time", "Raster_Period_Time"
-                XY.RasterPeriodTime = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Scan_Constraint"
-                XY.GridMode = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Zoom"
-                XY.Zoom = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Angle"
-                XY.Angle = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "X_Offset"
-                XY.XOffset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Y_Offset"
-                XY.YOffset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-            Case "Setpoint_1"
-                XY.Setpoint = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
-                XY.SetpointUnit = ExpConfig.Unit
-            Case "Retraction_Speed"
-                XY.ProportionalGain = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Height"
+                    XY.Height = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Width"
+                    XY.Width = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Points", "X_Points"
+                    XY.XPoints = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Lines", "Y_Points"
+                    XY.YPoints = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Raster_Time", "Raster_Period_Time"
+                    XY.RasterPeriodTime = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Scan_Constraint"
+                    XY.GridMode = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Zoom"
+                    XY.Zoom = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Angle"
+                    XY.Angle = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "X_Offset"
+                    XY.XOffset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Y_Offset"
+                    XY.YOffset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
 
-        End Select
+            End Select
+
+        End If
+
+        ' Check, if the property deals with the Regulator.
+        If ExpConfig.Category = "EEPA" AndAlso ExpConfig.Instruction = "Regulator" Then
+
+            Select Case ExpConfig.Prop
+
+                Case "Setpoint_1"
+                    XY.Setpoint = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                    XY.SetpointUnit = ExpConfig.Unit
+                Case "Retraction_Speed"
+                    XY.ProportionalGain = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+
+            End Select
+
+        End If
+
+        ' Check, if the property deals with the Regulator.
+        If ExpConfig.Category = "EEPA" AndAlso ExpConfig.Instruction = "GapVoltageControl" Then
+
+            Select Case ExpConfig.Prop
+
+                Case "Voltage"
+                    XY.BiasVoltage = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+
+            End Select
+
+        End If
 
     End Sub
 
@@ -726,6 +750,7 @@ Public Class cFileImportOmicronMatrix
         Public Device2_Points As Integer = 0
         Public Device2_ForwardAndBackward As Boolean = False
         Public Device2_SweepNumber As Integer = 0
+        Public Device2_Offset As Double = 0
 
         ''' <summary>
         ''' Feedback on?
@@ -801,6 +826,8 @@ Public Class cFileImportOmicronMatrix
                 SpecProp.Device1_Points = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
             Case "Enable_Device_1_Ramp_Reversal"
                 SpecProp.Device1_ForwardAndBackward = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Device_1_Repetitions"
+                SpecProp.Device1_SweepNumber = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
 
             Case "Device_2_Start"
                 SpecProp.Device2_SweepStart = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
@@ -811,11 +838,16 @@ Public Class cFileImportOmicronMatrix
                 SpecProp.Device2_Points = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
             Case "Enable_Device_2_Ramp_Reversal"
                 SpecProp.Device2_ForwardAndBackward = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Device_2_Repetitions"
+                SpecProp.Device2_SweepNumber = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Device_2_Offset"
+                SpecProp.Device2_Offset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
 
             Case "Disable_Feedback_Loop"
                 SpecProp.DisableFeedback = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
             Case "Enable_Feedback_Loop"
                 SpecProp.DisableFeedback = Not Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+
 
         End Select
     End Sub

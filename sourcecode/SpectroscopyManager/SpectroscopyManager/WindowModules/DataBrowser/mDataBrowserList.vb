@@ -751,6 +751,7 @@ Public Class mDataBrowserList
     ''' </summary>
     Private Sub FileBufferFetcher_ReportProgress(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles oFileBufferFetcher.ProgressChanged
         Me.lblStatus.Text = "(" & e.ProgressPercentage.ToString("N0") & " %) " & Convert.ToString(e.UserState)
+
     End Sub
 
 #End Region
@@ -945,6 +946,9 @@ Public Class mDataBrowserList
     ''' to get the new visibility status of the list-entries.
     ''' </summary>
     Public Sub VisibilityOfTheListEntriesChange() Handles Me.ListVisibilityChanged, panBrowserList.Resize
+
+        ' Adapt the action bar to the width of the browserlist.
+        Me.panProgress.Width = panBrowserList.Width
 
         ' Get temporary properties about the
         ' current scroll position, and the shown
@@ -1250,10 +1254,13 @@ Public Class mDataBrowserList
             Me.mnuRefreshList.Text = My.Resources.FileListRefresh_Cancel
             Me.mnuRefreshList.ToolTipText = My.Resources.FileListRefresh_CancelTT
             Me.mnuRefreshList.Image = My.Resources.cancel_16
+            Me.panProgress.Visible = True
+            Me.lblProgressHeading.Text = My.Resources.rDataBrowser.ProgressBox_FolderScanHeading
         Else
             Me.mnuRefreshList.Text = My.Resources.FileListRefresh_RefreshList
             Me.mnuRefreshList.ToolTipText = My.Resources.FileListRefresh_RefreshListTT
             Me.mnuRefreshList.Image = My.Resources.reload_16
+            Me.panProgress.Visible = False
         End If
         Me.mnuFilter.Enabled = Not IsListLoading
         Me.mnuSorting.Enabled = Not IsListLoading
@@ -1622,8 +1629,11 @@ Public Class mDataBrowserList
         If Not Me.FileActionAPIsToMenuButtons.ContainsKey(B) Then Return
         Dim API As iDataBrowser_FileObjectAction = Me.FileActionAPIsToMenuButtons(B)
 
+        ' Get the selected list entries
+        Dim SelectedListEntries As List(Of FileListEntry) = Me.ListEntriesSelected
+
         ' Check, if we have selected some list-entries.
-        If Me.ListEntriesSelected.Count <= 0 Then Return
+        If SelectedListEntries.Count <= 0 Then Return
 
         ' Check, whether to launch the API-call in one bunch for all selected files,
         ' or whether to process each file individually, via a thread-pool work-group.
@@ -1645,11 +1655,11 @@ Public Class mDataBrowserList
                 Me.FileBufferFetcher_ReportProgress(Me, New System.ComponentModel.ProgressChangedEventArgs(50, My.Resources.rDataBrowser.MultipleFileActions_Processing))
 
                 ' Launch multiple-file action for each file in the thread-pool.
-                For i As Integer = 0 To Me.ListEntriesSelected.Count - 1 Step 1
+                For i As Integer = 0 To SelectedListEntries.Count - 1 Step 1
 
                     ' Create informations for the worker, about the work to do.
                     Dim WorkerState As New MultipleAPIWorkerState_Individual
-                    WorkerState.FileObject = Me.ListEntriesSelected(i).FileObject
+                    WorkerState.FileObject = SelectedListEntries(i).FileObject
                     WorkerState.API = API
                     wigMultipleFileAPIProcessingWorkItemsGroup.QueueWorkItem(FileActionAPIMultipleFilesIndividual_ProcessCallback, WorkerState)
 
@@ -1670,6 +1680,7 @@ Public Class mDataBrowserList
             ' disable those parts of the interface we don't want to be changed
             ' by the user, during processing the request.
             Me.panProgress.Visible = True
+            Me.lblProgressHeading.Text = My.Resources.rDataBrowser.ProgressBox_FileProcessHeading
             Me.panBrowserListContainer.Enabled = False
             Me.mnu.Enabled = False
 
@@ -1683,8 +1694,8 @@ Public Class mDataBrowserList
             If API.MultipleFilesProcessedIndividually Then
                 ' Process all the files individually.
                 ' Launch multiple-file action for each file.
-                For i As Integer = 0 To Me.ListEntriesSelected.Count - 1 Step 1
-                    API.MultipleFileAction_IndividualAction(Me.ListEntriesSelected(i).FileObject)
+                For i As Integer = 0 To SelectedListEntries.Count - 1 Step 1
+                    API.MultipleFileAction_IndividualAction(SelectedListEntries(i).FileObject)
                 Next
             Else
                 API.MultipleFileAction_AllAtOnce(Me.FileObjectsSelected)

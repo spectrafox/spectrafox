@@ -75,6 +75,7 @@ Partial Class mDataBrowserList
         Me.mnuTools_Visualization = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTools_DataManipulations = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTools_NumericManipulations = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuTools_AtomicForceMicroscopyTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator3 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuTools_SpectroscopyDataCache = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMultipleScanImageFileActions = New System.Windows.Forms.ToolStripMenuItem()
@@ -102,6 +103,7 @@ Partial Class mDataBrowserList
         Me.ToolStripSeparator6 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmnuSpectroscopy_DataManipulations = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmnuSpectroscopy_NumericManipulations = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmScanImageFile = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.cmnuScanImage_Header = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
@@ -111,8 +113,6 @@ Partial Class mDataBrowserList
         Me.lblProgressHeading = New System.Windows.Forms.Label()
         Me.pbProgress = New System.Windows.Forms.ProgressBar()
         Me.panBrowserList = New SpectroscopyManager.VirtualVerticalPanel()
-        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools = New System.Windows.Forms.ToolStripMenuItem()
-        Me.mnuTools_AtomicForceMicroscopyTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnu.SuspendLayout()
         Me.ssStatus.SuspendLayout()
         Me.cmSpectroscopyFile.SuspendLayout()
@@ -494,6 +494,12 @@ Partial Class mDataBrowserList
         Me.mnuTools_NumericManipulations.Size = New System.Drawing.Size(272, 22)
         Me.mnuTools_NumericManipulations.Text = "numeric manipulations"
         '
+        'mnuTools_AtomicForceMicroscopyTools
+        '
+        Me.mnuTools_AtomicForceMicroscopyTools.Name = "mnuTools_AtomicForceMicroscopyTools"
+        Me.mnuTools_AtomicForceMicroscopyTools.Size = New System.Drawing.Size(272, 22)
+        Me.mnuTools_AtomicForceMicroscopyTools.Text = "atomic force microscopy tools"
+        '
         'ToolStripSeparator3
         '
         Me.ToolStripSeparator3.Name = "ToolStripSeparator3"
@@ -682,6 +688,12 @@ Partial Class mDataBrowserList
         Me.cmnuSpectroscopy_NumericManipulations.Size = New System.Drawing.Size(281, 22)
         Me.cmnuSpectroscopy_NumericManipulations.Text = "numeric manipulations"
         '
+        'cmnuSpectroscopy_AtomicForceMicroscopyTools
+        '
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Name = "cmnuSpectroscopy_AtomicForceMicroscopyTools"
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Size = New System.Drawing.Size(281, 22)
+        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Text = "atomic force microscopy tools"
+        '
         'cmScanImageFile
         '
         Me.cmScanImageFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuScanImage_Header, Me.ToolStripSeparator8, Me.cmnuScanImage_OpenInSeparateWindow})
@@ -720,20 +732,20 @@ Partial Class mDataBrowserList
         '
         'panProgress
         '
-        Me.panProgress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.panProgress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.panProgress.Controls.Add(Me.lblProgressHeading)
         Me.panProgress.Controls.Add(Me.pbProgress)
-        Me.panProgress.Location = New System.Drawing.Point(161, 350)
+        Me.panProgress.Location = New System.Drawing.Point(0, 764)
         Me.panProgress.Name = "panProgress"
-        Me.panProgress.Size = New System.Drawing.Size(466, 74)
+        Me.panProgress.Size = New System.Drawing.Size(834, 74)
         Me.panProgress.TabIndex = 2
         '
         'lblProgressHeading
         '
         Me.lblProgressHeading.AutoSize = True
         Me.lblProgressHeading.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblProgressHeading.Location = New System.Drawing.Point(27, 14)
+        Me.lblProgressHeading.Location = New System.Drawing.Point(11, 14)
         Me.lblProgressHeading.Name = "lblProgressHeading"
         Me.lblProgressHeading.Size = New System.Drawing.Size(388, 20)
         Me.lblProgressHeading.TabIndex = 1
@@ -745,7 +757,7 @@ Partial Class mDataBrowserList
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.pbProgress.Location = New System.Drawing.Point(15, 39)
         Me.pbProgress.Name = "pbProgress"
-        Me.pbProgress.Size = New System.Drawing.Size(436, 23)
+        Me.pbProgress.Size = New System.Drawing.Size(804, 23)
         Me.pbProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee
         Me.pbProgress.TabIndex = 0
         '
@@ -759,18 +771,6 @@ Partial Class mDataBrowserList
         Me.panBrowserList.Size = New System.Drawing.Size(814, 157)
         Me.panBrowserList.TabIndex = 1
         Me.panBrowserList.VirtualHeightOfThePanel = 100
-        '
-        'cmnuSpectroscopy_AtomicForceMicroscopyTools
-        '
-        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Name = "cmnuSpectroscopy_AtomicForceMicroscopyTools"
-        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Size = New System.Drawing.Size(281, 22)
-        Me.cmnuSpectroscopy_AtomicForceMicroscopyTools.Text = "atomic force microscopy tools"
-        '
-        'mnuTools_AtomicForceMicroscopyTools
-        '
-        Me.mnuTools_AtomicForceMicroscopyTools.Name = "mnuTools_AtomicForceMicroscopyTools"
-        Me.mnuTools_AtomicForceMicroscopyTools.Size = New System.Drawing.Size(272, 22)
-        Me.mnuTools_AtomicForceMicroscopyTools.Text = "atomic force microscopy tools"
         '
         'mDataBrowserList
         '

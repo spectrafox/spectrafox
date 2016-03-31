@@ -16,7 +16,8 @@ Public Class cFileImportNanonisZ
     Public Function Import(ByRef FullFileNamePlusPath As String,
                            ByVal FetchOnlyFileHeader As Boolean,
                            Optional ByRef ReaderBuffer As String = "",
-                           Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
+                           Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing,
+                           Optional ByRef ParameterFilesImportedOnce As List(Of iFileImport_ParameterFileToBeImportedOnce) = Nothing) As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
         ' Create New SpectroscopyTable
         Dim oSpectroscopyTable As New cSpectroscopyTable
         oSpectroscopyTable.FullFileName = FullFileNamePlusPath

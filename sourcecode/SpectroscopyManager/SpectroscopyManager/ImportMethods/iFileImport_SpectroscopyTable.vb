@@ -19,6 +19,7 @@
     Function ImportSpectroscopyTable(ByRef FullFileNamePlusPath As String,
                                      ByVal FetchOnlyFileHeader As Boolean,
                                      Optional ByRef ReaderBuffer As String = "",
-                                     Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cSpectroscopyTable
+                                     Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing,
+                                     Optional ByRef ParameterFilesImportedOnce As List(Of iFileImport_ParameterFileToBeImportedOnce) = Nothing) As cSpectroscopyTable
 
 End Interface

@@ -26,11 +26,12 @@ Public Class cFileImportOmicronMatrixImage
     Public Function ImportSXM(ByRef FullFileNamePlusPath As String,
                               ByVal FetchOnlyFileHeader As Boolean,
                               Optional ByRef ReaderBuffer As String = "",
-                              Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cScanImage Implements iFileImport_ScanImage.ImportScanImage
-
+                              Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing,
+                              Optional ByRef ParameterFilesImportedOnce As List(Of iFileImport_ParameterFileToBeImportedOnce) = Nothing) As cScanImage Implements iFileImport_ScanImage.ImportScanImage
 
         ' Check, if the ignore list exists
         If FilesToIgnoreAfterThisImport Is Nothing Then FilesToIgnoreAfterThisImport = New List(Of String)
+        If ParameterFilesImportedOnce Is Nothing Then ParameterFilesImportedOnce = New List(Of iFileImport_ParameterFileToBeImportedOnce)
 
         ' First get the file base name from the individual file name.
         Dim FileName As String = IO.Path.GetFileName(FullFileNamePlusPath)
@@ -46,12 +47,27 @@ Public Class cFileImportOmicronMatrixImage
         Dim ParameterFile As cFileImportOmicronMatrixParameterFile = Nothing
         For Each oFile As FileInfo In FileListInDirectory
             If oFile.Name = BaseFileNameComponents.BaseName & "_0001.mtrx" Then
-                ' Get the parameter file.
-                ParameterFile = cFileImportOmicronMatrixParameterFile.ReadParameterFile(oFile.FullName)
+
+                ' Check, if the parameter file is already imported:
+                Dim ParameterFileFoundInCache As Boolean = False
+                For i As Integer = 0 To ParameterFilesImportedOnce.Count - 1 Step 1
+                    If ParameterFilesImportedOnce(i).ParameterFileName = oFile.FullName AndAlso
+                       ParameterFilesImportedOnce(i).ParameterFileType = GetType(cFileImportOmicronMatrixParameterFile) Then
+                        ParameterFile = DirectCast(ParameterFilesImportedOnce(i), cFileImportOmicronMatrixParameterFile)
+                        ParameterFileFoundInCache = True
+                        Exit For
+                    End If
+                Next
+
+                ' Get the parameter file, if we did not get it from the cache.
+                If Not ParameterFileFoundInCache Then
+                    ParameterFile = cFileImportOmicronMatrixParameterFile.ReadParameterFile(oFile.FullName)
+                    ParameterFilesImportedOnce.Add(ParameterFile)
+                End If
 
                 ' Exit the loop, since we have found the file.
                 Exit For
-            End If
+                End If
         Next
         '#######################################################
 
@@ -107,6 +123,18 @@ Public Class cFileImportOmicronMatrixImage
                     .ZControllerProportionalGain = XYScanner.ProportionalGain
                     .ZControllerSetpoint = XYScanner.Setpoint
                     .ACQ_Time = XYScanner.RasterPeriodTime
+
+                    ' Correct the position of the image.
+                    ' The coordinate of the image is in the center of the image.
+                    ' --> So perform a coordinate transformation to the top left corner of the image.
+                    With oScanImage
+                        Dim NewScanLocation As cNumericalMethods.Point2D = cNumericalMethods.BackCoordinateTransform(.ScanOffset_X - .ScanRange_X / 2,
+                                                                                                                     .ScanOffset_Y - .ScanRange_Y / 2,
+                                                                                                                     .ScanOffset_X, .ScanOffset_Y,
+                                                                                                                     -oScanImage.ScanAngle)
+                        .ScanOffset_X += NewScanLocation.x
+                        .ScanOffset_Y += NewScanLocation.y
+                    End With
                 End With
 
                 Dim ExpectedNumber As UInt32
@@ -238,8 +266,8 @@ Public Class cFileImportOmicronMatrixImage
 
                         If Not FetchOnlyFileHeader Then
 
-                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-                            ChannelBWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
+                            ChannelBWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
 
                             For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
                                 If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
@@ -289,8 +317,8 @@ Public Class cFileImportOmicronMatrixImage
 
                             If Not FetchOnlyFileHeader Then
 
-                                ChannelFWDown.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-                                ChannelBWDown.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                                ChannelFWDown.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
+                                ChannelBWDown.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
 
                                 For y As Integer = oScanImage.ScanPixels_Y - 1 To 0 Step -1
                                     If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
@@ -340,8 +368,8 @@ Public Class cFileImportOmicronMatrixImage
 
                         If Not FetchOnlyFileHeader Then
 
-                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-                            ChannelBWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
+                            ChannelBWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
 
                             For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
                                 If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
@@ -382,7 +410,7 @@ Public Class cFileImportOmicronMatrixImage
 
                         If Not FetchOnlyFileHeader Then
 
-                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, Double.NaN)
 
                             For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
                                 If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For

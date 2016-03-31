@@ -497,6 +497,7 @@
     <Compile Include="HelperClasses\cStringCollectionHistory.vb" />
     <Compile Include="HelperClasses\ReadOnlyDictionary.vb" />
     <Compile Include="ImportMethods\cFileObject.vb" />
+    <Compile Include="ImportMethods\iFileImport_ParameterFileToBeImportedOnce.vb" />
     <Compile Include="ImportMethods\iFileImport_ScanImage.vb" />
     <Compile Include="ImportMethods\iFileImport_SpectroscopyTable.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotec.vb" />

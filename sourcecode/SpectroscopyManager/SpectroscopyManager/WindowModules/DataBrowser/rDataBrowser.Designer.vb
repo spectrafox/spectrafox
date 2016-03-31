@@ -103,6 +103,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The requested function is applied to the selected files ... please wait!.
+        '''</summary>
+        Friend Shared ReadOnly Property ProgressBox_FileProcessHeading() As String
+            Get
+                Return ResourceManager.GetString("ProgressBox_FileProcessHeading", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The data folder is being scanned for compatible files ... please wait!.
+        '''</summary>
+        Friend Shared ReadOnly Property ProgressBox_FolderScanHeading() As String
+            Get
+                Return ResourceManager.GetString("ProgressBox_FolderScanHeading", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to time to next list-refresh: %t s.
         '''</summary>
         Friend Shared ReadOnly Property RefreshTimer_CountDown() As String

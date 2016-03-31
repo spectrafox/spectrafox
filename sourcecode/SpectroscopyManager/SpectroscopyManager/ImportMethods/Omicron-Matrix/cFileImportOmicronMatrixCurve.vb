@@ -31,10 +31,12 @@ Public Class cFileImportOmicronMatrixCurve
     Public Function ImportBias(ByRef FullFileNamePlusPath As String,
                                ByVal FetchOnlyFileHeader As Boolean,
                                Optional ByRef ReaderBuffer As String = "",
-                               Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing) As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
+                               Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing,
+                               Optional ByRef ParameterFilesImportedOnce As List(Of iFileImport_ParameterFileToBeImportedOnce) = Nothing) As cSpectroscopyTable Implements iFileImport_SpectroscopyTable.ImportSpectroscopyTable
 
         ' Check, if the ignore list is nothing. If yes, then create a new list.
         If FilesToIgnoreAfterThisImport Is Nothing Then FilesToIgnoreAfterThisImport = New List(Of String)
+        If ParameterFilesImportedOnce Is Nothing Then ParameterFilesImportedOnce = New List(Of iFileImport_ParameterFileToBeImportedOnce)
 
         ' First get the file base name from the individual file name.
         Dim FileName As String = IO.Path.GetFileName(FullFileNamePlusPath)
@@ -52,10 +54,22 @@ Public Class cFileImportOmicronMatrixCurve
             If oFile.Name = BaseFileNameComponents.BaseName & "_0001.mtrx" Then
                 ' Parameter-File found.
 
-                ReaderBuffer = ""
+                ' Check, if the parameter file is already imported:
+                Dim ParameterFileFoundInCache As Boolean = False
+                For i As Integer = 0 To ParameterFilesImportedOnce.Count - 1 Step 1
+                    If ParameterFilesImportedOnce(i).ParameterFileName = oFile.FullName AndAlso
+                       ParameterFilesImportedOnce(i).ParameterFileType = GetType(cFileImportOmicronMatrixParameterFile) Then
+                        ParameterFile = DirectCast(ParameterFilesImportedOnce(i), cFileImportOmicronMatrixParameterFile)
+                        ParameterFileFoundInCache = True
+                        Exit For
+                    End If
+                Next
 
-                ' Get the parameter file.
-                ParameterFile = cFileImportOmicronMatrixParameterFile.ReadParameterFile(oFile.FullName)
+                ' Get the parameter file, if we did not get it from the cache.
+                If Not ParameterFileFoundInCache Then
+                    ParameterFile = cFileImportOmicronMatrixParameterFile.ReadParameterFile(oFile.FullName)
+                    ParameterFilesImportedOnce.Add(ParameterFile)
+                End If
 
                 ' Exit the loop, since we have found the file.
                 Exit For
@@ -239,10 +253,10 @@ Public Class cFileImportOmicronMatrixCurve
                     With oSpectroscopyTable
                         .Backward_Sweep = ForwardBackward
                         .FeedbackOff = SpecProp.DisableFeedback
-                        '.FeedbackOpenBias_V = ??
-                        '.FeedbackOpenCurrent_A = ??
-                        .Location_X = SpecProp.Location.XCoord
-                        .Location_Y = SpecProp.Location.YCoord
+                        .FeedbackOpenBias_V = XYScanner.BiasVoltage
+                        .FeedbackOpenCurrent_A = XYScanner.Setpoint
+                        .Location_X = XYScanner.XOffset + SpecProp.Location.XCoord
+                        .Location_Y = XYScanner.YOffset - SpecProp.Location.YCoord
                         '.Location_Z = SpecProp.Location.ZCoord
                         .NumberOfSweeps = SweepNumber
 
@@ -253,9 +267,11 @@ Public Class cFileImportOmicronMatrixCurve
                         If ChannelUnitType = cUnits.UnitType.Voltage Then
                             .BiasSpec_SweepStart_V = SweepStart
                             .BiasSpec_SweepEnd_V = SweepEnd
+
                         ElseIf ChannelUnitType = cUnits.UnitType.Length Then
                             .Z_Sweep_Distance = SweepStart - SweepEnd
-                            '.Z_Spectroscopy_Bias_V = XYScanner.
+                            .Z_Offset = SpecProp.Device2_Offset
+                            .Z_Spectroscopy_Bias_V = XYScanner.BiasVoltage
                         End If
                     End With
 

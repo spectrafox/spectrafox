@@ -14,6 +14,34 @@
 ''' </summary>
 Public Class cFileImportOmicronMatrixParameterFile
     Inherits cFileImportOmicronMatrix
+    Implements iFileImport_ParameterFileToBeImportedOnce
+
+#Region "Parameter file interface"
+
+    ''' <summary>
+    ''' Filename of the parameter file. Set during the import.
+    ''' </summary>
+    Protected _ParameterFileName As String
+
+    ''' <summary>
+    ''' Filename of the parameter file.
+    ''' </summary>
+    Public ReadOnly Property ParameterFileName As String Implements iFileImport_ParameterFileToBeImportedOnce.ParameterFileName
+        Get
+            Return Me._ParameterFileName
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Type of the parameter file.
+    ''' </summary>
+    Public ReadOnly Property ParameterFileType As Type Implements iFileImport_ParameterFileToBeImportedOnce.ParameterFileType
+        Get
+            Return GetType(cFileImportOmicronMatrixParameterFile)
+        End Get
+    End Property
+
+#End Region
 
 #Region "Properties"
 
@@ -103,6 +131,7 @@ Public Class cFileImportOmicronMatrixParameterFile
 
         ' Create Parameter File Object
         Dim FO As New cFileImportOmicronMatrixParameterFile
+        FO._ParameterFileName = FullFileNameToParameterFile
 
         ' Load StreamReader with the Big Endian Encoding
         Dim fs As New FileStream(FullFileNameToParameterFile, FileMode.Open, FileAccess.Read, FileShare.Read)
@@ -296,7 +325,7 @@ Public Class cFileImportOmicronMatrixParameterFile
                         Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
                             Dim Mark As String = ReadString(BlockReader)
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(Mark, Mark)))
+                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(Mark, "")))
 
                         End Using
 
