@@ -14,7 +14,7 @@
         Set(value As Integer)
             Me._MaxThreadCount = value
             My.Settings.Fitting_MaxParallelization = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End Set
     End Property
 

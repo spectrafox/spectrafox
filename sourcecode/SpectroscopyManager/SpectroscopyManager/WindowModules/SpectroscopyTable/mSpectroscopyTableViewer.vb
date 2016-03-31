@@ -368,7 +368,7 @@ Public Class mSpectroscopyTableViewer
         If Me._SymbolSizes.ContainsKey(FullFileName) Then
             Me._SymbolSizes(FullFileName) = NewSymbolSize
             My.Settings.Plot2D_LastSymbolSize = NewSymbolSize
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 
@@ -384,7 +384,7 @@ Public Class mSpectroscopyTableViewer
         If Me._LineStyles.ContainsKey(FullFileName) Then
             Me._LineStyles(FullFileName) = NewLineType
             My.Settings.Plot2D_LastDashStyle = NewLineType
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 
@@ -400,7 +400,7 @@ Public Class mSpectroscopyTableViewer
         If Me._LineWidths.ContainsKey(FullFileName) Then
             Me._LineWidths(FullFileName) = LineWidth
             My.Settings.Plot2D_LastLineThickness = LineWidth
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 
@@ -838,7 +838,7 @@ Public Class mSpectroscopyTableViewer
     Private Sub ColumnSelectorX_SelectedIndexChanged() Handles cbX.SelectedIndexChanged
         If Not Me.bReady Then Return
         My.Settings.LastSpectroscopyPlot_SelectedColumnNameX = Me.cbX.SelectedColumnName
-        My.Settings.Save()
+        cGlobal.SaveSettings()
         Me.PaintPreviewImage()
         RaiseEvent SelectedIndexChanged()
     End Sub
@@ -858,7 +858,7 @@ Public Class mSpectroscopyTableViewer
     Private Sub ckbLog_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles ckbLogX.CheckedChanged, ckbLogY.CheckedChanged
         My.Settings.PreviewBox_LogX = Me.ckbLogX.Checked
         My.Settings.PreviewBox_LogY = Me.ckbLogY.Checked
-        My.Settings.Save()
+        cGlobal.SaveSettings()
         Me.RepaintImage()
     End Sub
 

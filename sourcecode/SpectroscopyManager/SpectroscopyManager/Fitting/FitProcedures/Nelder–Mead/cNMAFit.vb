@@ -58,7 +58,7 @@ Public Class cNMAFit
             Set(value As Boolean)
                 _UseSimulatedAnnealing = value
                 My.Settings.NMAFit_UseSimulatedAnnealing = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -73,7 +73,7 @@ Public Class cNMAFit
             Set(value As Boolean)
                 _UseGPUComputingIfPossible = value
                 My.Settings.NMAFit_UseGPUComputingIfPossible = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -88,7 +88,7 @@ Public Class cNMAFit
             Set(value As Double)
                 _SimulatedAnnealingStartTemperature = value
                 My.Settings.NMAFit_AnnealingTemp = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -103,7 +103,7 @@ Public Class cNMAFit
             Set(value As Integer)
                 _SimulatedAnnealingSteps = value
                 My.Settings.NMAFit_AnnealingSteps = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -126,7 +126,7 @@ Public Class cNMAFit
             Set(value As SimulatedAnnealingCoolingTypes)
                 _SimulatedAnnealingCoolingType = value
                 My.Settings.NMAFit_AnnealingCoolingType = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -141,7 +141,7 @@ Public Class cNMAFit
             Set(value As Double)
                 _StopCondition_MinChi2Change = value
                 My.Settings.NMAFit_MinChi2 = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -156,7 +156,7 @@ Public Class cNMAFit
             Set(value As Integer)
                 _StopCondition_MaxIterations = value
                 My.Settings.NMAFit_MaxIterations = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 

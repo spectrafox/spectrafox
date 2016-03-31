@@ -17,7 +17,7 @@ Public Class ucSpectroscopyColumnSelector
     ''' </summary>
     Public Overrides Sub SetLastFilterText(ByVal Value As String)
         My.Settings.LastSpectroscopyPlot_FilterText = Value
-        'My.Settings.Save() ##### NEEDS TO MUCH TIME!!
+        'cGlobal.SaveSettings() ##### NEEDS TO MUCH TIME!!
     End Sub
 
     ''' <summary>
@@ -32,7 +32,7 @@ Public Class ucSpectroscopyColumnSelector
     ''' </summary>
     Public Overrides Sub SetLastUsedFilters(ByVal Value As StringCollection)
         My.Settings.DataColumnFilter_LastUsedFilters = Value
-        'My.Settings.Save() ##### NEEDS TO MUCH TIME!!
+        'cGlobal.SaveSettings() ##### NEEDS TO MUCH TIME!!
     End Sub
 
     ''' <summary>
@@ -52,7 +52,7 @@ Public Class ucSpectroscopyColumnSelector
             End If
         Next
         My.Settings.LastSpectroscopyPlot_SelectedColumnNames = Value
-        'My.Settings.Save() '##### NEEDS To MUCH TIME!!
+        'cGlobal.SaveSettings() '##### NEEDS To MUCH TIME!!
     End Sub
 
 #End Region

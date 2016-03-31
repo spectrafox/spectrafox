@@ -622,6 +622,11 @@ Public Class cFileImportOmicronMatrix
         ''' </summary>
         Public Zoom As Integer = 1
 
+        ''' <summary>
+        ''' Is the feedback circuit on?
+        ''' </summary>
+        Public FeedbackOn As Boolean = False
+
     End Class
 
     ''' <summary>
@@ -708,6 +713,8 @@ Public Class cFileImportOmicronMatrix
                     XY.SetpointUnit = ExpConfig.Unit
                 Case "Retraction_Speed"
                     XY.ProportionalGain = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                Case "Feedback_Loop_Enabled"
+                    XY.FeedbackOn = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
 
             End Select
 

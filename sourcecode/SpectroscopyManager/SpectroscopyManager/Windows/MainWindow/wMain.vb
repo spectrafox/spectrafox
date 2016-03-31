@@ -23,7 +23,7 @@ Public Class wMain
         If My.Settings.SettingsUpgradeRequired Then
             My.Settings.Upgrade()
             My.Settings.SettingsUpgradeRequired = False
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
 
         ' Change interface
@@ -107,11 +107,11 @@ Public Class wMain
                 End If
             Catch ex As Exception
                 My.Settings.LoadWithoutPlugins = True
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Try
         Else
             My.Settings.LoadWithoutPlugins = False
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
 
         ' Report Status
@@ -393,7 +393,7 @@ Public Class wMain
         End If
 
         My.Settings.AutoUpdate = Me.mnuEnableAutomaticUpdate.Checked
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
     ''' <summary>
@@ -401,7 +401,7 @@ Public Class wMain
     ''' </summary>
     Private Sub mnuInstallDevelopmentReleases_Click(sender As Object, e As EventArgs) Handles mnuInstallDevelopmentReleases.Click
         My.Settings.AutoUpdateOnlyStable = Me.mnuInstallDevelopmentReleases.Checked
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
     ''' <summary>

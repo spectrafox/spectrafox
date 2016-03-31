@@ -321,7 +321,7 @@ Public Class mLineScanViewer
         ' Save ColumnNames for next time:
         My.Settings.LastLineScan_ColumnX = Convert.ToString(Me.lbCommonColumnsX.SelectedItem)
         My.Settings.LastLineScan_ColumnZ = Convert.ToString(Me.lbCommonColumnsZ.SelectedItem)
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         ' Recalculates Values
         Me.RecalculateImage()

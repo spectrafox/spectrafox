@@ -55,7 +55,7 @@ Public Class wFit_MultipleDataSets
 
         ' Save to settings for the next time the window opens
         My.Settings.Fit_MultipleFiles_Set1_LastCol_X = Me.cbX_Set1.SelectedColumnName
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
     ''' <summary>
@@ -67,7 +67,7 @@ Public Class wFit_MultipleDataSets
 
         ' Save to settings for the next time the window opens
         My.Settings.Fit_MultipleFiles_Set1_LastCol_Y = Me.cbY_Set1.SelectedColumnName
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
     ''' <summary>
@@ -79,7 +79,7 @@ Public Class wFit_MultipleDataSets
 
         ' Save to settings for the next time the window opens
         My.Settings.Fit_MultipleFiles_Set2_LastCol_X = Me.cbX_Set2.SelectedColumnName
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
     ''' <summary>
@@ -91,7 +91,7 @@ Public Class wFit_MultipleDataSets
 
         ' Save to settings for the next time the window opens
         My.Settings.Fit_MultipleFiles_Set2_LastCol_Y = Me.cbY_Set2.SelectedColumnName
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 #End Region
 
@@ -355,7 +355,7 @@ Public Class wFit_MultipleDataSets
         ' Save last used to settings
         Dim SelectedFitFunctionType As Type = DirectCast(Me.cboAddFitModel.SelectedItem, KeyValuePair(Of Type, String)).Key
         My.Settings.Fit_MultipleFiles_Model = SelectedFitFunctionType.Name
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         ' Add Fit-Function to set 1
         If sender Is btnAddFitModel_Set1 Then
@@ -774,7 +774,7 @@ Public Class wFit_MultipleDataSets
                 nudPreviewPoints.Value = value
             End If
             My.Settings.Fit_SingleFile_PreviewPoints = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End Set
     End Property
 
@@ -1144,7 +1144,7 @@ Public Class wFit_MultipleDataSets
 
         My.Settings.Fit_MultipleFiles_Set1_FitRange_LeftValue = LeftValue
         My.Settings.Fit_MultipleFiles_Set1_FitRange_RightValue = RightValue
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         RaiseEvent FitRangeSelectionChanged(LeftValue, RightValue)
 
@@ -1162,7 +1162,7 @@ Public Class wFit_MultipleDataSets
 
         My.Settings.Fit_MultipleFiles_Set2_FitRange_LeftValue = LeftValue
         My.Settings.Fit_MultipleFiles_Set2_FitRange_RightValue = RightValue
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         RaiseEvent FitRangeSelectionChanged(LeftValue, RightValue)
 
@@ -1179,7 +1179,7 @@ Public Class wFit_MultipleDataSets
         Set(value As Double)
             Me.txtFitRange_LeftValue_Set1.SetValue(value)
             My.Settings.Fit_MultipleFiles_Set1_FitRange_LeftValue = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
             RaiseEvent FitRangeSelectionChanged(Me.FitRangeLeft_Set1, Me.FitRangeRight_Set1)
             Me.CalculatePreviewImage(FitFunctionSets.Set1)
         End Set
@@ -1195,7 +1195,7 @@ Public Class wFit_MultipleDataSets
         Set(value As Double)
             Me.txtFitRange_RightValue_Set1.SetValue(value)
             My.Settings.Fit_MultipleFiles_Set1_FitRange_RightValue = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
             RaiseEvent FitRangeSelectionChanged(Me.FitRangeLeft_Set1, Me.FitRangeRight_Set1)
             Me.CalculatePreviewImage(FitFunctionSets.Set1)
         End Set
@@ -1211,7 +1211,7 @@ Public Class wFit_MultipleDataSets
         Set(value As Double)
             Me.txtFitRange_LeftValue_Set2.SetValue(value)
             My.Settings.Fit_MultipleFiles_Set2_FitRange_LeftValue = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
             RaiseEvent FitRangeSelectionChanged(Me.FitRangeLeft_Set2, Me.FitRangeRight_Set2)
             Me.CalculatePreviewImage(FitFunctionSets.Set2)
         End Set
@@ -1227,7 +1227,7 @@ Public Class wFit_MultipleDataSets
         Set(value As Double)
             Me.txtFitRange_RightValue_Set2.SetValue(value)
             My.Settings.Fit_MultipleFiles_Set2_FitRange_RightValue = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
             RaiseEvent FitRangeSelectionChanged(Me.FitRangeLeft_Set2, Me.FitRangeRight_Set2)
             Me.CalculatePreviewImage(FitFunctionSets.Set2)
         End Set
@@ -1639,7 +1639,7 @@ Public Class wFit_MultipleDataSets
         If DialogRes = DialogResult.OK And Dialog.FileName <> "" Then
             ' Save last path:
             My.Settings.Fit_SingleFile_ModelExportPath = System.IO.Path.GetDirectoryName(Dialog.FileName)
-            My.Settings.Save()
+            cGlobal.SaveSettings()
 
             ' Start the Import:
             Me.Import(Dialog.FileName)
@@ -1669,7 +1669,7 @@ Public Class wFit_MultipleDataSets
         If DialogRes = DialogResult.OK And Dialog.FileName <> "" Then
             ' Save last path:
             My.Settings.Fit_SingleFile_ModelExportPath = System.IO.Path.GetDirectoryName(Dialog.FileName)
-            My.Settings.Save()
+            cGlobal.SaveSettings()
 
             ' Start the Export:
             Me.Export(Dialog.FileName)
@@ -2137,7 +2137,7 @@ Public Class wFit_MultipleDataSets
         Me.FitProcedure.SetFitProcedure(Me.GetSelectedFitProcedure, Me.GetSelectedFitProcedure)
         If Not Me.FitProcedure Is Nothing Then
             My.Settings.Fit_SingleFile_Procedure = DirectCast(Me.cboFitProcedure.SelectedItem, KeyValuePair(Of Type, String)).Key.Name
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 #End Region

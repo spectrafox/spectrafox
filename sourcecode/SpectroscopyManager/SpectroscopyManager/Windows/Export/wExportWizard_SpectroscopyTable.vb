@@ -137,7 +137,7 @@
         If My.Settings.LastExport_Path <> Me.etExportFolder.SelectedItem.Path Then
             My.Settings.LastExport_Path = Me.etExportFolder.SelectedItem.Path
             My.Settings.LastExport_Format = Me.GetSelectedExportFunction.ExportName
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 

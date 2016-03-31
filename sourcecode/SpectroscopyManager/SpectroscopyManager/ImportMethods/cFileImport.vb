@@ -526,6 +526,7 @@ Public Class cFileImport
                 ' If everything was ok so far, so if we are at this point,
                 ' move the temporary file to the real target-file-name,
                 ' and overwrite the copy.
+                If System.IO.File.Exists(BackupFileName) Then System.IO.File.Delete(BackupFileName)
                 If System.IO.File.Exists(TargetFileName) Then System.IO.File.Move(TargetFileName, BackupFileName)
                 System.IO.File.Move(TMPFileName, TargetFileName)
                 If System.IO.File.Exists(BackupFileName) Then System.IO.File.Delete(BackupFileName)

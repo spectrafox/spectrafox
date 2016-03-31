@@ -118,7 +118,7 @@ Public Class wFolderBrowser
 
         ' Save Settings.
         My.Settings.LastSelectedPath = StartupPath
-        My.Settings.Save()
+        'cGlobal.SaveSettings()
 
         ' Add Folder-Update Handler
         AddHandler CShItemUpdate, AddressOf UpdateInvoke        '7/1/2012
@@ -158,7 +158,7 @@ Public Class wFolderBrowser
             Me.sWorkingDirectoryPath = Path
             ' Save Settings.
             My.Settings.LastSelectedPath = Path
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 #End Region
@@ -1088,7 +1088,7 @@ CLEANUP:
         'If My.Settings.LastBrowsedFolders.Count >= My.Settings.LastBrowsedFolders_Max Then
         '    My.Settings.LastBrowsedFolders.RemoveAt(My.Settings.LastBrowsedFolders.Count - 1)
         'End If
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         ' Refresh the folder-history
         Me.RefreshFolderHistory()

@@ -46,7 +46,7 @@ Public Class cSpectroscopyTableColumnRenamer
         Next
 
         My.Settings.LastRenameColumnRules = SettingsRuleCollection
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
 #End Region

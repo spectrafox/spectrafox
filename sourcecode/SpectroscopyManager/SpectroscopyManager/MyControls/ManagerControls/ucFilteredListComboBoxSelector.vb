@@ -616,7 +616,7 @@ Public Class ucFilteredListComboBoxSelector
                                                                        Me.LastFilterHistory_MaxCount))
 
         ' Save the settings
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         ' Update the drop down history
         Me.UpdateFilterHistory()

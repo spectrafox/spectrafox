@@ -122,6 +122,10 @@ Public Class cFileImportOmicronMatrixImage
                     .ScanRange_Y = XYScanner.Height
                     .ZControllerProportionalGain = XYScanner.ProportionalGain
                     .ZControllerSetpoint = XYScanner.Setpoint
+                    .ZControllerSetpointUnit = cUnits.GetUnitSymbolFromType(cUnits.GetUnitTypeFromSymbol(XYScanner.SetpointUnit))
+                    .Bias = XYScanner.BiasVoltage
+                    .Current = XYScanner.Setpoint
+                    .ZControllerOn = XYScanner.FeedbackOn
                     .ACQ_Time = XYScanner.RasterPeriodTime
 
                     ' Correct the position of the image.

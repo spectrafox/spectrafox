@@ -732,8 +732,7 @@ Partial Class mDataBrowserList
         '
         'panProgress
         '
-        Me.panProgress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.panProgress.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.panProgress.Controls.Add(Me.lblProgressHeading)
         Me.panProgress.Controls.Add(Me.pbProgress)
         Me.panProgress.Location = New System.Drawing.Point(0, 764)

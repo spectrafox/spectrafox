@@ -335,7 +335,7 @@ Public Class wFit_SingleDataSet
         ' Save last used to settings
         Dim SelectedFitFunctionType As Type = DirectCast(Me.cboAddFitModel.SelectedItem, KeyValuePair(Of Type, String)).Key
         My.Settings.Fit_SingleFile_Model = SelectedFitFunctionType.Name
-        My.Settings.Save()
+        cGlobal.SaveSettings()
     End Sub
 
     ''' <summary>
@@ -581,7 +581,7 @@ Public Class wFit_SingleDataSet
                 nudPreviewPoints.Value = value
             End If
             My.Settings.Fit_SingleFile_PreviewPoints = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End Set
     End Property
 
@@ -791,7 +791,7 @@ Public Class wFit_SingleDataSet
 
         My.Settings.Fit_SingleFile_FitRange_LeftValue = LeftValue
         My.Settings.Fit_SingleFile_FitRange_RightValue = RightValue
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         RaiseEvent FitRangeSelectionChanged(LeftValue, RightValue)
 
@@ -808,7 +808,7 @@ Public Class wFit_SingleDataSet
         Set(value As Double)
             Me.txtLeftValue.SetValue(value)
             My.Settings.Fit_SingleFile_FitRange_LeftValue = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
             RaiseEvent FitRangeSelectionChanged(Me.FitRangeLeft, Me.FitRangeRight)
             Me.CalculatePreviewImage()
         End Set
@@ -824,7 +824,7 @@ Public Class wFit_SingleDataSet
         Set(value As Double)
             Me.txtRightValue.SetValue(value)
             My.Settings.Fit_SingleFile_FitRange_RightValue = value
-            My.Settings.Save()
+            cGlobal.SaveSettings()
             RaiseEvent FitRangeSelectionChanged(Me.FitRangeLeft, Me.FitRangeRight)
             Me.CalculatePreviewImage()
         End Set
@@ -1210,7 +1210,7 @@ Public Class wFit_SingleDataSet
         If DialogRes = DialogResult.OK And Dialog.FileName <> "" Then
             ' Save last path:
             My.Settings.Fit_SingleFile_ModelExportPath = System.IO.Path.GetDirectoryName(Dialog.FileName)
-            My.Settings.Save()
+            cGlobal.SaveSettings()
 
             ' Start the Import:
             Me.Import(Dialog.FileName)
@@ -1240,7 +1240,7 @@ Public Class wFit_SingleDataSet
         If DialogRes = DialogResult.OK And Dialog.FileName <> "" Then
             ' Save last path:
             My.Settings.Fit_SingleFile_ModelExportPath = System.IO.Path.GetDirectoryName(Dialog.FileName)
-            My.Settings.Save()
+            cGlobal.SaveSettings()
 
             ' Start the Export:
             Me.Export(Dialog.FileName)
@@ -1632,7 +1632,7 @@ Public Class wFit_SingleDataSet
         If Not Me.AddressToCallbackOnFormClosing Is Nothing Then e.Cancel = Me.AddressToCallbackOnFormClosing.Invoke
 
         ' Save the settings
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
     End Sub
 
@@ -1646,7 +1646,7 @@ Public Class wFit_SingleDataSet
         Me.FitProcedure.SetFitProcedure(Me.GetSelectedFitProcedure)
         If Not Me.FitProcedure Is Nothing Then
             My.Settings.Fit_SingleFile_Procedure = DirectCast(Me.cboFitProcedure.SelectedItem, KeyValuePair(Of Type, String)).Key.Name
-            My.Settings.Save()
+            cGlobal.SaveSettings()
         End If
     End Sub
 #End Region

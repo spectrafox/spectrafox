@@ -885,7 +885,7 @@ Public Class mDataBrowserList
 
         ' Save the settings for the next time:
         My.Settings.DataBrowserList_LastSortingDirection = Direction
-        My.Settings.Save()
+        'cGlobal.SaveSettings()
 
         ' Sort
         Me._SortDirection = Direction
@@ -919,7 +919,7 @@ Public Class mDataBrowserList
 
         ' Save the settings for the next time:
         My.Settings.DataBrowserList_LastSortingField = SortBy
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         ' Change the sorting
         Me._SortField = SortBy
@@ -946,9 +946,6 @@ Public Class mDataBrowserList
     ''' to get the new visibility status of the list-entries.
     ''' </summary>
     Public Sub VisibilityOfTheListEntriesChange() Handles Me.ListVisibilityChanged, panBrowserList.Resize
-
-        ' Adapt the action bar to the width of the browserlist.
-        Me.panProgress.Width = panBrowserList.Width
 
         ' Get temporary properties about the
         ' current scroll position, and the shown
@@ -1279,6 +1276,12 @@ Public Class mDataBrowserList
     Private Sub panBrowserListContainer_Resize(sender As Object, e As EventArgs) Handles panBrowserListContainer.Resize
         With Me.panBrowserListContainer.Size
             Me.panBrowserList.Size = New Size(.Width - 5, .Height)
+        End With
+
+        ' Adapt the action bar to the width of the browserlist.
+        With Me.panBrowserListContainer
+            Me.panProgress.Width = .Width
+            Me.panProgress.Location = New Point(.Location.X, .Location.Y + .Height - Me.panProgress.Height - Me.ssStatus.Height)
         End With
     End Sub
 
@@ -2461,7 +2464,7 @@ Public Class mDataBrowserList
                                                                                                    Filter,
                                                                                                    My.Settings.DataBrowserFileList_FilterMaxHistory)
         ' Save the settings
-        My.Settings.Save()
+        cGlobal.SaveSettings()
 
         ' Update the drop down history
         Me.UpdateFilterHistory()
@@ -2608,10 +2611,6 @@ Public Class mDataBrowserList
     Private Sub mnuSpecialTools_GridViewer_Click(sender As Object, e As EventArgs) Handles mnuSpecialTools_GridViewer.Click
         Dim GV As New wGridPlotter
         GV.Show(Me.oFileImporter)
-    End Sub
-
-    Private Sub VisibilityOfTheListEntriesChange(sender As Object, e As EventArgs) Handles panBrowserList.Resize
-
     End Sub
 
 #End Region

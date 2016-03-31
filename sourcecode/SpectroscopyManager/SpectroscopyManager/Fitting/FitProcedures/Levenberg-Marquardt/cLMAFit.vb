@@ -46,7 +46,7 @@ Public Class cLMAFit
             Set(value As Double)
                 _MinDeltaChi2 = value
                 My.Settings.LMAFit_MinChi2 = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -61,7 +61,7 @@ Public Class cLMAFit
             Set(value As Integer)
                 _MaxIterations = value
                 My.Settings.LMAFit_MaxIterations = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -76,7 +76,7 @@ Public Class cLMAFit
             Set(value As Double)
                 _DifferentiationStep = value
                 My.Settings.LMAFit_DerivativeDelta = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
@@ -93,7 +93,7 @@ Public Class cLMAFit
             Set(value As Boolean)
                 _UseCenterDifferentiationJacobianCalculation = value
                 My.Settings.LMAFit_UseCenterDifferentiation = value
-                My.Settings.Save()
+                cGlobal.SaveSettings()
             End Set
         End Property
 
