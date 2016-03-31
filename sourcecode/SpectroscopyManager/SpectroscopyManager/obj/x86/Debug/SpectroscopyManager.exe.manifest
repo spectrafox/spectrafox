@@ -139,14 +139,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3681280">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3686912">
       <assemblyIdentity name="SpectroscopyManager" version="2016.3.23.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>szvB4QP3dsnH+fOou9o62HxARwIsCysUv29Y2NSoe8w=</dsig:DigestValue>
+        <dsig:DigestValue>59snTzSLRy2l1Eettx1kn066vyon9o63Pzaf17Sf0d8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

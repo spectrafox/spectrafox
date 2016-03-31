@@ -73,6 +73,9 @@ Public Class cFileImportOmicronMatrixImage
 
                 ' Get the XYScanner-properties for the file
                 Dim XYScanner As XYScannerProperties = GetXYScannerPropertiesFromPropertyArray(oFile.Name, ParameterFile)
+
+                ' Get the measurement configuration for the data.
+                ' This is necessary for getting the correct units and transferfunctions.
                 Dim MeasurementConfig As cFileImportOmicronMatrixParameterFile.MeasurementDetails
                 Dim TFF As TransferFunction
                 Dim ChannelID As Integer = -1
@@ -218,85 +221,103 @@ Public Class cFileImportOmicronMatrixImage
                         ' No constraint.
                         Dim ChannelFWUp As New cScanImage.ScanChannel
                         Dim ChannelBWUp As New cScanImage.ScanChannel
-                        Dim ChannelFWDown As New cScanImage.ScanChannel
-                        Dim ChannelBWDown As New cScanImage.ScanChannel
 
-                        ' Set some extra columns
+                        ' First do the up channels.
                         With ChannelFWUp
                             .IsSpectraFoxGenerated = False
                             .Name = CurrentFileNameComponents.ChannelName & " FW Up"
                             .UnitSymbol = ChannelUnit
                             .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
                         End With
                         With ChannelBWUp
                             .IsSpectraFoxGenerated = False
                             .Name = CurrentFileNameComponents.ChannelName & " BW Up"
                             .UnitSymbol = ChannelUnit
                             .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-                        End With
-                        With ChannelFWDown
-                            .IsSpectraFoxGenerated = False
-                            .Name = CurrentFileNameComponents.ChannelName & " FW Down"
-                            .UnitSymbol = ChannelUnit
-                            .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-                        End With
-                        With ChannelBWDown
-                            .IsSpectraFoxGenerated = False
-                            .Name = CurrentFileNameComponents.ChannelName & " BW Down"
-                            .UnitSymbol = ChannelUnit
-                            .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
                         End With
 
-                        For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
-                            If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-                            For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                        If Not FetchOnlyFileHeader Then
+
+                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                            ChannelBWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+
+                            For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
                                 If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+                                For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                                    If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
 
-                                ' // Trace Forward Up
-                                ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+                                    ' // Trace Forward Up
+                                    ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
 
-                                DataPoint += 1
+                                    DataPoint += 1
+                                Next
+
+                                For x As Integer = oScanImage.ScanPixels_X - 1 To 0 Step -1
+                                    If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+
+                                    ' // Trace Backward Up
+                                    ChannelBWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+
+                                    DataPoint += 1
+                                Next
                             Next
 
-                            For x As Integer = oScanImage.ScanPixels_X - 1 To 0 Step -1
-                                If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-
-                                ' // Trace Backward Up
-                                ChannelBWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
-
-                                DataPoint += 1
-                            Next
-                        Next
-
-                        For y As Integer = oScanImage.ScanPixels_Y - 1 To 0 Step -1
-                            If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-                            For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
-                                If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-
-                                ' // Trace Forward Down
-                                ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
-
-                                DataPoint += 1
-                            Next
-
-                            For x As Integer = oScanImage.ScanPixels_X - 1 To 0 Step -1
-                                If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-
-                                ' // Trace Backward Down
-                                ChannelBWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
-
-                                DataPoint += 1
-                            Next
-                        Next
+                        End If
 
                         oScanImage.AddScanChannel(ChannelFWUp)
                         oScanImage.AddScanChannel(ChannelBWUp)
-                        oScanImage.AddScanChannel(ChannelFWDown)
-                        oScanImage.AddScanChannel(ChannelBWDown)
+
+                        ' Now do the down channels, if there are datapoints left.
+
+                        If DataPoint < Data.Count Then
+
+                            Dim ChannelFWDown As New cScanImage.ScanChannel
+                            Dim ChannelBWDown As New cScanImage.ScanChannel
+
+                            With ChannelFWDown
+                                .IsSpectraFoxGenerated = False
+                                .Name = CurrentFileNameComponents.ChannelName & " FW Down"
+                                .UnitSymbol = ChannelUnit
+                                .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
+                            End With
+                            With ChannelBWDown
+                                .IsSpectraFoxGenerated = False
+                                .Name = CurrentFileNameComponents.ChannelName & " BW Down"
+                                .UnitSymbol = ChannelUnit
+                                .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
+                            End With
+
+                            If Not FetchOnlyFileHeader Then
+
+                                ChannelFWDown.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                                ChannelBWDown.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+
+                                For y As Integer = oScanImage.ScanPixels_Y - 1 To 0 Step -1
+                                    If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+                                    For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                                        If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+
+                                        ' // Trace Forward Down
+                                        ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+
+                                        DataPoint += 1
+                                    Next
+
+                                    For x As Integer = oScanImage.ScanPixels_X - 1 To 0 Step -1
+                                        If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+
+                                        ' // Trace Backward Down
+                                        ChannelBWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+
+                                        DataPoint += 1
+                                    Next
+                                Next
+                            End If
+
+                            oScanImage.AddScanChannel(ChannelFWDown)
+                            oScanImage.AddScanChannel(ChannelBWDown)
+
+                        End If
 
                     Case 1
                         ' Constraint Line
@@ -309,36 +330,40 @@ Public Class cFileImportOmicronMatrixImage
                             .Name = CurrentFileNameComponents.ChannelName & " FW"
                             .UnitSymbol = ChannelUnit
                             .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
                         End With
                         With ChannelBWUp
                             .IsSpectraFoxGenerated = False
                             .Name = CurrentFileNameComponents.ChannelName & " BW"
                             .UnitSymbol = ChannelUnit
                             .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
                         End With
 
-                        For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
-                            If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-                            For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                        If Not FetchOnlyFileHeader Then
+
+                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+                            ChannelBWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+
+                            For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
                                 If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+                                For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                                    If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
 
-                                ' // Trace Forward Up
-                                ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+                                    ' // Trace Forward Up
+                                    ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
 
-                                DataPoint += 1
+                                    DataPoint += 1
+                                Next
+
+                                For x As Integer = oScanImage.ScanPixels_X - 1 To 0 Step -1
+                                    If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+
+                                    ' // Trace Backward Up
+                                    ChannelBWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+
+                                    DataPoint += 1
+                                Next
                             Next
-
-                            For x As Integer = oScanImage.ScanPixels_X - 1 To 0 Step -1
-                                If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-
-                                ' // Trace Backward Up
-                                ChannelBWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
-
-                                DataPoint += 1
-                            Next
-                        Next
+                        End If
 
                         oScanImage.AddScanChannel(ChannelFWUp)
                         oScanImage.AddScanChannel(ChannelBWUp)
@@ -353,76 +378,28 @@ Public Class cFileImportOmicronMatrixImage
                             .Name = CurrentFileNameComponents.ChannelName
                             .UnitSymbol = ChannelUnit
                             .Unit = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
-                            .ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
                         End With
 
-                        For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
-                            If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
-                            For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                        If Not FetchOnlyFileHeader Then
+
+                            ChannelFWUp.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
+
+                            For y As Integer = 0 To oScanImage.ScanPixels_Y - 1 Step 1
                                 If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
+                                For x As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
+                                    If DataPoint >= RecordedNumber OrElse DataPoint >= Data.Count Then Exit For
 
-                                ' // Trace Up
-                                ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
+                                    ' // Trace Up
+                                    ChannelFWUp.ScanData(y, x) = GetValueByTransferFunction(Data(DataPoint), TFF)
 
-                                DataPoint += 1
+                                    DataPoint += 1
+                                Next
                             Next
-                        Next
-
-
+                        End If
 
                         oScanImage.AddScanChannel(ChannelFWUp)
 
                 End Select
-
-                '####################################
-
-                'Dim ChannelFW As New cScanImage.ScanChannel
-                'Dim ChannelBW As New cScanImage.ScanChannel
-
-                '' Set some extra columns
-                'With ChannelFW
-                '    .IsSpectraFoxGenerated = False
-                '    .Name = CurrentFileNameComponents.ChannelName
-                '    .UnitSymbol = "?"
-                '    .Unit = cUnits.GetUnitTypeFromSymbol("?")
-                'End With
-                'With ChannelBW
-                '    .IsSpectraFoxGenerated = False
-                '    .Name = CurrentFileNameComponents.ChannelName & " BW"
-                '    .UnitSymbol = "?"
-                '    .Unit = cUnits.GetUnitTypeFromSymbol("?")
-                'End With
-
-                '' Split up the values into a matrix of the size of the expected values.
-                'ChannelFW.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-                'ChannelBW.ScanData = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(oScanImage.ScanPixels_Y, oScanImage.ScanPixels_X, 0)
-
-                'Dim x As Integer = 0
-                'Dim y As Integer = 0
-                'For i As Integer = 0 To Data.Count - 1 Step 1
-
-                '    ' Check the numbers
-                '    If x >= 2 * NumberOfPixels OrElse y >= NumberOfPixels Then Continue For
-
-                '    ' Fill the forward and backward channels.
-                '    If x < NumberOfPixels Then
-                '        ChannelFW.ScanData(y, x) = Data(i)
-                '    Else
-                '        ChannelBW.ScanData(y, NumberOfPixels - (x - NumberOfPixels) - 1) = Data(i)
-                '    End If
-
-                '    ' Increase X by one.
-                '    x += 1
-                '    If x >= 2 * NumberOfPixels Then
-                '        x = 0
-                '        y += 1
-                '    End If
-
-                'Next
-
-                '' Finally add the Channel to the ScanImage
-                'oScanImage.AddScanChannel(ChannelFW)
-                'oScanImage.AddScanChannel(ChannelBW)
 
                 ' Ignore this file for further imports, since we already imported it.
                 FilesToIgnoreAfterThisImport.Add(oFile.FullName)
@@ -475,110 +452,6 @@ Public Class cFileImportOmicronMatrixImage
 
         Return False
     End Function
-
-#End Region
-
-#Region "XYScanner specific functions"
-
-    ''' <summary>
-    ''' Structure that stores the properties of the XYScanner,
-    ''' which contains the information on how to interpret the data.
-    ''' </summary>
-    Public Class XYScannerProperties
-
-        Public Height As Double = -1
-        Public Width As Double = -1
-        Public XPoints As Integer = -1
-        Public YPoints As Integer = -1
-
-        Public XOffset As Double = 0
-        Public YOffset As Double = 0
-        Public Angle As Double = 0
-
-        Public Setpoint As Double = 0
-        Public ProportionalGain As Double = 0
-
-        ''' <summary>
-        ''' Raster time in seconds.
-        ''' </summary>
-        Public RasterPeriodTime As Double = 1
-
-        ''' <summary>
-        ''' Data mode.
-        ''' </summary>
-        Public GridMode As Integer = 0
-
-        ''' <summary>
-        ''' Zoom of the image.
-        ''' </summary>
-        Public Zoom As Integer = 1
-
-    End Class
-
-    ''' <summary>
-    ''' Returns the XYScanner properties from the parameter file for the specific image file.
-    ''' </summary>
-    Public Shared Function GetXYScannerPropertiesFromPropertyArray(ByVal ImageFileNameWithoutPath As String,
-                                                                   ByRef ParameterFile As cFileImportOmicronMatrixParameterFile) As XYScannerProperties
-
-        Dim XY As New XYScannerProperties
-
-        ' Check, if the parameter file is valid.
-        If ParameterFile Is Nothing Then Return XY
-
-        ' First get the initial parameter set,
-        ' that is modified afterwards by the PMOD commands.
-        For Each Prop As KeyValuePair(Of String, String) In ParameterFile.PropertyArray
-            ModifyXYScannerByParameter(XY, Prop)
-        Next
-
-        ' Now we get the position of the file in the chronology.
-        Dim FilePosition As Integer = ParameterFile.GetPositionOfPropertyValueInActionList(ImageFileNameWithoutPath)
-
-        If FilePosition >= 0 Then
-            ' Now we get the modified parameters specific for the image
-            ' by walking through the chronology up to the image,
-            ' and modifying the parameters accordingly.
-            For i As Integer = 0 To FilePosition - 1 Step 1
-                ModifyXYScannerByParameter(XY, ParameterFile.ActionsByTime(i).Value)
-            Next
-        End If
-
-        Return XY
-    End Function
-
-    ''' <summary>
-    ''' Uses a value from the property array of a parameter file to modify the XYScanner object.
-    ''' </summary>
-    Protected Shared Sub ModifyXYScannerByParameter(ByRef XY As XYScannerProperties,
-                                                    ByVal Prop As KeyValuePair(Of String, String))
-        Select Case Prop.Key
-            Case "EEPA:XYScanner.Height[Meter]"
-                XY.Height = Convert.ToDouble(Prop.Value)
-            Case "EEPA:XYScanner.Width[Meter]"
-                XY.Width = Convert.ToDouble(Prop.Value)
-            Case "EEPA:XYScanner.Points[Count]", "EEPA:XYScanner.X_Points[Count]"
-                XY.XPoints = Convert.ToInt32(Prop.Value)
-            Case "EEPA:XYScanner.Lines[Count]", "EEPA:XYScanner.Y_Points[Count]"
-                XY.YPoints = Convert.ToInt32(Prop.Value)
-            Case "EEPA:XYScanner.Raster_Time[Second]", "EEPA:XYScanner.Raster_Period_Time[Second]"
-                XY.RasterPeriodTime = Convert.ToDouble(Prop.Value)
-            Case "EEPA:XYScanner.Scan_Constraint[--]"
-                XY.GridMode = Convert.ToInt32(Prop.Value)
-            Case "EEPA:XYScanner.Zoom[--]"
-                XY.Zoom = Convert.ToInt32(Prop.Value)
-            Case "EEPA:XYScanner.Angle[Degree]"
-                XY.Angle = Convert.ToDouble(Prop.Value)
-            Case "EEPA:XYScanner.X_Offset[Meter]"
-                XY.XOffset = Convert.ToDouble(Prop.Value)
-            Case "EEPA:XYScanner.Y_Offset[Meter]"
-                XY.YOffset = Convert.ToDouble(Prop.Value)
-            Case "EEPA:Regulator.Setpoint_1[Ampere]"
-                XY.Setpoint = Convert.ToDouble(Prop.Value)
-            Case "EEPA:Regulator.Retraction_Speed[Meter/second]"
-                XY.ProportionalGain = Convert.ToDouble(Prop.Value)
-        End Select
-    End Sub
 
 #End Region
 

@@ -20,14 +20,28 @@ Public Class cFileImportOmicronMatrixParameterFile
     ''' <summary>
     ''' Array with all extracted properties of the Matrix file.
     ''' </summary>
-    Protected _PropertyArray As New Dictionary(Of String, String)
+    Protected _GeneralPropertyArray As New Dictionary(Of String, String)
 
     ''' <summary>
     ''' Array with all extracted initial properties of the Matrix file.
     ''' </summary>
-    Public ReadOnly Property PropertyArray As Dictionary(Of String, String)
+    Public ReadOnly Property GeneralPropertyArray As Dictionary(Of String, String)
         Get
-            Return Me._PropertyArray
+            Return Me._GeneralPropertyArray
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Array with all extracted initial experiment (EEPA) settings of the Matrix file.
+    ''' </summary>
+    Protected _EEPAPropertyArray As New Dictionary(Of ExperimentConfiguration, String)
+
+    ''' <summary>
+    ''' Array with all extracted initial experiment (EEPA) settings of the Matrix file.
+    ''' </summary>
+    Public ReadOnly Property InitialExperimentConfigurationArray As Dictionary(Of ExperimentConfiguration, String)
+        Get
+            Return Me._EEPAPropertyArray
         End Get
     End Property
 
@@ -114,13 +128,13 @@ Public Class cFileImportOmicronMatrixParameterFile
                         Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
                         Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
                             ' read the settings
-                            FO._PropertyArray.Add("META:SoftwareName", ReadString(BlockReader))
-                            FO._PropertyArray.Add("META:MatrixVersion", ReadString(BlockReader))
+                            FO._GeneralPropertyArray.Add("META:SoftwareName", ReadString(BlockReader))
+                            FO._GeneralPropertyArray.Add("META:MatrixVersion", ReadString(BlockReader))
                             ' Jump over the next 4 bytes!
                             BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
                             ' read the next settings
-                            FO._PropertyArray.Add("META:MatrixProfile", ReadString(BlockReader))
-                            FO._PropertyArray.Add("META:UserName", ReadString(BlockReader))
+                            FO._GeneralPropertyArray.Add("META:MatrixProfile", ReadString(BlockReader))
+                            FO._GeneralPropertyArray.Add("META:UserName", ReadString(BlockReader))
                         End Using
 
                     Case "DPXE"
@@ -133,7 +147,7 @@ Public Class cFileImportOmicronMatrixParameterFile
 
                             ' Read 7 strings
                             For i As Integer = 1 To 7 Step 1
-                                FO._PropertyArray.Add("EXPD:Property" & i.ToString, ReadString(BlockReader))
+                                FO._GeneralPropertyArray.Add("EXPD:Property" & i.ToString, ReadString(BlockReader))
                             Next
                         End Using
 
@@ -144,7 +158,7 @@ Public Class cFileImportOmicronMatrixParameterFile
                         Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
                             ' Read 3 strings
                             For i As Integer = 1 To 3 Step 1
-                                FO._PropertyArray.Add("GENL:Property" & i.ToString, ReadString(BlockReader))
+                                FO._GeneralPropertyArray.Add("GENL:Property" & i.ToString, ReadString(BlockReader))
                             Next
                         End Using
 
@@ -173,7 +187,7 @@ Public Class cFileImportOmicronMatrixParameterFile
                                     Dim t2 As String = ReadString(BlockReader)
                                     Dim Key2 As String = Key & t1
 
-                                    FO._PropertyArray.Add(Key2, t2)
+                                    FO._GeneralPropertyArray.Add(Key2, t2)
 
                                     PropertyCount -= 1
 
@@ -196,32 +210,31 @@ Public Class cFileImportOmicronMatrixParameterFile
 
                             Dim PropertyCount As Integer = Convert.ToInt32(BlockReader.ReadUInt32)
                             Dim GroupItemNumber As Integer
-                            Dim CheckSub As Boolean
-                            Dim Prop As String
-                            Dim Unit As String
+                            Dim Instruction As String
+                            Dim ExpConfig As New ExperimentConfiguration
 
                             While PropertyCount > 0
 
                                 ' Get the sub instruction.
-                                Dim Instruction As String = ReadString(BlockReader)
-                                If Instruction = "XYScanner" Then
-                                    CheckSub = True
-                                Else
-                                    CheckSub = False
-                                End If
+                                Instruction = ReadString(BlockReader)
 
                                 ' Get the number of group items.
                                 GroupItemNumber = Convert.ToInt32(BlockReader.ReadUInt32)
                                 While GroupItemNumber > 0
 
                                     ' Read the property and the unit
-                                    Prop = ReadString(BlockReader)
-                                    Unit = ReadString(BlockReader)
+                                    With ExpConfig
+                                        .Category = "EEPA"
+                                        .Instruction = Instruction
+                                        .Prop = ReadString(BlockReader)
+                                        .Unit = ReadString(BlockReader)
+                                    End With
 
                                     ' Jump over the next 4 bytes!
                                     BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                                    FO._PropertyArray.Add("EEPA:" & Instruction & "." & Prop & "[" & Unit & "]", ReadObject(BlockReader))
+                                    ' Write the property instruction to the array.
+                                    FO._EEPAPropertyArray.Add(ExpConfig, ReadObject(BlockReader))
 
                                     GroupItemNumber -= 1
 
@@ -259,15 +272,19 @@ Public Class cFileImportOmicronMatrixParameterFile
                             ' Jump over the next 4 bytes!
                             BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                            Dim PropertyInstance As String = ReadString(BlockReader)
-                            Dim PropertyName As String = ReadString(BlockReader)
-                            Dim PropertyUnit As String = ReadString(BlockReader)
+                            Dim ModifiedExpConfig As New ExperimentConfiguration
+                            With ModifiedExpConfig
+                                .Category = "EEPA"
+                                .Instruction = ReadString(BlockReader)
+                                .Prop = ReadString(BlockReader)
+                                .Unit = ReadString(BlockReader)
+                            End With
 
                             ' Jump over the next 4 bytes!
                             BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
                             Dim PropertyValue As String = ReadObject(BlockReader)
-                            Dim Key As New KeyValuePair(Of String, String)("EEPA:" & PropertyInstance & "." & PropertyName & "[" & PropertyUnit & "]", PropertyValue)
+                            Dim Key As New KeyValuePair(Of String, String)(ModifiedExpConfig.ToString, PropertyValue)
                             FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, Key))
 
                         End Using
@@ -305,7 +322,7 @@ Public Class cFileImportOmicronMatrixParameterFile
                             ' Get storage for the new identifiers.
                             Dim SubLastFourChars As String = String.Empty
 
-                            Dim ScanHeader As New List(Of Int32)
+                            'Dim ScanHeader As New List(Of Int32)
 
                             ' Read the whole subset of parameters
                             Do Until BlockReader.BaseStream.Position = BlockReader.BaseStream.Length
@@ -384,14 +401,12 @@ Public Class cFileImportOmicronMatrixParameterFile
                                         ' Header of the curves.
                                         ' Who knows what's in there?
 
-
-
                                         Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
                                         Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
 
-                                            While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
-                                                ScanHeader.Add(SubBlockReader.ReadInt32)
-                                            End While
+                                            'While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
+                                            '    ScanHeader.Add(SubBlockReader.ReadInt32)
+                                            'End While
 
                                         End Using
 
@@ -399,17 +414,18 @@ Public Class cFileImportOmicronMatrixParameterFile
                                         ' Data of the curves.
                                         ' Read the subblock.
 
-                                        Dim ListOfInteger As New List(Of UInt32)
+                                        Dim ListOfInteger As New List(Of Double)
 
                                         Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
                                         Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
 
-                                            'SubBlockReader.BaseStream.Seek(2, SeekOrigin.Current)
+                                            ' Jump over 6 bytes.
+                                            'SubBlockReader.BaseStream.Seek(6, SeekOrigin.Current)
 
-                                            For i As Integer = 0 To 204 Step 1
-
-                                                ListOfInteger.Add(SubBlockReader.ReadUInt32)
-                                            Next
+                                            'For i As Integer = 0 To 204 Step 1
+                                            'ListOfInteger.Add(SubBlockReader.ReadInt32)
+                                            'ListOfInteger.Add(SubBlockReader.ReadDouble)
+                                            'Next
 
                                         End Using
 
@@ -556,30 +572,6 @@ Public Class cFileImportOmicronMatrixParameterFile
                 Return i
             End If
         Next
-
-        Return -1
-
-    End Function
-
-    ''' <summary>
-    ''' Returns the entry being chronologically earlier in the list of actions,
-    ''' that starts with a specific value.
-    ''' Used, e.g., for finding properties of spectra.
-    ''' </summary>
-    ''' <return>-1 if not found</return>
-    Public Function GetPositionOfPropertyValueBeforePosition(ByVal ValueStartsWith As String,
-                                                             ByVal SearchPosition As Integer) As Integer
-
-        If SearchPosition >= 0 Then
-
-            ' Go through earlier entries
-            For i As Integer = SearchPosition To 0 Step -1
-                If Me._ActionsByTime(i).Value.Key.StartsWith(ValueStartsWith) Then
-                    Return i
-                End If
-            Next
-
-        End If
 
         Return -1
 

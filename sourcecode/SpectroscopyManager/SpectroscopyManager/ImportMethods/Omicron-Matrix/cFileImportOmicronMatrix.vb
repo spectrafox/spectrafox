@@ -39,7 +39,10 @@ Public Class cFileImportOmicronMatrix
         Public CurveNumber As String
         Public PassNumber As String
         Public CurveName As String
-        Public DataUnit As String
+        Public DataIsUnitOf As String
+        Public Function ChannelNameInclDependingUnit() As String
+            Return CurveName & "(" & DataIsUnitOf & ")"
+        End Function
     End Structure
 
     ''' <summary>
@@ -53,7 +56,7 @@ Public Class cFileImportOmicronMatrix
             FileNameComponents.CurveNumber = SpectroscopyFileMatch.Groups.Item("nocurve").Value
             FileNameComponents.PassNumber = SpectroscopyFileMatch.Groups.Item("nopass").Value
             FileNameComponents.CurveName = SpectroscopyFileMatch.Groups.Item("curve").Value
-            FileNameComponents.DataUnit = SpectroscopyFileMatch.Groups.Item("unit").Value
+            FileNameComponents.DataIsUnitOf = SpectroscopyFileMatch.Groups.Item("unit").Value
         End If
         Return FileNameComponents
     End Function
@@ -124,7 +127,6 @@ Public Class cFileImportOmicronMatrix
         Public Raw1_2 As Double
         Public Whole_2 As Double
         Public ChannelNumber As Integer
-        Public ChannelName As String
         Public Unit As String
     End Structure
 
@@ -453,12 +455,14 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function GetLastFourCharsByProceedingOneByte(ByRef br As BinaryReader, ByVal StringSoFar As String) As String
 
         Dim LastFourChars(3) As Char
-        StringSoFar.CopyTo(0, LastFourChars, 0, StringSoFar.Length)
 
-        ' Move the identifier buffer by one byte.
-        LastFourChars(0) = LastFourChars(1)
-        LastFourChars(1) = LastFourChars(2)
-        LastFourChars(2) = LastFourChars(3)
+        ' Copy the string, and leave out the first char,
+        ' that we anyhow would have thrown away.
+        If StringSoFar.Length >= 1 Then
+            StringSoFar.CopyTo(1, LastFourChars, 0, StringSoFar.Length - 1)
+        End If
+
+        ' Read the new char at the end of the string.
         LastFourChars(3) = Convert.ToChar(br.ReadByte)
 
         Return LastFourChars
@@ -472,6 +476,349 @@ Public Class cFileImportOmicronMatrix
     Public Shared Function Read4Bytes(ByRef br As BinaryReader) As String
         Return Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte) & Convert.ToChar(br.ReadByte)
     End Function
+
+#End Region
+
+#Region "Parameterfile: property array conversion"
+
+    ''' <summary>
+    ''' Structure storing the experiment configuration of the Matrix parameter file.
+    ''' </summary>
+    Public Structure ExperimentConfiguration
+        Public Category As String
+        Public Instruction As String
+        Public Prop As String
+        Public Unit As String
+
+        ''' <summary>
+        ''' Returns the PropertyArray identifier of the property.
+        ''' </summary>
+        Public Overrides Function ToString() As String
+            Return Category & ":" & Instruction & "." & Prop & "[" & Unit & "]"
+        End Function
+
+        ''' <summary>
+        ''' Regular expression to extract the information in an EEPA string from the property value again.
+        ''' Format of the string: Category & ":" & Instruction & "." & Prop & "[" & Unit & "]"
+        ''' </summary>
+        Public Shared PropertyArrayRegex As New Regex("^(?<cat>.{4})\:(?<instr>.*?)\.(?<prop>.*?)\[(?<unit>.*?)\]$", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+
+        ''' <summary>
+        ''' Returns a property array instruction from the given input string.
+        ''' </summary>
+        ''' <returns>Empty dummy instruction, if not interpretable. = Nothing</returns>
+        Public Shared Function FromString(ByVal ParseString As String) As ExperimentConfiguration
+            Dim Instruction As New ExperimentConfiguration
+
+            ' Try to parse the string.
+            Dim M As Match = PropertyArrayRegex.Match(ParseString)
+            If M.Success AndAlso M.Groups.Count >= 4 Then
+
+                ' Return the parsed array.
+                With Instruction
+                    .Category = M.Groups.Item("cat").Value
+                    .Instruction = M.Groups.Item("instr").Value
+                    .Prop = M.Groups.Item("prop").Value
+                    .Unit = M.Groups.Item("unit").Value
+                End With
+
+            Else
+
+                ' Return dummy.
+                With Instruction
+                    .Category = String.Empty
+                    .Instruction = String.Empty
+                    .Prop = String.Empty
+                    .Unit = String.Empty
+                End With
+
+            End If
+
+            Return Instruction
+
+        End Function
+
+    End Structure
+
+#End Region
+
+#Region "Matrix STS Location interpreter"
+
+    ''' <summary>
+    ''' Regular expression to extract the information in an EEPA string from the property value again.
+    ''' Format of the string: Category & ":" & Instruction & "." & Prop & "[" & Unit & "]"
+    ''' </summary>
+    Public Shared MatrixSTSLocationRegex As New Regex("^MTRX\$STS_LOCATION(?<xpoint>.*?),(?<ypoint>.*?);(?<xcoord>.*?),(?<ycoord>.*?)\%\%(?<extra>.*?)\%\%$", RegexOptions.Compiled Or RegexOptions.IgnoreCase)
+
+    ''' <summary>
+    ''' Stores the location of a spectroscopy experiment.
+    ''' </summary>
+    Public Structure STSLocation
+        Public XPoint As Integer
+        Public YPoint As Integer
+        Public XCoord As Double
+        Public YCoord As Double
+    End Structure
+
+    ''' <summary>
+    ''' Tries to convert the property string into a match to <code>MatrixSTSLocationRegex</code>.
+    ''' True, if conversion was successfull.
+    ''' </summary>
+    Public Shared Function GetSTSLocationExperimentConfigurationFromMatrix(ByVal PropertyString As String,
+                                                                           ByRef SpectroscopyLocation As STSLocation) As Boolean
+
+        Dim M As Match = MatrixSTSLocationRegex.Match(PropertyString)
+        If M.Success AndAlso M.Groups.Count >= 4 Then
+            SpectroscopyLocation = New STSLocation
+            With SpectroscopyLocation
+                .XCoord = Convert.ToDouble(M.Groups.Item("xcoord").Value, Globalization.CultureInfo.InvariantCulture)
+                .YCoord = Convert.ToDouble(M.Groups.Item("xcoord").Value, Globalization.CultureInfo.InvariantCulture)
+                .XPoint = Convert.ToInt32(M.Groups.Item("xpoint").Value, Globalization.CultureInfo.InvariantCulture)
+                .YPoint = Convert.ToInt32(M.Groups.Item("ypoint").Value, Globalization.CultureInfo.InvariantCulture)
+            End With
+            Return True
+        End If
+
+        Return False
+    End Function
+
+
+#End Region
+
+#Region "XYScanner specific functions"
+
+    ''' <summary>
+    ''' Structure that stores the properties of the XYScanner,
+    ''' which contains the information on how to interpret the data.
+    ''' </summary>
+    Public Class XYScannerProperties
+
+        Public Height As Double = -1
+        Public Width As Double = -1
+        Public XPoints As Integer = -1
+        Public YPoints As Integer = -1
+
+        Public XOffset As Double = 0
+        Public YOffset As Double = 0
+        Public Angle As Double = 0
+
+        Public Setpoint As Double = 0
+        Public SetpointUnit As String = ""
+        Public ProportionalGain As Double = 0
+
+        ''' <summary>
+        ''' Raster time in seconds.
+        ''' </summary>
+        Public RasterPeriodTime As Double = 1
+
+        ''' <summary>
+        ''' Data mode.
+        ''' </summary>
+        Public GridMode As Integer = 0
+
+        ''' <summary>
+        ''' Zoom of the image.
+        ''' </summary>
+        Public Zoom As Integer = 1
+
+    End Class
+
+    ''' <summary>
+    ''' Returns the XYScanner properties from the parameter file for the specific image file.
+    ''' </summary>
+    Public Shared Function GetXYScannerPropertiesFromPropertyArray(ByVal ImageFileNameWithoutPath As String,
+                                                                   ByRef ParameterFile As cFileImportOmicronMatrixParameterFile) As XYScannerProperties
+
+        Dim XY As New XYScannerProperties
+
+        ' Check, if the parameter file is valid.
+        If ParameterFile Is Nothing Then Return XY
+
+        ' First get the initial parameter set,
+        ' that is modified afterwards by the PMOD commands.
+        For Each Prop As KeyValuePair(Of ExperimentConfiguration, String) In ParameterFile.InitialExperimentConfigurationArray
+            ModifyXYScannerByParameter(XY, Prop.Key, Prop.Value)
+        Next
+
+        ' Now we get the position of the file in the chronology.
+        Dim FilePosition As Integer = ParameterFile.GetPositionOfPropertyValueInActionList(ImageFileNameWithoutPath)
+
+        If FilePosition >= 0 Then
+            ' Now we get the modified parameters specific for the image
+            ' by walking through the chronology up to the image,
+            ' and modifying the parameters accordingly.
+            For i As Integer = 0 To FilePosition - 1 Step 1
+
+                ' Try to get a XYscanner parameter.
+                ModifyXYScannerByParameter(XY,
+                                           ExperimentConfiguration.FromString(ParameterFile.ActionsByTime(i).Value.Key),
+                                           ParameterFile.ActionsByTime(i).Value.Value)
+
+            Next
+        End If
+
+        Return XY
+    End Function
+
+    ''' <summary>
+    ''' Uses a value from the property array of a parameter file to modify the XYScanner object.
+    ''' </summary>
+    Protected Shared Sub ModifyXYScannerByParameter(ByRef XY As XYScannerProperties,
+                                                    ByVal ExpConfig As ExperimentConfiguration,
+                                                    ByVal Value As String)
+
+        ' Check, if the property deals with the XYScanner.
+        ' If not then skip the function.
+        If ExpConfig.Category <> "EEPA" AndAlso ExpConfig.Instruction <> "XYScanner" Then Return
+
+        Select Case ExpConfig.Prop
+
+            Case "Height"
+                XY.Height = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Width"
+                XY.Width = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Points", "X_Points"
+                XY.XPoints = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Lines", "Y_Points"
+                XY.YPoints = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Raster_Time", "Raster_Period_Time"
+                XY.RasterPeriodTime = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Scan_Constraint"
+                XY.GridMode = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Zoom"
+                XY.Zoom = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Angle"
+                XY.Angle = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "X_Offset"
+                XY.XOffset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Y_Offset"
+                XY.YOffset = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Setpoint_1"
+                XY.Setpoint = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                XY.SetpointUnit = ExpConfig.Unit
+            Case "Retraction_Speed"
+                XY.ProportionalGain = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+
+        End Select
+
+    End Sub
+
+#End Region
+
+#Region "Spectroscopy specific functions"
+
+    ''' <summary>
+    ''' Structure that stores the properties of the SpectroscopyUnit,
+    ''' which contains the information on how to interpret the data.
+    ''' </summary>
+    Public Class SpectroscopyProperties
+
+        Public Device1_SweepStart As Double = 0
+        Public Device1_SweepEnd As Double = 0
+        Public Device1_UnitString As String = String.Empty
+        Public Device1_Points As Integer = 0
+        Public Device1_ForwardAndBackward As Boolean = False
+        Public Device1_SweepNumber As Integer = 0
+
+        Public Device2_SweepStart As Double = 0
+        Public Device2_SweepEnd As Double = 0
+        Public Device2_UnitString As String = String.Empty
+        Public Device2_Points As Integer = 0
+        Public Device2_ForwardAndBackward As Boolean = False
+        Public Device2_SweepNumber As Integer = 0
+
+        ''' <summary>
+        ''' Feedback on?
+        ''' </summary>
+        Public DisableFeedback As Boolean
+
+        ''' <summary>
+        ''' Location of the spectroscopy.
+        ''' </summary>
+        Public Location As New STSLocation
+
+    End Class
+
+    ''' <summary>
+    ''' Returns the Spectroscopy properties from the parameter file for the specific image file.
+    ''' </summary>
+    Public Shared Function GetSpectroscopyPropertiesFromPropertyArray(ByVal ImageFileNameWithoutPath As String,
+                                                                      ByRef ParameterFile As cFileImportOmicronMatrixParameterFile) As SpectroscopyProperties
+
+        Dim SpecProp As New SpectroscopyProperties
+
+        ' Check, if the parameter file is valid.
+        If ParameterFile Is Nothing Then Return SpecProp
+
+        ' First get the initial parameter set,
+        ' that is modified afterwards by the PMOD commands.
+        For Each Prop As KeyValuePair(Of ExperimentConfiguration, String) In ParameterFile.InitialExperimentConfigurationArray
+            ModifySpectroscopyPropertiesByParameter(SpecProp, Prop.Key, Prop.Value)
+        Next
+
+        ' Now we get the position of the file in the chronology.
+        Dim FilePosition As Integer = ParameterFile.GetPositionOfPropertyValueInActionList(ImageFileNameWithoutPath)
+
+        If FilePosition >= 0 Then
+            ' Now we get the modified parameters specific for the image
+            ' by walking through the chronology up to the image,
+            ' and modifying the parameters accordingly.
+            For i As Integer = 0 To FilePosition - 1 Step 1
+
+                ' Try to get a XYscanner parameter.
+                ModifySpectroscopyPropertiesByParameter(SpecProp,
+                                                        ExperimentConfiguration.FromString(ParameterFile.ActionsByTime(i).Value.Key),
+                                                        ParameterFile.ActionsByTime(i).Value.Value)
+
+                ' Try to get the spectroscopy location.
+                GetSTSLocationExperimentConfigurationFromMatrix(ParameterFile.ActionsByTime(i).Value.Key, SpecProp.Location)
+
+            Next
+        End If
+
+        Return SpecProp
+    End Function
+
+    ''' <summary>
+    ''' Uses a value from the property array of a parameter file to modify the XYScanner object.
+    ''' </summary>
+    Protected Shared Sub ModifySpectroscopyPropertiesByParameter(ByRef SpecProp As SpectroscopyProperties,
+                                                                 ByVal ExpConfig As ExperimentConfiguration,
+                                                                 ByVal Value As String)
+
+        ' Check, if the property deals with the Spectroscopy properties.
+        ' If not then skip the function.
+        If ExpConfig.Category <> "EEPA" AndAlso ExpConfig.Instruction <> "Spectroscopy" Then Return
+
+        Select Case ExpConfig.Prop
+
+            Case "Device_1_Start"
+                SpecProp.Device1_SweepStart = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                SpecProp.Device1_UnitString = ExpConfig.Unit
+            Case "Device_1_End"
+                SpecProp.Device1_SweepEnd = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Device_1_Points"
+                SpecProp.Device1_Points = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Enable_Device_1_Ramp_Reversal"
+                SpecProp.Device1_ForwardAndBackward = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+
+            Case "Device_2_Start"
+                SpecProp.Device2_SweepStart = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+                SpecProp.Device2_UnitString = ExpConfig.Unit
+            Case "Device_2_End"
+                SpecProp.Device2_SweepEnd = Convert.ToDouble(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Device_2_Points"
+                SpecProp.Device2_Points = Convert.ToInt32(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Enable_Device_2_Ramp_Reversal"
+                SpecProp.Device2_ForwardAndBackward = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+
+            Case "Disable_Feedback_Loop"
+                SpecProp.DisableFeedback = Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+            Case "Enable_Feedback_Loop"
+                SpecProp.DisableFeedback = Not Convert.ToBoolean(Value, Globalization.CultureInfo.InvariantCulture)
+
+        End Select
+    End Sub
 
 #End Region
 

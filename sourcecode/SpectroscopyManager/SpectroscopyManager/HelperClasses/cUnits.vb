@@ -1,5 +1,8 @@
 ﻿Public Class cUnits
 
+    ''' <summary>
+    ''' Possible units.
+    ''' </summary>
     Public Enum UnitType
         Unknown
         Length
@@ -10,6 +13,7 @@
         Conductance
         ConductanceDeriv
         Unitary
+        Angle
     End Enum
 
     ''' <summary>
@@ -177,6 +181,8 @@
                 Return UnitType.ConductanceDeriv
             Case UnitType.ConductanceDeriv.ToString
                 Return UnitType.ConductanceDeriv
+            Case UnitType.Angle.ToString
+                Return UnitType.Angle
             Case Else
                 Return UnitType.Unknown
         End Select
@@ -187,24 +193,28 @@
     ''' </summary>
     Public Shared Function GetUnitTypeFromSymbol(ByVal Symbol As String) As UnitType
         Select Case Symbol
-            Case "V"
+            Case "V", "Volt"
                 Return UnitType.Voltage
-            Case "A"
+            Case "A", "Ampere"
                 Return UnitType.Current
-            Case "s"
+            Case "s", "Second"
                 Return UnitType.Time
-            Case "m"
+            Case "m", "Meter", "Z", "z", "X", "x", "Y", "y"
                 Return UnitType.Length
-            Case "Hz"
+            Case "Hz", "Hertz"
                 Return UnitType.Frequency
             Case "A/V"
                 Return UnitType.Conductance
-            Case "S"
+            Case "S", "Siemens"
                 Return UnitType.Conductance
             Case "S/V"
                 Return UnitType.ConductanceDeriv
             Case "A/V^2"
                 Return UnitType.ConductanceDeriv
+            Case "Count"
+                Return UnitType.Unitary
+            Case "Degree", "Deg", "°"
+                Return UnitType.Angle
             Case Else
                 Return UnitType.Unknown
         End Select
@@ -215,22 +225,24 @@
     ''' </summary>
     Public Shared Function GetUnitSymbolFromType(ByVal UnitType As UnitType) As String
         Select Case UnitType
-            Case cUnits.UnitType.Voltage
+            Case UnitType.Voltage
                 Return "V"
-            Case cUnits.UnitType.Current
+            Case UnitType.Current
                 Return "A"
-            Case cUnits.UnitType.Time
+            Case UnitType.Time
                 Return "s"
-            Case cUnits.UnitType.Length
+            Case UnitType.Length
                 Return "m"
-            Case cUnits.UnitType.Frequency
+            Case UnitType.Frequency
                 Return "Hz"
-            Case cUnits.UnitType.Conductance
+            Case UnitType.Conductance
                 Return "S"
-            Case cUnits.UnitType.ConductanceDeriv
+            Case UnitType.ConductanceDeriv
                 Return "S/V"
-            Case cUnits.UnitType.Unitary
-                Return ""
+            Case UnitType.Unitary
+                Return "1"
+            Case UnitType.Angle
+                Return "°"
             Case Else
                 Return "-"
         End Select
