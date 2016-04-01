@@ -655,11 +655,16 @@ Public Class cFileObject
                                         End While
 
                                         ' Get the data from the innerxml
-                                        Dim ImageBytes As Byte() = Convert.FromBase64String(.ReadString())
-                                        Dim PreviewImage As Image = cImageConverter.ByteArrayToImage(ImageBytes)
+                                        Try
+                                            Dim ImageBytes As Byte() = Convert.FromBase64String(.ReadString())
+                                            Dim PreviewImage As Image = cImageConverter.ByteArrayToImage(ImageBytes)
 
-                                        ' Save newly imported preview image
-                                        If PreviewImageID <> String.Empty Then FO.SetPreviewImageStorage(PreviewImageID, PreviewImage)
+                                            ' Save newly imported preview image
+                                            If PreviewImageID <> String.Empty Then FO.SetPreviewImageStorage(PreviewImageID, PreviewImage)
+                                        Catch ex As Exception
+                                            Debug.WriteLine("Image import from cache file failed: " & ex.Message)
+                                        End Try
+
                                     End If
 
                                 Case "SpectroscopyDataColumn"

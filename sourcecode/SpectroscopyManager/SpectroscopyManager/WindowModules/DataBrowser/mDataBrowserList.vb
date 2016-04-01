@@ -1,5 +1,6 @@
 ﻿Imports Amib.Threading
 Imports System.Text.RegularExpressions
+Imports System.IO
 
 Public Class mDataBrowserList
 
@@ -625,6 +626,10 @@ Public Class mDataBrowserList
     ''' Save the current list of file-objects to the file-buffer.
     ''' </summary>
     Private Sub SaveFileBuffer()
+        ' Go to the beginning of the stream.
+        Me.FileBufferCache.Close()
+        Me.FileBufferCache.Dispose()
+        Me.FileBufferCache = New MemoryStream
         Me.oFileImporter.WriteFileBufferToStream(Me.FileBufferCache)
         Me.FileBufferCache_IsModified = True
     End Sub

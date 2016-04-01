@@ -365,6 +365,7 @@ Public Class cFileImport
 
     ''' <summary>
     ''' Write the file-buffer to a stream.
+    ''' Requires a new stream.
     ''' </summary>
     Public Function WriteFileBufferToStream(ByRef S As MemoryStream,
                                             Optional ByRef BackgroundWorker As System.ComponentModel.BackgroundWorker = Nothing) As Boolean
@@ -372,65 +373,65 @@ Public Class cFileImport
         If Me.FileBufferIsFetching Then Return False
 
         Try
-
-            ' Go to the beginning of the stream.
-            S.Close()
-            S.Dispose()
-            S = New MemoryStream
             S.Seek(0, IO.SeekOrigin.Begin)
 
-            ' Select the File-Encoding
-            Dim enc As New System.Text.UnicodeEncoding
+            ' Create a new zip stream for the memory stream.
+            Using GZ As New Compression.GZipStream(S, Compression.CompressionMode.Compress, True)
 
-            ' Create the XmlTextWriter object
-            Dim XMLobj As New Xml.XmlTextWriter(S, enc)
+                ' Select the File-Encoding
+                Dim enc As New System.Text.UnicodeEncoding
 
-            With XMLobj
-                ' Set the proper formatting
-                .Formatting = Xml.Formatting.Indented
-                .Indentation = 4
+                ' Create the XmlTextWriter object
+                'Dim XMLobj As New Xml.XmlTextWriter(S, enc)
+                Dim XMLobj As New Xml.XmlTextWriter(GZ, enc)
 
-                ' create the document header
-                .WriteStartDocument()
-                .WriteStartElement("root")
+                With XMLobj
+                    ' Set the proper formatting
+                    .Formatting = Xml.Formatting.Indented
+                    .Indentation = 4
 
-                ' Begin with SpectraFox program properties
-                .WriteStartElement("SpectraFox")
-                .WriteAttributeString("Version", cProgrammDeployment.GetProgramVersionString)
-                .WriteEndElement()
+                    ' create the document header
+                    .WriteStartDocument()
+                    .WriteStartElement("root")
 
-                ' Write properties of the cache file
-                .WriteStartElement("CacheInformation")
-                .WriteAttributeString("Count", Me._FileBuffer_Full.Count.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                .WriteEndElement()
+                    ' Begin with SpectraFox program properties
+                    .WriteStartElement("SpectraFox")
+                    .WriteAttributeString("Version", cProgrammDeployment.GetProgramVersionString)
+                    .WriteEndElement()
 
-                ' Begin the section of the file-object entries
-                .WriteStartElement("FileObjects")
-                Dim i As Integer = 0
-                For Each FileObject As cFileObject In Me._FileBuffer_Full.Values
+                    ' Write properties of the cache file
+                    .WriteStartElement("CacheInformation")
+                    .WriteAttributeString("Count", Me._FileBuffer_Full.Count.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    .WriteEndElement()
 
-                    ' Report progress
-                    If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(CInt(i / Me._FileBuffer_Full.Count), "Writing objects to cache file ...")
-                    i += 1
+                    ' Begin the section of the file-object entries
+                    .WriteStartElement("FileObjects")
+                    Dim i As Integer = 0
+                    For Each FileObject As cFileObject In Me._FileBuffer_Full.Values
 
-                    ' Write the information for each file.
-                    FileObject.WriteFileObjectToSingleXMLCacheLine(XMLobj)
+                        ' Report progress
+                        If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(CInt(i / Me._FileBuffer_Full.Count), "Writing objects to cache file ...")
+                        i += 1
 
-                Next
-                .WriteEndElement()
+                        ' Write the information for each file.
+                        FileObject.WriteFileObjectToSingleXMLCacheLine(XMLobj)
 
-                ' End <root>
-                .WriteEndElement()
+                    Next
+                    .WriteEndElement()
 
-                ' Close the document
-                .WriteEndDocument()
+                    ' End <root>
+                    .WriteEndElement()
 
-                ' Close the XML-Document
-                .Flush()
-                '.Close() ' Document
-                '.Dispose()
-            End With
-            XMLobj = Nothing
+                    ' Close the document
+                    .WriteEndDocument()
+
+                    ' Close the XML-Document
+                    .Flush()
+                    '.Close() ' Document
+                    '.Dispose()
+                End With
+                XMLobj = Nothing
+            End Using
 
         Catch ex As Exception
             Debug.WriteLine("Error writing cache-file to stream: " & ex.Message)
@@ -456,10 +457,10 @@ Public Class cFileImport
             ' Report progress
             If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(5, "Opening file for writing ...")
 
-            Dim MS As New MemoryStream
+            Using MS As New MemoryStream
 
-            Dim ExportSuccessFull As Boolean = False
-            Try
+                Dim ExportSuccessFull As Boolean = False
+
                 ' open filestream
                 ExportSuccessFull = Me.WriteFileBufferToStream(MS, BackgroundWorker)
 
@@ -468,13 +469,7 @@ Public Class cFileImport
 
                 ' Report progress
                 If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(98, "Closing file, and releasing ressources ...")
-            Catch ex As Exception
-            Finally
-                ' Close the stream
-                MS.Close()
-                MS.Dispose()
-                MS = Nothing
-            End Try
+            End Using
 
         Catch ex As Exception
             Debug.WriteLine("Error writing cache-file: " & ex.Message)
@@ -503,24 +498,27 @@ Public Class cFileImport
             ' Report progress
             If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(5, "Opening file for writing ...")
 
-            ' Create a filestream.
-            Dim FS As New FileStream(TMPFileName, FileMode.Create)
-
             Dim ExportSuccessFull As Boolean = False
-            Try
-                ' Write the stream to the file.
-                FileBufferStream.WriteTo(FS)
-                ExportSuccessFull = True
+
+            ' Create a filestream.
+            Using FS As New FileStream(TMPFileName, FileMode.Create)
+
+                ' Go to the beginning of the stream.
+                FileBufferStream.Seek(0, SeekOrigin.Begin)
+
+                ' Create the Unzip-Stream
+                Using GZ As New Compression.GZipStream(FileBufferStream, Compression.CompressionMode.Decompress, True)
+                    GZ.CopyTo(FS)
+                    ExportSuccessFull = True
+                End Using
+
+                '' Write the stream to the file.
+                'FileBufferStream.WriteTo(FS)
+                'ExportSuccessFull = True
 
                 ' Report progress
                 If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(98, "Closing file, and releasing ressources ...")
-            Catch ex As Exception
-            Finally
-                ' Close the stream
-                FS.Close()
-                FS.Dispose()
-                FS = Nothing
-            End Try
+            End Using
 
             If ExportSuccessFull Then
                 ' If everything was ok so far, so if we are at this point,
@@ -563,82 +561,87 @@ Public Class cFileImport
             ' Go to the beginning of the stream.
             S.Seek(0, IO.SeekOrigin.Begin)
 
-            ' Report progress
-            If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(5, "Opening cache file ...")
+            Using GZ As New Compression.GZipStream(S, Compression.CompressionMode.Decompress, True)
 
-            ' Open the XML-reader object for the specified file
-            Dim XMLReader As New Xml.XmlTextReader(S)
+                ' Report progress
+                If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(5, "Opening cache file ...")
 
-            ' Save the Spectrafox-version that created the file to 
-            ' check against old files and new features.
-            Dim SpectraFoxVersionOfFile As String = ""
+                ' Open the XML-reader object for the specified file
+                Dim XMLReader As New Xml.XmlTextReader(GZ)
 
-            ' Number of files expected in the file-cache.
-            Dim CacheCount As Integer = -1
+                ' Save the Spectrafox-version that created the file to 
+                ' check against old files and new features.
+                Dim SpectraFoxVersionOfFile As String = ""
 
-            ' Now read the XML-file, and import the settings.
-            With XMLReader
-                ' read up to the end of the file
-                Do While .Read
-                    ' Check for the type of data
-                    Select Case .NodeType
-                        Case Xml.XmlNodeType.Element
-                            ' An element comes: this is what we are looking for!
-                            '####################################################
-                            Select Case .Name
-                                Case "SpectraFox"
-                                    ' get and check the properties:
-                                    '###############################
-                                    If .AttributeCount > 0 Then
-                                        While .MoveToNextAttribute
-                                            Select Case .Name
-                                                Case "Version"
-                                                    SpectraFoxVersionOfFile = .Value
-                                            End Select
-                                        End While
-                                    End If
+                ' Number of files expected in the file-cache.
+                Dim CacheCount As Integer = -1
 
-                                Case "CacheInformation"
-                                    ' get and check the properties:
-                                    '###############################
-                                    If .AttributeCount > 0 Then
-                                        While .MoveToNextAttribute
-                                            Select Case .Name
-                                                Case "Count"
-                                                    CacheCount = Convert.ToInt32(.Value, System.Globalization.CultureInfo.InvariantCulture)
-                                            End Select
-                                        End While
-                                    End If
+                ' Now read the XML-file, and import the settings.
+                With XMLReader
+                    ' read up to the end of the file
+                    Do While .Read
+                        ' Check for the type of data
+                        Select Case .NodeType
+                            Case Xml.XmlNodeType.Element
+                                ' An element comes: this is what we are looking for!
+                                '####################################################
+                                Select Case .Name
+                                    Case "SpectraFox"
+                                        ' get and check the properties:
+                                        '###############################
+                                        If .AttributeCount > 0 Then
+                                            While .MoveToNextAttribute
+                                                Select Case .Name
+                                                    Case "Version"
+                                                        SpectraFoxVersionOfFile = .Value
+                                                End Select
+                                            End While
+                                        End If
 
-                                Case "FileObject"
+                                    Case "CacheInformation"
+                                        ' get and check the properties:
+                                        '###############################
+                                        If .AttributeCount > 0 Then
+                                            While .MoveToNextAttribute
+                                                Select Case .Name
+                                                    Case "Count"
+                                                        CacheCount = Convert.ToInt32(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                                End Select
+                                            End While
+                                        End If
 
-                                    Dim NewFileObject As cFileObject = cFileObject.GetFileObjectFromSingleXMLCacheLine(.ReadSubtree)
+                                    Case "FileObject"
 
-                                    If Not NewFileObject Is Nothing Then
-                                        ' Set additional settings
-                                        With NewFileObject
-                                            ' Use the current path to the file, since this may change on different computers.
-                                            .FullFileNameInclPath = BasePath & IO.Path.DirectorySeparatorChar & .FileName
-                                        End With
+                                        Dim NewFileObject As cFileObject = cFileObject.GetFileObjectFromSingleXMLCacheLine(.ReadSubtree)
 
-                                        ' Add the current path + the new file-object.
-                                        diFileList.Add(NewFileObject.FullFileNameInclPath, NewFileObject)
+                                        If Not NewFileObject Is Nothing Then
+                                            ' Set additional settings
+                                            With NewFileObject
+                                                ' Use the current path to the file, since this may change on different computers.
+                                                .FullFileNameInclPath = BasePath & IO.Path.DirectorySeparatorChar & .FileName
+                                            End With
 
-                                        ' Report progress
-                                        If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(CInt(diFileList.Count / CacheCount), "Reading cached file objects ...")
+                                            ' Add the current path + the new file-object.
+                                            diFileList.Add(NewFileObject.FullFileNameInclPath, NewFileObject)
 
-                                    End If
+                                            ' Report progress
+                                            If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(CInt(diFileList.Count / CacheCount), "Reading cached file objects ...")
 
-                            End Select
+                                        End If
 
-                    End Select
-                Loop
+                                End Select
 
-                ' Close the XML-Reader
-                .Close()
-                .Dispose()
-            End With
-            XMLReader = Nothing
+                        End Select
+                    Loop
+
+                    ' Close the XML-Reader
+                    .Close()
+                    .Dispose()
+                End With
+                XMLReader = Nothing
+
+            End Using
+
         Catch ex As Exception
             Debug.WriteLine("Cache file import failed from stream: " & ex.Message)
         End Try
@@ -664,36 +667,25 @@ Public Class cFileImport
             ' Report progress
             If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(5, "Opening cache file ...")
 
-            ' Create a filestream.
-            Dim FS As New FileStream(FullFilenameIncludingPath, FileMode.Open)
-            Dim MS As New MemoryStream
+            Using MS As New MemoryStream
 
-            Try
-                ' Read the file
-                FS.CopyTo(MS)
-            Catch ex As Exception
-                Debug.WriteLine("Cache file import failed in file " & FileName & ", due to exception: " & vbNewLine & ex.Message)
-            Finally
-                ' Close the stream
-                FS.Close()
-                FS.Dispose()
-                FS = Nothing
-            End Try
+                ' Create a filestream.
+                Using FS As New FileStream(FullFilenameIncludingPath, FileMode.Open)
 
-            Try
-                ' open filestream
+                    Using GZ As New Compression.GZipStream(MS, Compression.CompressionMode.Compress, True)
+                        ' Read the file, and compress the content in the memory
+                        FS.CopyTo(GZ)
+                    End Using
+
+                End Using
+
+                ' interpret the file buffer
                 Me.GetFileBufferFromStream(MS, PathToFile, BackgroundWorker)
 
                 ' Report progress
                 If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(98, "Closing file, and releasing resources ...")
-            Catch ex As Exception
-                Debug.WriteLine("Cache file import failed in file " & FileName & ", due to exception: " & vbNewLine & ex.Message)
-            Finally
-                ' Close the stream
-                MS.Close()
-                MS.Dispose()
-                MS = Nothing
-            End Try
+
+            End Using
 
         Catch ex As Exception
             Debug.WriteLine("Cache file import failed in file " & FileName & ", due to exception: " & vbNewLine & ex.Message)

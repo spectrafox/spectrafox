@@ -232,9 +232,10 @@ Public Class cFileImportOmicronMatrixCurve
                     Dim SweepEnd As Double = 0
                     Dim ForwardBackward As Boolean = False
                     Dim SweepNumber As Integer = 0
-                    Dim ChannelUnitType As cUnits.UnitType = cUnits.GetUnitTypeFromSymbol(CurrentFileNameComponents.DataIsUnitOf)
+                    Dim XChannelUnitType As cUnits.UnitType = cUnits.GetUnitTypeFromSymbol(CurrentFileNameComponents.DataIsUnitOf)
+                    Dim XChannelUnit As String = cUnits.GetUnitSymbolFromType(XChannelUnitType)
 
-                    Select Case ChannelUnitType
+                    Select Case XChannelUnitType
                         Case cUnits.GetUnitTypeFromSymbol(SpecProp.Device1_UnitString)
                             SweepStart = SpecProp.Device1_SweepStart
                             SweepEnd = SpecProp.Device1_SweepEnd
@@ -264,11 +265,11 @@ Public Class cFileImportOmicronMatrixCurve
                         .ZController_Setpoint = XYScanner.Setpoint
                         .ZController_SetpointUnit = XYScanner.SetpointUnit
 
-                        If ChannelUnitType = cUnits.UnitType.Voltage Then
+                        If XChannelUnitType = cUnits.UnitType.Voltage Then
                             .BiasSpec_SweepStart_V = SweepStart
                             .BiasSpec_SweepEnd_V = SweepEnd
 
-                        ElseIf ChannelUnitType = cUnits.UnitType.Length Then
+                        ElseIf XChannelUnitType = cUnits.UnitType.Length Then
                             .Z_Sweep_Distance = SweepStart - SweepEnd
                             .Z_Offset = SpecProp.Device2_Offset
                             .Z_Spectroscopy_Bias_V = XYScanner.BiasVoltage
@@ -277,13 +278,13 @@ Public Class cFileImportOmicronMatrixCurve
 
 
                     ' Now generate the X-column, if we have a known channel unit type.
-                    If ChannelUnitType <> cUnits.UnitType.Unknown Then
+                    If XChannelUnitType <> cUnits.UnitType.Unknown Then
 
                         ' Check if the X-column under the same name exists already
-                        If ChannelUnitType = cUnits.UnitType.Length AndAlso oSpectroscopyTable.GetColumnNameList.Contains(XColumnName_Length) Then
+                        If XChannelUnitType = cUnits.UnitType.Length AndAlso oSpectroscopyTable.GetColumnNameList.Contains(XColumnName_Length) Then
                             CreateXColumn = False
                         End If
-                        If ChannelUnitType = cUnits.UnitType.Voltage AndAlso oSpectroscopyTable.GetColumnNameList.Contains(XColumnName_Voltage) Then
+                        If XChannelUnitType = cUnits.UnitType.Voltage AndAlso oSpectroscopyTable.GetColumnNameList.Contains(XColumnName_Voltage) Then
                             CreateXColumn = False
                         End If
 
@@ -318,13 +319,13 @@ Public Class cFileImportOmicronMatrixCurve
 
                             With XColumn
                                 .IsSpectraFoxGenerated = False
-                                If ChannelUnitType = cUnits.UnitType.Length Then
+                                If XChannelUnitType = cUnits.UnitType.Length Then
                                     .Name = XColumnName_Length
-                                ElseIf ChannelUnitType = cUnits.UnitType.Voltage Then
+                                ElseIf XChannelUnitType = cUnits.UnitType.Voltage Then
                                     .Name = XColumnName_Voltage
                                 End If
-                                .UnitSymbol = ChannelUnit
-                                .UnitType = cUnits.GetUnitTypeFromSymbol(.UnitSymbol)
+                                .UnitSymbol = XChannelUnit
+                                .UnitType = XChannelUnitType
                                 .SetValueList(XColumnData)
                             End With
 
