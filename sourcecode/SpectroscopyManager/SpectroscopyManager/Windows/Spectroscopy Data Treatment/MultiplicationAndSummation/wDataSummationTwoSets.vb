@@ -161,6 +161,26 @@
         Me.SetSaveButton(True)
     End Sub
 
+
+#Region "Exchange source and reference file."
+
+    ''' <summary>
+    ''' Exchange source and reference file.
+    ''' </summary>
+    Private Sub btnExchangeSourceAndReferenceData_Click(sender As Object, e As EventArgs) Handles btnExchangeSourceAndReferenceData.Click
+
+        ' Reverse the order of the file list to exchange source and reference.
+        Me._FileObjectList.Reverse()
+        Me._SpectroscopyTableList.Reverse()
+
+        ' Reload the interface.
+        Me.SaveSettings()
+        Me.SpectroscopyTablesFetched()
+
+    End Sub
+
+#End Region
+
 #Region "Column Saving"
     ' This will be called from the worker thread to activate or deactivate the ColumnSave buttons
     Delegate Sub SetSaveButtonCallback(ByVal Enabled As Boolean)
@@ -196,6 +216,13 @@
     ''' Function that runs when the form is closed... saves Settings.
     ''' </summary>
     Private Sub FormIsClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Me.SaveSettings()
+    End Sub
+
+    ''' <summary>
+    ''' Saves the current settings.
+    ''' </summary>
+    Public Sub SaveSettings()
         ' Saves the Chosen Parameters to the Settings.
         With My.Settings
             .LastDataSummationTwoSets_ScalingFactor = Me.txtSummationFactor.DecimalValue
@@ -204,7 +231,7 @@
             .LastDataSummationTwoSets_ColumnX = Me.pbBeforeSummation.cbX.SelectedColumnName
             .LastDataSummationTwoSets_ColumnToSum = Me.pbBeforeSummation.cbY.SelectedColumnName
             .LastDataSummationTwoSets_ColumnToSumWith = Me.pbReferenceData.cbY.SelectedColumnName
-            .Save()
+            cGlobal.SaveSettings()
         End With
     End Sub
 #End Region

@@ -43,6 +43,8 @@ Partial Class wDataSummationTwoSets
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.csColumnToSumWith = New SpectroscopyManager.ucSpectroscopyColumnSelector()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.btnExchangeSourceAndReferenceData = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -61,16 +63,16 @@ Partial Class wDataSummationTwoSets
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(774, 157)
+        Me.Label1.Location = New System.Drawing.Point(773, 177)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(115, 13)
+        Me.Label1.Size = New System.Drawing.Size(113, 13)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Save as ColumnName:"
+        Me.Label1.Text = "save as column name:"
         '
         'txtNewColumnName
         '
         Me.txtNewColumnName.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtNewColumnName.Location = New System.Drawing.Point(895, 154)
+        Me.txtNewColumnName.Location = New System.Drawing.Point(894, 174)
         Me.txtNewColumnName.Name = "txtNewColumnName"
         Me.txtNewColumnName.Size = New System.Drawing.Size(166, 20)
         Me.txtNewColumnName.TabIndex = 4
@@ -81,9 +83,9 @@ Partial Class wDataSummationTwoSets
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(9, 20)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(45, 13)
+        Me.Label2.Size = New System.Drawing.Size(44, 13)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Column:"
+        Me.Label2.Text = "column:"
         '
         'btnSaveColumn
         '
@@ -91,7 +93,7 @@ Partial Class wDataSummationTwoSets
         Me.btnSaveColumn.Enabled = False
         Me.btnSaveColumn.Image = Global.SpectroscopyManager.My.Resources.Resources.save_25
         Me.btnSaveColumn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnSaveColumn.Location = New System.Drawing.Point(961, 192)
+        Me.btnSaveColumn.Location = New System.Drawing.Point(961, 246)
         Me.btnSaveColumn.Name = "btnSaveColumn"
         Me.btnSaveColumn.Size = New System.Drawing.Size(106, 64)
         Me.btnSaveColumn.TabIndex = 10
@@ -105,7 +107,7 @@ Partial Class wDataSummationTwoSets
         Me.btnApplySummation.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnApplySummation.Image = Global.SpectroscopyManager.My.Resources.Resources.ok_25
         Me.btnApplySummation.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnApplySummation.Location = New System.Drawing.Point(776, 192)
+        Me.btnApplySummation.Location = New System.Drawing.Point(776, 246)
         Me.btnApplySummation.Name = "btnApplySummation"
         Me.btnApplySummation.Size = New System.Drawing.Size(179, 64)
         Me.btnApplySummation.TabIndex = 9
@@ -151,6 +153,7 @@ Partial Class wDataSummationTwoSets
         Me.pbBeforeSummation.ClearPointSelectionModeAfterSelection = False
         Me.pbBeforeSummation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbBeforeSummation.Location = New System.Drawing.Point(3, 16)
+        Me.pbBeforeSummation.MultipleSpectraStackOffset = 0R
         Me.pbBeforeSummation.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.One
         Me.pbBeforeSummation.Name = "pbBeforeSummation"
         Me.pbBeforeSummation.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -223,6 +226,7 @@ Partial Class wDataSummationTwoSets
         Me.pbReferenceData.ClearPointSelectionModeAfterSelection = False
         Me.pbReferenceData.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbReferenceData.Location = New System.Drawing.Point(3, 16)
+        Me.pbReferenceData.MultipleSpectraStackOffset = 0R
         Me.pbReferenceData.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.One
         Me.pbReferenceData.Name = "pbReferenceData"
         Me.pbReferenceData.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -258,6 +262,7 @@ Partial Class wDataSummationTwoSets
         Me.pbAfterSummation.ClearPointSelectionModeAfterSelection = False
         Me.pbAfterSummation.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbAfterSummation.Location = New System.Drawing.Point(3, 16)
+        Me.pbAfterSummation.MultipleSpectraStackOffset = 0R
         Me.pbAfterSummation.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         Me.pbAfterSummation.Name = "pbAfterSummation"
         Me.pbAfterSummation.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -286,6 +291,7 @@ Partial Class wDataSummationTwoSets
         '
         'txtSummationFactor
         '
+        Me.txtSummationFactor.AllowZero = True
         Me.txtSummationFactor.BackColor = System.Drawing.Color.White
         Me.txtSummationFactor.ForeColor = System.Drawing.Color.Black
         Me.txtSummationFactor.FormatDecimalPlaces = 6
@@ -311,6 +317,7 @@ Partial Class wDataSummationTwoSets
         'GroupBox3
         '
         Me.GroupBox3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox3.Controls.Add(Me.btnExchangeSourceAndReferenceData)
         Me.GroupBox3.Controls.Add(Me.txtSummationFactor)
         Me.GroupBox3.Controls.Add(Me.lblScalingFactor)
         Me.GroupBox3.Controls.Add(Me.Label2)
@@ -319,7 +326,7 @@ Partial Class wDataSummationTwoSets
         Me.GroupBox3.Controls.Add(Me.csColumnToSumWith)
         Me.GroupBox3.Location = New System.Drawing.Point(776, 3)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(289, 139)
+        Me.GroupBox3.Size = New System.Drawing.Size(289, 165)
         Me.GroupBox3.TabIndex = 16
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "settings"
@@ -350,6 +357,28 @@ Partial Class wDataSummationTwoSets
         Me.csColumnToSumWith.TurnOnLastFilterSaving = False
         Me.csColumnToSumWith.TurnOnLastSelectionSaving = False
         '
+        'Label3
+        '
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(779, 206)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(284, 26)
+        Me.Label3.TabIndex = 2
+        Me.Label3.Text = "NOTICE: the data will only be saved in the source file (left)." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "The reference dat" &
+    "a file will stay untouched!" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'btnExchangeSourceAndReferenceData
+        '
+        Me.btnExchangeSourceAndReferenceData.Image = Global.SpectroscopyManager.My.Resources.Resources.reload_16
+        Me.btnExchangeSourceAndReferenceData.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnExchangeSourceAndReferenceData.Location = New System.Drawing.Point(12, 132)
+        Me.btnExchangeSourceAndReferenceData.Name = "btnExchangeSourceAndReferenceData"
+        Me.btnExchangeSourceAndReferenceData.Size = New System.Drawing.Size(263, 23)
+        Me.btnExchangeSourceAndReferenceData.TabIndex = 18
+        Me.btnExchangeSourceAndReferenceData.Text = "exchange source and reference data"
+        Me.btnExchangeSourceAndReferenceData.UseVisualStyleBackColor = True
+        '
         'wDataSummationTwoSets
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -361,12 +390,14 @@ Partial Class wDataSummationTwoSets
         Me.Controls.Add(Me.btnCloseWindow)
         Me.Controls.Add(Me.btnSaveColumn)
         Me.Controls.Add(Me.txtNewColumnName)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "wDataSummationTwoSets"
         Me.Text = "Data Summation - "
         Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.Label3, 0)
         Me.Controls.SetChildIndex(Me.txtNewColumnName, 0)
         Me.Controls.SetChildIndex(Me.btnSaveColumn, 0)
         Me.Controls.SetChildIndex(Me.btnCloseWindow, 0)
@@ -410,4 +441,6 @@ Partial Class wDataSummationTwoSets
     Friend WithEvents SplitContainer2 As SplitContainer
     Friend WithEvents GroupBox4 As GroupBox
     Friend WithEvents pbReferenceData As mSpectroscopyTableViewer
+    Friend WithEvents btnExchangeSourceAndReferenceData As Button
+    Friend WithEvents Label3 As Label
 End Class
