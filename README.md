@@ -27,8 +27,10 @@ Operating system:
     * .NET Framework 4.5
 
 Currently compatible with measurement files of the following manufacturers:
-* Nanonis
-* Createc
+* SPECS Nanonis
+* Createc STMAFM
+* Omicron Matrix
+* Nanotec WSxM
 
 
 Installation

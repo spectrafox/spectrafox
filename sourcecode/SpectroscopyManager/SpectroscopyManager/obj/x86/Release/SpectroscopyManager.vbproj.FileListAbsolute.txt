@@ -910,3 +910,5 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\o
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cNumericSmoothingPanel_SavitzkyGolay.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.rAFMForceCurrentDeconvolution.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wAFMForceCurrentDeconvolution.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.rExport.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wSettings_Program.resources
