@@ -29,6 +29,8 @@ Partial Class mSpectroscopyTableViewer
         Me.tsbtnColumnSetup = New System.Windows.Forms.ToolStripButton()
         Me.tssRight = New System.Windows.Forms.ToolStripSeparator()
         Me.tsbtnTool_Zoom = New System.Windows.Forms.ToolStripButton()
+        Me.tsbtnMeasureVertical = New System.Windows.Forms.ToolStripButton()
+        Me.tsbtnMeasureHorizontal = New System.Windows.Forms.ToolStripButton()
         Me.tslblTools = New System.Windows.Forms.ToolStripLabel()
         Me.tsbtnPlotSetup = New System.Windows.Forms.ToolStripButton()
         Me.tssLeft1 = New System.Windows.Forms.ToolStripSeparator()
@@ -55,8 +57,6 @@ Partial Class mSpectroscopyTableViewer
         Me.ckbLogY = New System.Windows.Forms.CheckBox()
         Me.lblYAxis = New System.Windows.Forms.Label()
         Me.cbY = New SpectroscopyManager.ucSpectroscopyColumnSelector()
-        Me.tsbtnMeasureVertical = New System.Windows.Forms.ToolStripButton()
-        Me.tsbtnMeasureHorizontal = New System.Windows.Forms.ToolStripButton()
         Me.tsTools.SuspendLayout()
         Me.dpLeft.SuspendLayout()
         CType(Me.nudSymbolSize, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -121,6 +121,28 @@ Partial Class mSpectroscopyTableViewer
         Me.tsbtnTool_Zoom.Name = "tsbtnTool_Zoom"
         Me.tsbtnTool_Zoom.Size = New System.Drawing.Size(23, 22)
         Me.tsbtnTool_Zoom.Text = "reset to the default scale"
+        '
+        'tsbtnMeasureVertical
+        '
+        Me.tsbtnMeasureVertical.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsbtnMeasureVertical.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbtnMeasureVertical.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_vert_16
+        Me.tsbtnMeasureVertical.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtnMeasureVertical.Name = "tsbtnMeasureVertical"
+        Me.tsbtnMeasureVertical.Size = New System.Drawing.Size(23, 22)
+        Me.tsbtnMeasureVertical.Text = "measure vertical distance"
+        Me.tsbtnMeasureVertical.ToolTipText = "measure vertical distance"
+        '
+        'tsbtnMeasureHorizontal
+        '
+        Me.tsbtnMeasureHorizontal.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.tsbtnMeasureHorizontal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbtnMeasureHorizontal.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_16
+        Me.tsbtnMeasureHorizontal.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbtnMeasureHorizontal.Name = "tsbtnMeasureHorizontal"
+        Me.tsbtnMeasureHorizontal.Size = New System.Drawing.Size(23, 22)
+        Me.tsbtnMeasureHorizontal.Text = "measure horizontal distance"
+        Me.tsbtnMeasureHorizontal.ToolTipText = "measure horizontal distance"
         '
         'tslblTools
         '
@@ -424,36 +446,14 @@ Partial Class mSpectroscopyTableViewer
         Me.cbY.TurnOnLastFilterSaving = False
         Me.cbY.TurnOnLastSelectionSaving = False
         '
-        'tsbtnMeasureVertical
-        '
-        Me.tsbtnMeasureVertical.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsbtnMeasureVertical.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbtnMeasureVertical.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_vert_16
-        Me.tsbtnMeasureVertical.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbtnMeasureVertical.Name = "tsbtnMeasureVertical"
-        Me.tsbtnMeasureVertical.Size = New System.Drawing.Size(23, 22)
-        Me.tsbtnMeasureVertical.Text = "measure vertical distance"
-        Me.tsbtnMeasureVertical.ToolTipText = "measure vertical distance"
-        '
-        'tsbtnMeasureHorizontal
-        '
-        Me.tsbtnMeasureHorizontal.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
-        Me.tsbtnMeasureHorizontal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbtnMeasureHorizontal.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_16
-        Me.tsbtnMeasureHorizontal.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbtnMeasureHorizontal.Name = "tsbtnMeasureHorizontal"
-        Me.tsbtnMeasureHorizontal.Size = New System.Drawing.Size(23, 22)
-        Me.tsbtnMeasureHorizontal.Text = "measure horizontal distance"
-        Me.tsbtnMeasureHorizontal.ToolTipText = "measure horizontal distance"
-        '
         'mSpectroscopyTableViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.dpLeft)
         Me.Controls.Add(Me.dpRight)
-        Me.Controls.Add(Me.zPreview)
         Me.Controls.Add(Me.tsTools)
+        Me.Controls.Add(Me.zPreview)
         Me.Name = "mSpectroscopyTableViewer"
         Me.Size = New System.Drawing.Size(539, 356)
         Me.tsTools.ResumeLayout(False)

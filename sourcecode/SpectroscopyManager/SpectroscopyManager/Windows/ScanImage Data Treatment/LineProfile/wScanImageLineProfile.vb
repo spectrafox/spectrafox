@@ -72,6 +72,9 @@ Public Class wScanImageLineProfile
 
 #Region "Plotting of the line-profile"
 
+    ''' <summary>
+    ''' Plots the line profile from the given points as pixel coordinates in the image.
+    ''' </summary>
     Public Sub PlotLineProfile(ByVal Point2 As Point, ByVal Point1 As Point)
 
         Dim DataPointNo As Integer = CInt(Me.nudDataPoints.Value)
@@ -89,6 +92,18 @@ Public Class wScanImageLineProfile
         ' in the value-matrix, to extract the lines.
         Dim ValueMatrixP1 As Point = Me._ScanImagePlot.ScanImagePlotted.GetCoordinateInValueMatrix(RealP1)
         Dim ValueMatrixP2 As Point = Me._ScanImagePlot.ScanImagePlotted.GetCoordinateInValueMatrix(RealP2)
+
+        ' Check for valid coordinates:
+        If ValueMatrixP1.Y >= Me._ScanImagePlot.ScanChannelPlotted.ScanData.RowCount OrElse
+           ValueMatrixP2.Y >= Me._ScanImagePlot.ScanChannelPlotted.ScanData.RowCount OrElse
+           ValueMatrixP1.X >= Me._ScanImagePlot.ScanChannelPlotted.ScanData.ColumnCount OrElse
+           ValueMatrixP2.X >= Me._ScanImagePlot.ScanChannelPlotted.ScanData.ColumnCount OrElse
+           ValueMatrixP1.Y < 0 OrElse
+           ValueMatrixP2.Y < 0 OrElse
+           ValueMatrixP1.X < 0 OrElse
+           ValueMatrixP2.X < 0 Then
+            Return
+        End If
 
         ' Get the height values of the value-matrix:
         Dim RealP1_Z As Double = Me._ScanImagePlot.ScanChannelPlotted.ScanData(ValueMatrixP1.Y, ValueMatrixP1.X)

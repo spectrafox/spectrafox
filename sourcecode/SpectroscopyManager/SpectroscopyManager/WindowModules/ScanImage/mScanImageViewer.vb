@@ -82,9 +82,15 @@ Public Class mScanImageViewer
     ''' </summary>
     Private _ScanImageFiltersSelected As New List(Of iScanImageFilter)
 
+    ''' <summary>
+    ''' Store the list of the external viewers.
+    ''' </summary>
+    Private _ExternalViewers As New cExternalViewers
+
 #End Region
 
 #Region "Module Load Function"
+
     ''' <summary>
     ''' Constructor: Sets the Adresses for the Scan-Image Background-Worker
     ''' </summary>
@@ -111,6 +117,16 @@ Public Class mScanImageViewer
                 End If
             Next
             If Me._ScanImageFiltersAvailable.Count > 0 Then .SelectedIndex = 0
+        End With
+
+        ' Populate the external viewer list.
+        With Me.cboExternalViewer
+            For i As Integer = 0 To Me._ExternalViewers.ExternalViewers.Count - 1 Step 1
+                .Items.Add(Me._ExternalViewers.ExternalViewers(i).DisplayName)
+            Next
+            If .Items.Count > 0 Then
+                .SelectedIndex = 0
+            End If
         End With
 
         ' Initially collapse the setting panels
@@ -533,6 +549,12 @@ Public Class mScanImageViewer
     ''' Hide on Mouse-Leave.
     ''' </summary>
     Private Sub dpRight_MouseLeave(sender As Object, e As EventArgs) Handles dpRight.MouseLeave_PanelArea
+        ' Only slide out, if no control has the focus.
+        For Each C As Control In Me.dpRight.Controls
+            If C.Focused Then
+                Return
+            End If
+        Next
         Me.dpRight.SlideIn()
         Me.pbScanImage.Focus()
     End Sub
@@ -545,11 +567,43 @@ Public Class mScanImageViewer
     End Sub
 
     ''' <summary>
+    ''' force hide or show
+    ''' </summary>
+    Private Sub tsbtnPlotSetup_Click(sender As Object, e As EventArgs) Handles tsbtnPlotSetup.Click
+        With Me.dpRight
+            If .IsPanelSlidOut Then
+                .SlideIn()
+            Else
+                .SlideOut()
+            End If
+        End With
+    End Sub
+
+    ''' <summary>
     ''' Hide on Mouse-Leave.
     ''' </summary>
     Private Sub dpLeft_MouseLeave(sender As Object, e As EventArgs) Handles dpLeft.MouseLeave_PanelArea
+        ' Only slide out, if no control has the focus.
+        For Each C As Control In Me.dpLeft.Controls
+            If C.Focused Then
+                Return
+            End If
+        Next
         Me.dpLeft.SlideIn()
         Me.pbScanImage.Focus()
+    End Sub
+
+    ''' <summary>
+    ''' force hide or show
+    ''' </summary>
+    Private Sub tsbtnChannelSetup_Click(sender As Object, e As EventArgs) Handles tsbtnChannelSetup.Click
+        With Me.dpLeft
+            If .IsPanelSlidOut Then
+                .SlideIn()
+            Else
+                .SlideOut()
+            End If
+        End With
     End Sub
 
     ''' <summary>
@@ -1073,7 +1127,31 @@ Public Class mScanImageViewer
         wPlot.Show(Me.oScanImagePlot, P1, P2)
     End Sub
 
-    Private Sub RecalculateImage(NewColorSchema As cColorScheme)
+#End Region
+
+#Region "open in external viewer"
+
+    ''' <summary>
+    ''' External viewer support.
+    ''' </summary>
+    Private Sub btnOpenExternal_Click(sender As Object, e As EventArgs) Handles btnOpenExternal.Click
+
+        ' Returns, if we have no file.
+        If Me.oScanImage Is Nothing Then Return
+
+        ' Open the current file in the external viewer.
+        Dim SelectedIndex As Integer = Me.cboExternalViewer.SelectedIndex
+        If SelectedIndex >= 0 And SelectedIndex < Me._ExternalViewers.ExternalViewers.Count Then
+
+            ' Abort, if the filename is invalid.
+            If IO.File.Exists(Me.oScanImage.FullFileName) Then
+
+                ' launch the viewer
+                Me._ExternalViewers.ExternalViewers(SelectedIndex).LaunchViewer(Me.oScanImage.FullFileName)
+
+            End If
+
+        End If
 
     End Sub
 

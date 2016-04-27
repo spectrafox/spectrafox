@@ -1753,6 +1753,14 @@ Public Class mSpectroscopyTableViewer
     ''' Hide on Mouse-Leave.
     ''' </summary>
     Private Sub dpRight_MouseLeave(sender As Object, e As EventArgs) Handles dpRight.MouseLeave_PanelArea
+
+        ' Only slide out, if no control has the focus.
+        For Each C As Control In Me.dpRight.Controls
+            If C.Focused Then
+                Return
+            End If
+        Next
+
         Me.dpRight.SlideIn()
     End Sub
 
@@ -1767,6 +1775,12 @@ Public Class mSpectroscopyTableViewer
     ''' Hide on Mouse-Leave.
     ''' </summary>
     Private Sub dpLeft_MouseLeave(sender As Object, e As EventArgs) Handles dpLeft.MouseLeave_PanelArea
+        ' Only slide out, if no control has the focus.
+        For Each C As Control In Me.dpLeft.Controls
+            If C.Focused Then
+                Return
+            End If
+        Next
         Me.dpLeft.SlideIn()
     End Sub
 

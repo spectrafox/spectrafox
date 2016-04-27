@@ -39,8 +39,8 @@ Partial Class wMain
         Me.mnuEnableAutomaticUpdate = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuInstallDevelopmentReleases = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
-        Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuHelp_ShowHelp = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuAbout = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTest = New System.Windows.Forms.ToolStripMenuItem()
         Me.msMainMenu.SuspendLayout()
         Me.SuspendLayout()
@@ -48,7 +48,7 @@ Partial Class wMain
         'msMainMenu
         '
         Me.msMainMenu.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.msMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuFile, Me.mnuPrograms, Me.mnuWindows, Me.mnuComputingCloud, Me.mnuGPUComputing, Me.mnuHelp, Me.mnuTest})
+        Me.msMainMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuFile, Me.mnuWindows, Me.mnuComputingCloud, Me.mnuGPUComputing, Me.mnuPrograms, Me.mnuHelp, Me.mnuTest})
         Me.msMainMenu.Location = New System.Drawing.Point(0, 0)
         Me.msMainMenu.Name = "msMainMenu"
         Me.msMainMenu.Size = New System.Drawing.Size(1016, 24)
@@ -66,19 +66,19 @@ Partial Class wMain
         '
         Me.mnuBrowseFolder.Image = Global.SpectroscopyManager.My.Resources.Resources.folder_16
         Me.mnuBrowseFolder.Name = "mnuBrowseFolder"
-        Me.mnuBrowseFolder.Size = New System.Drawing.Size(148, 22)
+        Me.mnuBrowseFolder.Size = New System.Drawing.Size(152, 22)
         Me.mnuBrowseFolder.Text = "Browse Folder"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(145, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(149, 6)
         '
         'mnuQuitProgram
         '
         Me.mnuQuitProgram.Image = Global.SpectroscopyManager.My.Resources.Resources.power_16
         Me.mnuQuitProgram.Name = "mnuQuitProgram"
-        Me.mnuQuitProgram.Size = New System.Drawing.Size(148, 22)
+        Me.mnuQuitProgram.Size = New System.Drawing.Size(152, 22)
         Me.mnuQuitProgram.Text = "Exit"
         '
         'mnuPrograms
@@ -87,13 +87,12 @@ Partial Class wMain
         Me.mnuPrograms.Name = "mnuPrograms"
         Me.mnuPrograms.Size = New System.Drawing.Size(65, 20)
         Me.mnuPrograms.Text = "Program"
-        Me.mnuPrograms.Visible = False
         '
         'mnuProgramSettings
         '
         Me.mnuProgramSettings.Image = Global.SpectroscopyManager.My.Resources.Resources.settings_16
         Me.mnuProgramSettings.Name = "mnuProgramSettings"
-        Me.mnuProgramSettings.Size = New System.Drawing.Size(116, 22)
+        Me.mnuProgramSettings.Size = New System.Drawing.Size(152, 22)
         Me.mnuProgramSettings.Text = "Settings"
         '
         'mnuWindows
@@ -132,7 +131,7 @@ Partial Class wMain
         '
         Me.mnuGPUComputingSettings.Image = Global.SpectroscopyManager.My.Resources.Resources.settings_16
         Me.mnuGPUComputingSettings.Name = "mnuGPUComputingSettings"
-        Me.mnuGPUComputingSettings.Size = New System.Drawing.Size(116, 22)
+        Me.mnuGPUComputingSettings.Size = New System.Drawing.Size(152, 22)
         Me.mnuGPUComputingSettings.Text = "Settings"
         '
         'mnuHelp
@@ -165,19 +164,19 @@ Partial Class wMain
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
         Me.ToolStripSeparator2.Size = New System.Drawing.Size(245, 6)
         '
-        'mnuAbout
-        '
-        Me.mnuAbout.Image = Global.SpectroscopyManager.My.Resources.Resources.info_16
-        Me.mnuAbout.Name = "mnuAbout"
-        Me.mnuAbout.Size = New System.Drawing.Size(248, 22)
-        Me.mnuAbout.Text = "about SpectraFox"
-        '
         'mnuHelp_ShowHelp
         '
         Me.mnuHelp_ShowHelp.Image = Global.SpectroscopyManager.My.Resources.Resources.question_16
         Me.mnuHelp_ShowHelp.Name = "mnuHelp_ShowHelp"
         Me.mnuHelp_ShowHelp.Size = New System.Drawing.Size(248, 22)
         Me.mnuHelp_ShowHelp.Text = "open online help in web-browser"
+        '
+        'mnuAbout
+        '
+        Me.mnuAbout.Image = Global.SpectroscopyManager.My.Resources.Resources.info_16
+        Me.mnuAbout.Name = "mnuAbout"
+        Me.mnuAbout.Size = New System.Drawing.Size(248, 22)
+        Me.mnuAbout.Text = "about SpectraFox"
         '
         'mnuTest
         '

@@ -211,6 +211,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rComputingCloud.resx</DependentUpon>
     </Compile>
+    <Compile Include="Export\cExternalViewers.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_CSV.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_TAB.vb" />
@@ -222,6 +223,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rExportMethods.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Export\rExport.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rExport.resx</DependentUpon>
     </Compile>
     <Compile Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -714,6 +720,12 @@
     <Compile Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\Settings\wSettings_Program.Designer.vb">
+      <DependentUpon>wSettings_Program.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Settings\wSettings_Program.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\rAFMForceCurrentDeconvolution.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1107,6 +1119,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>rExportMethods.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Export\rExport.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rExport.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1338,6 +1355,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.resx">
       <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Settings\wSettings_Program.resx">
+      <DependentUpon>wSettings_Program.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Spectroscopy Data Treatment\AFM-Signal Deconvolution\rAFMForceCurrentDeconvolution.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>

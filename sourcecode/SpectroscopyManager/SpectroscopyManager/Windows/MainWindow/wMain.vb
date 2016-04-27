@@ -416,5 +416,14 @@ Public Class wMain
                             My.Resources.rMain.Help_ErrorOpeningWebbrowser_Title, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+    ''' <summary>
+    ''' Open the settings window.
+    ''' </summary>
+    Private Sub mnuProgramSettings_Click(sender As Object, e As EventArgs) Handles mnuProgramSettings.Click
+        Dim W As New wSettings_Program
+        W.Show()
+    End Sub
+
 #End Region
 End Class

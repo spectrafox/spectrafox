@@ -37,6 +37,7 @@ Partial Class mScanImageViewer
         Me.tssLeft1 = New System.Windows.Forms.ToolStripSeparator()
         Me.tslblInfobar = New System.Windows.Forms.ToolStripLabel()
         Me.dpLeft = New SpectroscopyManager.DockablePanel()
+        Me.cboExternalViewer = New System.Windows.Forms.ComboBox()
         Me.gbChannel = New System.Windows.Forms.GroupBox()
         Me.cbChannel = New SpectroscopyManager.ucScanChannelSelector()
         Me.btnFilterSettings = New System.Windows.Forms.Button()
@@ -51,12 +52,15 @@ Partial Class mScanImageViewer
         Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
         Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.lblColorCode = New System.Windows.Forms.Label()
+        Me.gbOpenExternal = New System.Windows.Forms.GroupBox()
+        Me.btnOpenExternal = New System.Windows.Forms.Button()
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.tsTools.SuspendLayout()
         Me.dpLeft.SuspendLayout()
         Me.gbChannel.SuspendLayout()
         Me.dpRight.SuspendLayout()
+        Me.gbOpenExternal.SuspendLayout()
         Me.SuspendLayout()
         '
         'pbScanImage
@@ -153,6 +157,7 @@ Partial Class mScanImageViewer
         '
         'dpLeft
         '
+        Me.dpLeft.Controls.Add(Me.gbOpenExternal)
         Me.dpLeft.Controls.Add(Me.gbChannel)
         Me.dpLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.dpLeft.Location = New System.Drawing.Point(0, 25)
@@ -162,6 +167,15 @@ Partial Class mScanImageViewer
         Me.dpLeft.SlidePixelsPerTimerTick = 25
         Me.dpLeft.SuspendMessageFiltering = False
         Me.dpLeft.TabIndex = 15
+        '
+        'cboExternalViewer
+        '
+        Me.cboExternalViewer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cboExternalViewer.FormattingEnabled = True
+        Me.cboExternalViewer.Location = New System.Drawing.Point(6, 19)
+        Me.cboExternalViewer.Name = "cboExternalViewer"
+        Me.cboExternalViewer.Size = New System.Drawing.Size(145, 21)
+        Me.cboExternalViewer.TabIndex = 15
         '
         'gbChannel
         '
@@ -287,9 +301,9 @@ Partial Class mScanImageViewer
         Me.ckbUseHighQualityScaling.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.SpectroscopyManager.My.MySettings.Default, "ScanImageViewer_HQPlot", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
         Me.ckbUseHighQualityScaling.Location = New System.Drawing.Point(6, 341)
         Me.ckbUseHighQualityScaling.Name = "ckbUseHighQualityScaling"
-        Me.ckbUseHighQualityScaling.Size = New System.Drawing.Size(133, 17)
+        Me.ckbUseHighQualityScaling.Size = New System.Drawing.Size(124, 17)
         Me.ckbUseHighQualityScaling.TabIndex = 9
-        Me.ckbUseHighQualityScaling.Text = "high quality processing"
+        Me.ckbUseHighQualityScaling.Text = "high quality rescaling"
         Me.ckbUseHighQualityScaling.UseVisualStyleBackColor = True
         '
         'vsValueRangeSelector
@@ -317,6 +331,26 @@ Partial Class mScanImageViewer
         Me.lblColorCode.TabIndex = 14
         Me.lblColorCode.Text = "color scheme:"
         '
+        'gbOpenExternal
+        '
+        Me.gbOpenExternal.Controls.Add(Me.btnOpenExternal)
+        Me.gbOpenExternal.Controls.Add(Me.cboExternalViewer)
+        Me.gbOpenExternal.Location = New System.Drawing.Point(3, 226)
+        Me.gbOpenExternal.Name = "gbOpenExternal"
+        Me.gbOpenExternal.Size = New System.Drawing.Size(157, 80)
+        Me.gbOpenExternal.TabIndex = 15
+        Me.gbOpenExternal.TabStop = False
+        Me.gbOpenExternal.Text = "open file in external viewer:"
+        '
+        'btnOpenExternal
+        '
+        Me.btnOpenExternal.Location = New System.Drawing.Point(6, 46)
+        Me.btnOpenExternal.Name = "btnOpenExternal"
+        Me.btnOpenExternal.Size = New System.Drawing.Size(145, 23)
+        Me.btnOpenExternal.TabIndex = 15
+        Me.btnOpenExternal.Text = "open in external viewer"
+        Me.btnOpenExternal.UseVisualStyleBackColor = True
+        '
         'mScanImageViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -336,6 +370,7 @@ Partial Class mScanImageViewer
         Me.gbChannel.PerformLayout()
         Me.dpRight.ResumeLayout(False)
         Me.dpRight.PerformLayout()
+        Me.gbOpenExternal.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -367,4 +402,7 @@ Partial Class mScanImageViewer
     Friend WithEvents tsbtnPlotSetup As ToolStripButton
     Friend WithEvents tssRight As ToolStripSeparator
     Friend WithEvents ckbScaleBarVisible As CheckBox
+    Friend WithEvents cboExternalViewer As ComboBox
+    Friend WithEvents gbOpenExternal As GroupBox
+    Friend WithEvents btnOpenExternal As Button
 End Class
