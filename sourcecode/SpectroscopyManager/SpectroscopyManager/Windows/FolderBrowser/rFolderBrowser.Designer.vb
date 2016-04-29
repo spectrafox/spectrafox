@@ -65,6 +65,25 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The path you entered is invalid!
+        '''Please check and try again..
+        '''</summary>
+        Friend Shared ReadOnly Property Error_PathInvalid() As String
+            Get
+                Return ResourceManager.GetString("Error_PathInvalid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to invalid path.
+        '''</summary>
+        Friend Shared ReadOnly Property Error_PathInvalid_Title() As String
+            Get
+                Return ResourceManager.GetString("Error_PathInvalid_Title", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to no items in current folder.
         '''</summary>
         Friend Shared ReadOnly Property FolderCount_FolderEmpty() As String

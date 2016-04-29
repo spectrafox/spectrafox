@@ -26,7 +26,7 @@ Partial Class wFolderBrowser
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.mnuRefreshView = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuFolderHistory = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
+        Me.scMainSplitter = New System.Windows.Forms.SplitContainer()
         Me.lv1 = New SpectroscopyManager.ListView_DoubleBuffered()
         Me.chName = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.chSize = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -36,15 +36,18 @@ Partial Class wFolderBrowser
         Me.chCreated = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.btnBrowseFolder = New System.Windows.Forms.Button()
+        Me.txtPath = New System.Windows.Forms.TextBox()
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.tsslLeft = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsslMiddle = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tsslRight = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblPath = New System.Windows.Forms.Label()
+        Me.btnPathOpen = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SplitContainer1.Panel1.SuspendLayout()
-        Me.SplitContainer1.Panel2.SuspendLayout()
-        Me.SplitContainer1.SuspendLayout()
+        CType(Me.scMainSplitter, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.scMainSplitter.Panel1.SuspendLayout()
+        Me.scMainSplitter.Panel2.SuspendLayout()
+        Me.scMainSplitter.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -59,7 +62,7 @@ Partial Class wFolderBrowser
         Me.dbDictionaryBrowser.Name = "dbDictionaryBrowser"
         Me.dbDictionaryBrowser.ShowHiddenFolders = False
         Me.dbDictionaryBrowser.ShowRootLines = False
-        Me.dbDictionaryBrowser.Size = New System.Drawing.Size(314, 688)
+        Me.dbDictionaryBrowser.Size = New System.Drawing.Size(314, 664)
         Me.dbDictionaryBrowser.StartUpDirectory = ExpTreeLib.ExpTree.StartDir.MyComputer
         Me.dbDictionaryBrowser.TabIndex = 20
         '
@@ -87,23 +90,25 @@ Partial Class wFolderBrowser
         Me.mnuFolderHistory.Size = New System.Drawing.Size(105, 20)
         Me.mnuFolderHistory.Text = "folder history"
         '
-        'SplitContainer1
+        'scMainSplitter
         '
-        Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SplitContainer1.Location = New System.Drawing.Point(0, 24)
-        Me.SplitContainer1.Name = "SplitContainer1"
+        Me.scMainSplitter.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.scMainSplitter.Location = New System.Drawing.Point(0, 48)
+        Me.scMainSplitter.Name = "scMainSplitter"
         '
-        'SplitContainer1.Panel1
+        'scMainSplitter.Panel1
         '
-        Me.SplitContainer1.Panel1.Controls.Add(Me.dbDictionaryBrowser)
+        Me.scMainSplitter.Panel1.Controls.Add(Me.dbDictionaryBrowser)
         '
-        'SplitContainer1.Panel2
+        'scMainSplitter.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.lv1)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.Panel1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(721, 688)
-        Me.SplitContainer1.SplitterDistance = 314
-        Me.SplitContainer1.TabIndex = 22
+        Me.scMainSplitter.Panel2.Controls.Add(Me.lv1)
+        Me.scMainSplitter.Panel2.Controls.Add(Me.Panel1)
+        Me.scMainSplitter.Size = New System.Drawing.Size(721, 664)
+        Me.scMainSplitter.SplitterDistance = 314
+        Me.scMainSplitter.TabIndex = 22
         '
         'lv1
         '
@@ -113,7 +118,7 @@ Partial Class wFolderBrowser
         Me.lv1.LabelEdit = True
         Me.lv1.Location = New System.Drawing.Point(0, 59)
         Me.lv1.Name = "lv1"
-        Me.lv1.Size = New System.Drawing.Size(403, 629)
+        Me.lv1.Size = New System.Drawing.Size(403, 605)
         Me.lv1.TabIndex = 2
         Me.lv1.UseCompatibleStateImageBehavior = False
         Me.lv1.View = System.Windows.Forms.View.Details
@@ -174,6 +179,15 @@ Partial Class wFolderBrowser
         Me.btnBrowseFolder.Text = "open data-browser for the selected folder"
         Me.btnBrowseFolder.UseVisualStyleBackColor = True
         '
+        'txtPath
+        '
+        Me.txtPath.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtPath.Location = New System.Drawing.Point(92, 26)
+        Me.txtPath.Name = "txtPath"
+        Me.txtPath.Size = New System.Drawing.Size(588, 20)
+        Me.txtPath.TabIndex = 21
+        '
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsslLeft, Me.tsslMiddle, Me.tsslRight})
@@ -203,23 +217,45 @@ Partial Class wFolderBrowser
         Me.tsslRight.Name = "tsslRight"
         Me.tsslRight.Size = New System.Drawing.Size(0, 17)
         '
+        'lblPath
+        '
+        Me.lblPath.AutoSize = True
+        Me.lblPath.Location = New System.Drawing.Point(0, 29)
+        Me.lblPath.Name = "lblPath"
+        Me.lblPath.Size = New System.Drawing.Size(86, 13)
+        Me.lblPath.TabIndex = 24
+        Me.lblPath.Text = "current directory:"
+        '
+        'btnPathOpen
+        '
+        Me.btnPathOpen.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnPathOpen.Image = Global.SpectroscopyManager.My.Resources.Resources.right_16
+        Me.btnPathOpen.Location = New System.Drawing.Point(686, 26)
+        Me.btnPathOpen.Name = "btnPathOpen"
+        Me.btnPathOpen.Size = New System.Drawing.Size(33, 20)
+        Me.btnPathOpen.TabIndex = 25
+        Me.btnPathOpen.UseVisualStyleBackColor = True
+        '
         'wFolderBrowser
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(721, 734)
-        Me.Controls.Add(Me.SplitContainer1)
-        Me.Controls.Add(Me.MenuStrip1)
+        Me.Controls.Add(Me.btnPathOpen)
+        Me.Controls.Add(Me.lblPath)
+        Me.Controls.Add(Me.scMainSplitter)
         Me.Controls.Add(Me.StatusStrip1)
+        Me.Controls.Add(Me.txtPath)
+        Me.Controls.Add(Me.MenuStrip1)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "wFolderBrowser"
         Me.Text = "Select Folder"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        Me.SplitContainer1.Panel1.ResumeLayout(False)
-        Me.SplitContainer1.Panel2.ResumeLayout(False)
-        CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SplitContainer1.ResumeLayout(False)
+        Me.scMainSplitter.Panel1.ResumeLayout(False)
+        Me.scMainSplitter.Panel2.ResumeLayout(False)
+        CType(Me.scMainSplitter, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.scMainSplitter.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
@@ -230,7 +266,7 @@ Partial Class wFolderBrowser
     Friend WithEvents dbDictionaryBrowser As ExpTreeLib.ExpTree
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
     Friend WithEvents mnuRefreshView As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
+    Friend WithEvents scMainSplitter As System.Windows.Forms.SplitContainer
     Friend WithEvents lv1 As ListView_DoubleBuffered
     Friend WithEvents chName As System.Windows.Forms.ColumnHeader
     Friend WithEvents chSize As System.Windows.Forms.ColumnHeader
@@ -245,4 +281,7 @@ Partial Class wFolderBrowser
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents btnBrowseFolder As System.Windows.Forms.Button
     Friend WithEvents mnuFolderHistory As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents txtPath As TextBox
+    Friend WithEvents lblPath As Label
+    Friend WithEvents btnPathOpen As Button
 End Class

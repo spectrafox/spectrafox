@@ -338,10 +338,11 @@ Public Class wFolderBrowser
            Handles dbDictionaryBrowser.ExpTreeNodeSelected
 
         If LastSelectedCSI IsNot Nothing AndAlso LastSelectedCSI Is CSI Then Exit Sub
-        Cursor = Cursors.WaitCursor
-        tsslMiddle.Text = pathName
+        Me.Cursor = Cursors.WaitCursor
+        Me.tsslMiddle.Text = pathName
+        Me.txtPath.Text = pathName
         Me.Text = My.Resources.rFolderBrowser.WindowTitle_Addon & pathName
-        tsslLeft.Text = My.Resources.rFolderBrowser.UpdateNode_Status
+        Me.tsslLeft.Text = My.Resources.rFolderBrowser.UpdateNode_Status
 
         If BGW2 IsNot Nothing Then
             BGW2.CancelAsync()
@@ -1267,6 +1268,53 @@ CLEANUP:
 
         End Select
 
+    End Sub
+
+#End Region
+
+#Region "Change path via the textbox"
+
+    ''' <summary>
+    ''' Change the path on pressing enter.
+    ''' </summary>
+    Private Sub txtPath_PressEnter(sender As Object, e As KeyEventArgs) Handles txtPath.KeyDown
+
+        ' Check, if enter is pressed.
+        If e.KeyCode <> Keys.Enter Then Return
+
+        ' Open the path
+        Me.OpenPath(Me.txtPath.Text)
+
+    End Sub
+
+    ''' <summary>
+    ''' Opens the path that is entered in the pathbox.
+    ''' </summary>
+    Private Sub btnPathOpen_Click(sender As Object, e As EventArgs) Handles btnPathOpen.Click
+        Me.OpenPath(Me.txtPath.Text)
+    End Sub
+
+    ''' <summary>
+    ''' Opens the given path, if it exists.
+    ''' </summary>
+    Private Sub OpenPath(ByVal Path As String)
+        ' Check, if the path is valid, and set this path.
+        If System.IO.Directory.Exists(Path) Then
+
+            Dim csi As CShItem = CShItem.GetCShItem(Path)
+            If csi.IsFolder Then
+                Me.dbDictionaryBrowser.ExpandANode(csi)
+                SetWorkingDirectory(csi.Path)
+            End If
+
+        Else
+
+            ' Show error.
+            MessageBox.Show(My.Resources.rFolderBrowser.Error_PathInvalid,
+                            My.Resources.rFolderBrowser.Error_PathInvalid_Title,
+                            MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+        End If
     End Sub
 
 #End Region
