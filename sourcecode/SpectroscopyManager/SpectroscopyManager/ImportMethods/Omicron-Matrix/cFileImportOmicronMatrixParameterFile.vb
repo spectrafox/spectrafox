@@ -134,127 +134,177 @@ Public Class cFileImportOmicronMatrixParameterFile
         FO._ParameterFileName = FullFileNameToParameterFile
 
         ' Load StreamReader with the Big Endian Encoding
-        Dim fs As New FileStream(FullFileNameToParameterFile, FileMode.Open, FileAccess.Read, FileShare.Read)
-        ' Now Using BinaryReader to obtain Image-Data
-        Dim br As New BinaryReader(fs, System.Text.Encoding.Unicode)
+        Using fs As New FileStream(FullFileNameToParameterFile, FileMode.Open, FileAccess.Read, FileShare.Read)
+            ' Now Using BinaryReader to obtain Image-Data
+            Using br As New BinaryReader(fs, System.Text.Encoding.Unicode)
 
-        ' Buffers
-        Dim LastFourChars As String = String.Empty
+                ' Buffers
+                Dim LastFourChars As String = String.Empty
 
-        Try
+                Try
 
-            ' Read the whole parameter file.
-            Do Until fs.Position = fs.Length
+                    ' Read the whole parameter file.
+                    Do Until fs.Position = fs.Length
 
-                ' Move the identifier buffer by one byte.
-                LastFourChars = GetLastFourCharsByProceedingOneByte(br, LastFourChars)
+                        ' Move the identifier buffer by one byte.
+                        LastFourChars = GetLastFourCharsByProceedingOneByte(br, LastFourChars)
 
-                Select Case LastFourChars
+                        Select Case LastFourChars
 
-                    Case "ATEM"
-                        ' META information concerning the Matrix system.
+                            Case "ATEM"
+                                ' META information concerning the Matrix system.
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
-                            ' read the settings
-                            FO._GeneralPropertyArray.Add("META:SoftwareName", ReadString(BlockReader))
-                            FO._GeneralPropertyArray.Add("META:MatrixVersion", ReadString(BlockReader))
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
-                            ' read the next settings
-                            FO._GeneralPropertyArray.Add("META:MatrixProfile", ReadString(BlockReader))
-                            FO._GeneralPropertyArray.Add("META:UserName", ReadString(BlockReader))
-                        End Using
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                    ' read the settings
+                                    FO._GeneralPropertyArray.Add("META:SoftwareName", ReadString(BlockReader))
+                                    FO._GeneralPropertyArray.Add("META:MatrixVersion", ReadString(BlockReader))
+                                    ' Jump over the next 4 bytes!
+                                    BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                    ' read the next settings
+                                    FO._GeneralPropertyArray.Add("META:MatrixProfile", ReadString(BlockReader))
+                                    FO._GeneralPropertyArray.Add("META:UserName", ReadString(BlockReader))
+                                End Using
 
-                    Case "DPXE"
-                        ' Experiment description and properties.
+                            Case "DPXE"
+                                ' Experiment description and properties.
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                    ' Jump over the next 4 bytes!
+                                    BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                            ' Read 7 strings
-                            For i As Integer = 1 To 7 Step 1
-                                FO._GeneralPropertyArray.Add("EXPD:Property" & i.ToString, ReadString(BlockReader))
-                            Next
-                        End Using
+                                    ' Read 7 strings
+                                    For i As Integer = 1 To 7 Step 1
+                                        FO._GeneralPropertyArray.Add("EXPD:Property" & i.ToString, ReadString(BlockReader))
+                                    Next
+                                End Using
 
-                    Case "LNEG"
-                        ' Project description and files
+                            Case "LNEG"
+                                ' Project description and files
 
-                        Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
-                            ' Read 3 strings
-                            For i As Integer = 1 To 3 Step 1
-                                FO._GeneralPropertyArray.Add("GENL:Property" & i.ToString, ReadString(BlockReader))
-                            Next
-                        End Using
+                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                    ' Read 3 strings
+                                    For i As Integer = 1 To 3 Step 1
+                                        FO._GeneralPropertyArray.Add("GENL:Property" & i.ToString, ReadString(BlockReader))
+                                    Next
+                                End Using
 
-                    Case "TSNI"
-                        ' configuration of instances
+                            Case "TSNI"
+                                ' configuration of instances
 
-                        Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                            ' Get the number of stored parameters.
-                            Dim ParameterCount As UInt32 = BlockReader.ReadUInt32
+                                    ' Get the number of stored parameters.
+                                    Dim ParameterCount As UInt32 = BlockReader.ReadUInt32
 
-                            For i As UInteger = 1 To ParameterCount Step 1
+                                    For i As UInteger = 1 To ParameterCount Step 1
 
-                                Dim S1 As String = ReadString(BlockReader)
-                                Dim S2 As String = ReadString(BlockReader)
-                                Dim S3 As String = ReadString(BlockReader)
+                                        Dim S1 As String = ReadString(BlockReader)
+                                        Dim S2 As String = ReadString(BlockReader)
+                                        Dim S3 As String = ReadString(BlockReader)
 
-                                Dim Key As String = "INST:" & S1 & "::" & S2 & " (" & S3 & ")."
+                                        Dim Key As String = "INST:" & S1 & "::" & S2 & " (" & S3 & ")."
 
-                                Dim PropertyCount As Integer = Convert.ToInt32(BlockReader.ReadUInt32)
+                                        Dim PropertyCount As Integer = Convert.ToInt32(BlockReader.ReadUInt32)
 
-                                While PropertyCount > 0
+                                        While PropertyCount > 0
 
-                                    Dim t1 As String = ReadString(BlockReader)
-                                    Dim t2 As String = ReadString(BlockReader)
-                                    Dim Key2 As String = Key & t1
+                                            Dim t1 As String = ReadString(BlockReader)
+                                            Dim t2 As String = ReadString(BlockReader)
+                                            Dim Key2 As String = Key & t1
 
-                                    FO._GeneralPropertyArray.Add(Key2, t2)
+                                            FO._GeneralPropertyArray.Add(Key2, t2)
 
-                                    PropertyCount -= 1
+                                            PropertyCount -= 1
 
-                                End While
+                                        End While
 
-                            Next
+                                    Next
 
-                        End Using
+                                End Using
 
-                    Case "APEE"
-                        ' Configuration of experiment
-                        ' altered values are recorded in PMOD
-                        ' the most important parts are in XYScanner
+                            Case "APEE"
+                                ' Configuration of experiment
+                                ' altered values are recorded in PMOD
+                                ' the most important parts are in XYScanner
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                    ' Jump over the next 4 bytes!
+                                    BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                            Dim PropertyCount As Integer = Convert.ToInt32(BlockReader.ReadUInt32)
-                            Dim GroupItemNumber As Integer
-                            Dim Instruction As String
-                            Dim ExpConfig As New ExperimentConfiguration
+                                    Dim PropertyCount As Integer = Convert.ToInt32(BlockReader.ReadUInt32)
+                                    Dim GroupItemNumber As Integer
+                                    Dim Instruction As String
+                                    Dim ExpConfig As New ExperimentConfiguration
 
-                            While PropertyCount > 0
+                                    While PropertyCount > 0
 
-                                ' Get the sub instruction.
-                                Instruction = ReadString(BlockReader)
+                                        ' Get the sub instruction.
+                                        Instruction = ReadString(BlockReader)
 
-                                ' Get the number of group items.
-                                GroupItemNumber = Convert.ToInt32(BlockReader.ReadUInt32)
-                                While GroupItemNumber > 0
+                                        ' Get the number of group items.
+                                        GroupItemNumber = Convert.ToInt32(BlockReader.ReadUInt32)
+                                        While GroupItemNumber > 0
 
-                                    ' Read the property and the unit
-                                    With ExpConfig
+                                            ' Read the property and the unit
+                                            With ExpConfig
+                                                .Category = "EEPA"
+                                                .Instruction = Instruction
+                                                .Prop = ReadString(BlockReader)
+                                                .Unit = ReadString(BlockReader)
+                                            End With
+
+                                            ' Jump over the next 4 bytes!
+                                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+
+                                            ' Write the property instruction to the array.
+                                            FO._EEPAPropertyArray.Add(ExpConfig, ReadObject(BlockReader))
+
+                                            GroupItemNumber -= 1
+
+                                        End While
+
+                                        PropertyCount -= 1
+                                    End While
+
+                                End Using
+
+
+                            Case "FERB"
+                                ' Here comes the data file name,
+                                ' and the modified properties of the data file,
+                                ' including any marks.
+
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+
+                                    ' Jump over the next 4 bytes!
+                                    BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+
+                                    Dim FileNameDescribed As String = ReadString(BlockReader)
+                                    FO._FilesDescribed.Add(FileNameDescribed)
+                                    FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(FileNameDescribed, FileNameDescribed)))
+
+                                End Using
+
+                            Case "DOMP"
+                                ' Here we get the changed parameters.
+
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+
+                                    ' Jump over the next 4 bytes!
+                                    BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+
+                                    Dim ModifiedExpConfig As New ExperimentConfiguration
+                                    With ModifiedExpConfig
                                         .Category = "EEPA"
-                                        .Instruction = Instruction
+                                        .Instruction = ReadString(BlockReader)
                                         .Prop = ReadString(BlockReader)
                                         .Unit = ReadString(BlockReader)
                                     End With
@@ -262,325 +312,272 @@ Public Class cFileImportOmicronMatrixParameterFile
                                     ' Jump over the next 4 bytes!
                                     BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                                    ' Write the property instruction to the array.
-                                    FO._EEPAPropertyArray.Add(ExpConfig, ReadObject(BlockReader))
+                                    Dim PropertyValue As String = ReadObject(BlockReader)
+                                    Dim Key As New KeyValuePair(Of String, String)(ModifiedExpConfig.ToString, PropertyValue)
+                                    FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, Key))
 
-                                    GroupItemNumber -= 1
+                                End Using
 
-                                End While
+                            Case "KRAM"
+                                ' Marks of the files
 
-                                PropertyCount -= 1
-                            End While
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                        End Using
+                                    Dim Mark As String = ReadString(BlockReader)
+                                    FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(Mark, "")))
 
+                                End Using
 
-                    Case "FERB"
-                        ' Here comes the data file name,
-                        ' and the modified properties of the data file,
-                        ' including any marks.
+                            Case "YSCC"
+                                ' Defines a specific measurement.
+                                ' This measurement is encapsuled in this block,
+                                ' which we interpret separately!
+                                ' It has the inner blocks TCID, SCHC, NACS, REFX, FERB.
+                                ' These blocks contain the measurement data.
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                    ' Create a new measurement object.
+                                    Dim Measurement As New MeasurementDetails
+                                    Measurement.Time = CurrentBlock.Time
 
-                            Dim FileNameDescribed As String = ReadString(BlockReader)
-                            FO._FilesDescribed.Add(FileNameDescribed)
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(FileNameDescribed, FileNameDescribed)))
+                                    '#########################
 
-                        End Using
+                                    ' Jump over the next 4 bytes!
+                                    BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                    Case "DOMP"
-                        ' Here we get the changed parameters.
+                                    ' Get storage for the new identifiers.
+                                    Dim SubLastFourChars As String = String.Empty
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                    'Dim ScanHeader As New List(Of Int32)
 
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                    ' Read the whole subset of parameters
+                                    Do Until BlockReader.BaseStream.Position = BlockReader.BaseStream.Length
 
-                            Dim ModifiedExpConfig As New ExperimentConfiguration
-                            With ModifiedExpConfig
-                                .Category = "EEPA"
-                                .Instruction = ReadString(BlockReader)
-                                .Prop = ReadString(BlockReader)
-                                .Unit = ReadString(BlockReader)
-                            End With
+                                        ' Move the identifier buffer by one byte.
+                                        SubLastFourChars = GetLastFourCharsByProceedingOneByte(BlockReader, SubLastFourChars)
 
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                        Select Case SubLastFourChars
 
-                            Dim PropertyValue As String = ReadObject(BlockReader)
-                            Dim Key As New KeyValuePair(Of String, String)(ModifiedExpConfig.ToString, PropertyValue)
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, Key))
+                                            Case "TCID"
+                                                ' // description and internal number of captured channels
+                                                ' // has to be linkend to the physical devices 
+                                                ' // given in XFER to get the scaling
 
-                        End Using
+                                                ' Read the subblock.
+                                                Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
+                                                Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
 
-                    Case "KRAM"
-                        ' Marks of the files
+                                                    ' Jump over the next 8 bytes!
+                                                    SubBlockReader.BaseStream.Seek(8, SeekOrigin.Current)
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                                    ' Get the data types of the channels.
+                                                    Dim PropertiesCount As Integer = CInt(SubBlockReader.ReadUInt32)
 
-                            Dim Mark As String = ReadString(BlockReader)
-                            FO._ActionsByTime.Add(New KeyValuePair(Of Date, KeyValuePair(Of String, String))(CurrentBlock.Time, New KeyValuePair(Of String, String)(Mark, "")))
+                                                    ' Go through the data types list.
+                                                    For i As Integer = 0 To PropertiesCount - 1 Step 1
 
-                        End Using
+                                                        ' Jump over the next 16 bytes!
+                                                        SubBlockReader.BaseStream.Seek(16, SeekOrigin.Current)
 
-                    Case "YSCC"
-                        ' Defines a specific measurement.
-                        ' This measurement is encapsuled in this block,
-                        ' which we interpret separately!
-                        ' It has the inner blocks TCID, SCHC, NACS, REFX, FERB.
-                        ' These blocks contain the measurement data.
+                                                        ' Add the properties
+                                                        Measurement.DataTypeList.Add(ReadString(SubBlockReader), ReadString(SubBlockReader))
 
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                                    Next
 
-                            ' Create a new measurement object.
-                            Dim Measurement As New MeasurementDetails
-                            Measurement.Time = CurrentBlock.Time
+                                                    ' Now get the channel description
+                                                    Dim ChannelCount As Integer = CInt(SubBlockReader.ReadUInt32)
+                                                    Dim Name As String
+                                                    Dim Unit As String
+                                                    Dim ChannelNumber As Integer
 
-                            '#########################
+                                                    ' Go through the channel list.
+                                                    For i As Integer = 0 To ChannelCount - 1 Step 1
 
-                            ' Jump over the next 4 bytes!
-                            BlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                                        ' Jump over the next 4 bytes!
+                                                        SubBlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                            ' Get storage for the new identifiers.
-                            Dim SubLastFourChars As String = String.Empty
+                                                        ChannelNumber = CInt(SubBlockReader.ReadUInt32)
 
-                            'Dim ScanHeader As New List(Of Int32)
+                                                        ' Jump over the next 8 bytes!
+                                                        SubBlockReader.BaseStream.Seek(8, SeekOrigin.Current)
 
-                            ' Read the whole subset of parameters
-                            Do Until BlockReader.BaseStream.Position = BlockReader.BaseStream.Length
+                                                        Name = ReadString(SubBlockReader)
+                                                        Unit = ReadString(SubBlockReader)
 
-                                ' Move the identifier buffer by one byte.
-                                SubLastFourChars = GetLastFourCharsByProceedingOneByte(BlockReader, SubLastFourChars)
+                                                        ' Add to the channel list
+                                                        Measurement.Channels.Add(ChannelNumber, New KeyValuePair(Of String, String)(Name, Unit))
 
-                                Select Case SubLastFourChars
+                                                    Next
 
-                                    Case "TCID"
-                                        ' // description and internal number of captured channels
-                                        ' // has to be linkend to the physical devices 
-                                        ' // given in XFER to get the scaling
+                                                    ' Get block information
+                                                    ChannelCount = CInt(SubBlockReader.ReadUInt32)
+
+                                                    ' Go through the channel list.
+                                                    For i As Integer = 0 To ChannelCount - 1 Step 1
+                                                        ' Jump over the next 16 bytes!
+                                                        SubBlockReader.BaseStream.Seek(16, SeekOrigin.Current)
+
+                                                        ' Read the storage string.
+                                                        Measurement.BlockStorage.Add(i, ReadString(SubBlockReader))
+                                                    Next
+
+                                                End Using
+
+                                            Case "SCHC"
+                                                ' Header of the curves.
+                                                ' Who knows what's in there?
+
+                                                Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
+                                                Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
+
+                                                    'While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
+                                                    '    ScanHeader.Add(SubBlockReader.ReadInt32)
+                                                    'End While
 
-                                        ' Read the subblock.
-                                        Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
-                                        Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
+                                                End Using
 
-                                            ' Jump over the next 8 bytes!
-                                            SubBlockReader.BaseStream.Seek(8, SeekOrigin.Current)
+                                            Case "NACS"
+                                                ' Data of the curves.
+                                                ' Read the subblock.
 
-                                            ' Get the data types of the channels.
-                                            Dim PropertiesCount As Integer = CInt(SubBlockReader.ReadUInt32)
+                                                Dim ListOfInteger As New List(Of Double)
 
-                                            ' Go through the data types list.
-                                            For i As Integer = 0 To PropertiesCount - 1 Step 1
+                                                Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
+                                                Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
 
-                                                ' Jump over the next 16 bytes!
-                                                SubBlockReader.BaseStream.Seek(16, SeekOrigin.Current)
+                                                    ' Jump over 6 bytes.
+                                                    'SubBlockReader.BaseStream.Seek(6, SeekOrigin.Current)
 
-                                                ' Add the properties
-                                                Measurement.DataTypeList.Add(ReadString(SubBlockReader), ReadString(SubBlockReader))
+                                                    'For i As Integer = 0 To 204 Step 1
+                                                    'ListOfInteger.Add(SubBlockReader.ReadInt32)
+                                                    'ListOfInteger.Add(SubBlockReader.ReadDouble)
+                                                    'Next
 
-                                            Next
+                                                End Using
 
-                                            ' Now get the channel description
-                                            Dim ChannelCount As Integer = CInt(SubBlockReader.ReadUInt32)
-                                            Dim Name As String
-                                            Dim Unit As String
-                                            Dim ChannelNumber As Integer
+                                            Case "REFX"
+                                                ' Data after the measurement data block.
+                                                ' Contains all information for scaling,
+                                                ' such as the transferfunction properties.
 
-                                            ' Go through the channel list.
-                                            For i As Integer = 0 To ChannelCount - 1 Step 1
+                                                Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
+                                                Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
 
-                                                ' Jump over the next 4 bytes!
-                                                SubBlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                                                    While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
 
-                                                ChannelNumber = CInt(SubBlockReader.ReadUInt32)
+                                                        ' Jump over the next 4 bytes!
+                                                        SubBlockReader.BaseStream.Seek(4, SeekOrigin.Current)
 
-                                                ' Jump over the next 8 bytes!
-                                                SubBlockReader.BaseStream.Seek(8, SeekOrigin.Current)
+                                                        ' Now comes the channel number and channel name
+                                                        Dim ChannelNumber As Integer = CInt(SubBlockReader.ReadUInt32)
+                                                        Dim TransferFunction As String = ReadString(SubBlockReader)
+                                                        Dim Unit As String = ReadString(SubBlockReader)
+                                                        Dim PropertyCount As Integer = CInt(SubBlockReader.ReadUInt32)
+                                                        Dim PropertyName As String
+                                                        Dim PropertyValue As Double
+                                                        'Dim Key As String
 
-                                                Name = ReadString(SubBlockReader)
-                                                Unit = ReadString(SubBlockReader)
+                                                        Dim TFF As New TransferFunction
+                                                        TFF.ChannelNumber = ChannelNumber
+                                                        TFF.TransferFunctionType = GetTransferFunctionByName(TransferFunction)
+                                                        TFF.Unit = Unit
 
-                                                ' Add to the channel list
-                                                Measurement.Channels.Add(ChannelNumber, New KeyValuePair(Of String, String)(Name, Unit))
+                                                        For i As Integer = 0 To PropertyCount - 1 Step 1
+                                                            PropertyName = ReadString(SubBlockReader)
+                                                            PropertyValue = ReadDouble(SubBlockReader)
 
-                                            Next
+                                                            '' Create a general entry for the transferfunction property.
+                                                            'Key = "XFER:Channel:" & ChannelNumber.ToString & "::" & PropertyName
+                                                            'Measurement.TransferFunctionProperties.Add(Key, PropertyValue)
 
-                                            ' Get block information
-                                            ChannelCount = CInt(SubBlockReader.ReadUInt32)
+                                                            ' Create a specific entry in the Transferfunction object.
+                                                            Select Case PropertyName
+                                                                Case "NeutralFactor"
+                                                                    TFF.NeutralFactor_2 = PropertyValue
+                                                                Case "Offset"
+                                                                    TFF.Offset = PropertyValue
+                                                                Case "PreFactor"
+                                                                    TFF.Prefactor_2 = PropertyValue
+                                                                Case "PreOffset"
+                                                                    TFF.Preoffset_2 = PropertyValue
+                                                                Case "Raw_1"
+                                                                    TFF.Raw1_2 = PropertyValue
+                                                                Case "Factor"
+                                                                    TFF.Factor_1 = PropertyValue
+                                                            End Select
+                                                        Next
 
-                                            ' Go through the channel list.
-                                            For i As Integer = 0 To ChannelCount - 1 Step 1
-                                                ' Jump over the next 16 bytes!
-                                                SubBlockReader.BaseStream.Seek(16, SeekOrigin.Current)
+                                                        ' perform some additional calculations for the multilinear transferfunction
 
-                                                ' Read the storage string.
-                                                Measurement.BlockStorage.Add(i, ReadString(SubBlockReader))
-                                            Next
+                                                        If TFF.TransferFunctionType = TransferFunctionTypes.MultiLinear1D AndAlso (TFF.NeutralFactor_2 * TFF.Prefactor_2) <> 0 Then
+                                                            TFF.Whole_2 = (TFF.Raw1_2 - TFF.Preoffset_2) / (TFF.NeutralFactor_2 * TFF.Prefactor_2)
+                                                        End If
 
-                                        End Using
+                                                        ' Catch an unknown transferfunction,
+                                                        ' and replace it by a dummy one.
+                                                        If TFF.TransferFunctionType = TransferFunctionTypes.Unknown Then
+                                                            TFF.TransferFunctionType = TransferFunctionTypes.Linear1D
+                                                            TFF.Factor_1 = 1
+                                                            TFF.Offset = 0
+                                                            TFF.Unit = String.Empty
+                                                        End If
 
-                                    Case "SCHC"
-                                        ' Header of the curves.
-                                        ' Who knows what's in there?
+                                                        ' Add the TFF object to the list of Transferfunctions.
+                                                        Measurement.TransferFunctions.Add(ChannelNumber, TFF)
 
-                                        Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
-                                        Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
+                                                    End While
 
-                                            'While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
-                                            '    ScanHeader.Add(SubBlockReader.ReadInt32)
-                                            'End While
+                                                End Using
 
-                                        End Using
 
-                                    Case "NACS"
-                                        ' Data of the curves.
-                                        ' Read the subblock.
 
-                                        Dim ListOfInteger As New List(Of Double)
+                                        End Select
+                                    Loop
 
-                                        Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
-                                        Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
+                                    ' Add the measurement to the list of measurements
+                                    FO._Measurements.Add(Measurement)
 
-                                            ' Jump over 6 bytes.
-                                            'SubBlockReader.BaseStream.Seek(6, SeekOrigin.Current)
+                                End Using
 
-                                            'For i As Integer = 0 To 204 Step 1
-                                            'ListOfInteger.Add(SubBlockReader.ReadInt32)
-                                            'ListOfInteger.Add(SubBlockReader.ReadDouble)
-                                            'Next
 
-                                        End Using
 
-                                    Case "REFX"
-                                        ' Data after the measurement data block.
-                                        ' Contains all information for scaling,
-                                        ' such as the transferfunction properties.
+                            Case "WEIV"
+                                ' VIEW: Details of the software windows, etc. ...
+                                ' unimportant, so jump to the end of the block, by reading the whole block.
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
 
-                                        Dim CurrentSubBlock As DataBlockWithoutTime = ReadBlockWithoutTime(BlockReader, SubLastFourChars)
-                                        Using SubBlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentSubBlock)
+                            Case "CORP"
+                                ' PROC: Processors of the scanning windows, etc. ...
+                                ' unimportant, so jump to the end of the block, by reading the whole block.
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
 
-                                            While SubBlockReader.BaseStream.Position < SubBlockReader.BaseStream.Length
+                            Case "QESF"
+                                ' FSEQ: something with file?
+                                ' unimportant, so jump to the end of the block, by reading the whole block.
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
 
-                                                ' Jump over the next 4 bytes!
-                                                SubBlockReader.BaseStream.Seek(4, SeekOrigin.Current)
+                            Case "SPXE"
+                                ' EXPS: something with experiment?
+                                ' unimportant, so jump to the end of the block, by reading the whole block.
+                                Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
 
-                                                ' Now comes the channel number and channel name
-                                                Dim ChannelNumber As Integer = CInt(SubBlockReader.ReadUInt32)
-                                                Dim TransferFunction As String = ReadString(SubBlockReader)
-                                                Dim Unit As String = ReadString(SubBlockReader)
-                                                Dim PropertyCount As Integer = CInt(SubBlockReader.ReadUInt32)
-                                                Dim PropertyName As String
-                                                Dim PropertyValue As Double
-                                                'Dim Key As String
+                            Case "DEOE"
+                                ' End of file reached
+                                Exit Do
 
-                                                Dim TFF As New TransferFunction
-                                                TFF.ChannelNumber = ChannelNumber
-                                                TFF.TransferFunctionType = GetTransferFunctionByName(TransferFunction)
-                                                TFF.Unit = Unit
+                        End Select
 
-                                                For i As Integer = 0 To PropertyCount - 1 Step 1
-                                                    PropertyName = ReadString(SubBlockReader)
-                                                    PropertyValue = ReadDouble(SubBlockReader)
+                    Loop
 
-                                                    '' Create a general entry for the transferfunction property.
-                                                    'Key = "XFER:Channel:" & ChannelNumber.ToString & "::" & PropertyName
-                                                    'Measurement.TransferFunctionProperties.Add(Key, PropertyValue)
-
-                                                    ' Create a specific entry in the Transferfunction object.
-                                                    Select Case PropertyName
-                                                        Case "NeutralFactor"
-                                                            TFF.NeutralFactor_2 = PropertyValue
-                                                        Case "Offset"
-                                                            TFF.Offset = PropertyValue
-                                                        Case "PreFactor"
-                                                            TFF.Prefactor_2 = PropertyValue
-                                                        Case "PreOffset"
-                                                            TFF.Preoffset_2 = PropertyValue
-                                                        Case "Raw_1"
-                                                            TFF.Raw1_2 = PropertyValue
-                                                        Case "Factor"
-                                                            TFF.Factor_1 = PropertyValue
-                                                    End Select
-                                                Next
-
-                                                ' perform some additional calculations for the multilinear transferfunction
-
-                                                If TFF.TransferFunctionType = TransferFunctionTypes.MultiLinear1D AndAlso (TFF.NeutralFactor_2 * TFF.Prefactor_2) <> 0 Then
-                                                    TFF.Whole_2 = (TFF.Raw1_2 - TFF.Preoffset_2) / (TFF.NeutralFactor_2 * TFF.Prefactor_2)
-                                                End If
-
-                                                ' Catch an unknown transferfunction,
-                                                ' and replace it by a dummy one.
-                                                If TFF.TransferFunctionType = TransferFunctionTypes.Unknown Then
-                                                    TFF.TransferFunctionType = TransferFunctionTypes.Linear1D
-                                                    TFF.Factor_1 = 1
-                                                    TFF.Offset = 0
-                                                    TFF.Unit = String.Empty
-                                                End If
-
-                                                ' Add the TFF object to the list of Transferfunctions.
-                                                Measurement.TransferFunctions.Add(ChannelNumber, TFF)
-
-                                            End While
-
-                                        End Using
-
-
-
-                                End Select
-                            Loop
-
-                            ' Add the measurement to the list of measurements
-                            FO._Measurements.Add(Measurement)
-
-                        End Using
-
-
-
-                    Case "WEIV"
-                        ' VIEW: Details of the software windows, etc. ...
-                        ' unimportant, so jump to the end of the block, by reading the whole block.
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-
-                    Case "CORP"
-                        ' PROC: Processors of the scanning windows, etc. ...
-                        ' unimportant, so jump to the end of the block, by reading the whole block.
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-
-                    Case "QESF"
-                        ' FSEQ: something with file?
-                        ' unimportant, so jump to the end of the block, by reading the whole block.
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-
-                    Case "SPXE"
-                        ' EXPS: something with experiment?
-                        ' unimportant, so jump to the end of the block, by reading the whole block.
-                        Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-
-                    Case "DEOE"
-                        ' End of file reached
-                        Exit Do
-
-                End Select
-
-            Loop
-
-        Catch ex As Exception
-            Debug.WriteLine("cFileImportOmicronMatrixParameterFile: Error reading parameter file: " & ex.Message)
-            FO = Nothing
-        Finally
-            br.Close()
-            fs.Close()
-            br.Dispose()
-            fs.Dispose()
-        End Try
+                Catch ex As Exception
+                    Debug.WriteLine("cFileImportOmicronMatrixParameterFile: Error reading parameter file: " & ex.Message)
+                    FO = Nothing
+                End Try
+            End Using
+        End Using
 
         Return FO
     End Function

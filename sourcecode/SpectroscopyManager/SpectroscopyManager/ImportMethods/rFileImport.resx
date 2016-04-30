@@ -134,6 +134,10 @@ message:
   <data name="FileImport_WritingCacheFile" xml:space="preserve">
     <value>writing cache file ...</value>
   </data>
+  <data name="GridFile_MeasurementDimensions" xml:space="preserve">
+    <value>width: %dimx
+height: %dimy</value>
+  </data>
   <data name="ScanImage_MeasurementDimensions" xml:space="preserve">
     <value>%xp x %yp
 %spc, %spbV</value>

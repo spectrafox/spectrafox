@@ -70,99 +70,6 @@ Public Class cFileImport
 
 #End Region
 
-#Region "File Buffer Creation - Smart Thread Pool"
-
-    '' Smart Thread Pool
-    'Private STP As SmartThreadPool
-
-    '' Save for reporting from the STP the current backgroundworker
-    'Private CurrentBackgroundWorker As System.ComponentModel.BackgroundWorker
-
-    '' Save FileMax for Thread Pool
-    'Private STPFetchMax As Integer
-
-    ' ''' <summary>
-    ' ''' Reads all Contents from the selected Path and returns a list with recognized Files.
-    ' ''' </summary>
-    'Public Function CreateFileBufferSTP(ByVal Path As String,
-    '                                    Optional ByRef BackgroundWorker As System.ComponentModel.BackgroundWorker = Nothing,
-    '                                    Optional ByVal OnlyIncludeFileNames As List(Of String) = Nothing) As Dictionary(Of String, cFileObject)
-
-    '    Me.STP = New SmartThreadPool
-
-    '    ' Return-Dictionary
-    '    Me._FileBuffer = New Dictionary(Of String, cFileObject)
-
-    '    ' make a reference to a directory
-    '    Dim oDirectoryInfo As New DirectoryInfo(Path)
-    '    Dim fiFileList As FileInfo() = oDirectoryInfo.GetFiles()
-
-    '    ' If the job is done by a background-worker, then report the progress
-    '    ' and check, if the User has requested a cancellation of the Thread.
-    '    If Not BackgroundWorker Is Nothing Then
-    '        CurrentBackgroundWorker = BackgroundWorker
-    '        CurrentBackgroundWorker.ReportProgress(0, String.Empty)
-    '    End If
-
-    '    ' list the names of all files in the specified directory
-    '    Me.STPFetchMax = fiFileList.Length
-    '    For Each oFile As FileInfo In fiFileList
-
-    '        ' If filtering requested, only show the filtered files.
-    '        If Not OnlyIncludeFileNames Is Nothing Then
-    '            If Not OnlyIncludeFileNames.Contains(oFile.Name) Then
-    '                Continue For
-    '            End If
-    '        End If
-
-    '        STP.QueueWorkItem(New WorkItemCallback(AddressOf Me.STPGetFileObject), oFile)
-    '    Next
-
-    '    ' Wait until all fetch processes were successful.
-    '    STP.WaitForIdle()
-
-    '    ' Shutdown the Thread-Pool
-    '    STP.Shutdown()
-
-    '    ' Remote the Smart-Thread-Pool
-    '    Me.STP.Dispose()
-    '    Me.STP = Nothing
-
-    '    Return Me._FileBuffer
-    'End Function
-
-    ' ''' <summary>
-    ' ''' Smart Thread Pool assisted File-Object Fetching
-    ' ''' </summary>
-    'Private Function STPGetFileObject(State As Object) As Object
-    '    ' If the Job is done by a Background-Worker, then report the Progress
-    '    ' and check, if the User has requested a cancellation of the Thread.
-    '    If Not CurrentBackgroundWorker Is Nothing Then
-    '        Dim CountLeft As Integer = 100 - CInt(Me.STP.WaitingCallbacks / Me.STPFetchMax * 100)
-    '        CurrentBackgroundWorker.ReportProgress(CountLeft, "(" & Me.STPFetchMax - Me.STP.WaitingCallbacks & "|" & Me.STPFetchMax & ") " & My.Resources.FileImport_ScanningFiles.Replace("%", CType(State, FileInfo).Name))
-    '    End If
-
-    '    ' Scan File and get all Informations about File-Type and File-Path
-    '    Dim oFileObject As cFileObject = cFileImport.GetFileObject(CType(State, FileInfo))
-    '    oFileObject.LastFileChange = CType(State, FileInfo).LastWriteTime
-
-    '    SyncLock Me._FileBuffer
-    '        If oFileObject.FileType <> cFileObject.FileTypes.UNIDENTIFIED Then Me._FileBuffer.Add(oFileObject.FullName, oFileObject)
-    '    End SyncLock
-
-    '    Return Nothing
-    'End Function
-
-    ' ''' <summary>
-    ' ''' Cancels a running multiple thread file buffer creation.
-    ' ''' </summary>
-    'Public Sub CancelRunningSTPFileBufferCreation()
-    '    If Not Me.STP Is Nothing Then
-    '        Me.STP.Cancel()
-    '    End If
-    'End Sub
-#End Region
-
 #Region "File Buffer creation - BackgroundWorker"
 
     ''' <summary>
@@ -196,6 +103,7 @@ Public Class cFileImport
         ' Get all available import filters:
         Dim ImportRoutines_SpectroscopyTables As List(Of iFileImport_SpectroscopyTable) = cFileImport.GetAllImportRoutines_SpectroscopyTable
         Dim ImportRoutines_ScanImages As List(Of iFileImport_ScanImage) = cFileImport.GetAllImportRoutines_ScanImage
+        Dim ImportRoutines_GridFiles As List(Of iFileImport_GridFile) = cFileImport.GetAllImportRoutines_GridFile
 
         ' Temporary variables
         Dim i As Integer = 1
@@ -282,7 +190,13 @@ Public Class cFileImport
             '############## FILE IMPORT SECTION ###############
 
             ' Create the file-object
-            Dim oFileObject As cFileObject = cFileObject.GetFileObjectFromPath(oFile, ReaderBuffer, ImportRoutines_SpectroscopyTables, ImportRoutines_ScanImages)
+            Dim oFileObject As cFileObject = cFileObject.GetFileObjectFromPath(oFile,
+                                                                               ReaderBuffer,
+                                                                               ImportRoutines_SpectroscopyTables,
+                                                                               ImportRoutines_ScanImages,
+                                                                               ImportRoutines_GridFiles)
+
+            ' If we have a valid FileObject, load the headers of the file.
             If Not oFileObject Is Nothing Then
 
                 ' Fetch the headers of the files.
@@ -293,6 +207,9 @@ Public Class cFileImport
                     Case cFileObject.FileTypes.ScanImage
                         Dim oScanImage As cScanImage = Nothing
                         cFileImport.GetScanImageFile(oFileObject, oScanImage, True, lFilesToIgnoreDuringImport, lParameterFileCache)
+                    Case cFileObject.FileTypes.GridFile
+                        Dim oGridFile As cGridFile = Nothing
+                        cFileImport.GetGridFile(oFileObject, oGridFile, True, lFilesToIgnoreDuringImport, lParameterFileCache)
                 End Select
 
                 ' Add the file-object to the output list, if we do not have to overwrite it.
@@ -707,6 +624,7 @@ Public Class cFileImport
     Public Class AsyncMultipleFileLoader
         Implements iSingleSpectroscopyTableLoaded
         Implements iSingleScanImageLoaded
+        Implements iSingleGridFileLoaded
 
         ''' <summary>
         ''' Counter for all files that are fetched
@@ -815,7 +733,7 @@ Public Class cFileImport
         ''' </summary>
         Public Sub ScanImageLoaded(ByRef ScanImage As cScanImage) Implements iSingleScanImageLoaded.ScanImageLoaded
 
-            ' Store the loaded spectroscopy-table
+            ' Store the loaded scan image
             Me.OutputListScan.Add(ScanImage)
 
             If iFetchedFilesCounter < _FileObjectList.Count Then
@@ -828,6 +746,58 @@ Public Class cFileImport
                 ' last file fetched, so call the callback
                 '#########################################
                 CallBackFunctionScan.AllScanImagesLoaded(Me.OutputListScan)
+            End If
+        End Sub
+
+#End Region
+
+#Region "GridFile section"
+        ''' <summary>
+        ''' Sets the initial variables, and starts the fetch procedure.
+        ''' </summary>
+        Public Sub New(ByRef FileObjectList As List(Of cFileObject),
+                       ByVal Callback As iMultipleGridFilesLoaded,
+                       Optional ByVal FetchOnlyFileHeader As Boolean = False,
+                       Optional ByRef ThreadPool As cSmartThreadPoolExtended = Nothing)
+            Me.CallBackFunctionGrid = Callback
+            Me._ThreadPool = ThreadPool
+            Me._FileObjectList = FileObjectList
+            Me._FetchOnlyHeader = FetchOnlyFileHeader
+
+            ' Start the fetch
+            cFileImport.GetScanImageFile_Async(_FileObjectList(iFetchedFilesCounter),
+                                               Me, Me._FetchOnlyHeader, Me._ThreadPool)
+            iFetchedFilesCounter += 1
+        End Sub
+
+        ''' <summary>
+        ''' Callback called on all files loaded
+        ''' </summary>
+        Public CallBackFunctionGrid As iMultipleGridFilesLoaded
+
+        ''' <summary>
+        ''' Store the fetched files.
+        ''' </summary>
+        Private OutputListGrid As New List(Of cGridFile)
+
+        ''' <summary>
+        ''' Fetch the next file
+        ''' </summary>
+        Public Sub GridFileLoaded(ByRef GridFile As cGridFile) Implements iSingleGridFileLoaded.GridFileLoaded
+
+            ' Store the loaded grid file
+            Me.OutputListGrid.Add(GridFile)
+
+            If iFetchedFilesCounter < _FileObjectList.Count Then
+                ' Fetch next file
+                '#################
+                cFileImport.GetGridFile_Async(_FileObjectList(iFetchedFilesCounter),
+                                              Me, Me._FetchOnlyHeader, Me._ThreadPool)
+                iFetchedFilesCounter += 1
+            Else
+                ' last file fetched, so call the callback
+                '#########################################
+                CallBackFunctionGrid.AllGridFilesLoaded(Me.OutputListGrid)
             End If
         End Sub
 
@@ -1135,6 +1105,153 @@ Public Class cFileImport
 
 #End Region
 
+#Region "Grid File"
+
+    ''' <summary>
+    ''' Reads the selected grid file and returns a <code>cGridFile</code> object.
+    ''' </summary>
+    Public Shared Function GetGridFile(ByRef FileObject As cFileObject,
+                                       ByRef TargetGridFile As cGridFile,
+                                       Optional ByVal FetchOnlyFileHeader As Boolean = False,
+                                       Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing,
+                                       Optional ByRef ParameterFilesImportedOnce As List(Of iFileImport_ParameterFileToBeImportedOnce) = Nothing) As Boolean
+
+        ' Check, if the File still exists
+        If Not System.IO.File.Exists(FileObject.FullFileNameInclPath) Then Return False
+
+        ' Check, if the file is a Scan Image
+        If FileObject.FileType <> cFileObject.FileTypes.GridFile Then Return False
+
+        Try
+            ' Start import depending on FileType.
+            ' Get the import routine for this.
+            Dim ImportRoutine As iFileImport_GridFile = cFileImport.GetImportRoutineFromType_GridFile(FileObject.ImportRoutine)
+            If ImportRoutine Is Nothing Then Return False
+
+            '' Get again the FULL FileObject
+            FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , , , {ImportRoutine}.ToList)
+
+            ' Start the import:
+            TargetGridFile = ImportRoutine.ImportGridFile(FileObject.FullFileNameInclPath, FetchOnlyFileHeader, , FilesToIgnoreAfterThisImport, ParameterFilesImportedOnce)
+            FileObject.GridFile = TargetGridFile
+
+            '' Get again the FULL FileObject
+            FileObject = cFileObject.GetFileObjectFromPath(FileObject)
+
+            ' Save some GridFile-properties in the FileObject.
+            'FileObject.RecordLocation_X = TargetGridFile.ScanOffset_X
+            'FileObject.RecordLocation_Y = TargetGridFile.ScanOffset_Y
+            'FileObject.ScanImageRange_X = TargetGridFile.ScanRange_X
+            'FileObject.ScanImageRange_Y = TargetGridFile.ScanRange_Y
+
+            ' Save the Record-Date
+            FileObject.RecordDate = TargetGridFile.StartDate
+
+            ' Set properties of the BaseFileObject
+            FileObject.MeasurementDimensions = My.Resources.rFileImport.GridFile_MeasurementDimensions _
+                                                        .Replace("%dimx", cUnits.GetFormatedValueString(TargetGridFile.GridDimensions.Width, 2)) _
+                                                        .Replace("%dimy", cUnits.GetFormatedValueString(TargetGridFile.GridDimensions.Height, 2))
+
+            FileObject._SourceFileComment = TargetGridFile.Comment
+
+            ' Set Base-FileObject-Reference
+            TargetGridFile.BaseFileObject = FileObject
+
+            Return True
+        Catch ex As OutOfMemoryException
+            ' If we run out of memory during the fetch,
+            ' try to free up some space by running the garbage collector manually.
+            GC.Collect()
+            GC.WaitForPendingFinalizers()
+            Return GetGridFile(FileObject, TargetGridFile)
+        Catch ex As Exception
+            ' File-Import failed.
+            MessageBox.Show(My.Resources.rFileImport.FileImportError.Replace("%fn", FileObject.FullFileNameInclPath) _
+                                                                    .Replace("%e", ex.Message),
+                            My.Resources.rFileImport.FileImportError_title, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+        Return False
+    End Function
+
+    ''' <summary>
+    ''' Reads the selected grid file and returns a <code>cGridFile</code> object.
+    ''' </summary>
+    Public Shared Sub GetGridFile_Async(ByRef FileObject As cFileObject,
+                                        ByVal Callback As iSingleGridFileLoaded,
+                                        Optional ByVal FetchOnlyFileHeader As Boolean = False,
+                                        Optional ByRef ThreadPool As cSmartThreadPoolExtended = Nothing)
+        ' if no thread-pool is handed over, 
+        ' create a separate thread and start the fetch
+        ' else, queue the work.
+        Dim WorkerState As Object() = New Object() {FileObject, Callback, FetchOnlyFileHeader}
+        If ThreadPool Is Nothing Then
+            Dim T As New Threading.Thread(AddressOf AsyncScanImageFileGetter)
+            T.Start(WorkerState)
+        Else
+            ThreadPool.QueueWorkItem(New WorkItemCallback(AddressOf AsyncScanImageFileGetter), WorkerState)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Async grid file file getter.
+    ''' </summary>
+    Private Shared Function AsyncGridFileGetter(ParameterArray As Object) As Object
+        Dim Params As Object() = DirectCast(ParameterArray, Object())
+        Dim FileObject As cFileObject = DirectCast(Params(0), cFileObject)
+        Dim Callback As iSingleGridFileLoaded = DirectCast(Params(1), iSingleGridFileLoaded)
+        Dim FetchOnlyFileHeader As Boolean = DirectCast(Params(2), Boolean)
+
+        Dim oGridFile As cGridFile = Nothing
+        GetGridFile(FileObject, oGridFile, FetchOnlyFileHeader)
+
+        If Not oGridFile Is Nothing Then
+            Callback.GridFileLoaded(oGridFile)
+        End If
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Reads the selected grid files and returns a list of GridFile objects
+    ''' </summary>
+    Public Shared Function GetGridFiles(ByRef FileObjectList As List(Of cFileObject),
+                                        ByRef TargetGridFiles As List(Of cGridFile),
+                                        Optional ByVal FetchOnlyFileHeader As Boolean = False) As Boolean
+        ' Create new list, if target-list is empty
+        If TargetGridFiles Is Nothing Then
+            TargetGridFiles = New List(Of cGridFile)
+        End If
+
+        Dim CurrentGridFile As cGridFile = Nothing
+        For i As Integer = 0 To FileObjectList.Count - 1 Step 1
+            ' create new 
+            GetGridFile(FileObjectList(i), CurrentGridFile, FetchOnlyFileHeader)
+            If TargetGridFiles.Count = i Then
+                TargetGridFiles.Add(CurrentGridFile)
+            Else
+                TargetGridFiles(i) = CurrentGridFile
+            End If
+        Next
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' Reads the selected GridFile async and calls the callback afterwards.
+    ''' </summary>
+    Public Shared Function GetGridFiles_Async(ByRef FileObjectList As List(Of cFileObject),
+                                              ByVal Callback As iMultipleGridFilesLoaded,
+                                              Optional ByVal FetchOnlyFileHeader As Boolean = False,
+                                              Optional ByRef ThreadPool As cSmartThreadPoolExtended = Nothing) As Boolean
+
+        ' Create and launch the sub-class for multiple-file fetching
+        Dim AsyncFileLoader As New AsyncMultipleFileLoader(FileObjectList,
+                                                           Callback,
+                                                           FetchOnlyFileHeader,
+                                                           ThreadPool)
+        Return True
+    End Function
+
+#End Region
+
 #Region "Helper Functions"
 
     ''' <summary>
@@ -1249,6 +1366,40 @@ Public Class cFileImport
     Public Shared Function GetImportRoutineFromType_ScanImage(ByRef T As Type) As iFileImport_ScanImage
         If GetType(iFileImport_ScanImage).IsAssignableFrom(T) Then
             Return DirectCast(System.Activator.CreateInstance(T), iFileImport_ScanImage)
+        End If
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Returns a list with all import routines implemented in the program.
+    ''' </summary>
+    Public Shared Function GetAllImportRoutines_GridFile() As List(Of iFileImport_GridFile)
+        Dim APIList As New List(Of iFileImport_GridFile)
+
+        Try
+            ' fill the list of with the interfaces found.
+            With APIList
+                Dim APIType = GetType(iFileImport_GridFile)
+                Dim AllAPIImplementingInterfaces As IEnumerable(Of Type) = AppDomain.CurrentDomain.GetAssemblies() _
+                                                                       .SelectMany(Function(s) s.GetTypes()) _
+                                                                       .Where(Function(p) APIType.IsAssignableFrom(p) And p.IsClass And Not p.IsAbstract)
+                For Each ImplementingType As Type In AllAPIImplementingInterfaces
+                    .Add(DirectCast(System.Activator.CreateInstance(ImplementingType), iFileImport_GridFile))
+                Next
+            End With
+        Catch ex As Exception
+            Trace.WriteLine("#ERROR: cFileImport.GetAllImportRoutines_ScanImage: Error on loading: " & ex.Message)
+        End Try
+
+        Return APIList
+    End Function
+
+    ''' <summary>
+    ''' Returns the Import-Routine, if the type compatible. Else Nothing
+    ''' </summary>
+    Public Shared Function GetImportRoutineFromType_GridFile(ByRef T As Type) As iFileImport_GridFile
+        If GetType(iFileImport_GridFile).IsAssignableFrom(T) Then
+            Return DirectCast(System.Activator.CreateInstance(T), iFileImport_GridFile)
         End If
         Return Nothing
     End Function

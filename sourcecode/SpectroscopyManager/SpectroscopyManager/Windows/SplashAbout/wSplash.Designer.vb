@@ -22,7 +22,7 @@ Partial Class wSplash
         Me.lblVersion.BackColor = System.Drawing.Color.Transparent
         Me.lblVersion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblVersion.ForeColor = System.Drawing.Color.LightGray
-        Me.lblVersion.Location = New System.Drawing.Point(492, 9)
+        Me.lblVersion.Location = New System.Drawing.Point(490, 3)
         Me.lblVersion.MaximumSize = New System.Drawing.Size(150, 15)
         Me.lblVersion.MinimumSize = New System.Drawing.Size(150, 13)
         Me.lblVersion.Name = "lblVersion"
@@ -38,13 +38,11 @@ Partial Class wSplash
         Me.lblHint.BackColor = System.Drawing.Color.Transparent
         Me.lblHint.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHint.ForeColor = System.Drawing.Color.LightGray
-        Me.lblHint.Location = New System.Drawing.Point(287, 34)
+        Me.lblHint.Location = New System.Drawing.Point(287, 41)
         Me.lblHint.Name = "lblHint"
-        Me.lblHint.Size = New System.Drawing.Size(353, 39)
+        Me.lblHint.Size = New System.Drawing.Size(353, 91)
         Me.lblHint.TabIndex = 0
-        Me.lblHint.Text = "This open source software is distributed free of charge under" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "the terms of the G" &
-    "NU Lesser General Public License v3." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "If it contributes to your scientific work," &
-    " please cite it."
+        Me.lblHint.Text = resources.GetString("lblHint.Text")
         Me.lblHint.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lblStatus

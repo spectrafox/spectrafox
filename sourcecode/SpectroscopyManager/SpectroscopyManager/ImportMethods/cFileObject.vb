@@ -15,6 +15,7 @@ Public Class cFileObject
         SpectroscopyTable
         ScanImage
         SpectraFoxFile
+        GridFile
     End Enum
 
     ''' <summary>
@@ -28,6 +29,8 @@ Public Class cFileObject
                 Return FileTypes.ScanImage
             Case FileTypes.SpectraFoxFile.ToString
                 Return FileTypes.SpectraFoxFile
+            Case FileTypes.GridFile.ToString
+                Return FileTypes.GridFile
             Case Else
                 Return FileTypes.UNIDENTIFIED
         End Select
@@ -65,14 +68,21 @@ Public Class cFileObject
 #End Region
 
 #Region "General Properties extractable from the raw file."
+
+    ''' <summary>
+    ''' Stores the type of the file.
+    ''' </summary>
     Public FileType As FileTypes
+
+    ''' <summary>
+    ''' Stores the date of the last change of the file.
+    ''' </summary>
     Public LastFileChange As Date
 
     ''' <summary>
-    ''' Save a link to the required import-routines
+    ''' Stores a link to the required import-routine.
     ''' </summary>
     Public ImportRoutine As Type
-
 
     ''' <summary>
     ''' Returns the full filename that includes the full path.
@@ -106,6 +116,7 @@ Public Class cFileObject
             Return System.IO.Path.GetDirectoryName(Me.FullFileNameInclPath)
         End Get
     End Property
+
 #End Region
 
 #Region "Programmatically added data"
@@ -520,6 +531,17 @@ Public Class cFileObject
 
 
 #End Region
+
+#Region "Grid Files Added"
+
+    ''' <summary>
+    ''' Reference to the GridFile object, connected to this FileObject,
+    ''' if the FileType is GridFile.
+    ''' </summary>
+    Public GridFile As cGridFile = Nothing
+
+#End Region
+
 
 #End Region
 
@@ -1221,7 +1243,8 @@ Public Class cFileObject
     Public Shared Function GetFileObjectFromPath(ByVal oFile As FileInfo,
                                                  Optional ByRef ReaderBuffer As String = "",
                                                  Optional ByRef ImportRoutines_SpectroscopyTables As List(Of iFileImport_SpectroscopyTable) = Nothing,
-                                                 Optional ByRef ImportRoutines_ScanImages As List(Of iFileImport_ScanImage) = Nothing) As cFileObject
+                                                 Optional ByRef ImportRoutines_ScanImages As List(Of iFileImport_ScanImage) = Nothing,
+                                                 Optional ByRef ImportRoutines_GridFiles As List(Of iFileImport_GridFile) = Nothing) As cFileObject
 
         ' reset the file-identified status
         Dim bFileIdentified As Boolean = False
@@ -1234,8 +1257,11 @@ Public Class cFileObject
         ' Get all available import filters, if we don't get them delivered from outside the function
         If ImportRoutines_SpectroscopyTables Is Nothing Then ImportRoutines_SpectroscopyTables = cFileImport.GetAllImportRoutines_SpectroscopyTable
         If ImportRoutines_ScanImages Is Nothing Then ImportRoutines_ScanImages = cFileImport.GetAllImportRoutines_ScanImage
+        If ImportRoutines_GridFiles Is Nothing Then ImportRoutines_GridFiles = cFileImport.GetAllImportRoutines_GridFile
 
-        ' Scan file and get all informations about the file-type
+        '####################
+        ' Scan file and get all informations about the file-type.
+        ' Always exit the loop, if the file has been identified.
         If Not bFileIdentified Then
             For Each ImportRoutine As iFileImport_SpectroscopyTable In ImportRoutines_SpectroscopyTables
                 If bFileIdentified Then Exit For
@@ -1265,8 +1291,24 @@ Public Class cFileObject
                 End If
             Next
         End If
+        If Not bFileIdentified Then
+            For Each ImportRoutine As iFileImport_GridFile In ImportRoutines_GridFiles
+                If bFileIdentified Then Exit For
+                ' Check the file-extension
+                If oFile.Extension.EndsWith(ImportRoutine.FileExtension) Then
+                    ' Check, if the file can be interpreted by the import routine
+                    If ImportRoutine.IdentifyFile(oFile.FullName, ReaderBuffer) Then
+                        tImportRoutineType = ImportRoutine.GetType
+                        tFileType = cFileObject.FileTypes.GridFile
+                        bFileIdentified = True
+                    End If
+                End If
+            Next
+        End If
+        '#################
 
-        ' Load the file-object, if it could get identified
+        ' If the file could get identified, then create a FileObject
+        ' and store the ImportRoutine, path, and type.
         If bFileIdentified Then
 
             oFileObject = New cFileObject
@@ -1291,7 +1333,9 @@ Public Class cFileObject
 
 #Region "Dispose"
 
-    ' Dispose
+    ''' <summary>
+    ''' Dispose function.
+    ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         Me.eFileObjectChanged = Nothing
     End Sub

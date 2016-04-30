@@ -1,6 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports MathNet.Numerics.LinearAlgebra.Double
 
+''' <summary>
+''' Class that represents 2D-data recorded with SPMs.
+''' Each file can contain several channels.
+''' </summary>
 Public Class cScanImage
     Implements IDisposable
 

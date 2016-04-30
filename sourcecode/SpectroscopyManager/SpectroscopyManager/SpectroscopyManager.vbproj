@@ -486,6 +486,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rGPUComputing.resx</DependentUpon>
     </Compile>
+    <Compile Include="GridFiles\cGridFile.vb" />
     <Compile Include="HelperClasses\cArrayHelper.vb" />
     <Compile Include="HelperClasses\cClipboardInvoker.vb" />
     <Compile Include="HelperClasses\cColorHelper.vb" />
@@ -503,9 +504,11 @@
     <Compile Include="HelperClasses\cStringCollectionHistory.vb" />
     <Compile Include="HelperClasses\ReadOnlyDictionary.vb" />
     <Compile Include="ImportMethods\cFileObject.vb" />
+    <Compile Include="ImportMethods\iFileImport_GridFile.vb" />
     <Compile Include="ImportMethods\iFileImport_ParameterFileToBeImportedOnce.vb" />
     <Compile Include="ImportMethods\iFileImport_ScanImage.vb" />
     <Compile Include="ImportMethods\iFileImport_SpectroscopyTable.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisGrid.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotec.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecCUR.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecImages.vb" />
@@ -638,6 +641,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rLineScanViewer.resx</DependentUpon>
     </Compile>
+    <Compile Include="WindowModules\LoaderInterfaces\iMultipleGridFilesLoaded.vb" />
+    <Compile Include="WindowModules\LoaderInterfaces\iSingleGridFileLoaded.vb" />
     <Compile Include="WindowModules\ScanImage\rScanImageViewer.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -649,10 +654,10 @@
     <Compile Include="WindowModules\ValueRangeSelector\mValueRangeSelector2.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WindowModules\ScanImageLoaderInterfaces\iMultipleScanImageLoaded.vb" />
-    <Compile Include="WindowModules\SpectroscopyTablesLoaderInterfaces\iMultipleSpectroscopyTablesLoaded.vb" />
-    <Compile Include="WindowModules\ScanImageLoaderInterfaces\iSingleScanImageLoaded.vb" />
-    <Compile Include="WindowModules\SpectroscopyTablesLoaderInterfaces\iSingleSpectroscopyTableLoaded.vb" />
+    <Compile Include="WindowModules\LoaderInterfaces\iMultipleScanImageLoaded.vb" />
+    <Compile Include="WindowModules\LoaderInterfaces\iMultipleSpectroscopyTablesLoaded.vb" />
+    <Compile Include="WindowModules\LoaderInterfaces\iSingleScanImageLoaded.vb" />
+    <Compile Include="WindowModules\LoaderInterfaces\iSingleSpectroscopyTableLoaded.vb" />
     <Compile Include="WindowModules\SpectroscopyTable\mSpectroscopyTableDataTable.Designer.vb">
       <DependentUpon>mSpectroscopyTableDataTable.vb</DependentUpon>
     </Compile>

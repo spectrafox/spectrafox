@@ -112,6 +112,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to width: %dimx
+        '''height: %dimy.
+        '''</summary>
+        Friend Shared ReadOnly Property GridFile_MeasurementDimensions() As String
+            Get
+                Return ResourceManager.GetString("GridFile_MeasurementDimensions", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to %xp x %yp
         '''%spc, %spbV.
         '''</summary>

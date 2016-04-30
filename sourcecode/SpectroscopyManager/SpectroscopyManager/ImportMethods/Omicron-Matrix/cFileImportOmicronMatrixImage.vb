@@ -147,95 +147,93 @@ Public Class cFileImportOmicronMatrixImage
                 Dim Data As New List(Of Integer)
 
                 ' Load StreamReader with the Big Endian Encoding
-                Dim fs As New FileStream(oFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
+                Using fs As New FileStream(oFile.FullName, FileMode.Open, FileAccess.Read, FileShare.Read)
 
-                ' Now Using BinaryReader to obtain Image-Data
-                Dim br As New BinaryReader(fs, System.Text.Encoding.Default)
+                    ' Now Using BinaryReader to obtain Image-Data
+                    Using br As New BinaryReader(fs, System.Text.Encoding.Default)
 
-                Try
+                        ' Buffers
+                        Dim LastFourChars As String = String.Empty
+                        ReaderBuffer = ""
 
-                    ' Buffers
-                    Dim LastFourChars As String = String.Empty
-                    ReaderBuffer = ""
+                        Try
 
-                    ' Read the header up to the position of the data, which is announced by "ATAD".
-                    Do Until fs.Position = fs.Length Or LastFourChars = "ATAD"
+                            ' Read the header up to the position of the data, which is announced by "ATAD".
+                            Do Until fs.Position = fs.Length Or LastFourChars = "ATAD"
 
-                        ' Move the identifier buffer by one byte.
-                        LastFourChars = GetLastFourCharsByProceedingOneByte(br, LastFourChars)
+                                ' Move the identifier buffer by one byte.
+                                LastFourChars = GetLastFourCharsByProceedingOneByte(br, LastFourChars)
 
-                        Select Case LastFourChars
+                                Select Case LastFourChars
 
-                            Case "TLKB"
-                                ' BKLT: This announces the timestamp at which the file has been recorded.
+                                    Case "TLKB"
+                                        ' BKLT: This announces the timestamp at which the file has been recorded.
 
-                                ' BLOCK READING NOT WORKING HERE???
-                                'Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
-                                'Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                        ' BLOCK READING NOT WORKING HERE???
+                                        'Dim CurrentBlock As DataBlockWithTime = ReadBlockWithTime(br, LastFourChars)
+                                        'Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                                '    ' Store the time as record time.
-                                '    oSpectroscopyTable.RecordDate = CurrentBlock.Time
+                                        '    ' Store the time as record time.
+                                        '    oSpectroscopyTable.RecordDate = CurrentBlock.Time
 
-                                'End Using
+                                        'End Using
 
-                                ' Jump over the first 4 bytes!
-                                fs.Seek(4, SeekOrigin.Current)
+                                        ' Jump over the first 4 bytes!
+                                        fs.Seek(4, SeekOrigin.Current)
 
-                                ' Timestamp of the file. The next 8 bytes.
-                                RecordTimeTicks = br.ReadUInt64
-                                oScanImage.RecordDate = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(RecordTimeTicks).ToLocalTime()
+                                        ' Timestamp of the file. The next 8 bytes.
+                                        RecordTimeTicks = br.ReadUInt64
+                                        oScanImage.RecordDate = New DateTime(1970, 1, 1, 0, 0, 0, 0, System.DateTimeKind.Utc).AddSeconds(RecordTimeTicks).ToLocalTime()
 
-                            Case "CSED"
-                                ' DESC: This is the descriptor of the file.
-                                ' E.g. it announces the number of points in the curve.
+                                    Case "CSED"
+                                        ' DESC: This is the descriptor of the file.
+                                        ' E.g. it announces the number of points in the curve.
 
-                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
-                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                        Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                                    ' The next 20 bytes are unknown.
-                                    BlockReader.BaseStream.Seek(20, SeekOrigin.Current)
+                                            ' The next 20 bytes are unknown.
+                                            BlockReader.BaseStream.Seek(20, SeekOrigin.Current)
 
-                                    ' The next 4 bytes are UINT32-LE as point number.
-                                    ExpectedNumber = BlockReader.ReadUInt32
-                                    RecordedNumber = BlockReader.ReadUInt32
+                                            ' The next 4 bytes are UINT32-LE as point number.
+                                            ExpectedNumber = BlockReader.ReadUInt32
+                                            RecordedNumber = BlockReader.ReadUInt32
 
-                                End Using
+                                        End Using
 
-                            Case "ATAD"
-                                ' DATA: This announces that the data is following.
+                                    Case "ATAD"
+                                        ' DATA: This announces that the data is following.
 
-                                ' Abort reading of the header. From here on the data starts.
-                                If FetchOnlyFileHeader Then
-                                    Exit Do
-                                End If
+                                        ' Abort reading of the header. From here on the data starts.
+                                        If FetchOnlyFileHeader Then
+                                            Exit Do
+                                        End If
 
-                                Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
-                                Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
+                                        Dim CurrentBlock As DataBlockWithoutTime = ReadBlockWithoutTime(br, LastFourChars)
+                                        Using BlockReader As BinaryReader = GetBinaryReaderForBlockContent(CurrentBlock)
 
-                                    ' Create the data storage, using the length information obtained before
-                                    Data = New List(Of Integer)(CInt(RecordedNumber))
+                                            ' Create the data storage, using the length information obtained before
+                                            Data = New List(Of Integer)(CInt(RecordedNumber))
 
-                                    ' read the data
-                                    Dim Value As Int32
-                                    While BlockReader.BaseStream.Position < BlockReader.BaseStream.Length
-                                        Value = BlockReader.ReadInt32
-                                        Data.Add(Value)
-                                    End While
+                                            ' read the data
+                                            Dim Value As Int32
+                                            While BlockReader.BaseStream.Position < BlockReader.BaseStream.Length
+                                                Value = BlockReader.ReadInt32
+                                                Data.Add(Value)
+                                            End While
 
-                                End Using
+                                        End Using
 
-                        End Select
+                                End Select
 
-                    Loop
+                            Loop
 
-                Catch ex As Exception
-                    Debug.WriteLine("cFileImportOmicronMatrixImage: Error reading data file: " & ex.Message)
-                Finally
-                    br.Close()
-                    fs.Close()
-                    br.Dispose()
-                    fs.Dispose()
-                End Try
+                        Catch ex As Exception
+                            Debug.WriteLine("cFileImportOmicronMatrixImage: Error reading data file: " & ex.Message)
+                        End Try
+
+                    End Using
+                End Using
 
                 ' Create an emergency catch of the data.
                 Dim NumberOfPixels As Integer = Convert.ToInt32(Math.Sqrt(ExpectedNumber) / 2)
@@ -461,11 +459,10 @@ Public Class cFileImportOmicronMatrixImage
 
         ' Load StreamReader and read first identifier.
         ' Is the only one needed for identification.
-        Dim sr As New StreamReader(FullFileNamePlusPath)
         Dim Buffer(DataFileIdentifier.Length - 1) As Char
-        sr.ReadBlock(Buffer, 0, DataFileIdentifier.Length)
-        sr.Close()
-        sr.Dispose()
+        Using sr As New StreamReader(FullFileNamePlusPath)
+            sr.ReadBlock(Buffer, 0, DataFileIdentifier.Length)
+        End Using
 
         ' All Omicron data files start with the DataFileIdentifier.
         ' If we stumble upon this identifier, we can start loading the file.

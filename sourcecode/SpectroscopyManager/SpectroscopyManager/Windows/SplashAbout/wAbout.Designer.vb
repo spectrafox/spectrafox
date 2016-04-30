@@ -25,6 +25,7 @@ Partial Class wAbout
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(wAbout))
         Me.OKButton = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.wbChangelog = New System.Windows.Forms.WebBrowser()
@@ -32,6 +33,7 @@ Partial Class wAbout
         Me.lblVersion = New System.Windows.Forms.Label()
         Me.txtEULA = New System.Windows.Forms.TextBox()
         Me.txtChangeLog = New System.Windows.Forms.TextBox()
+        Me.lblHint = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'OKButton
@@ -97,7 +99,7 @@ Partial Class wAbout
         Me.lblVersion.BackColor = System.Drawing.Color.Transparent
         Me.lblVersion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblVersion.ForeColor = System.Drawing.Color.White
-        Me.lblVersion.Location = New System.Drawing.Point(494, 7)
+        Me.lblVersion.Location = New System.Drawing.Point(494, 9)
         Me.lblVersion.MaximumSize = New System.Drawing.Size(150, 13)
         Me.lblVersion.MinimumSize = New System.Drawing.Size(150, 15)
         Me.lblVersion.Name = "lblVersion"
@@ -141,6 +143,20 @@ Partial Class wAbout
         Me.txtChangeLog.Text = "ChangeLog"
         Me.txtChangeLog.Visible = False
         '
+        'lblHint
+        '
+        Me.lblHint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblHint.AutoSize = True
+        Me.lblHint.BackColor = System.Drawing.Color.Transparent
+        Me.lblHint.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblHint.ForeColor = System.Drawing.Color.LightGray
+        Me.lblHint.Location = New System.Drawing.Point(291, 34)
+        Me.lblHint.Name = "lblHint"
+        Me.lblHint.Size = New System.Drawing.Size(353, 91)
+        Me.lblHint.TabIndex = 5
+        Me.lblHint.Text = resources.GetString("lblHint.Text")
+        Me.lblHint.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'wAbout
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -150,6 +166,7 @@ Partial Class wAbout
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None
         Me.CancelButton = Me.OKButton
         Me.ClientSize = New System.Drawing.Size(1226, 427)
+        Me.Controls.Add(Me.lblHint)
         Me.Controls.Add(Me.txtEULA)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
@@ -175,5 +192,5 @@ Partial Class wAbout
     Friend WithEvents txtEULA As System.Windows.Forms.TextBox
     Friend WithEvents wbChangelog As System.Windows.Forms.WebBrowser
     Friend WithEvents Label3 As System.Windows.Forms.Label
-
+    Friend WithEvents lblHint As Label
 End Class
