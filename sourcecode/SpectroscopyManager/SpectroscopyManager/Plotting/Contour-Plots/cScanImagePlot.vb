@@ -86,6 +86,9 @@
     ''' </summary>
     Private PixelsIn_Y_ToKeep As Integer
 
+#End Region
+
+#Region "Point Marks"
     ''' <summary>
     ''' Saves Points to mark on the Image.
     ''' </summary>
@@ -166,6 +169,91 @@
             CircleEmpty
             CircleFilled
         End Enum
+
+    End Class
+
+#End Region
+
+#Region "Text Objects"
+    ''' <summary>
+    ''' Saves TextObjects on the Image.
+    ''' </summary>
+    Public Property ListOfTextObjects As New List(Of TextObject)
+
+    ''' <summary>
+    ''' Adds a TextObjects to the Display-List
+    ''' </summary>
+    Public Sub AddTextObject(Text As TextObject)
+        If Not Me.ListOfTextObjects.Contains(Text) Then
+            Me.ListOfTextObjects.Add(Text)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Adds a TextObjects to the Display-List
+    ''' </summary>
+    Public Sub AddTextObjects(PointMarks As List(Of TextObject))
+        For Each Text As TextObject In PointMarks
+            Me.AddTextObject(Text)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Removes all entries from the TextObjects-List
+    ''' </summary>
+    Public Sub ClearTextObjectList()
+        Me.ListOfTextObjects.Clear()
+    End Sub
+
+    ''' <summary>
+    ''' Structure used to mark points on the scan-image plot.
+    ''' </summary>
+    Public Class TextObject
+
+        ''' <summary>
+        ''' Text to show.
+        ''' </summary>
+        Public Text As String = String.Empty
+
+        ''' <summary>
+        ''' Color to paint the text in.
+        ''' </summary>
+        Public Color As Color
+
+        ''' <summary>
+        ''' Font with which the labels of points are plotted to the image.
+        ''' </summary>
+        Public Font As New Font("Arial", 10.0F, FontStyle.Bold, GraphicsUnit.Point)
+
+        ''' <summary>
+        ''' Coordinates at which the algorithm placed for plotting it in the image.
+        ''' </summary>
+        Public PlotPoint As PointF
+
+        ''' <summary>
+        ''' Determines if the value is given as absolute value or relative.
+        ''' </summary>
+        Public ValueIsAbsolute As Boolean = True
+
+        ''' <summary>
+        ''' Determines if the font size should be given relative or absolute.
+        ''' If zero, it uses absolute font size. Given as percent!
+        ''' </summary>
+        Public UseRelativeFontSize As Integer = 0
+
+        ''' <summary>
+        ''' If automatic, it will choose the color from the background.
+        ''' </summary>
+        Public ChooseColorAutomatic As Boolean = True
+
+        ''' <summary>
+        ''' Constructor for the TextObject
+        ''' </summary>
+        Public Sub New(ByVal PlotPoint As PointF,
+                       ByVal Text As String)
+            Me.Text = Text
+            Me.PlotPoint = PlotPoint
+        End Sub
 
     End Class
 
@@ -287,89 +375,141 @@
                     ' Lock the image for reading out the pixel-colors.
                     Me.oFastImage.Lock()
 
-                    For Each pm As PointMark In Me.ListOfPointMarks
+                    Try
 
-                        ' Get the transformed point in the scan-frame.
-                        pm.PlotPoint = ScanImage.GetCoordinateInValueMatrix(pm.X, pm.Y)
+                        For Each pm As PointMark In Me.ListOfPointMarks
+                            ' Get the transformed point in the scan-frame.
+                            pm.PlotPoint = ScanImage.GetCoordinateInValueMatrix(pm.X, pm.Y)
 
-                        ' Resized point-location.
-                        pm.PlotPoint.X = CInt(pm.PlotPoint.X * (PixelsIn_X_ToKeep / ScanImage.ScanPixels_X))
-                        pm.PlotPoint.Y = CInt(pm.PlotPoint.Y * (PixelsIn_Y_ToKeep / ScanImage.ScanPixels_Y))
+                            ' Resized point-location.
+                            pm.PlotPoint.X = CInt(pm.PlotPoint.X * (PixelsIn_X_ToKeep / ScanImage.ScanPixels_X))
+                            pm.PlotPoint.Y = CInt(pm.PlotPoint.Y * (PixelsIn_Y_ToKeep / ScanImage.ScanPixels_Y))
 
-                        ' Get the color of the point, if it is not specified!
-                        If pm.Color = Nothing Then
+                            ' Get the color of the point, if it is not specified!
+                            If pm.Color = Nothing Then
 
-                            If (pm.PlotPoint.X >= 0 And pm.PlotPoint.X < Me.oFastImage.Width) And
-                               (pm.PlotPoint.Y >= 0 And pm.PlotPoint.Y < Me.oFastImage.Height) Then
+                                If (pm.PlotPoint.X >= 0 And pm.PlotPoint.X < Me.oFastImage.Width) And
+                                   (pm.PlotPoint.Y >= 0 And pm.PlotPoint.Y < Me.oFastImage.Height) Then
 
-                                pm.PlotColor = cColorHelper.InvertColor(Me.oFastImage.GetPixel(pm.PlotPoint.X, pm.PlotPoint.Y))
+                                    pm.PlotColor = cColorHelper.InvertColor(Me.oFastImage.GetPixel(pm.PlotPoint.X, pm.PlotPoint.Y))
 
+                                End If
+
+                            Else
+                                ' Use the predefined color.
+                                pm.PlotColor = pm.Color
                             End If
-
-                        Else
-                            ' Use the predefined color.
-                            pm.PlotColor = pm.Color
-                        End If
-
-                    Next
+                        Next
+                    Catch ex As Exception
+                        Debug.WriteLine("cScanImagePlot->Error getting point mark color: " & ex.Message)
+                    End Try
 
                     ' Unlock the image for reading out the pixel-colors.
                     Me.oFastImage.Unlock(False)
 
-                    ' Now plot the point marks to the graphics surface.
-                    For Each pm As PointMark In Me.ListOfPointMarks
+                        ' Now plot the point marks to the graphics surface.
+                        For Each pm As PointMark In Me.ListOfPointMarks
 
-                        ' Get a pen to draw the point.
-                        PointColorPen = New Pen(pm.PlotColor, 2)
+                            ' Get a pen to draw the point.
+                            PointColorPen = New Pen(pm.PlotColor, 2)
 
-                        ' Get the size of the point to draw.
-                        ' If non is specified (-1) then set it to an appropriate value.
-                        If pm.PlotRadiusInScale < 0 Then
-                            pm.PlotRadiusInPixel = PointMarkSizeDefault
-                        Else
-                            pm.PlotRadiusInPixel = CInt(pm.PlotRadiusInScale * Me._RangePerPixelUsed)
-                        End If
+                            ' Get the size of the point to draw.
+                            ' If non is specified (-1) then set it to an appropriate value.
+                            If pm.PlotRadiusInScale < 0 Then
+                                pm.PlotRadiusInPixel = PointMarkSizeDefault
+                            Else
+                                pm.PlotRadiusInPixel = CInt(pm.PlotRadiusInScale * Me._RangePerPixelUsed)
+                            End If
 
-                        ' Draw a certain shape to the image.
-                        Select Case pm.Shape
+                            ' Draw a certain shape to the image.
+                            Select Case pm.Shape
 
-                            Case PointMark.PointMarkShapes.Cross
+                                Case PointMark.PointMarkShapes.Cross
 
-                                ' Plot a cross centered at the point-mark.
-                                DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
-                                DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel)
+                                    ' Plot a cross centered at the point-mark.
+                                    DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
+                                    DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel)
 
-                            Case PointMark.PointMarkShapes.CircleEmpty
-                                DrawSurface.DrawEllipse(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
+                                Case PointMark.PointMarkShapes.CircleEmpty
+                                    DrawSurface.DrawEllipse(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
 
-                            Case PointMark.PointMarkShapes.CircleFilled
-                                DrawSurface.FillEllipse(PointColorPen.Brush, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
+                                Case PointMark.PointMarkShapes.CircleFilled
+                                    DrawSurface.FillEllipse(PointColorPen.Brush, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
 
-                        End Select
+                            End Select
 
-                        ' Write the label of the point-mark.
-                        If Me.PlotPointMarkLabels Then
-                            If pm.Label <> Nothing Then
-                                If pm.Label <> String.Empty Then
-                                    DrawSurface.DrawString(pm.Label, Me.PointMarkFont, PointColorPen.Brush, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
+                            ' Write the label of the point-mark.
+                            If Me.PlotPointMarkLabels Then
+                                If pm.Label <> Nothing Then
+                                    If pm.Label <> String.Empty Then
+                                        DrawSurface.DrawString(pm.Label, Me.PointMarkFont, PointColorPen.Brush, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
+                                    End If
                                 End If
                             End If
-                        End If
 
-                        ' Dispose the pen
-                        PointColorPen.Dispose()
-                        PointColorPen = Nothing
+                            ' Dispose the pen
+                            PointColorPen.Dispose()
+                            PointColorPen = Nothing
 
-                    Next
+                        Next
 
-                Catch ex As Exception
-                    Debug.WriteLine("ScanImagePlot->PointMarkPlot: error: " & ex.Message)
+                    Catch ex As Exception
+                        Debug.WriteLine("ScanImagePlot->PointMarkPlot: error: " & ex.Message)
                 End Try
 
             End If
 
         End If
         ' END Point-Mark
+        '##########################################################################################
+        '##########################################################################################
+
+        '##########################################################################################
+        '##########################################################################################
+        ' Apply TextObjects
+        If Me.ListOfTextObjects IsNot Nothing AndAlso Me.ListOfTextObjects.Count > 0 Then
+
+            For Each Text As TextObject In Me.ListOfTextObjects
+
+                ' Get the absolute position, if it was given relative:
+                Dim PlotPosition As PointF
+                If Text.ValueIsAbsolute Then
+                    PlotPosition = Text.PlotPoint
+                Else
+                    PlotPosition = New PointF(Me.oFastImage.Width * Text.PlotPoint.X, Me.oFastImage.Height * Text.PlotPoint.Y)
+                End If
+
+                ' Get the color to use.
+                If Text.ChooseColorAutomatic Then
+                    ' Lock the image for reading out the pixel-colors.
+                    Me.oFastImage.Lock()
+
+                    If (PlotPosition.X >= 0 And CInt(PlotPosition.X) < Me.oFastImage.Width) And
+                       (PlotPosition.Y >= 0 And CInt(PlotPosition.Y) < Me.oFastImage.Height) Then
+
+                        Text.Color = cColorHelper.InvertColor(Me.oFastImage.GetPixel(CInt(PlotPosition.X), CInt(PlotPosition.Y)))
+
+                    End If
+
+                    ' Unlock the image for reading out the pixel-colors.
+                    Me.oFastImage.Unlock(False)
+                End If
+
+                ' Get the font-size to use.
+                If Text.UseRelativeFontSize > 0 Then
+                    Text.Font = New Font(Text.Font.FontFamily,
+                                         Convert.ToSingle(Math.Min(Me.oFastImage.Width, Me.oFastImage.Height) * Text.UseRelativeFontSize / 100),
+                                         FontStyle.Regular)
+                End If
+
+                Using P As New Pen(Text.Color)
+                    DrawSurface.DrawString(Text.Text, Text.Font, P.Brush, PlotPosition)
+                End Using
+
+            Next
+
+        End If
+        ' END TextObjects
         '##########################################################################################
         '##########################################################################################
 

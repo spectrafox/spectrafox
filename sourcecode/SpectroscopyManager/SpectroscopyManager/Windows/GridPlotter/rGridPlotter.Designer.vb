@@ -83,6 +83,33 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to save GIF file ....
+        '''</summary>
+        Friend Shared ReadOnly Property ExportGif_FileDialogTitle() As String
+            Get
+                Return ResourceManager.GetString("ExportGif_FileDialogTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to combining images to GIF animation.
+        '''</summary>
+        Friend Shared ReadOnly Property ExportGif_Progress_GeneratingFinalGIF() As String
+            Get
+                Return ResourceManager.GetString("ExportGif_Progress_GeneratingFinalGIF", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to generating image ( %i | %max ).
+        '''</summary>
+        Friend Shared ReadOnly Property ExportGif_Progress_GeneratingImage() As String
+            Get
+                Return ResourceManager.GetString("ExportGif_Progress_GeneratingImage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to (%p %) loading file %f ....
         '''</summary>
         Friend Shared ReadOnly Property FetchProgress() As String

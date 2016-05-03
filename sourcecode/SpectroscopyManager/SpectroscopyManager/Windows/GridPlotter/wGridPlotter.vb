@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Threading.Tasks
+Imports ImageMagick
 Imports MathNet.Numerics
 
 Public Class wGridPlotter
@@ -25,6 +26,21 @@ Public Class wGridPlotter
     Protected WithEvents _GridPlotter As New BackgroundWorker
 
     ''' <summary>
+    ''' Backgroundworker for creating the GIF animation.
+    ''' </summary>
+    Protected WithEvents _GIFAnimationWorker As New BackgroundWorker
+
+    ''' <summary>
+    ''' Is any worker busy?
+    ''' </summary>
+    Public Function IsAnyWorkerBusy() As Boolean
+        If Me._GIFAnimationWorker.IsBusy Then Return True
+        If Me._FileLoader.IsBusy Then Return True
+        If Me._GridPlotter.IsBusy Then Return True
+        Return False
+    End Function
+
+    ''' <summary>
     ''' Contains all file-objects that should be loaded.
     ''' </summary>
     Protected _FileObjectsLoaded_Spectroscopy As New Dictionary(Of String, cFileObject)
@@ -35,6 +51,11 @@ Public Class wGridPlotter
     Protected _FileObjectsLoaded_ScanImage As New Dictionary(Of String, cFileObject)
 
     ''' <summary>
+    ''' Contains all file-objects that should be loaded.
+    ''' </summary>
+    Protected _FileObjectsLoaded_GridFile As New Dictionary(Of String, cFileObject)
+
+    ''' <summary>
     ''' Contains all spectroscopy-tables.
     ''' </summary>
     Protected _SpectroscopyTables As New List(Of cSpectroscopyTable)
@@ -43,6 +64,11 @@ Public Class wGridPlotter
     ''' Contains all scan images.
     ''' </summary>
     Protected _ScanImages As New List(Of cScanImage)
+
+    ''' <summary>
+    ''' Contains all grid files.
+    ''' </summary>
+    Protected _GridFiles As New List(Of cGridFile)
 
     ''' <summary>
     ''' Maximum value that the range selector represents.
@@ -89,9 +115,19 @@ Public Class wGridPlotter
     Protected _AveragingWindowValuesWereUpdated As Boolean = False
 
     ''' <summary>
+    ''' Keep grid value range constant, and don't adapt it to the full range automatically.
+    ''' </summary>
+    Protected _KeepGridValueRangeConstant As Boolean = False
+
+    ''' <summary>
     ''' Plot point diameter.
     ''' </summary>
     Private _PointDiameter As Double = 0.0000000001
+
+    ''' <summary>
+    ''' Defines the position of the bias indicator.
+    ''' </summary>
+    Private BiasIndicatorPosition As New PointF(0.01, 0.01)
 
     ''' <summary>
     ''' Show or hide the grid data during the plot.
@@ -146,12 +182,14 @@ Public Class wGridPlotter
 
         ' Set the file-selector contents
         Me.dsSpectroscopyFiles.SetFileList(Me._FileList)
+        Me.dsGridFiles.SetFileList(Me._FileList)
         Me.dsScanImages.SetFileList(Me._FileList)
 
         ' Setup the background-worker
         Me._FileLoader.WorkerReportsProgress = True
         Me._FileLoader.WorkerSupportsCancellation = True
         Me._GridPlotter.WorkerReportsProgress = True
+        Me._GIFAnimationWorker.WorkerReportsProgress = True
 
         ' Set the initial values
         Me.txtPlotSettings_PointDiameter.SetValue(Me._PointDiameter,, False)
@@ -167,6 +205,11 @@ Public Class wGridPlotter
         ' Set the parents of the pictureboxes for transparency.
         Me.svOutputImage.Parent = Me.gbOutput
 
+        ' Set some default values
+        Me.txtAnimationTime.SetValue(5000)
+        Me.txtPlotSettings_BiasIndicatorSize.SetValue(7)
+        Me.ckbPlotSettings_BiasIndicatorSize.Checked = True
+
         Me.bReady = True
 
     End Sub
@@ -180,7 +223,7 @@ Public Class wGridPlotter
     ''' Abort the Closing, if the File-Buffer is fetching!
     ''' </summary>
     Private Sub CheckBeforeFormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        If Me._FileLoader.IsBusy Or Me._GridPlotter.IsBusy Then
+        If Me.IsAnyWorkerBusy Then
             MessageBox.Show(My.Resources.rGridPlotter.WindowClosing_FetchInProgress,
                             My.Resources.rGridPlotter.WindowClosing_FetchInProgress_title,
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -196,8 +239,10 @@ Public Class wGridPlotter
     ''' <summary>
     ''' Enable or disable the loading button.
     ''' </summary>
-    Private Sub dsSpectroscopyFiles_SelectionChanged(ByRef SelectedFileObjects As Dictionary(Of String, cFileObject)) Handles dsSpectroscopyFiles.SelectionChanged, dsScanImages.SelectionChanged
-        If dsSpectroscopyFiles.SelectedEntries.Count > 0 AndAlso dsScanImages.SelectedEntries.Count > 0 Then
+    Private Sub dsSpectroscopyFiles_SelectionChanged(ByRef SelectedFileObjects As Dictionary(Of String, cFileObject)) Handles dsSpectroscopyFiles.SelectionChanged, dsScanImages.SelectionChanged, dsGridFiles.SelectionChanged
+        If ((dsSpectroscopyFiles.SelectedEntries.Count > 0 AndAlso Me.tcGridFilesSelector.SelectedTab Is Me.tpIndividualSpectroscopyFiles) OrElse
+            (dsGridFiles.SelectedEntries.Count > 0 AndAlso Me.tcGridFilesSelector.SelectedTab Is Me.tpGridFiles)) AndAlso
+           dsScanImages.SelectedEntries.Count > 0 Then
             Me.btnLoadData.Enabled = True
         Else
             Me.btnLoadData.Enabled = False
@@ -213,11 +258,12 @@ Public Class wGridPlotter
     ''' </summary>
     Private Sub btnLoadDataSet_Click(sender As Object, e As EventArgs) Handles btnLoadData.Click
 
-        If Me._FileLoader.IsBusy Then Return
+        If Me.IsAnyWorkerBusy Then Return
 
         ' Copy the references of the file-objects to the list of file-objects to load.
         Me._FileObjectsLoaded_Spectroscopy = Me.dsSpectroscopyFiles.SelectedEntries()
         Me._FileObjectsLoaded_ScanImage = Me.dsScanImages.SelectedEntries()
+        Me._FileObjectsLoaded_GridFile = Me.dsGridFiles.SelectedEntries()
 
         ' Disable buttons.
         ActivateLoadingButton(False)
@@ -232,9 +278,11 @@ Public Class wGridPlotter
     ''' </summary>
     Protected Sub ActivateLoadingButton(ByVal Active As Boolean)
         Me.btnLoadData.Enabled = Active
-        Me.dsSpectroscopyFiles.Enabled = Active
+        Me.tcGridFilesSelector.Enabled = Active
         Me.dsScanImages.Enabled = Active
         Me.gbDataRange.Enabled = Active
+        Me.gbExport.Enabled = Active
+        Me.gbGenerateGIF.Enabled = Active
     End Sub
 
     ''' <summary>
@@ -245,6 +293,7 @@ Public Class wGridPlotter
         ' Clear the cache.
         Me._ScanImages.Clear()
         Me._SpectroscopyTables.Clear()
+        Me._GridFiles.Clear()
 
         ' Set the length of the list at once, if it is too small.
         If Me._SpectroscopyTables.Capacity < Me._FileObjectsLoaded_Spectroscopy.Count Then
@@ -253,12 +302,15 @@ Public Class wGridPlotter
         If Me._ScanImages.Capacity < Me._FileObjectsLoaded_ScanImage.Count Then
             Me._ScanImages.Capacity = Me._FileObjectsLoaded_ScanImage.Count
         End If
+        If Me._GridFiles.Capacity < Me._FileObjectsLoaded_GridFile.Count Then
+            Me._GridFiles.Capacity = Me._FileObjectsLoaded_GridFile.Count
+        End If
 
         ' Variables for the progress calculation.
         Dim ProgressPercentage As Double = 0
         Dim ProgressPercentageIncrement As Double = 0
 
-        ProgressPercentageIncrement = 90 / (Me._FileObjectsLoaded_Spectroscopy.Count + 1)
+        ProgressPercentageIncrement = 70 / (Me._FileObjectsLoaded_Spectroscopy.Count + 1)
         For Each SpectroscopyFOKV As KeyValuePair(Of String, cFileObject) In Me._FileObjectsLoaded_Spectroscopy
 
             ' Report Progress
@@ -276,7 +328,7 @@ Public Class wGridPlotter
 
         Next
 
-        ProgressPercentageIncrement = 99 / (Me._FileObjectsLoaded_ScanImage.Count + 1)
+        ProgressPercentageIncrement = 10 / (Me._FileObjectsLoaded_ScanImage.Count + 1)
         For Each ScanFOKV As KeyValuePair(Of String, cFileObject) In Me._FileObjectsLoaded_ScanImage
 
             ' Report Progress
@@ -290,6 +342,24 @@ Public Class wGridPlotter
             ' Add the table to the cache.
             If Not ScanImage Is Nothing Then
                 Me._ScanImages.Add(ScanImage)
+            End If
+
+        Next
+
+        ProgressPercentageIncrement = 15 / (Me._FileObjectsLoaded_GridFile.Count + 1)
+        For Each GridFOKV As KeyValuePair(Of String, cFileObject) In Me._FileObjectsLoaded_GridFile
+
+            ' Report Progress
+            ProgressPercentage += ProgressPercentageIncrement
+            Me._FileLoader.ReportProgress(CInt(ProgressPercentage), My.Resources.rGridPlotter.FetchProgress.Replace("%f", GridFOKV.Value.FileNameWithoutPath).Replace("%p", ProgressPercentage.ToString("N2")))
+
+            ' Load the GridFile
+            Dim GridFile As cGridFile = Nothing
+            cFileImport.GetGridFile(GridFOKV.Value, GridFile, False)
+
+            ' Add the table to the cache.
+            If Not GridFile Is Nothing Then
+                Me._GridFiles.Add(GridFile)
             End If
 
         Next
@@ -309,6 +379,13 @@ Public Class wGridPlotter
         Else
             ' Enable buttons.
             ActivateLoadingButton(True)
+
+            ' If we loaded a grid file. Store the spectroscopytables of the grid file
+            ' in the spectroscopy table list.
+            If Me._GridFiles.Count > 0 Then
+                Me._SpectroscopyTables = Me._GridFiles(0).SpectroscopyTables
+            End If
+
             Me.DrawDatasetAfterLoading()
         End If
     End Sub
@@ -327,8 +404,12 @@ Public Class wGridPlotter
         ' SCAN-IMAGES
         Me.svOutputImage.SetScanImageObjects(Me._ScanImages)
 
+        ' Load the selected data
+        Me.SelectedSpectroscopyDataChanged()
+
         ' Plot the averaging window to the graph
         Me.PlotAveragingWindowToSpectroscopyPlot()
+
     End Sub
 
     ''' <summary>
@@ -401,6 +482,10 @@ Public Class wGridPlotter
 
         ' Set the average window start to the lower limit
         Me.SetAverageWindowStart(Me._SelectedRange_XMin + (Me._SelectedRange_XMax - Me._SelectedRange_XMin) / 2, True)
+
+        ' Set the GIF-export to the max and min values
+        Me.txtGIFStartValue.SetValue(Me._SelectedRange_XMin)
+        Me.txtGIFEndValue.SetValue(Me._SelectedRange_XMax)
 
     End Sub
 
@@ -620,7 +705,7 @@ Public Class wGridPlotter
         If Not Me.bReady Then Return
 
         ' Check if a plot is still running.
-        If Me._GridPlotter.IsBusy Then Return
+        If Me.IsAnyWorkerBusy Then Return
 
         '' Deactivate the plot settings box
         'Me.gbPlotSettings.Enabled = False
@@ -634,18 +719,18 @@ Public Class wGridPlotter
     ''' <summary>
     ''' Plots the grid in the background-worker.
     ''' </summary>
-    Private Sub PlotGridAsync() Handles _GridPlotter.DoWork
+    Private Sub CreateGridPointMarks() Handles _GridPlotter.DoWork
 
         Try
 
-            Me._GridPlotter.ReportProgress(5, My.Resources.rGridPlotter.PlotProgress_CalculateAverageValuesOfAveragingWindow)
+            If Me._GridPlotter.IsBusy Then Me._GridPlotter.ReportProgress(5, My.Resources.rGridPlotter.PlotProgress_CalculateAverageValuesOfAveragingWindow)
             ' Start to count up and average all values in the selected range,
             ' if the value array is marked as invalid.
             Me.CalculateAveragingWindowValue()
 
             ' Get the maximum and minimum-values of the averaging window,
             ' if the averaging window changed.
-            If Me._AveragingWindowValuesWereUpdated Then
+            If Me._AveragingWindowValuesWereUpdated AndAlso Not Me._KeepGridValueRangeConstant Then
                 Me._GridPlotRangeMax = cNumericalMethods.GetMaximumValue(Me._AveragingWindowValues)
                 Me._GridPlotRangeMin = cNumericalMethods.GetMinimumValue(Me._AveragingWindowValues)
             End If
@@ -665,7 +750,7 @@ Public Class wGridPlotter
             For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
 
                 ' Report progress
-                Me._GridPlotter.ReportProgress(CInt(Progress), My.Resources.rGridPlotter.PlotProgress_PlottingDataPoint.Replace("%f", Me._SpectroscopyTables(i).FileNameWithoutPath))
+                If Me._GridPlotter.IsBusy Then Me._GridPlotter.ReportProgress(CInt(Progress), My.Resources.rGridPlotter.PlotProgress_PlottingDataPoint.Replace("%f", Me._SpectroscopyTables(i).FileNameWithoutPath))
                 Progress += ProgressProgress
 
                 ' Get the color of the point-mark.
@@ -688,148 +773,12 @@ Public Class wGridPlotter
 
             Next
 
-            '#######################################
-            ' !!! OLD !!! JUST DRAWED THE GRID!!!
-            '#######################################
-            'Me._GridPlotter.ReportProgress(10, My.Resources.rGridPlotter.PlotProgress_GettingGridDimensions)
-            '' First we need to calculate the matrix dimensions for the values from
-            '' the locations of the spectra.
-            'Dim SpectraLocation_XMax As Double = Double.MinValue
-            'Dim SpectraLocation_XMin As Double = Double.MaxValue
-            'Dim SpectraLocation_YMax As Double = Double.MinValue
-            'Dim SpectraLocation_YMin As Double = Double.MaxValue
-
-            '' Go through all spectra, and the the most extremal locations.
-            'For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
-
-            '    SpectraLocation_XMax = Math.Max(Me._SpectroscopyTables(i).Location_X, SpectraLocation_XMax)
-            '    SpectraLocation_XMin = Math.Min(Me._SpectroscopyTables(i).Location_X, SpectraLocation_XMin)
-            '    SpectraLocation_YMax = Math.Max(Me._SpectroscopyTables(i).Location_Y, SpectraLocation_YMax)
-            '    SpectraLocation_YMin = Math.Min(Me._SpectroscopyTables(i).Location_Y, SpectraLocation_YMin)
-
-            'Next
-
-            '' Define the plot properties.
-            'Dim PointRadius As Double = Me._PointDiameter / 2
-
-            '' Get the grid dimensions
-            'Dim GridDimensionsInScale_Width As Double = (SpectraLocation_XMax - SpectraLocation_XMin) + Me._PointDiameter
-            'Dim GridDimensionsInScale_Height As Double = (SpectraLocation_YMax - SpectraLocation_YMin) + Me._PointDiameter
-
-            'Dim ScanImage_XMax As Double = Double.MinValue
-            'Dim ScanImage_XMin As Double = Double.MaxValue
-            'Dim ScanImage_YMax As Double = Double.MinValue
-            'Dim ScanImage_YMin As Double = Double.MaxValue
-            '' Now get the topography-image, and compare the dimensions.
-            '' Take the LARGER ones to plot the image!
-            'For Each ScanImage As cScanImage In Me._ScanImages
-
-            'Next
-
-            '' Now, that we have the grid dimensions, we can create a value matrix initially filled with Double.NaN values,
-            '' into which we "paint" the values. This matrix is then plotted.
-            'Dim ImageWidth As Integer = Me.pbOutputGrid.Width
-            'Dim ImageHeight As Integer = Me.pbOutputGrid.Height
-            'If ImageWidth <= 0 Or ImageHeight <= 0 Then Return
-
-            'Dim ScalePerPixel_X As Double = GridDimensionsInScale_Width / ImageWidth
-            'Dim ScalePerPixel_Y As Double = GridDimensionsInScale_Height / ImageHeight
-            'If ScalePerPixel_X <= 0 Or ScalePerPixel_Y <= 0 Then Return
-
-            '' Get the plot circle radius
-            'Dim CircleRadiusInPixels_X As Integer = CInt(PointRadius / ScalePerPixel_X)
-            'Dim CircleRadiusInPixels_Y As Integer = CInt(PointRadius / ScalePerPixel_Y)
-
-            '' First we create a matrix for the values at the given plot positions.
-            'Dim PlotMatrix As LinearAlgebra.Double.DenseMatrix = LinearAlgebra.Double.DenseMatrix.Create(ImageHeight, ImageWidth, Double.NaN)
-
-            ''Dim MaxValue As Double = Double.MinValue
-            ''Dim MinValue As Double = Double.MaxValue
-
-            '' Now fill the matrix at the given spots
-            'Dim Progress As Double = 10
-            'Dim ProgressProgress As Double = (80 / (Me._SpectroscopyTables.Count + 1))
-            'For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
-
-            '    ' Report progress
-            '    Me._GridPlotter.ReportProgress(CInt(Progress), My.Resources.rGridPlotter.PlotProgress_PlottingDataPoint.Replace("%f", Me._SpectroscopyTables(i).FileNameWithoutPath))
-            '    Progress += ProgressProgress
-
-            '    Dim PlotPointLocation_X As Integer = -1
-            '    Dim PlotPointLocation_Y As Integer = -1
-
-            '    ' Get the center location of the spectrum
-            '    PlotPointLocation_X = CInt((Me._SpectroscopyTables(i).Location_X - SpectraLocation_XMin + PointRadius) / ScalePerPixel_X)
-            '    PlotPointLocation_Y = CInt((Me._SpectroscopyTables(i).Location_Y - SpectraLocation_YMin + PointRadius) / ScalePerPixel_Y)
-
-            '    If PlotPointLocation_X >= 0 And PlotPointLocation_X < PlotMatrix.ColumnCount And
-            '       PlotPointLocation_Y >= 0 And PlotPointLocation_Y < PlotMatrix.RowCount Then
-
-            '        'MaxValue = Math.Max(Me._AveragingWindowValues(i), MaxValue)
-            '        'MinValue = Math.Min(Me._AveragingWindowValues(i), MinValue)
-
-            '        ' Change the central location of the matrix, exactly where the spectrum is located.
-            '        ' Average with already existing values.
-            '        If Double.IsNaN(PlotMatrix(PlotPointLocation_Y, PlotPointLocation_X)) Then
-            '            PlotMatrix(PlotPointLocation_Y, PlotPointLocation_X) = Me._AveragingWindowValues(i)
-            '        Else
-            '            PlotMatrix(PlotPointLocation_Y, PlotPointLocation_X) = (PlotMatrix(PlotPointLocation_Y, PlotPointLocation_X) + Me._AveragingWindowValues(i)) / 2
-            '        End If
-
-            '        ' Temporary variables
-            '        Dim RadiusFromLocation As Double
-            '        Dim CircleCoordinateX As Integer
-            '        Dim CircleCoordinateY As Integer
-
-            '        ' Change the values in a circle around the location, by averaging them with already existing values.
-            '        For x As Integer = -CircleRadiusInPixels_X To CircleRadiusInPixels_X Step 1
-            '            For y As Integer = -CircleRadiusInPixels_Y To CircleRadiusInPixels_Y Step 1
-
-            '                ' Calculate the current point's radius
-            '                RadiusFromLocation = Math.Sqrt(x * x * ScalePerPixel_X * ScalePerPixel_X + y * y * ScalePerPixel_Y * ScalePerPixel_Y)
-
-            '                ' Plot a circle, so ignore values outside this radius
-            '                If RadiusFromLocation > PointRadius Then Continue For
-
-            '                CircleCoordinateX = PlotPointLocation_X + x
-            '                CircleCoordinateY = PlotPointLocation_Y + y
-
-            '                ' Now enter the values in the circle to the matrix.
-            '                If CircleCoordinateX >= 0 And CircleCoordinateX < PlotMatrix.ColumnCount And
-            '                   CircleCoordinateY >= 0 And CircleCoordinateY < PlotMatrix.RowCount Then
-
-            '                    If Double.IsNaN(PlotMatrix(CircleCoordinateY, CircleCoordinateX)) Then
-            '                        PlotMatrix(CircleCoordinateY, CircleCoordinateX) = Me._AveragingWindowValues(i)
-            '                    Else
-            '                        PlotMatrix(CircleCoordinateY, CircleCoordinateX) = (PlotMatrix(CircleCoordinateY, CircleCoordinateX) + Me._AveragingWindowValues(i)) / 2
-            '                    End If
-
-            '                End If
-
-            '            Next
-            '        Next
-
-            '    End If
-
-            'Next
-
-            '' Now we create a 2D-Plot of these values.
-            'Dim Plot As New cContourPlot(PlotMatrix)
-
-            '' Use the given Color-Scheme
-            'Plot.ColorScheme = Me.cpPlotSettings_ColorCode.GetSelectedColorScheme
-
-            '' Save the output image.
-            ''Me._OutputImage = Plot.Plot2D(MaxValue, MinValue)
-            'Me._OutputImage = Plot.Plot2D(Me.vrsPlotSettings_ColorScaling.SelectedMinValue, Me.vrsPlotSettings_ColorScaling.SelectedMaxValue)
-
-
         Catch ex As Exception
             Debug.WriteLine("wGridPlotter->GridPlot()-error: " & ex.Message)
         End Try
 
         ' Reset the progress
-        Me._GridPlotter.ReportProgress(-1, "-")
+        If Me._GridPlotter.IsBusy Then Me._GridPlotter.ReportProgress(-1, "-")
 
     End Sub
 
@@ -862,14 +811,31 @@ Public Class wGridPlotter
             '' Set Point-Marks in the Preview-Window of the ScanImage,
             '' if the selected Image contains the selected Spectroscopy-Files:
             With Me.svOutputImage
+
+                ' Add the grid's point marks
                 .ClearPointMarkList()
                 .AddPointMark(Me._PointMarkList)
-                .RecalculateImage()
+
+                ' Add the bias value as Text-Object
+                .ClearTextObjectList()
+                If Me.ckbPlotSettings_BiasIndicatorSize.Checked AndAlso Me.txtPlotSettings_BiasIndicatorSize.IntValue > 0 Then
+                    Dim Text As New cScanImagePlot.TextObject(BiasIndicatorPosition, cUnits.GetFormatedValueString(Me._AverageWindowStart))
+                    With Text
+                        .ValueIsAbsolute = False
+                        .UseRelativeFontSize = Me.txtPlotSettings_BiasIndicatorSize.IntValue
+                    End With
+                    .AddTextObject(Text)
+                End If
+
+                .RecalculateImageAsync()
             End With
 
             ' Set the value range of the output image to the value range selector
-            If Me._AveragingWindowValuesWereUpdated Then
-                Me.vrsPlotSettings_ColorScaling.SetValueArray(Me._AveragingWindowValues)
+            If Me._AveragingWindowValuesWereUpdated AndAlso Me._AveragingWindowValues.Count > 0 Then
+                Me.vrsPlotSettings_ColorScaling.SetValueArray(Me._AveragingWindowValues,,
+                                                              False,
+                                                              New Tuple(Of Double, Double)(Me._GridPlotRangeMin, Me._GridPlotRangeMax),
+                                                              False)
             End If
 
         End If
@@ -882,7 +848,7 @@ Public Class wGridPlotter
     ''' <summary>
     ''' Change the plot point diameter.
     ''' </summary>
-    Private Sub txtPlotSettings_PointDiameter_TextChanged(ByRef NT As NumericTextbox) Handles txtPlotSettings_PointDiameter.ValidValueChanged
+    Private Sub txtPlotSettings_PointDiameter_TextChanged(ByRef NT As NumericTextbox) Handles txtPlotSettings_PointDiameter.ValidValueChanged, txtPlotSettings_BiasIndicatorSize.ValidValueChanged
         Me._PointDiameter = Me.txtPlotSettings_PointDiameter.DecimalValue
         Me.PlotGrid()
     End Sub
@@ -894,7 +860,7 @@ Public Class wGridPlotter
     ''' <summary>
     ''' Report progress.
     ''' </summary>
-    Protected Sub WorkerProgress(sender As Object, e As ProgressChangedEventArgs) Handles _FileLoader.ProgressChanged, _GridPlotter.ProgressChanged
+    Protected Sub WorkerProgress(sender As Object, e As ProgressChangedEventArgs) Handles _FileLoader.ProgressChanged, _GridPlotter.ProgressChanged, _GIFAnimationWorker.ProgressChanged
         If e.ProgressPercentage <= 100 And e.ProgressPercentage >= 0 Then
             If Not Me.pgProgress.Visible Then Me.pgProgress.Visible = True
             If Not Me.lblProgress.Visible Then Me.lblProgress.Visible = True
@@ -991,7 +957,204 @@ Public Class wGridPlotter
 
 #End Region
 
-#Region "assigned to no region yet"
+#Region "GIF animation"
+
+    ''' <summary>
+    ''' Filename to store the GIF animation.
+    ''' </summary>
+    Private _GIFAnimationOutputFileName As String
+
+    ''' <summary>
+    ''' Generate the GIF animation file.
+    ''' </summary>
+    Private Sub btnGenerateGIF_Click(sender As Object, e As EventArgs) Handles btnGenerateGIF.Click
+        If Me.IsAnyWorkerBusy Then Return
+
+        ' Ask for a filename:
+        Dim FileBrowser As New SaveFileDialog
+        With FileBrowser
+            .Title = My.Resources.rGridPlotter.ExportGif_FileDialogTitle
+            .Filter = "GIF animation file|*.gif"
+            .FileName = "grid.gif"
+            .ValidateNames = True
+        End With
+
+        ' Check for a valid filename.
+        If Not FileBrowser.ShowDialog() = DialogResult.OK Then
+            Return
+        End If
+
+        ' Store the target filename
+        Me._GIFAnimationOutputFileName = FileBrowser.FileName
+
+        Me.ActivateLoadingButton(False)
+
+        ' Start the GIF generation.
+        Me._GIFAnimationWorker.RunWorkerAsync()
+    End Sub
+
+    ''' <summary>
+    ''' Generates the GIF Animation.
+    ''' </summary>
+    Protected Sub GenerateGIFAnimation() Handles _GIFAnimationWorker.DoWork
+        ' Only continue, if the averaging window is not zero.
+        If Me._AverageWindowWidth <= 0 Then Return
+
+        ' Get the number of steps.
+        Dim StartValue As Double = Me.txtGIFStartValue.DecimalValue
+        Dim EndValue As Double = Me.txtGIFEndValue.DecimalValue
+        Dim Steps As Integer = CInt((EndValue - StartValue) / Me._AverageWindowWidth)
+        If Steps <= 0 Then Return
+
+        Dim Progress As Double = 0
+        Dim ProgressProgress As Double = 0
+
+        ' Generate the images.
+        Dim Images As New List(Of Bitmap)
+
+        Try
+
+            ' Sweep though the range and copy each image.
+            Dim CurrentValue As Double
+            ProgressProgress = 85 / Steps
+            For i As Integer = 0 To Steps - 1 Step 1
+
+                CurrentValue = StartValue + i * Me._AverageWindowWidth
+
+                ' Report progress
+                If Me._GIFAnimationWorker.IsBusy Then Me._GIFAnimationWorker.ReportProgress(CInt(Progress), My.Resources.rGridPlotter.ExportGif_Progress_GeneratingImage.Replace("%i", i.ToString).Replace("%max", Steps.ToString))
+                Progress += ProgressProgress
+
+                '####################
+                ' Generate the image
+
+                ' First: set the value range.
+                Me.SetAverageWindowStart(CurrentValue, False)
+
+                ' Mark the values as invalid, which allows to recalculate the value-array.
+                Me._AveragingWindowValuesInvalid = True
+
+                ' Second: generate the GridPointMarks.
+                Me.CreateGridPointMarks()
+
+                ' Third: use a ScanImagePlotter to generate the image to be saved.
+                ' Create new ScanImagePlot from the Data
+                Dim oScanImagePlot As New cScanImagePlot(Me._ScanImages)
+
+                ' Setup the plot-engine
+                oScanImagePlot.PlotScaleBar = Me.svOutputImage.ckbScaleBarVisible.Checked
+
+                ' If we have a new scan-channel that is plotted,
+                ' then initially use the full value range to be plotted.
+                Dim MaxValueToPlot As Double
+                Dim MinValueToPlot As Double
+                MaxValueToPlot = Me.svOutputImage.vsValueRangeSelector.SelectedMaxValue
+                MinValueToPlot = Me.svOutputImage.vsValueRangeSelector.SelectedMinValue
+
+                ' Calculate Image:
+                With oScanImagePlot
+                    .ClearPointMarkList()
+
+                    ' Add the grid points
+                    .AddPointMarks(Me._PointMarkList)
+
+                    ' Add the bias value as Text-Object
+                    If Me.txtPlotSettings_BiasIndicatorSize.IntValue > 0 Then
+                        Dim Text As New cScanImagePlot.TextObject(BiasIndicatorPosition, cUnits.GetFormatedValueString(CurrentValue))
+                        With Text
+                            .ValueIsAbsolute = False
+                            .UseRelativeFontSize = Me.txtPlotSettings_BiasIndicatorSize.IntValue
+                        End With
+                        .AddTextObject(Text)
+                    End If
+
+                    ' Draw the image
+                    .ColorScheme = Me.svOutputImage.cpColorPicker.SelectedColorScheme
+                    .ScanImageFiltersToApplyBeforePlot = Me.svOutputImage.ScanImageFiltersSelected
+                    .CreateImage(MaxValueToPlot,
+                                 MinValueToPlot,
+                                 Me.svOutputImage.GetSelectedScanChannelName,
+                                 Me.svOutputImage.Width, Me.svOutputImage.Height,
+                                 Me.svOutputImage.ckbUseHighQualityScaling.Checked)
+                End With
+                '####################
+
+                ' Store the image:
+                Images.Add(New Bitmap(oScanImagePlot.Image))
+
+            Next
+
+            ' Progress
+            Progress = 90
+            If Me._GIFAnimationWorker.IsBusy Then Me._GIFAnimationWorker.ReportProgress(CInt(Progress), My.Resources.rGridPlotter.ExportGif_Progress_GeneratingFinalGIF)
+
+            ' Create the GIF file
+            Using GIFCreator As MagickImageCollection = New MagickImageCollection
+
+                ' Get the time per image.
+                Dim AnimationTime As Integer = CInt(Me.txtAnimationTime.DecimalValue / Images.Count)
+
+                For i As Integer = 0 To Images.Count - 1 Step 1
+                    GIFCreator.Add(New MagickImage(Images(i)))
+                    Images(i).Dispose()
+                    GIFCreator(i).AnimationDelay = AnimationTime
+                    ' For DEBUG:
+                    'Images(i).Save(FileBrowser.FileName & "." & i.ToString & ".gif")
+                Next
+
+                ' Adjust the settings of the GIF
+                Dim settings As QuantizeSettings = New QuantizeSettings
+                settings.Colors = 256
+                GIFCreator.Quantize(settings)
+
+                ' Optionally optimize the images (images should have the same size).
+                'GIFCreator.Optimize()
+
+                ' Save gif
+                GIFCreator.Write(Me._GIFAnimationOutputFileName)
+
+            End Using
+
+            If Me._GIFAnimationWorker.IsBusy Then Me._GIFAnimationWorker.ReportProgress(-1, String.Empty)
+        Catch ex As Exception
+            Debug.WriteLine("wGridPlotter:GifCreator--> error " & ex.Message)
+        Finally
+            ' Dispose all bitmaps!
+            For i As Integer = 0 To Images.Count - 1 Step 1
+                Images(i).Dispose()
+            Next
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Called after creating the GIF Animation.
+    ''' </summary>
+    Protected Sub GenerateGIFAnimationFinished() Handles _GIFAnimationWorker.RunWorkerCompleted
+
+        Me.ActivateLoadingButton(True)
+
+    End Sub
+
+#End Region
+
+#Region "Interface stuff"
+
+    ''' <summary>
+    ''' Switch the bias indicator on or off.
+    ''' </summary>
+    Private Sub ckbPlotSettings_BiasIndicatorSize_CheckedChanged(sender As Object, e As EventArgs) Handles ckbPlotSettings_BiasIndicatorSize.CheckedChanged
+        If Not Me.bReady Then Return
+        Me.txtPlotSettings_BiasIndicatorSize.Enabled = Me.ckbPlotSettings_BiasIndicatorSize.Checked
+        Me.PlotGrid()
+    End Sub
+
+    ''' <summary>
+    ''' Changes the automatic adjustment of the grid value range.
+    ''' </summary>
+    Private Sub ckbGIFKeepValueRangeConstant_CheckedChanged(sender As Object, e As EventArgs) Handles ckbGIFKeepValueRangeConstant.CheckedChanged
+        Me._KeepGridValueRangeConstant = Me.ckbGIFKeepValueRangeConstant.Checked
+    End Sub
 
 #End Region
 

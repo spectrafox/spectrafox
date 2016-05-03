@@ -573,6 +573,25 @@ Public Class cSpectroscopyTable
         End Get
     End Property
 
+    ''' <summary>
+    ''' List that stores KeyValuePairs of properties, that are unimportant for SpectraFox.
+    ''' Here all interpreted properties in the file headers are written to,
+    ''' that are not identified by SpectraFox.
+    ''' </summary>
+    Protected _PropertyList As List(Of KeyValuePair(Of String, String))
+
+    ''' <summary>
+    ''' List that stores KeyValuePairs of properties, that are unimportant for SpectraFox.
+    ''' Here all interpreted properties in the file headers are written to,
+    ''' that are not identified by SpectraFox.
+    ''' </summary>
+    Public ReadOnly Property PropertyList As List(Of KeyValuePair(Of String, String))
+        Get
+            Return Me._PropertyList
+        End Get
+    End Property
+
+
 #Region "Basic properties"
 
     <DescriptionAttribute("Shows the date the spectrum was recorded."), _

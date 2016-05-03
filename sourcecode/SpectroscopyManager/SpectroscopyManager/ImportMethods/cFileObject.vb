@@ -540,6 +540,23 @@ Public Class cFileObject
     ''' </summary>
     Public GridFile As cGridFile = Nothing
 
+
+    ''' <summary>
+    ''' Returns the saved GridFile Spectroscopy-List of names.
+    ''' </summary>
+    Public Function GetGridSpectroscopyTableNameList() As List(Of String)
+        If Me.GridFile Is Nothing Then Return Nothing
+        Return Me.GridFile.ChannelsRecorded
+    End Function
+
+    ''' <summary>
+    ''' Returns the saved GridFile Spectroscopy-List.
+    ''' </summary>
+    Public Function GetGridSpectroscopyTableList() As List(Of cSpectroscopyTable)
+        If Me.GridFile Is Nothing Then Return Nothing
+        Return Me.GridFile.SpectroscopyTables
+    End Function
+
 #End Region
 
 
@@ -782,28 +799,49 @@ Public Class cFileObject
             .WriteEndElement()
 
             ' Begin the section of the additional data columns
-            .WriteStartElement("SpectroscopyDataColumns")
             If Not Me.SpectroscopyTable Is Nothing Then
+                .WriteStartElement("SpectroscopyDataColumns")
                 For Each DC As cSpectroscopyTable.DataColumn In Me.SpectroscopyTable.Columns.Values
                     .WriteStartElement("SpectroscopyDataColumn")
                     .WriteAttributeString("Name", DC.Name)
                     .WriteAttributeString("InSourceFile", DC.IsSpectraFoxGenerated.ToString(System.Globalization.CultureInfo.InvariantCulture))
                     .WriteEndElement()
                 Next
+                .WriteEndElement()
             End If
-            .WriteEndElement()
 
             ' Begin the section of the additional scan channels
-            .WriteStartElement("ScanImageChannels")
             If Not Me.ScanImage Is Nothing Then
+                .WriteStartElement("ScanImageChannels")
                 For Each SCKV As KeyValuePair(Of String, cScanImage.ScanChannel) In Me.ScanImage.ScanChannels
                     .WriteStartElement("ScanImageChannel")
                     .WriteAttributeString("Name", SCKV.Key)
                     .WriteAttributeString("InSourceFile", SCKV.Value.IsSpectraFoxGenerated.ToString(System.Globalization.CultureInfo.InvariantCulture))
                     .WriteEndElement()
                 Next
+                .WriteEndElement()
             End If
-            .WriteEndElement()
+
+            ' Begin the section of the grid files
+            If Not Me.GridFile Is Nothing Then
+                .WriteStartElement("GridFileChannels")
+
+                ' Write all initially recorded grid file channels
+                For Each ChannelName As String In Me.GridFile.ChannelsRecorded
+                    .WriteStartElement("GridFileChannel")
+                    .WriteAttributeString("Name", ChannelName)
+                    .WriteAttributeString("InSourceFile", False.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    .WriteEndElement()
+                Next
+                'For Each ChannelName As KeyValuePair(Of String, cSpectroscopyTable.DataColumn) In Me.GridFile.GeneratedChannels
+                '    .WriteStartElement("GridFileChannel")
+                '    .WriteAttributeString("Name", ChannelName)
+                '    .WriteAttributeString("InSourceFile", False.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                '    .WriteEndElement()
+                'Next
+
+                .WriteEndElement()
+            End If
 
             ' Begin the section of the preview images stored
             .WriteStartElement("PreviewImageStorage")

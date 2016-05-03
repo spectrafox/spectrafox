@@ -35,6 +35,7 @@ Partial Class mDataBrowserList
         Me.mnuSort_DESC = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuFilter = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuFilter_ShowDataTableFiles = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuFilter_ShowGridFiles = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuFilter_ShowScanImageFiles = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuFilter_Title = New System.Windows.Forms.ToolStripLabel()
@@ -108,6 +109,10 @@ Partial Class mDataBrowserList
         Me.cmnuScanImage_Header = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSeparator8 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmnuScanImage_OpenInSeparateWindow = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmGridFile = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.cmnuGridFile_Header = New System.Windows.Forms.ToolStripLabel()
+        Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
+        Me.cmnuGridFile_OpenInSeparateWindow = New System.Windows.Forms.ToolStripMenuItem()
         Me.panBrowserListContainer = New SpectroscopyManager.MouseBoundPanel()
         Me.panProgress = New System.Windows.Forms.Panel()
         Me.lblProgressHeading = New System.Windows.Forms.Label()
@@ -117,6 +122,7 @@ Partial Class mDataBrowserList
         Me.ssStatus.SuspendLayout()
         Me.cmSpectroscopyFile.SuspendLayout()
         Me.cmScanImageFile.SuspendLayout()
+        Me.cmGridFile.SuspendLayout()
         Me.panBrowserListContainer.SuspendLayout()
         Me.panProgress.SuspendLayout()
         Me.SuspendLayout()
@@ -193,7 +199,7 @@ Partial Class mDataBrowserList
         '
         'mnuFilter
         '
-        Me.mnuFilter.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuFilter_ShowDataTableFiles, Me.mnuFilter_ShowScanImageFiles, Me.ToolStripSeparator10, Me.mnuFilter_Title, Me.mnuFilter_FilterText, Me.mnuFilter_AddToHistory, Me.mnuFilter_FilterHistory, Me.mnuFilter_ClearFilter, Me.ToolStripSeparator12, Me.mnuFilter_SearchTitle, Me.mnuFilter_SearchText, Me.mnuFilter_SearchNext, Me.mnuFilter_SearchClear})
+        Me.mnuFilter.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuFilter_ShowDataTableFiles, Me.mnuFilter_ShowGridFiles, Me.mnuFilter_ShowScanImageFiles, Me.ToolStripSeparator10, Me.mnuFilter_Title, Me.mnuFilter_FilterText, Me.mnuFilter_AddToHistory, Me.mnuFilter_FilterHistory, Me.mnuFilter_ClearFilter, Me.ToolStripSeparator12, Me.mnuFilter_SearchTitle, Me.mnuFilter_SearchText, Me.mnuFilter_SearchNext, Me.mnuFilter_SearchClear})
         Me.mnuFilter.Image = Global.SpectroscopyManager.My.Resources.Resources.filter_16
         Me.mnuFilter.Name = "mnuFilter"
         Me.mnuFilter.Size = New System.Drawing.Size(28, 20)
@@ -207,6 +213,14 @@ Partial Class mDataBrowserList
         Me.mnuFilter_ShowDataTableFiles.ShortcutKeys = System.Windows.Forms.Keys.F1
         Me.mnuFilter_ShowDataTableFiles.Size = New System.Drawing.Size(280, 22)
         Me.mnuFilter_ShowDataTableFiles.Text = "show data table files"
+        '
+        'mnuFilter_ShowGridFiles
+        '
+        Me.mnuFilter_ShowGridFiles.Checked = True
+        Me.mnuFilter_ShowGridFiles.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.mnuFilter_ShowGridFiles.Name = "mnuFilter_ShowGridFiles"
+        Me.mnuFilter_ShowGridFiles.Size = New System.Drawing.Size(280, 22)
+        Me.mnuFilter_ShowGridFiles.Text = "show grid spectroscopy files"
         '
         'mnuFilter_ShowScanImageFiles
         '
@@ -718,6 +732,30 @@ Partial Class mDataBrowserList
         Me.cmnuScanImage_OpenInSeparateWindow.Size = New System.Drawing.Size(232, 22)
         Me.cmnuScanImage_OpenInSeparateWindow.Text = "open in separate window"
         '
+        'cmGridFile
+        '
+        Me.cmGridFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuGridFile_Header, Me.ToolStripSeparator16, Me.cmnuGridFile_OpenInSeparateWindow})
+        Me.cmGridFile.Name = "cmScanImageFile"
+        Me.cmGridFile.Size = New System.Drawing.Size(207, 50)
+        '
+        'cmnuGridFile_Header
+        '
+        Me.cmnuGridFile_Header.Name = "cmnuGridFile_Header"
+        Me.cmnuGridFile_Header.Size = New System.Drawing.Size(133, 15)
+        Me.cmnuGridFile_Header.Text = "#selected grid file name"
+        '
+        'ToolStripSeparator16
+        '
+        Me.ToolStripSeparator16.Name = "ToolStripSeparator16"
+        Me.ToolStripSeparator16.Size = New System.Drawing.Size(203, 6)
+        '
+        'cmnuGridFile_OpenInSeparateWindow
+        '
+        Me.cmnuGridFile_OpenInSeparateWindow.Image = Global.SpectroscopyManager.My.Resources.Resources.openfolder_16
+        Me.cmnuGridFile_OpenInSeparateWindow.Name = "cmnuGridFile_OpenInSeparateWindow"
+        Me.cmnuGridFile_OpenInSeparateWindow.Size = New System.Drawing.Size(206, 22)
+        Me.cmnuGridFile_OpenInSeparateWindow.Text = "open in separate window"
+        '
         'panBrowserListContainer
         '
         Me.panBrowserListContainer.Controls.Add(Me.panProgress)
@@ -787,6 +825,7 @@ Partial Class mDataBrowserList
         Me.ssStatus.PerformLayout()
         Me.cmSpectroscopyFile.ResumeLayout(False)
         Me.cmScanImageFile.ResumeLayout(False)
+        Me.cmGridFile.ResumeLayout(False)
         Me.panBrowserListContainer.ResumeLayout(False)
         Me.panProgress.ResumeLayout(False)
         Me.panProgress.PerformLayout()
@@ -884,4 +923,9 @@ Partial Class mDataBrowserList
     Friend WithEvents mnuPreview_cbSpectroscopyColumnY_3rd As ToolStripComboBox
     Friend WithEvents mnuTools_AtomicForceMicroscopyTools As ToolStripMenuItem
     Friend WithEvents cmnuSpectroscopy_AtomicForceMicroscopyTools As ToolStripMenuItem
+    Friend WithEvents cmGridFile As ContextMenuStrip
+    Friend WithEvents cmnuGridFile_Header As ToolStripLabel
+    Friend WithEvents ToolStripSeparator16 As ToolStripSeparator
+    Friend WithEvents cmnuGridFile_OpenInSeparateWindow As ToolStripMenuItem
+    Friend WithEvents mnuFilter_ShowGridFiles As ToolStripMenuItem
 End Class

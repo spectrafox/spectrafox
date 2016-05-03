@@ -97,6 +97,7 @@ Public Class wDataBrowserModular
 #End Region
 
 #Region "Event Handling, e.g. if list-entry is selected in the data Browser list"
+
     ''' <summary>
     ''' Multiple Spectroscopy-Files selected.
     ''' Fetch the files in the background!
@@ -113,7 +114,7 @@ Public Class wDataBrowserModular
                                                         FO.RecordLocation_Z,,,, FO.FileName
                                                         ))
         Next
-        Me.svScanViewer.RecalculateImage()
+        Me.svScanViewer.RecalculateImageAsync()
 
     End Sub
 
@@ -160,6 +161,29 @@ Public Class wDataBrowserModular
                                             Me, False, Me.DataBrowserList.ThreadPool)
 
     End Sub
+
+    ''' <summary>
+    ''' Single Grid-File selected.
+    ''' Fetch the file in the background!
+    ''' </summary>
+    Private Sub OnMultipleSpectroscopyTablesSelected(ByRef FileObject As cFileObject) Handles DataBrowserList.SingleGridFileSelected
+
+        ' Set Point-Marks in the Preview-Window of the ScanImage,
+        ' if the selected image contains the selected Spectroscopy-Files:
+        Me.svScanViewer.ClearPointMarkList()
+        If FileObject.GridFile IsNot Nothing Then
+            For Each ST As cSpectroscopyTable In FileObject.GridFile.SpectroscopyTables
+                Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
+                                                    ST.Location_X,
+                                                    ST.Location_Y,
+                                                    ST.Location_Z,,,, ST.FileNameWithoutPath
+                                                    ))
+            Next
+        End If
+        Me.svScanViewer.RecalculateImageAsync()
+
+    End Sub
+
 #End Region
 
 #Region "SpectroscopyTable or Scan-Image selection -> mediator between the List module and Preview-Boxes"
@@ -191,7 +215,7 @@ Public Class wDataBrowserModular
                                                         SpectroscopyTable.Location_Y,
                                                         SpectroscopyTable.Location_Z,,,, SpectroscopyTable.FileNameWithoutPathAndExtension
                                                         ))
-            Me.svScanViewer.RecalculateImage()
+            Me.svScanViewer.RecalculateImageAsync()
         End If
     End Sub
 
@@ -220,7 +244,7 @@ Public Class wDataBrowserModular
                                                         SpectroscopyTable.Location_Z,,,, SpectroscopyTable.FileNameWithoutPathAndExtension
                                                         ))
             Next
-            Me.svScanViewer.RecalculateImage()
+            Me.svScanViewer.RecalculateImageAsync()
         End If
     End Sub
 

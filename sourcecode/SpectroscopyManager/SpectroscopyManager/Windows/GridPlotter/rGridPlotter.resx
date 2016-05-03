@@ -123,6 +123,15 @@
   <data name="AveragingWindowSelector_Select" xml:space="preserve">
     <value>select in graph</value>
   </data>
+  <data name="ExportGif_FileDialogTitle" xml:space="preserve">
+    <value>save GIF file ...</value>
+  </data>
+  <data name="ExportGif_Progress_GeneratingFinalGIF" xml:space="preserve">
+    <value>combining images to GIF animation</value>
+  </data>
+  <data name="ExportGif_Progress_GeneratingImage" xml:space="preserve">
+    <value>generating image ( %i | %max )</value>
+  </data>
   <data name="FetchProgress" xml:space="preserve">
     <value>(%p %) loading file %f ...</value>
   </data>

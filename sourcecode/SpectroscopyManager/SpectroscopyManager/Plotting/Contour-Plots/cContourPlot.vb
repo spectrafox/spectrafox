@@ -587,34 +587,33 @@ Public Class cContourPlot
     ''' <summary>
     ''' Resizes an image using bicubic interpolation.
     ''' </summary>
-    Public Shared Function ResizeImage(ByVal ImageObject As System.Drawing.Bitmap,
+    Public Shared Function ResizeImage(ByVal ImageObject As Bitmap,
                                        ByVal TargetWidth As Integer,
                                        ByVal TargetHeight As Integer,
-                                       Optional ByVal UseHighQualityImageProcessing As Boolean = True) As System.Drawing.Bitmap
+                                       Optional ByVal UseHighQualityImageProcessing As Boolean = True) As Bitmap
 
         ' Area, where the result is painted in.
         Dim result As New Bitmap(TargetWidth, TargetHeight)
 
         ' use a graphics object to draw the resized image into the bitmap
-        Dim gr As Graphics = Graphics.FromImage(result)
+        Using gr As Graphics = Graphics.FromImage(result)
+            If UseHighQualityImageProcessing Then
+                ' set the resize quality modes to high quality
+                gr.CompositingQuality = CompositingQuality.HighQuality
+                gr.InterpolationMode = InterpolationMode.Bicubic ' InterpolationMode
+                gr.PixelOffsetMode = PixelOffsetMode.HighQuality
+                gr.SmoothingMode = SmoothingMode.AntiAlias
+            Else
+                ' set the resize quality modes to high speed quality
+                gr.CompositingQuality = CompositingQuality.HighSpeed
+                gr.InterpolationMode = InterpolationMode.NearestNeighbor
+                gr.PixelOffsetMode = PixelOffsetMode.HighSpeed
+                gr.SmoothingMode = SmoothingMode.HighSpeed
+            End If
 
-        If UseHighQualityImageProcessing Then
-            ' set the resize quality modes to high quality
-            gr.CompositingQuality = CompositingQuality.HighQuality
-            gr.InterpolationMode = InterpolationMode.Bicubic ' InterpolationMode
-            gr.PixelOffsetMode = PixelOffsetMode.HighQuality
-            gr.SmoothingMode = SmoothingMode.AntiAlias
-        Else
-            ' set the resize quality modes to high speed quality
-            gr.CompositingQuality = CompositingQuality.HighSpeed
-            gr.InterpolationMode = InterpolationMode.NearestNeighbor
-            gr.PixelOffsetMode = PixelOffsetMode.HighSpeed
-            gr.SmoothingMode = SmoothingMode.HighSpeed
-        End If
-
-        ' draw the image into the resized target bitmap
-        gr.DrawImage(ImageObject, 0, 0, result.Width, result.Height)
-        gr.Dispose()
+            ' draw the image into the resized target bitmap
+            gr.DrawImage(ImageObject, 0, 0, result.Width, result.Height)
+        End Using
 
         ' return the resulting bitmap
         Return result

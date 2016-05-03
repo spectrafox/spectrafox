@@ -8,7 +8,7 @@ Public Class cFileImportNanonisBias
     ''' <summary>
     ''' Regex for parsing the column header.
     ''' </summary>
-    Private ColumnHeaderRegex As New Regex("(?<ColumnName>.*?)\s\((?<Unit>[a-zA-Z]*?)\)", RegexOptions.Compiled)
+    Public Shared ColumnHeaderRegex As New Regex("(?<ColumnName>.*?)\s\((?<Unit>[a-zA-Z]*?)\)", RegexOptions.Compiled)
 
     ''' <summary>
     ''' Imports the Bias-Spectroscopy-File into a Spectroscopy Table

@@ -75,6 +75,11 @@ Public Class mDataBrowserListEntry
     Private lQuickButtonStorage_Scan As New List(Of Button)
 
     ''' <summary>
+    ''' Quick-buttons for grid-files.
+    ''' </summary>
+    Private lQuickButtonStorage_Grid As New List(Of Button)
+
+    ''' <summary>
     ''' ListEntry Background Color, if not selected!
     ''' </summary>
     Private DefaultBackgroundColor As Color = Color.LightGray
@@ -149,6 +154,7 @@ Public Class mDataBrowserListEntry
                 Select Case FileActionAPIs(i).CanHandleFileObjectType
                     Case cFileObject.FileTypes.SpectroscopyTable
                     Case cFileObject.FileTypes.ScanImage
+                    Case cFileObject.FileTypes.GridFile
                     Case Else : Continue For
                 End Select
 
@@ -168,6 +174,7 @@ Public Class mDataBrowserListEntry
                     Select Case FileActionAPIs(i).CanHandleFileObjectType
                         Case cFileObject.FileTypes.SpectroscopyTable : lQuickButtonStorage_Spec.Add(QuickButton)
                         Case cFileObject.FileTypes.ScanImage : lQuickButtonStorage_Scan.Add(QuickButton)
+                        Case cFileObject.FileTypes.GridFile : lQuickButtonStorage_Grid.Add(QuickButton)
                     End Select
 
                     ' Add the click-action
@@ -317,6 +324,9 @@ Public Class mDataBrowserListEntry
         ' Show loading screen
         ShowHidePanLoading(True)
 
+        ' Set the loading background color.
+        Me.BackColor = Color.LightGray
+
         ' Save list-entry fetch properties.
         tmpFetch_PreviewImageSize = Me.pbPreview.Size
 
@@ -387,7 +397,7 @@ Public Class mDataBrowserListEntry
 
                 ' Add column-list
                 Me.lbDataColumns.Items.Clear()
-                Me.lbDataColumns.Items.AddRange(.ColumnNames.ToArray)
+                If .ColumnNames IsNot Nothing Then Me.lbDataColumns.Items.AddRange(.ColumnNames.ToArray)
 
                 ' Add comment
                 Me.txtComment.Text = .Comment
@@ -420,6 +430,7 @@ Public Class mDataBrowserListEntry
     Private Function ListEntryFetcher() As Object
 
         Try
+
             If Me._FileObject.FileType = cFileObject.FileTypes.SpectroscopyTable Then
                 '############################
                 ' Fetch a Spectroscopy-Table
@@ -459,7 +470,7 @@ Public Class mDataBrowserListEntry
                     Me._ListEntry.BackColor = Color.LightGray
                 End With
 
-                
+
             ElseIf Me._FileObject.FileType = cFileObject.FileTypes.ScanImage Then
                 '##########################
                 ' Fetch a ScanImage-Table
@@ -495,6 +506,43 @@ Public Class mDataBrowserListEntry
                     Me._ListEntry.MeasurementPoints = .MeasurementDimensions
                     Me._ListEntry.BackColor = Color.DimGray
                 End With
+
+            ElseIf Me._FileObject.FileType = cFileObject.FileTypes.GridFile Then
+                '##########################
+                ' Fetch a GridFile-Table
+                '##########################
+
+                ' Load the Preview-Image, with the first Channel
+                ' Send Abort-Image, if the Columns were not found.
+                Dim PreviewImage As Image = My.Resources.cancel
+                'If Me._FileObject.GetGridSpectroscopyTableList.Count > 0 Then
+
+                '    '' Check in the ScanImage, if there are
+                '    '' Channels with the names to be displayed as Preview-Image.
+                '    'If Me._FileObject.GetScanChannelNameList.Contains(Me.PreviewImageSettings.ScanImage_Channel) Then
+                '    '    PreviewImage = Me._FileObject.GetScanChannelPreviewImage(Me.PreviewImageSettings.ScanImage_Channel,
+                '    '                                                             Me.tmpFetch_PreviewImageSize.Width,
+                '    '                                                             Me.tmpFetch_PreviewImageSize.Height)
+                '    'Else
+                '    '    PreviewImage = My.Resources.channel_does_not_exist
+                '    'End If
+                'Else
+                '    PreviewImage = My.Resources.cancel
+                'End If
+
+                ' Create new ListEntry
+                Me._ListEntry = New ListEntry
+                With Me._FileObject
+                    Me._ListEntry.FullFileName = .FullFileNameInclPath
+                    Me._ListEntry.FileName = .FileNameWithoutPath
+                    Me._ListEntry.Comment = .SourceFileComment
+                    Me._ListEntry.ColumnNames = .GetGridSpectroscopyTableNameList
+                    Me._ListEntry.RecordDate = .RecordDate
+                    Me._ListEntry.PreviewImage = PreviewImage
+                    Me._ListEntry.MeasurementPoints = .MeasurementDimensions
+                    Me._ListEntry.BackColor = Color.Gray
+                End With
+
             End If
 
             ' Fetch complete

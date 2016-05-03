@@ -58,6 +58,8 @@
 
 #End Region
 
+#Region "Coordinate Transformation for Scan Images"
+
     ''' <summary>
     ''' Converts Degrees to Radian
     ''' </summary>
@@ -118,5 +120,45 @@
 
         Return New Point2D(XLocal_PixelCoordinate, YLocal_PixelCoordinate)
     End Function
+
+#End Region
+
+#Region "General 2D Coordinate transformations"
+
+    ''' <summary>
+    ''' Performs a clockwise rotation
+    ''' </summary>
+    Public Shared Function RotateClockwise(X As Double, Y As Double, AngleInDeg As Double) As Point2D
+
+        ' Convert angle to Radian.
+        Dim RotationAngleInRadian As Double = MathNet.Numerics.Trig.DegreeToRadian(AngleInDeg)
+        Dim CosRotation As Double = MathNet.Numerics.Trig.Cos(RotationAngleInRadian)
+        Dim SinRotation As Double = MathNet.Numerics.Trig.Sin(RotationAngleInRadian)
+
+        ' Local location-coordinates in the scan-matrix.
+        Dim XRotated As Double = X * CosRotation - Y * SinRotation
+        Dim YRotated As Double = -X * SinRotation - Y * CosRotation
+
+        Return New Point2D(XRotated, YRotated)
+    End Function
+
+    ''' <summary>
+    ''' Performs a clockwise rotation
+    ''' </summary>
+    Public Shared Function RotateCounterClockwise(X As Double, Y As Double, AngleInDeg As Double) As Point2D
+
+        ' Convert angle to Radian.
+        Dim RotationAngleInRadian As Double = MathNet.Numerics.Trig.DegreeToRadian(AngleInDeg)
+        Dim CosRotation As Double = MathNet.Numerics.Trig.Cos(RotationAngleInRadian)
+        Dim SinRotation As Double = MathNet.Numerics.Trig.Sin(RotationAngleInRadian)
+
+        ' Local location-coordinates in the scan-matrix.
+        Dim XRotated As Double = X * CosRotation + Y * SinRotation
+        Dim YRotated As Double = X * SinRotation - Y * CosRotation
+
+        Return New Point2D(XRotated, YRotated)
+    End Function
+
+#End Region
 
 End Class

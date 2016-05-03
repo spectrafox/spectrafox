@@ -70,6 +70,7 @@
                                         ByRef InColumnYOriginal As Double(),
                                         Optional ByVal ni As Integer = -1,
                                         Optional ByVal nf As Integer = -1) As sNumericStatistics
+
         ' check initial and final value of the data range to analyze
         If ni < 0 Then ni = 0
         If ni > InColumnY.Count - 1 Then ni = 0
@@ -83,7 +84,7 @@
 
         ' Check integrity of data.
         Dim N As Integer = nf - ni
-        If N < 0 Then
+        If N < 0 OrElse InColumnY.Count = 0 Then
             Throw New Exception("Column-Length is zero. Statistical data could not be recieved.")
         End If
 

@@ -20,6 +20,11 @@
     Public Property ShowScanImages As Boolean = True
 
     ''' <summary>
+    ''' Show the grid files in the file-list.
+    ''' </summary>
+    Public Property ShowGridFiles As Boolean = True
+
+    ''' <summary>
     ''' Selection mode of this list.
     ''' </summary>
     Public Property SelectionMode As SelectionMode
@@ -94,6 +99,8 @@
                     If Not Me.ShowSpectroscopyTables Then Continue For
                 Case cFileObject.FileTypes.ScanImage
                     If Not Me.ShowScanImages Then Continue For
+                Case cFileObject.FileTypes.GridFile
+                    If Not Me.ShowGridFiles Then Continue For
                 Case Else
                     Continue For
             End Select

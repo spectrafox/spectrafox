@@ -70,11 +70,6 @@ Public Class cGridFile
        ReadOnlyAttribute(True)>
     Public Property SweepSignalColumn As String
 
-    <DescriptionAttribute("Additional parameters stored for each experiment."),
-    CategoryAttribute("Experiment"),
-    ReadOnlyAttribute(True)>
-    Public Property AdditionalParameters As New List(Of String)
-
     <DescriptionAttribute("Channels recorded in each point."),
     CategoryAttribute("Experiment"),
     ReadOnlyAttribute(True)>
@@ -83,7 +78,7 @@ Public Class cGridFile
     <DescriptionAttribute("Parameters that stay fixed during the experiment."),
     CategoryAttribute("Experiment"),
     ReadOnlyAttribute(True)>
-    Public Property FixedParameters As New List(Of String)
+    Public Property ParametersForEachExperiment As New List(Of Dictionary(Of String, Double))
 
     ''' <summary>
     ''' Total number of parameters stored with each experiment
@@ -96,6 +91,17 @@ Public Class cGridFile
         CategoryAttribute("Experiment"),
         ReadOnlyAttribute(True)>
     Public Property PointCount As Integer
+
+    ''' <summary>
+    ''' Storage for the individual experiments.
+    ''' </summary>
+    Public Property SpectroscopyTables As New List(Of cSpectroscopyTable)
+
+    ''' <summary>
+    ''' Spectroscopy table that is used to store all properties.
+    ''' </summary>
+    Protected Friend _TemplateSpectroscopyTable As New cSpectroscopyTable
+
 
 #End Region
 

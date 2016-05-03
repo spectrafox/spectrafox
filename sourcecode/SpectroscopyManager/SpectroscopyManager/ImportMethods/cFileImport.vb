@@ -1139,10 +1139,10 @@ Public Class cFileImport
             FileObject = cFileObject.GetFileObjectFromPath(FileObject)
 
             ' Save some GridFile-properties in the FileObject.
-            'FileObject.RecordLocation_X = TargetGridFile.ScanOffset_X
-            'FileObject.RecordLocation_Y = TargetGridFile.ScanOffset_Y
-            'FileObject.ScanImageRange_X = TargetGridFile.ScanRange_X
-            'FileObject.ScanImageRange_Y = TargetGridFile.ScanRange_Y
+            FileObject.RecordLocation_X = TargetGridFile.GridCenterPosition.x
+            FileObject.RecordLocation_Y = TargetGridFile.GridCenterPosition.y
+            FileObject.ScanImageRange_X = TargetGridFile.GridDimensionsSI.x
+            FileObject.ScanImageRange_Y = TargetGridFile.GridDimensionsSI.y
 
             ' Save the Record-Date
             FileObject.RecordDate = TargetGridFile.StartDate

@@ -94,7 +94,10 @@ Public Class mValueRangeSelector
     ''' Counts the individual values by dividing the paint area into different regions.
     ''' </summary>
     Public Sub SetValueArray(ByRef InputValueList As Double(),
-                             Optional ByVal UnitSymbol As String = "")
+                             Optional ByVal UnitSymbol As String = "",
+                             Optional ByVal AutomaticallySetMinMaxValues As Boolean = True,
+                             Optional ByVal MinMaxValuesToSet As Tuple(Of Double, Double) = Nothing,
+                             Optional ByVal SendRangeChangedEvent As Boolean = True)
         Me.ValueList = InputValueList
 
         ' Get some data statistics on setting new data
@@ -102,15 +105,27 @@ Public Class mValueRangeSelector
         Me.MinValue = cNumericalMethods.GetMinimumValue(InputValueList)
         Me.MaxValue = cNumericalMethods.GetMaximumValue(InputValueList)
 
-        ' Reset selected Min and Max Values:
-        Me.SelectedMaxValue = Me.MaxValue
-        Me.SelectedMinValue = Me.MinValue
+        If AutomaticallySetMinMaxValues Then
+            ' Reset selected Min and Max Values:
+            Me.SelectedMinValue = Me.MinValue
+            Me.SelectedMaxValue = Me.MaxValue
+        End If
+
+        If MinMaxValuesToSet IsNot Nothing Then
+            ' Reset selected Min and Max Values:
+            Me.SelectedMinValue = MinMaxValuesToSet.Item1
+            Me.SelectedMaxValue = MinMaxValuesToSet.Item2
+        End If
 
         ' Calculate Paint-Parameters from Data
         Me.CalculatePaintParameters()
 
         ' Raise the event
-        RaiseEvent SelectedRangeChanged()
+        If SendRangeChangedEvent Then
+            RaiseEvent SelectedRangeChanged()
+        Else
+            Me.FillTextBoxes()
+        End If
     End Sub
 
 #End Region

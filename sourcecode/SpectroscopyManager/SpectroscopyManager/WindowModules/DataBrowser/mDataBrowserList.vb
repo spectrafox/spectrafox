@@ -286,6 +286,18 @@ Public Class mDataBrowserList
     ''' </summary>
     Public Event MultipleSpectroscopyTableSelectedShowInPreview(ByRef SpectroscopyTableFileObjectList As List(Of cFileObject))
 
+    ''' <summary>
+    ''' Event raised, if a single grid file has been selected.
+    ''' </summary>
+    Public Event SingleGridFileSelected(ByRef GridFileObject As cFileObject)
+
+    ''' <summary>
+    ''' Event raised, if multiple scan-images have been selected.
+    ''' ----- NOT ALWAYS GETS FIRED -----
+    ''' only if the user clicks to show all tables together as preview
+    ''' </summary>
+    Public Event MultipleGridFilesSelected(ByRef GridFileObjects As List(Of cFileObject))
+
 
 #End Region
 
@@ -643,6 +655,9 @@ Public Class mDataBrowserList
 
         If Not Me.FileBufferCache_IsModified And Not Force Then Return
 
+        ' Only write file buffer, if we have some files in the buffer.
+        If Me.oFileImporter.FileBuffer_Full.Count <= 0 Then Return
+
         ' Write the fetched file-buffer as cache file to the disk.
         Me.FileBufferCache_FileLock = New cFileLock(Me.FileBufferCache_FullPathPlusFile, TimeSpan.FromMinutes(1))
         If Me.FileBufferCache_FileLock.GetFileLockOrWait() Then
@@ -803,6 +818,9 @@ Public Class mDataBrowserList
         If Not Me.mnuFilter_ShowScanImageFiles.Checked Then
             SortedFileObjects = SortedFileObjects.Where(Function(obj) obj.FileObject.FileType <> cFileObject.FileTypes.ScanImage).ToList
         End If
+        If Not Me.mnuFilter_ShowGridFiles.Checked Then
+            SortedFileObjects = SortedFileObjects.Where(Function(obj) obj.FileObject.FileType <> cFileObject.FileTypes.GridFile).ToList
+        End If
 
         ' Second filter the values for the file-name using the current settings
         Dim CurrentFileNameFilter As String = Me.mnuFilter_FilterText.Text.Trim
@@ -934,10 +952,11 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' Set list-filters by file-type.
     ''' </summary>
-    Private Sub mnuFilter_FileTypeFilter_Click(sender As Object, e As EventArgs) Handles mnuFilter_ShowScanImageFiles.Click, mnuFilter_ShowDataTableFiles.Click
+    Private Sub mnuFilter_FileTypeFilter_Click(sender As Object, e As EventArgs) Handles mnuFilter_ShowScanImageFiles.Click, mnuFilter_ShowDataTableFiles.Click, mnuFilter_ShowGridFiles.Click
 
         If sender Is mnuFilter_ShowDataTableFiles Then mnuFilter_ShowDataTableFiles.Checked = Not mnuFilter_ShowDataTableFiles.Checked
         If sender Is mnuFilter_ShowScanImageFiles Then mnuFilter_ShowScanImageFiles.Checked = Not mnuFilter_ShowScanImageFiles.Checked
+        If sender Is mnuFilter_ShowGridFiles Then mnuFilter_ShowGridFiles.Checked = Not mnuFilter_ShowGridFiles.Checked
 
         Me.SortAndFilterFileListUsingCurrentSettings()
 
@@ -1326,7 +1345,10 @@ Public Class mDataBrowserList
         End If
 
         ' Scroll the list on pressing ONLY the Up/Down-Key by one entry.
-        If KeyCode = Keys.Up Or KeyCode = Keys.Down Then
+        If KeyCode = Keys.Up OrElse
+           KeyCode = Keys.Down OrElse
+           KeyCode = Keys.PageUp OrElse
+           KeyCode = Keys.PageDown Then
 
             ' If a selection is done, go to the top most selected entry,
             ' and select the next higher one
@@ -1352,7 +1374,9 @@ Public Class mDataBrowserList
             Next
 
             ' Scroll up or down.
-            If iHighestListIndex > 0 And KeyCode = Keys.Up And CInt(Control.ModifierKeys) = CInt(Keys.None) Then
+            If iHighestListIndex > 0 AndAlso
+                KeyCode = Keys.Up AndAlso
+                CInt(Control.ModifierKeys) = CInt(Keys.None) Then
                 ' Scroll UP (single)
                 '####################
                 ' Now deselect all list-entries
@@ -1366,9 +1390,25 @@ Public Class mDataBrowserList
 
                 Me.ListEntrySelectionChanged()
 
-            ElseIf iLowestListIndex >= 0 And
-                   iLowestListIndex < Me.FileListDisplayed_SortedAndFiltered.Count - 1 And
-                   KeyCode = Keys.Down And
+            ElseIf iHighestListIndex > 5 AndAlso
+                KeyCode = Keys.PageUp AndAlso
+                CInt(Control.ModifierKeys) = CInt(Keys.None) Then
+                ' Scroll UP (multiple)
+                '####################
+                ' Now deselect all list-entries
+                For Each LE As FileListEntry In Me.FileListDisplayed.Values
+                    LE.HasBeenSelected = False
+                Next
+
+                ' And now select only the highest - 1 list-entry.
+                Me.FileListDisplayed(Me.FileListDisplayed_SortedAndFiltered(iHighestListIndex - 5)).HasBeenSelected = True
+                Me.ScrollList(iHighestCoordinate - Me.HeightPerListEntry, False)
+
+                Me.ListEntrySelectionChanged()
+
+            ElseIf iLowestListIndex >= 0 AndAlso
+                   iLowestListIndex < Me.FileListDisplayed_SortedAndFiltered.Count - 1 AndAlso
+                   KeyCode = Keys.Down AndAlso
                    CInt(Control.ModifierKeys) = CInt(Keys.None) Then
                 ' Scroll DOWN (single)
                 '######################
@@ -1379,6 +1419,23 @@ Public Class mDataBrowserList
 
                 ' And now select only the highest - 1 list-entry.
                 Me.FileListDisplayed(Me.FileListDisplayed_SortedAndFiltered(iLowestListIndex + 1)).HasBeenSelected = True
+                Me.ScrollList(iLowestCoordinate, False)
+
+                Me.ListEntrySelectionChanged()
+
+            ElseIf iLowestListIndex >= 0 And
+               iLowestListIndex < Me.FileListDisplayed_SortedAndFiltered.Count - 5 And
+               KeyCode = Keys.PageDown And
+               CInt(Control.ModifierKeys) = CInt(Keys.None) Then
+                ' Scroll DOWN (multiple)
+                '######################
+                ' Now deselect all list-entries
+                For Each LE As FileListEntry In Me.FileListDisplayed.Values
+                    LE.HasBeenSelected = False
+                Next
+
+                ' And now select only the highest - 1 list-entry.
+                Me.FileListDisplayed(Me.FileListDisplayed_SortedAndFiltered(iLowestListIndex + 5)).HasBeenSelected = True
                 Me.ScrollList(iLowestCoordinate, False)
 
                 Me.ListEntrySelectionChanged()
@@ -1403,9 +1460,11 @@ Public Class mDataBrowserList
         ' Count the selected file-types
         Dim SelectedSpectroscopyTables As IEnumerable(Of cFileObject) = Me.FileObjectsSelected.Where(Function(obj) obj.FileType = cFileObject.FileTypes.SpectroscopyTable)
         Dim SelectedScanImages As IEnumerable(Of cFileObject) = Me.FileObjectsSelected.Where(Function(obj) obj.FileType = cFileObject.FileTypes.ScanImage)
+        Dim SelectedGridFiles As IEnumerable(Of cFileObject) = Me.FileObjectsSelected.Where(Function(obj) obj.FileType = cFileObject.FileTypes.GridFile)
 
         Dim iCountSpectroscopyTables As Integer = SelectedSpectroscopyTables.Count
         Dim iCountScanImages As Integer = SelectedScanImages.Count
+        Dim iCountGridFiles As Integer = SelectedGridFiles.Count
 
         ' Count the number of selected spectroscopy-tables and scan images,
         ' to enable the menu buttons.
@@ -1425,10 +1484,17 @@ Public Class mDataBrowserList
             End If
 
         End If
+
         If iCountScanImages = 1 Then
             RaiseEvent SingleScanImageSelected(SelectedScanImages(0))
         ElseIf iCountScanImages > 1 Then
             RaiseEvent MultipleScanImagesSelected(SelectedScanImages.ToList)
+        End If
+
+        If iCountGridFiles = 1 Then
+            RaiseEvent SingleGridFileSelected(SelectedGridFiles(0))
+        ElseIf iCountGridFiles > 1 Then
+            RaiseEvent MultipleGridFilesSelected(SelectedGridFiles.ToList)
         End If
 
     End Sub
@@ -1585,6 +1651,9 @@ Public Class mDataBrowserList
         ElseIf FileObject.FileType = cFileObject.FileTypes.ScanImage Then
             Me.cmnuScanImage_Header.Text = FileObject.FileNameWithoutPath
             Me.cmScanImageFile.Show(Cursor.Position)
+        ElseIf FileObject.FileType = cFileObject.FileTypes.GridFile Then
+            Me.cmnuGridFile_Header.Text = FileObject.FileNameWithoutPath
+            Me.cmGridFile.Show(Cursor.Position)
         End If
 
     End Sub
@@ -1593,7 +1662,7 @@ Public Class mDataBrowserList
     ''' On closing the context-menu, remove the reference to the current file-object.
     ''' NOT WORKING!!! IS CALLED, BEFORE THE CLICK_ACTION OF THE BUTTON CLICKED!!!
     ''' </summary>
-    Private Sub ContextMenu_Closed(sender As Object, e As ToolStripDropDownClosedEventArgs) Handles cmScanImageFile.Closed, cmSpectroscopyFile.Closed
+    Private Sub ContextMenu_Closed(sender As Object, e As ToolStripDropDownClosedEventArgs) Handles cmScanImageFile.Closed, cmSpectroscopyFile.Closed, cmGridFile.Closed
         'Me._CurrentContextMenuFileObject = Nothing
     End Sub
 

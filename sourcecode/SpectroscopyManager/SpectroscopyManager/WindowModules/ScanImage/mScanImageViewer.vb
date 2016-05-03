@@ -65,7 +65,12 @@ Public Class mScanImageViewer
     ''' <summary>
     ''' Saves Points to mark on the Image.
     ''' </summary>
-    Private Property ListOfPointMarks As New List(Of cScanImagePlot.PointMark)
+    Private ListOfPointMarks As New List(Of cScanImagePlot.PointMark)
+
+    ''' <summary>
+    ''' Saves TextObjects on the Image.
+    ''' </summary>
+    Private ListOfTextObjects As New List(Of cScanImagePlot.TextObject)
 
     ''' <summary>
     ''' Saves the currently selected scan-channel-ID.
@@ -78,9 +83,18 @@ Public Class mScanImageViewer
     Private _ScanImageFiltersAvailable As New List(Of iScanImageFilter)
 
     ''' <summary>
-    ''' Marks the selected indices of the _ScanImageFiltersAvailable list.
+    ''' Selected ScanImageFilters list.
     ''' </summary>
     Private _ScanImageFiltersSelected As New List(Of iScanImageFilter)
+
+    ''' <summary>
+    ''' Selected ScanImageFilters list.
+    ''' </summary>
+    Public ReadOnly Property ScanImageFiltersSelected As List(Of iScanImageFilter)
+        Get
+            Return Me._ScanImageFiltersSelected
+        End Get
+    End Property
 
     ''' <summary>
     ''' Store the list of the external viewers.
@@ -187,7 +201,7 @@ Public Class mScanImageViewer
     ''' <summary>
     ''' Start Background-Worker for drawing the image.
     ''' </summary>
-    Public Sub RecalculateImage() Handles vsValueRangeSelector.SelectedRangeChanged, cpColorPicker.SelectedColorSchemaChanged, pbScanImage.Resize
+    Public Sub RecalculateImageAsync() Handles vsValueRangeSelector.SelectedRangeChanged, cpColorPicker.SelectedColorSchemaChanged, pbScanImage.Resize
         If Me.oScanImages.Count <= 0 Then Return
 
         ' If the Fetcher is Busy, set the "Redraw-Pending" variable to
@@ -206,6 +220,27 @@ Public Class mScanImageViewer
         Me.tslblInfobar.Text = My.Resources.rScanImageViewer.InfobarTemplate_RedrawInProgress
 
         Me.ImageLoadingBackgroundWorker.RunWorkerAsync()
+    End Sub
+
+    ''' <summary>
+    ''' Start Background-Worker for drawing the image.
+    ''' </summary>
+    Public Sub RecalculateImageDirect() Handles vsValueRangeSelector.SelectedRangeChanged, cpColorPicker.SelectedColorSchemaChanged, pbScanImage.Resize
+        If Me.oScanImages.Count <= 0 Then Return
+
+        ' Set ImageFetcherProperties
+        Me.ImageFetcherChannelName = Me.GetSelectedScanChannelName
+        Me.ImageFetcherTargetWidth = Me.pbScanImage.Width
+        Me.ImageFetcherTargetHeight = Me.pbScanImage.Height
+        Me.ImageFetcherColorScheme = Me.cpColorPicker.GetSelectedColorScheme
+
+        Me.tslblInfobar.Text = My.Resources.rScanImageViewer.InfobarTemplate_RedrawInProgress
+
+        ' Fetch the image directly.
+        Me.ScanImageFetcher(Nothing, Nothing)
+
+        ' Call the after-fetch function to deal with the fetched image.
+        Me.ImageFetcher_FetchComplete(Nothing, Nothing)
     End Sub
 
 #End Region
@@ -258,6 +293,7 @@ Public Class mScanImageViewer
         With Me.oScanImagePlot
             .ClearPointMarkList()
             .AddPointMarks(Me.ListOfPointMarks)
+            .AddTextObjects(Me.ListOfTextObjects)
             .ColorScheme = Me.ImageFetcherColorScheme
             .ScanImageFiltersToApplyBeforePlot = Me._ScanImageFiltersSelected
             .CreateImage(MaxValueToPlot,
@@ -280,7 +316,7 @@ Public Class mScanImageViewer
     ''' </summary>
     Private Sub ImageFetcher_FetchComplete(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles ImageLoadingBackgroundWorker.RunWorkerCompleted
         ' Check, if a Scan-Image is pending, then just reload the Scan-Image
-        If Me.oScanImagesPending IsNot Nothing AndAlso Me.oScanImagesPending.Count > 0 Then
+        If e Is Nothing OrElse (Me.oScanImagesPending IsNot Nothing AndAlso Me.oScanImagesPending.Count > 0) Then
             ' Scan Image Pending
             '####################
 
@@ -318,7 +354,7 @@ Public Class mScanImageViewer
 
             If Me.ImageFetcherRedrawPending Then
                 Me.ImageFetcherRedrawPending = False
-                Me.RecalculateImage()
+                Me.RecalculateImageAsync()
             End If
         End If
     End Sub
@@ -337,7 +373,7 @@ Public Class mScanImageViewer
     ''' Returns the selected Scan-Channel of the Image.
     ''' </summary>
     <DebuggerStepThrough>
-    Private Function GetSelectedScanChannelName() As String
+    Public Function GetSelectedScanChannelName() As String
         Return Me._CurrentlySelectedScanChannelName
     End Function
 
@@ -349,7 +385,7 @@ Public Class mScanImageViewer
         ' Get the name of the currently selected Scan-Channel
         Me._CurrentlySelectedScanChannelName = Me.cbChannel.SelectedEntry
         Me.bPlottedChannelChanged = True
-        Me.RecalculateImage()
+        Me.RecalculateImageAsync()
     End Sub
 
     ''' <summary>
@@ -402,7 +438,7 @@ Public Class mScanImageViewer
 
             ' "Change" the scan-channel to produce a redraw of the filtered list.
             Me.bPlottedChannelChanged = True
-            Me.RecalculateImage()
+            Me.RecalculateImageAsync()
         Catch ex As Exception
             Debug.WriteLine("Selected filter could not be extracted: " & ex.Message)
         End Try
@@ -430,7 +466,7 @@ Public Class mScanImageViewer
 
             ' "Change" the scan-channel to produce a redraw of the filtered list.
             Me.bPlottedChannelChanged = True
-            Me.RecalculateImage()
+            Me.RecalculateImageAsync()
         End If
     End Sub
 
@@ -529,6 +565,32 @@ Public Class mScanImageViewer
 
 #End Region
 
+
+#Region "TextObject Functions"
+
+    ''' <summary>
+    ''' Adds a TextObject to the Display-List
+    ''' </summary>
+    Public Sub AddTextObject(Text As cScanImagePlot.TextObject)
+        Me.ListOfTextObjects.Add(Text)
+    End Sub
+
+    ''' <summary>
+    ''' Adds a TextObjects to the Display-List
+    ''' </summary>
+    Public Sub AddTextObject(Texts As List(Of cScanImagePlot.TextObject))
+        Me.ListOfTextObjects.AddRange(Texts)
+    End Sub
+
+    ''' <summary>
+    ''' Removes all entries from the Point-Mark-List
+    ''' </summary>
+    Public Sub ClearTextObjectList()
+        Me.ListOfTextObjects.Clear()
+    End Sub
+
+#End Region
+
 #Region "Slide-Status changed"
 
     ''' <summary>
@@ -621,14 +683,14 @@ Public Class mScanImageViewer
     ''' Desired plot quality changed. So replot.
     ''' </summary>
     Private Sub ckbUseHighQualityScaling_CheckedChanged(sender As Object, e As EventArgs) Handles ckbUseHighQualityScaling.CheckedChanged
-        Me.RecalculateImage()
+        Me.RecalculateImageAsync()
     End Sub
 
     ''' <summary>
     ''' Change the visibility of the scale-bar.
     ''' </summary>
     Private Sub ckbScaleBarVisible_CheckedChanged(sender As Object, e As EventArgs) Handles ckbScaleBarVisible.CheckedChanged
-        Me.RecalculateImage()
+        Me.RecalculateImageAsync()
     End Sub
 
 #End Region
