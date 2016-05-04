@@ -372,10 +372,9 @@
             ' Go through all Point-Marks, if they exist
             If Me.ListOfPointMarks.Count > 0 Then
                 Try
-                    ' Lock the image for reading out the pixel-colors.
-                    Me.oFastImage.Lock()
-
                     Try
+                        ' Lock the image for reading out the pixel-colors.
+                        Me.oFastImage.Lock()
 
                         For Each pm As PointMark In Me.ListOfPointMarks
                             ' Get the transformed point in the scan-frame.
@@ -402,59 +401,60 @@
                         Next
                     Catch ex As Exception
                         Debug.WriteLine("cScanImagePlot->Error getting point mark color: " & ex.Message)
+                    Finally
+                        ' Unlock the image for reading out the pixel-colors.
+                        Me.oFastImage.Unlock(False)
                     End Try
 
-                    ' Unlock the image for reading out the pixel-colors.
-                    Me.oFastImage.Unlock(False)
 
-                        ' Now plot the point marks to the graphics surface.
-                        For Each pm As PointMark In Me.ListOfPointMarks
+                    ' Now plot the point marks to the graphics surface.
+                    For Each pm As PointMark In Me.ListOfPointMarks
 
-                            ' Get a pen to draw the point.
-                            PointColorPen = New Pen(pm.PlotColor, 2)
+                        ' Get a pen to draw the point.
+                        PointColorPen = New Pen(pm.PlotColor, 2)
 
-                            ' Get the size of the point to draw.
-                            ' If non is specified (-1) then set it to an appropriate value.
-                            If pm.PlotRadiusInScale < 0 Then
-                                pm.PlotRadiusInPixel = PointMarkSizeDefault
-                            Else
-                                pm.PlotRadiusInPixel = CInt(pm.PlotRadiusInScale * Me._RangePerPixelUsed)
-                            End If
+                        ' Get the size of the point to draw.
+                        ' If non is specified (-1) then set it to an appropriate value.
+                        If pm.PlotRadiusInScale < 0 Then
+                            pm.PlotRadiusInPixel = PointMarkSizeDefault
+                        Else
+                            pm.PlotRadiusInPixel = CInt(pm.PlotRadiusInScale * Me._RangePerPixelUsed)
+                        End If
 
-                            ' Draw a certain shape to the image.
-                            Select Case pm.Shape
+                        ' Draw a certain shape to the image.
+                        Select Case pm.Shape
 
-                                Case PointMark.PointMarkShapes.Cross
+                            Case PointMark.PointMarkShapes.Cross
 
-                                    ' Plot a cross centered at the point-mark.
-                                    DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
-                                    DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel)
+                                ' Plot a cross centered at the point-mark.
+                                DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
+                                DrawSurface.DrawLine(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel)
 
-                                Case PointMark.PointMarkShapes.CircleEmpty
-                                    DrawSurface.DrawEllipse(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
+                            Case PointMark.PointMarkShapes.CircleEmpty
+                                DrawSurface.DrawEllipse(PointColorPen, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
 
-                                Case PointMark.PointMarkShapes.CircleFilled
-                                    DrawSurface.FillEllipse(PointColorPen.Brush, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
+                            Case PointMark.PointMarkShapes.CircleFilled
+                                DrawSurface.FillEllipse(PointColorPen.Brush, pm.PlotPoint.X - pm.PlotRadiusInPixel, pm.PlotPoint.Y - pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel, 2 * pm.PlotRadiusInPixel)
 
-                            End Select
+                        End Select
 
-                            ' Write the label of the point-mark.
-                            If Me.PlotPointMarkLabels Then
-                                If pm.Label <> Nothing Then
-                                    If pm.Label <> String.Empty Then
-                                        DrawSurface.DrawString(pm.Label, Me.PointMarkFont, PointColorPen.Brush, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
-                                    End If
+                        ' Write the label of the point-mark.
+                        If Me.PlotPointMarkLabels Then
+                            If pm.Label <> Nothing Then
+                                If pm.Label <> String.Empty Then
+                                    DrawSurface.DrawString(pm.Label, Me.PointMarkFont, PointColorPen.Brush, pm.PlotPoint.X + pm.PlotRadiusInPixel, pm.PlotPoint.Y + pm.PlotRadiusInPixel)
                                 End If
                             End If
+                        End If
 
-                            ' Dispose the pen
-                            PointColorPen.Dispose()
-                            PointColorPen = Nothing
+                        ' Dispose the pen
+                        PointColorPen.Dispose()
+                        PointColorPen = Nothing
 
-                        Next
+                    Next
 
-                    Catch ex As Exception
-                        Debug.WriteLine("ScanImagePlot->PointMarkPlot: error: " & ex.Message)
+                Catch ex As Exception
+                    Debug.WriteLine("ScanImagePlot->PointMarkPlot: error: " & ex.Message)
                 End Try
 
             End If
@@ -481,18 +481,25 @@
 
                 ' Get the color to use.
                 If Text.ChooseColorAutomatic Then
-                    ' Lock the image for reading out the pixel-colors.
-                    Me.oFastImage.Lock()
 
-                    If (PlotPosition.X >= 0 And CInt(PlotPosition.X) < Me.oFastImage.Width) And
-                       (PlotPosition.Y >= 0 And CInt(PlotPosition.Y) < Me.oFastImage.Height) Then
+                    Try
+                        ' Lock the image for reading out the pixel-colors.
+                        Me.oFastImage.Lock()
 
-                        Text.Color = cColorHelper.InvertColor(Me.oFastImage.GetPixel(CInt(PlotPosition.X), CInt(PlotPosition.Y)))
+                        If (PlotPosition.X >= 0 And CInt(PlotPosition.X) < Me.oFastImage.Width) And
+                           (PlotPosition.Y >= 0 And CInt(PlotPosition.Y) < Me.oFastImage.Height) Then
 
-                    End If
+                            Text.Color = cColorHelper.InvertColor(Me.oFastImage.GetPixel(CInt(PlotPosition.X), CInt(PlotPosition.Y)))
 
-                    ' Unlock the image for reading out the pixel-colors.
-                    Me.oFastImage.Unlock(False)
+                        End If
+
+                    Catch ex As Exception
+                        Debug.WriteLine("Error getting color for text object: " & ex.Message)
+                    Finally
+                        ' Unlock the image for reading out the pixel-colors.
+                        Me.oFastImage.Unlock(False)
+                    End Try
+
                 End If
 
                 ' Get the font-size to use.

@@ -221,9 +221,16 @@ Public Class cContourPlot
                                                 ScaleBarPosition.Y - ScaleBarLabelStringSize.Height)
 
         ' Get the color of the scale-bar:
-        Image.Lock()
-        Dim ScaleBarPen As New Pen(cColorHelper.InvertColor(Image.GetPixel(ScaleBarLabelPosition)), 2)
-        Image.Unlock(False)
+        Dim ScaleBarPen As Pen
+        Try
+            Image.Lock()
+            ScaleBarPen = New Pen(cColorHelper.InvertColor(Image.GetPixel(ScaleBarLabelPosition)), 2)
+        Catch ex As Exception
+            Debug.WriteLine("Failed to get scale bar pen: " & ex.Message)
+            ScaleBarPen = New Pen(Color.Black)
+        Finally
+            Image.Unlock(False)
+        End Try
 
         With ScaleBarPosition
             ' Draw line:

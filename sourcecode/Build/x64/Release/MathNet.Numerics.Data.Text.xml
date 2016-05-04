@@ -84,6 +84,11 @@
             Returns a regex friendly delimiter.
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.Data.Text.DelimitedReader.StripOffQuotes(System.String)">
+            <summary>
+            strip off quotes (TODO: can we replace this with trimming?)
+            </summary>
+        </member>
         <member name="T:MathNet.Numerics.Data.Text.DelimitedWriter">
             <summary>
             Writes an <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/> to delimited text file. If the user does not
