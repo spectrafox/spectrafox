@@ -1752,7 +1752,7 @@ Public Class mSpectroscopyTableViewer
     ''' <summary>
     ''' Hide on Mouse-Leave.
     ''' </summary>
-    Private Sub dpRight_MouseLeave(sender As Object, e As EventArgs) Handles dpRight.MouseLeave_PanelArea
+    Private Sub dpRight_MouseLeave(sender As Object, e As EventArgs) Handles dpRight.MouseLeave_PanelArea, Me.MouseLeave
 
         ' Only slide out, if no control has the focus.
         For Each C As Control In Me.dpRight.Controls
@@ -1762,19 +1762,36 @@ Public Class mSpectroscopyTableViewer
         Next
 
         Me.dpRight.SlideIn()
+
+        ' Clear the focus of all remaining elements.
+        Me.ActiveControl = Nothing
     End Sub
 
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
     Private Sub dpRight_MouseEnter(sender As Object, e As EventArgs) Handles dpRight.MouseEnter_PanelArea, tsbtnColumnSetup.MouseEnter
-        Me.dpRight.SlideOut()
+        Return
+        'Me.dpRight.SlideOut()
+    End Sub
+
+    ''' <summary>
+    ''' force hide or show
+    ''' </summary>
+    Private Sub tsbtnColumnSetup_Click(sender As Object, e As EventArgs) Handles tsbtnColumnSetup.Click
+        With Me.dpRight
+            If .IsPanelSlidOut Then
+                .SlideIn()
+            Else
+                .SlideOut()
+            End If
+        End With
     End Sub
 
     ''' <summary>
     ''' Hide on Mouse-Leave.
     ''' </summary>
-    Private Sub dpLeft_MouseLeave(sender As Object, e As EventArgs) Handles dpLeft.MouseLeave_PanelArea
+    Private Sub dpLeft_MouseLeave(sender As Object, e As EventArgs) Handles dpLeft.MouseLeave_PanelArea, Me.MouseLeave
         ' Only slide out, if no control has the focus.
         For Each C As Control In Me.dpLeft.Controls
             If C.Focused Then
@@ -1782,13 +1799,30 @@ Public Class mSpectroscopyTableViewer
             End If
         Next
         Me.dpLeft.SlideIn()
+
+        ' Clear the focus of all remaining elements.
+        Me.ActiveControl = Nothing
     End Sub
 
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
     Private Sub dpLeft_MouseEnter(sender As Object, e As EventArgs) Handles dpLeft.MouseEnter_PanelArea, tsbtnPlotSetup.MouseEnter
-        Me.dpLeft.SlideOut()
+        Return
+        'Me.dpLeft.SlideOut()
+    End Sub
+
+    ''' <summary>
+    ''' force hide or show
+    ''' </summary>
+    Private Sub tsbtnPlotSetup_Click(sender As Object, e As EventArgs) Handles tsbtnPlotSetup.Click
+        With Me.dpLeft
+            If .IsPanelSlidOut Then
+                .SlideIn()
+            Else
+                .SlideOut()
+            End If
+        End With
     End Sub
 
 #End Region

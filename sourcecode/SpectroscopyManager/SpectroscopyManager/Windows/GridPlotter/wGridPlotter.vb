@@ -242,7 +242,7 @@ Public Class wGridPlotter
     Private Sub dsSpectroscopyFiles_SelectionChanged(ByRef SelectedFileObjects As Dictionary(Of String, cFileObject)) Handles dsSpectroscopyFiles.SelectionChanged, dsScanImages.SelectionChanged, dsGridFiles.SelectionChanged
         If ((dsSpectroscopyFiles.SelectedEntries.Count > 0 AndAlso Me.tcGridFilesSelector.SelectedTab Is Me.tpIndividualSpectroscopyFiles) OrElse
             (dsGridFiles.SelectedEntries.Count > 0 AndAlso Me.tcGridFilesSelector.SelectedTab Is Me.tpGridFiles)) AndAlso
-           dsScanImages.SelectedEntries.Count > 0 Then
+           dsScanImages.SelectedEntries.Count >= 0 Then
             Me.btnLoadData.Enabled = True
         Else
             Me.btnLoadData.Enabled = False
@@ -364,6 +364,62 @@ Public Class wGridPlotter
 
         Next
 
+        ' If we loaded a grid file. Store the spectroscopytables of the grid file
+        ' in the spectroscopy table list.
+        If Me._GridFiles.Count > 0 Then
+            Me._SpectroscopyTables = Me._GridFiles(0).SpectroscopyTables
+        End If
+
+        '##################################################
+        ' Handling of pure grid data without a topography.
+        ' In this case we generate a dummy topography file.
+        '##################################################
+
+        If Me._ScanImages.Count = 0 Then
+
+            ' Create new scan image.
+            Dim ScanImage As New cScanImage
+            Dim ScanChannel As New cScanImage.ScanChannel
+
+            ' Get the dimensions of the grid.
+            Dim X_Max As Double = Double.MinValue
+            Dim X_Min As Double = Double.MaxValue
+            Dim Y_Max As Double = Double.MinValue
+            Dim Y_Min As Double = Double.MaxValue
+
+            For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
+
+                X_Max = Math.Max(Me._SpectroscopyTables(i).Location_X, X_Max)
+                X_Min = Math.Min(Me._SpectroscopyTables(i).Location_X, X_Min)
+
+                Y_Max = Math.Max(Me._SpectroscopyTables(i).Location_Y, Y_Max)
+                Y_Min = Math.Min(Me._SpectroscopyTables(i).Location_Y, Y_Min)
+
+            Next
+
+            Dim XRange As Double = X_Max - X_Min
+            Dim YRange As Double = Y_Max - Y_Min
+
+            With ScanImage
+                .ScanOffset_X = X_Min - 0.02 * XRange
+                .ScanOffset_Y = Y_Max + 0.02 * YRange
+                .ScanRange_X = XRange * 1.04
+                .ScanRange_Y = YRange * 1.04
+                .ScanAngle = 0
+                .ScanPixels_X = 500
+                .ScanPixels_Y = 500
+
+                ScanChannel.ScanData = LinearAlgebra.Double.DenseMatrix.Create(500, 500, Double.NaN)
+                .AddScanChannel(ScanChannel)
+            End With
+
+            Me._ScanImages.Add(ScanImage)
+        End If
+
+        ' 
+        '##################################################
+
+
         ' Hide the progress bars
         Me._FileLoader.ReportProgress(-1, String.Empty)
 
@@ -379,12 +435,6 @@ Public Class wGridPlotter
         Else
             ' Enable buttons.
             ActivateLoadingButton(True)
-
-            ' If we loaded a grid file. Store the spectroscopytables of the grid file
-            ' in the spectroscopy table list.
-            If Me._GridFiles.Count > 0 Then
-                Me._SpectroscopyTables = Me._GridFiles(0).SpectroscopyTables
-            End If
 
             Me.DrawDatasetAfterLoading()
         End If

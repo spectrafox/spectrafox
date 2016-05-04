@@ -45,7 +45,6 @@ Partial Class wGridPlotter
         Me.spDataRangeSelector_DataToDisplay = New SpectroscopyManager.ucSpectroscopyTableSelector()
         Me.lblValueRange_SelectPlotData = New System.Windows.Forms.Label()
         Me.gbGenerateGIF = New System.Windows.Forms.GroupBox()
-        Me.ckbGIFKeepValueRangeConstant = New System.Windows.Forms.CheckBox()
         Me.lblGIFEndValue = New System.Windows.Forms.Label()
         Me.lblGIFStartValue = New System.Windows.Forms.Label()
         Me.lblAnimationTime = New System.Windows.Forms.Label()
@@ -58,6 +57,7 @@ Partial Class wGridPlotter
         Me.gbOutput = New System.Windows.Forms.GroupBox()
         Me.svOutputImage = New SpectroscopyManager.mScanImageViewer()
         Me.gbPlotSettings = New System.Windows.Forms.GroupBox()
+        Me.ckbGIFKeepValueRangeConstant = New System.Windows.Forms.CheckBox()
         Me.ckbPlotSettings_BiasIndicatorSize = New System.Windows.Forms.CheckBox()
         Me.vrsPlotSettings_ColorScaling = New SpectroscopyManager.mValueRangeSelector()
         Me.cpPlotSettings_ColorCode = New SpectroscopyManager.ucColorPalettePicker()
@@ -412,26 +412,15 @@ Partial Class wGridPlotter
         Me.gbGenerateGIF.Controls.Add(Me.btnGenerateGIF)
         Me.gbGenerateGIF.Location = New System.Drawing.Point(785, 77)
         Me.gbGenerateGIF.Name = "gbGenerateGIF"
-        Me.gbGenerateGIF.Size = New System.Drawing.Size(189, 138)
+        Me.gbGenerateGIF.Size = New System.Drawing.Size(189, 118)
         Me.gbGenerateGIF.TabIndex = 10
         Me.gbGenerateGIF.TabStop = False
         Me.gbGenerateGIF.Text = "generate animated GIF:"
         '
-        'ckbGIFKeepValueRangeConstant
-        '
-        Me.ckbGIFKeepValueRangeConstant.AutoSize = True
-        Me.ckbGIFKeepValueRangeConstant.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.ckbGIFKeepValueRangeConstant.Location = New System.Drawing.Point(15, 139)
-        Me.ckbGIFKeepValueRangeConstant.Name = "ckbGIFKeepValueRangeConstant"
-        Me.ckbGIFKeepValueRangeConstant.Size = New System.Drawing.Size(200, 17)
-        Me.ckbGIFKeepValueRangeConstant.TabIndex = 12
-        Me.ckbGIFKeepValueRangeConstant.Text = "automatic adjustment of value range:"
-        Me.ckbGIFKeepValueRangeConstant.UseVisualStyleBackColor = True
-        '
         'lblGIFEndValue
         '
         Me.lblGIFEndValue.AutoSize = True
-        Me.lblGIFEndValue.Location = New System.Drawing.Point(9, 61)
+        Me.lblGIFEndValue.Location = New System.Drawing.Point(9, 63)
         Me.lblGIFEndValue.Name = "lblGIFEndValue"
         Me.lblGIFEndValue.Size = New System.Drawing.Size(76, 13)
         Me.lblGIFEndValue.TabIndex = 11
@@ -440,7 +429,7 @@ Partial Class wGridPlotter
         'lblGIFStartValue
         '
         Me.lblGIFStartValue.AutoSize = True
-        Me.lblGIFStartValue.Location = New System.Drawing.Point(7, 40)
+        Me.lblGIFStartValue.Location = New System.Drawing.Point(7, 41)
         Me.lblGIFStartValue.Name = "lblGIFStartValue"
         Me.lblGIFStartValue.Size = New System.Drawing.Size(78, 13)
         Me.lblGIFStartValue.TabIndex = 11
@@ -461,7 +450,7 @@ Partial Class wGridPlotter
         Me.txtGIFEndValue.BackColor = System.Drawing.Color.White
         Me.txtGIFEndValue.ForeColor = System.Drawing.Color.Black
         Me.txtGIFEndValue.FormatDecimalPlaces = 6
-        Me.txtGIFEndValue.Location = New System.Drawing.Point(87, 60)
+        Me.txtGIFEndValue.Location = New System.Drawing.Point(87, 61)
         Me.txtGIFEndValue.Name = "txtGIFEndValue"
         Me.txtGIFEndValue.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtGIFEndValue.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
@@ -477,7 +466,7 @@ Partial Class wGridPlotter
         Me.txtGIFStartValue.BackColor = System.Drawing.Color.White
         Me.txtGIFStartValue.ForeColor = System.Drawing.Color.Black
         Me.txtGIFStartValue.FormatDecimalPlaces = 6
-        Me.txtGIFStartValue.Location = New System.Drawing.Point(87, 38)
+        Me.txtGIFStartValue.Location = New System.Drawing.Point(87, 39)
         Me.txtGIFStartValue.Name = "txtGIFStartValue"
         Me.txtGIFStartValue.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtGIFStartValue.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
@@ -507,7 +496,7 @@ Partial Class wGridPlotter
         '
         Me.btnGenerateGIF.Image = Global.SpectroscopyManager.My.Resources.Resources.export_16
         Me.btnGenerateGIF.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnGenerateGIF.Location = New System.Drawing.Point(10, 109)
+        Me.btnGenerateGIF.Location = New System.Drawing.Point(10, 86)
         Me.btnGenerateGIF.Name = "btnGenerateGIF"
         Me.btnGenerateGIF.Size = New System.Drawing.Size(173, 23)
         Me.btnGenerateGIF.TabIndex = 8
@@ -578,15 +567,26 @@ Partial Class wGridPlotter
         Me.gbPlotSettings.TabStop = False
         Me.gbPlotSettings.Text = "grid plot settings"
         '
+        'ckbGIFKeepValueRangeConstant
+        '
+        Me.ckbGIFKeepValueRangeConstant.AutoSize = True
+        Me.ckbGIFKeepValueRangeConstant.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ckbGIFKeepValueRangeConstant.Location = New System.Drawing.Point(15, 139)
+        Me.ckbGIFKeepValueRangeConstant.Name = "ckbGIFKeepValueRangeConstant"
+        Me.ckbGIFKeepValueRangeConstant.Size = New System.Drawing.Size(198, 17)
+        Me.ckbGIFKeepValueRangeConstant.TabIndex = 12
+        Me.ckbGIFKeepValueRangeConstant.Text = "stop auto-adjustment of value range:"
+        Me.ckbGIFKeepValueRangeConstant.UseVisualStyleBackColor = True
+        '
         'ckbPlotSettings_BiasIndicatorSize
         '
         Me.ckbPlotSettings_BiasIndicatorSize.AutoSize = True
         Me.ckbPlotSettings_BiasIndicatorSize.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.ckbPlotSettings_BiasIndicatorSize.Location = New System.Drawing.Point(15, 117)
         Me.ckbPlotSettings_BiasIndicatorSize.Name = "ckbPlotSettings_BiasIndicatorSize"
-        Me.ckbPlotSettings_BiasIndicatorSize.Size = New System.Drawing.Size(129, 17)
+        Me.ckbPlotSettings_BiasIndicatorSize.Size = New System.Drawing.Size(136, 17)
         Me.ckbPlotSettings_BiasIndicatorSize.TabIndex = 6
-        Me.ckbPlotSettings_BiasIndicatorSize.Text = "bias indicator size (%):"
+        Me.ckbPlotSettings_BiasIndicatorSize.Text = "value indicator size (%):"
         Me.ckbPlotSettings_BiasIndicatorSize.UseVisualStyleBackColor = True
         '
         'vrsPlotSettings_ColorScaling
@@ -613,11 +613,11 @@ Partial Class wGridPlotter
         Me.txtPlotSettings_BiasIndicatorSize.BackColor = System.Drawing.Color.Green
         Me.txtPlotSettings_BiasIndicatorSize.ForeColor = System.Drawing.Color.White
         Me.txtPlotSettings_BiasIndicatorSize.FormatDecimalPlaces = 0
-        Me.txtPlotSettings_BiasIndicatorSize.Location = New System.Drawing.Point(150, 115)
+        Me.txtPlotSettings_BiasIndicatorSize.Location = New System.Drawing.Point(157, 115)
         Me.txtPlotSettings_BiasIndicatorSize.Name = "txtPlotSettings_BiasIndicatorSize"
         Me.txtPlotSettings_BiasIndicatorSize.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.PlainNumber
         Me.txtPlotSettings_BiasIndicatorSize.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.Positive
-        Me.txtPlotSettings_BiasIndicatorSize.Size = New System.Drawing.Size(84, 20)
+        Me.txtPlotSettings_BiasIndicatorSize.Size = New System.Drawing.Size(77, 20)
         Me.txtPlotSettings_BiasIndicatorSize.TabIndex = 1
         Me.txtPlotSettings_BiasIndicatorSize.Text = "0.000000"
         Me.txtPlotSettings_BiasIndicatorSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right

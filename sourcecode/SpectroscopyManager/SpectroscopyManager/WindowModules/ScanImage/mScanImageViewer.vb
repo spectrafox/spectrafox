@@ -618,14 +618,18 @@ Public Class mScanImageViewer
             End If
         Next
         Me.dpRight.SlideIn()
-        Me.pbScanImage.Focus()
+
+        ' Clear the focus of all remaining elements.
+        'Me.pbScanImage.Focus()
+        Me.ActiveControl = Nothing
     End Sub
 
     ''' <summary>
     ''' Show on Mouse-Enter.
     ''' </summary>
     Private Sub dpRight_MouseEnter(sender As Object, e As EventArgs) Handles dpRight.MouseEnter_PanelArea, tsbtnPlotSetup.MouseEnter
-        Me.dpRight.SlideOut()
+        Return
+        'Me.dpRight.SlideOut()
     End Sub
 
     ''' <summary>
@@ -652,7 +656,10 @@ Public Class mScanImageViewer
             End If
         Next
         Me.dpLeft.SlideIn()
-        Me.pbScanImage.Focus()
+
+        ' Clear the focus of all remaining elements.
+        'Me.pbScanImage.Focus()
+        Me.ActiveControl = Nothing
     End Sub
 
     ''' <summary>
@@ -672,7 +679,8 @@ Public Class mScanImageViewer
     ''' Show on Mouse-Enter.
     ''' </summary>
     Private Sub dpLeft_MouseEnter(sender As Object, e As EventArgs) Handles dpLeft.MouseEnter_PanelArea, tsbtnChannelSetup.MouseEnter
-        Me.dpLeft.SlideOut()
+        Return
+        'Me.dpLeft.SlideOut()
     End Sub
 
 #End Region

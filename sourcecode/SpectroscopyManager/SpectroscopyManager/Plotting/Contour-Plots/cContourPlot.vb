@@ -118,9 +118,10 @@ Public Class cContourPlot
         ' Create new graphics surface from memory bitmap
         Me.oFastImage = New cFastImage(New Bitmap(Me.ValueMatrix.ColumnCount, Me.ValueMatrix.RowCount))
 
-        ' Lock the bitmap for editing.
-        Me.oFastImage.Lock()
         Try
+            ' Lock the bitmap for editing.
+            Me.oFastImage.Lock()
+
             ' set background color to white so that pixels can be correctly colorized!
             Me.oFastImage.Clear(Color.Transparent)
 
@@ -163,10 +164,10 @@ Public Class cContourPlot
             Next
         Catch ex As Exception
             Debug.WriteLine("cContourPlot->2DPlot error: " & ex.Message)
+        Finally
+            ' Always unlock the bitmap and save modified pixels!
+            Me.oFastImage.Unlock(True)
         End Try
-
-        ' Always unlock the bitmap and save modified pixels!
-        Me.oFastImage.Unlock(True)
 
         Return Me.Image
     End Function
