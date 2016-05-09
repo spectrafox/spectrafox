@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.5.9.0" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.5.9.1" language="neutral" processorArchitecture="x86" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -152,13 +152,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3610624">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.5.9.0" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="SpectroscopyManager" version="2016.5.9.1" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>9MVvSzTZ1S1NRLSqddd0NC7U3T5XgW3PlSWW7rlgrAo=</dsig:DigestValue>
+        <dsig:DigestValue>OUhC/QKWnF0imkqeHbYbbW/7WOhUexIC+1Oxn5tKMG8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,13 +186,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="3287">
+  <file name="changelog_dev.html" size="3484">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>UIkzqmEwPcJyiXbey7HCWh2ayySmhxki1zIrPED8QDc=</dsig:DigestValue>
+      <dsig:DigestValue>w7SIQMuJAWzZu1isJpt7NZuUlA9+lCJQ9Z8f6KaEKHg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="changelog_stable.html" size="35725">
