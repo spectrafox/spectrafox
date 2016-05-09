@@ -225,7 +225,7 @@ Public Class mScanImageViewer
     ''' <summary>
     ''' Start Background-Worker for drawing the image.
     ''' </summary>
-    Public Sub RecalculateImageDirect() Handles vsValueRangeSelector.SelectedRangeChanged, cpColorPicker.SelectedColorSchemaChanged, pbScanImage.Resize
+    Public Sub RecalculateImageDirect()
         If Me.oScanImages.Count <= 0 Then Return
 
         ' Set ImageFetcherProperties

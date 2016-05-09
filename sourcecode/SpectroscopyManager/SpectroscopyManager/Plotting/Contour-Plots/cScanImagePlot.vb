@@ -192,8 +192,8 @@
     ''' <summary>
     ''' Adds a TextObjects to the Display-List
     ''' </summary>
-    Public Sub AddTextObjects(PointMarks As List(Of TextObject))
-        For Each Text As TextObject In PointMarks
+    Public Sub AddTextObjects(TextObjects As List(Of TextObject))
+        For Each Text As TextObject In TextObjects
             Me.AddTextObject(Text)
         Next
     End Sub

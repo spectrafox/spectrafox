@@ -123,7 +123,7 @@ Public Class cContourPlot
             Me.oFastImage.Lock()
 
             ' set background color to white so that pixels can be correctly colorized!
-            Me.oFastImage.Clear(Color.Transparent)
+            Me.oFastImage.Clear(Color.White)
 
             ' Check, if we have brushes defined.
             If Me._BrushArray Is Nothing Then Exit Try

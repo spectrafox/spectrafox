@@ -218,7 +218,11 @@ Public Class NumericTextbox
 
         ' Jump to next Control on "Enter"
         If e.KeyCode = Keys.Enter Then
-            SendKeys.Send("{TAB}")
+            Try
+                SendKeys.Send("{TAB}")
+            Catch ex As Exception
+                Debug.WriteLine("Numeric TextBox: error in sending TAB key")
+            End Try
         End If
     End Sub
 

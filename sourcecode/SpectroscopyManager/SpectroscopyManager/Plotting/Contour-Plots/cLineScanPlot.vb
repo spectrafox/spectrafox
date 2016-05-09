@@ -28,9 +28,6 @@
         ' Call Constructor of Base Class
         MyBase.New(New MathNet.Numerics.LinearAlgebra.Double.DenseMatrix(1, 1))
 
-        ' Check Spectroscopy-Files for correct number of values and correct range.
-
-
         ' Save Reference to the Spectroscopy-Files:
         Me.lSpectroscopyTables = ListOfSpectroscopyTables
 
@@ -50,10 +47,13 @@
     ''' </summary>
     Public Shadows Function CreateImage(ByVal TargetWidth As Integer,
                                         ByVal TargetHeight As Integer,
-                                        ByVal MaxIntensityCorrespondingToValue As Single,
-                                        ByVal MinIntensityCorrespondingToValue As Single,
+                                        ByVal MaxIntensityCorrespondingToValue As Double,
+                                        ByVal MinIntensityCorrespondingToValue As Double,
                                         ByVal ColumnNameX As String,
-                                        ByVal ColumnNameValues As String) As Bitmap
+                                        ByVal ColumnNameValues As String,
+                                        Optional ByVal LimitXAxis As Boolean = False,
+                                        Optional ByVal MaxXToPlot As Double = Double.NaN,
+                                        Optional ByVal MinXToPlot As Double = Double.NaN) As Bitmap
 
         If TargetHeight <= 0 Then Throw New ArgumentOutOfRangeException("TargetHeight", "The target height of the image has to be > 0")
         If TargetWidth <= 0 Then Throw New ArgumentOutOfRangeException("TargetWidth", "The target width of the image has to be > 0")

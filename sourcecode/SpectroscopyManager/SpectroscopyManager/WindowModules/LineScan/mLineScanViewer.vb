@@ -6,13 +6,11 @@ Public Class mLineScanViewer
     ''' <summary>
     ''' List of SpectroscopyFiles used to display the LineScan
     ''' </summary>
-    ''' <remarks></remarks>
     Private lSpectroscopyTables As List(Of cSpectroscopyTable)
 
     ''' <summary>
     ''' LineScan Object
     ''' </summary>
-    ''' <remarks></remarks>
     Private oLineScanPlot As cLineScanPlot
 
     Private bReady As Boolean = False
@@ -173,8 +171,8 @@ Public Class mLineScanViewer
             ' Calculate Image:
             Dim bm As Bitmap = oLineScanPlot.CreateImage(Me.pbLineScan.Width,
                                                          Me.pbLineScan.Height,
-                                                         Convert.ToSingle(Me.vsValueRangeSelector.SelectedMaxValue),
-                                                         Convert.ToSingle(Me.vsValueRangeSelector.SelectedMinValue),
+                                                         Me.vsValueRangeSelector.SelectedMaxValue,
+                                                         Me.vsValueRangeSelector.SelectedMinValue,
                                                          Me.ImageFetcherColumnX,
                                                          Me.ImageFetcherColumnZ)
             Me.ImageFetcherResult = Me.oLineScanPlot.Image
