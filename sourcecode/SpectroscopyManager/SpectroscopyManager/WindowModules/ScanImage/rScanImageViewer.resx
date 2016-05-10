@@ -117,11 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CopyToClipboard_Error" xml:space="preserve">
+    <value>An error occured on copying the image to the clipboard:
+
+%e</value>
+  </data>
+  <data name="CopyToClipboard_Error_Title" xml:space="preserve">
+    <value>error in copying the image to the clipboard ...</value>
+  </data>
   <data name="InfobarTemplate_RedrawInProgress" xml:space="preserve">
     <value>redraw in progress ...</value>
   </data>
   <data name="InfobarTemplate_ScanImageName" xml:space="preserve">
     <value>%name - %channel (%wr x %hr)</value>
+  </data>
+  <data name="SaveImage_Error" xml:space="preserve">
+    <value>An error occured on saving the image:
+
+%e</value>
+  </data>
+  <data name="SaveImage_Error_Title" xml:space="preserve">
+    <value>error saving image ...</value>
   </data>
   <data name="SelectionCrossHair_Label" xml:space="preserve">
     <value>%cr (%cp px)</value>

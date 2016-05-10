@@ -65,6 +65,26 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to An error occured on copying the image to the clipboard:
+        '''
+        '''%e.
+        '''</summary>
+        Friend Shared ReadOnly Property CopyToClipboard_Error() As String
+            Get
+                Return ResourceManager.GetString("CopyToClipboard_Error", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to error in copying the image to the clipboard ....
+        '''</summary>
+        Friend Shared ReadOnly Property CopyToClipboard_Error_Title() As String
+            Get
+                Return ResourceManager.GetString("CopyToClipboard_Error_Title", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to redraw in progress ....
         '''</summary>
         Friend Shared ReadOnly Property InfobarTemplate_RedrawInProgress() As String
@@ -79,6 +99,26 @@ Namespace My.Resources
         Friend Shared ReadOnly Property InfobarTemplate_ScanImageName() As String
             Get
                 Return ResourceManager.GetString("InfobarTemplate_ScanImageName", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to An error occured on saving the image:
+        '''
+        '''%e.
+        '''</summary>
+        Friend Shared ReadOnly Property SaveImage_Error() As String
+            Get
+                Return ResourceManager.GetString("SaveImage_Error", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to error saving image ....
+        '''</summary>
+        Friend Shared ReadOnly Property SaveImage_Error_Title() As String
+            Get
+                Return ResourceManager.GetString("SaveImage_Error_Title", resourceCulture)
             End Get
         End Property
         

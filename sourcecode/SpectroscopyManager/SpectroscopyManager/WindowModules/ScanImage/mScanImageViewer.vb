@@ -499,14 +499,22 @@ Public Class mScanImageViewer
     ''' Saves the Image to the Clipboard
     ''' </summary>
     Private Sub cmnuCopyImageToClipboard_Click(sender As System.Object, e As System.EventArgs) Handles cmnuCopyImageToClipboard.Click
-        Using stream = New MemoryStream()
-            Me.pbScanImage.Image.Save(stream, ImageFormat.Png)
+        Using stream As New MemoryStream()
 
-            Clipboard.Clear()
-            Dim data = New DataObject()
-            data.SetData("PNG", True, stream)
-            data.SetData(DataFormats.Bitmap, True, Me.pbScanImage.Image)
-            Clipboard.SetDataObject(data, True)
+            Try
+                Me.pbScanImage.Image.Save(stream, ImageFormat.Png)
+
+                Clipboard.Clear()
+                Dim data = New DataObject()
+                data.SetData("PNG", True, stream)
+                data.SetData(DataFormats.Bitmap, True, Me.pbScanImage.Image)
+                Clipboard.SetDataObject(data, True)
+            Catch ex As Exception
+                MessageBox.Show(My.Resources.rScanImageViewer.SaveImage_Error.Replace("%e", ex.Message),
+                                    My.Resources.rScanImageViewer.SaveImage_Error_Title,
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
         End Using
     End Sub
 
@@ -514,33 +522,45 @@ Public Class mScanImageViewer
     ''' Save Image to File:
     ''' </summary>
     Private Sub cmnuSaveAsImage_Click(sender As System.Object, e As System.EventArgs) Handles cmnuSaveAsImage.Click
-        Dim fs As New SaveFileDialog
-        With fs
-            .InitialDirectory = My.Settings.LastExport_Path
-            .Title = My.Resources.Title_SaveImage
-            .Filter = "Portable Network Graphics|*.png|JPEG Image|*.jpg|Windows Bitmap|*.bmp|Graphics Interchange Format|*.gif|Windows Enhanced Metafile|*.emf|Exchangeable Image File Format|*.exif"
-            If .ShowDialog = DialogResult.OK Then
-                Select Case .FilterIndex
-                    Case 1
-                        Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Png)
-                    Case 2
-                        Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Jpeg)
-                    Case 3
-                        Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Bmp)
-                    Case 4
-                        Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Gif)
-                    Case 5
-                        Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Emf)
-                    Case 6
-                        Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Exif)
-                End Select
-            End If
-        End With
+        Using fs As New SaveFileDialog
+            With fs
+                .InitialDirectory = My.Settings.LastExport_Path
+                .Title = My.Resources.Title_SaveImage
+                .Filter = "Portable Network Graphics|*.png|JPEG Image|*.jpg|Windows Bitmap|*.bmp|Graphics Interchange Format|*.gif|Windows Enhanced Metafile|*.emf|Exchangeable Image File Format|*.exif"
+                If .ShowDialog = DialogResult.OK Then
+                    Try
+                        Select Case .FilterIndex
+                            Case 1
+                                Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Png)
+                            Case 2
+                                Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Jpeg)
+                            Case 3
+                                Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Bmp)
+                            Case 4
+                                Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Gif)
+                            Case 5
+                                Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Emf)
+                            Case 6
+                                Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Exif)
+                        End Select
+                    Catch ex As Exception
+                        MessageBox.Show(My.Resources.rScanImageViewer.SaveImage_Error.Replace("%e", ex.Message),
+                                        My.Resources.rScanImageViewer.SaveImage_Error_Title,
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    End Try
+                End If
+            End With
+        End Using
     End Sub
 
 #End Region
 
 #Region "PointMark Functions"
+
+    ''' <summary>
+    ''' Point mark that is currently displayed with the tooltip.
+    ''' </summary>
+    Protected PointMarkShowingTooltip As cScanImagePlot.PointMark = Nothing
 
     ''' <summary>
     ''' Adds a Point-Mark to the Display-List
@@ -562,6 +582,28 @@ Public Class mScanImageViewer
     Public Sub ClearPointMarkList()
         Me.ListOfPointMarks.Clear()
     End Sub
+
+    ''' <summary>
+    ''' Returns the point mark at the given location on the screen.
+    ''' Returns nothing, if not found.
+    ''' </summary>
+    Private Function GetPointMarkUnderMousePosition(ByVal MousePosition As Point) As cScanImagePlot.PointMark
+        Dim PMSelected As cScanImagePlot.PointMark = Nothing
+
+        For Each PM As cScanImagePlot.PointMark In Me.ListOfPointMarks
+            If MousePosition.X >= (PM.PlotPoint.X - PM.PlotRadiusInPixel) AndAlso
+               MousePosition.X <= (PM.PlotPoint.X + PM.PlotRadiusInPixel) AndAlso
+               MousePosition.Y >= (PM.PlotPoint.Y - PM.PlotRadiusInPixel) AndAlso
+               MousePosition.Y <= (PM.PlotPoint.Y + PM.PlotRadiusInPixel) Then
+
+                PMSelected = PM
+
+                Exit For
+            End If
+        Next
+
+        Return PMSelected
+    End Function
 
 #End Region
 
@@ -726,6 +768,12 @@ Public Class mScanImageViewer
     ''' then this event is fired after selecting two points.
     ''' </summary>
     Public Event AreaSelected(ByVal P1 As Point, ByVal P2 As Point)
+
+    ''' <summary>
+    ''' If the selection-mode is <code>SelectionModes.None</code>,
+    ''' then this event is fired after clicking on top of a point mark.
+    ''' </summary>
+    Public Event PointMarkClicked(ByVal PointMark As cScanImagePlot.PointMark)
 
     ''' <summary>
     ''' Selection modes into which the control can be brought.
@@ -900,6 +948,18 @@ Public Class mScanImageViewer
 
                 End If
 
+
+
+            Case SelectionModes.None
+                ' If no selection mode is active, goes through the point marks, 
+                ' and checks, if the click hits a point mark
+                Dim PointMarkClickedOn As cScanImagePlot.PointMark = GetPointMarkUnderMousePosition(MousePoint)
+
+                ' Send a point-mark clicked event.
+                If PointMarkClickedOn IsNot Nothing Then
+                    RaiseEvent PointMarkClicked(PointMarkClickedOn)
+                End If
+
         End Select
 
     End Sub
@@ -909,11 +969,31 @@ Public Class mScanImageViewer
     ''' </summary>
     Private Sub pbScanImage_MouseMove(sender As Object, e As MouseEventArgs) Handles pbScanImage.MouseMove
 
-        ' Ignore fully, if no selection mode is activated.
-        If Me._SelectionModeLast = SelectionModes.None Then Return
+        ' Ignore beside tooltips, if no selection mode is activated.
+        If Me._SelectionModeLast = SelectionModes.None Then
 
-        ' Invalidate the drawing if a selection mode is active.
-        Me.pbScanImage.Refresh()
+            ' If no selection mode is active, goes through the point marks, 
+            ' and checks, if the mouse coordinate hits a point mark
+            Dim PointMarkHovered As cScanImagePlot.PointMark = GetPointMarkUnderMousePosition(e.Location)
+
+            ' Show a tooltip for the hovered point mark.
+            If PointMarkHovered IsNot Nothing Then
+
+                ' Store the hovered point mark, to not produce flickering.
+                If PointMarkHovered IsNot PointMarkShowingTooltip Then
+                    PointMarkShowingTooltip = PointMarkHovered
+                    Me.ttToolTip.Show(PointMarkHovered.Label, Me, e.Location)
+                End If
+                'RaiseEvent PointMarkClicked(PointMarkClickedOn)
+            Else
+                Me.ttToolTip.Hide(Me)
+            End If
+
+        Else
+            ' Invalidate the drawing if a selection mode is active.
+            Me.pbScanImage.Refresh()
+        End If
+
 
     End Sub
 

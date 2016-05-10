@@ -37,6 +37,8 @@ Partial Class mScanImageViewer
         Me.tssLeft1 = New System.Windows.Forms.ToolStripSeparator()
         Me.tslblInfobar = New System.Windows.Forms.ToolStripLabel()
         Me.dpLeft = New SpectroscopyManager.DockablePanel()
+        Me.gbOpenExternal = New System.Windows.Forms.GroupBox()
+        Me.btnOpenExternal = New System.Windows.Forms.Button()
         Me.cboExternalViewer = New System.Windows.Forms.ComboBox()
         Me.gbChannel = New System.Windows.Forms.GroupBox()
         Me.cbChannel = New SpectroscopyManager.ucScanChannelSelector()
@@ -52,15 +54,14 @@ Partial Class mScanImageViewer
         Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
         Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.lblColorCode = New System.Windows.Forms.Label()
-        Me.gbOpenExternal = New System.Windows.Forms.GroupBox()
-        Me.btnOpenExternal = New System.Windows.Forms.Button()
+        Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.tsTools.SuspendLayout()
         Me.dpLeft.SuspendLayout()
+        Me.gbOpenExternal.SuspendLayout()
         Me.gbChannel.SuspendLayout()
         Me.dpRight.SuspendLayout()
-        Me.gbOpenExternal.SuspendLayout()
         Me.SuspendLayout()
         '
         'pbScanImage
@@ -77,19 +78,21 @@ Partial Class mScanImageViewer
         '
         Me.cmnuImageContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuCopyImageToClipboard, Me.cmnuSaveAsImage})
         Me.cmnuImageContextMenuStrip.Name = "ImageContextMenuStrip"
-        Me.cmnuImageContextMenuStrip.Size = New System.Drawing.Size(124, 48)
+        Me.cmnuImageContextMenuStrip.Size = New System.Drawing.Size(168, 48)
         '
         'cmnuCopyImageToClipboard
         '
+        Me.cmnuCopyImageToClipboard.Image = Global.SpectroscopyManager.My.Resources.Resources.copy_16
         Me.cmnuCopyImageToClipboard.Name = "cmnuCopyImageToClipboard"
-        Me.cmnuCopyImageToClipboard.Size = New System.Drawing.Size(123, 22)
-        Me.cmnuCopyImageToClipboard.Text = "copy"
+        Me.cmnuCopyImageToClipboard.Size = New System.Drawing.Size(167, 22)
+        Me.cmnuCopyImageToClipboard.Text = "copy to clipboard"
         '
         'cmnuSaveAsImage
         '
+        Me.cmnuSaveAsImage.Image = Global.SpectroscopyManager.My.Resources.Resources.export_16
         Me.cmnuSaveAsImage.Name = "cmnuSaveAsImage"
-        Me.cmnuSaveAsImage.Size = New System.Drawing.Size(123, 22)
-        Me.cmnuSaveAsImage.Text = "save as ..."
+        Me.cmnuSaveAsImage.Size = New System.Drawing.Size(167, 22)
+        Me.cmnuSaveAsImage.Text = "save image as file"
         '
         'tsTools
         '
@@ -167,6 +170,26 @@ Partial Class mScanImageViewer
         Me.dpLeft.SlidePixelsPerTimerTick = 25
         Me.dpLeft.SuspendMessageFiltering = False
         Me.dpLeft.TabIndex = 15
+        '
+        'gbOpenExternal
+        '
+        Me.gbOpenExternal.Controls.Add(Me.btnOpenExternal)
+        Me.gbOpenExternal.Controls.Add(Me.cboExternalViewer)
+        Me.gbOpenExternal.Location = New System.Drawing.Point(3, 226)
+        Me.gbOpenExternal.Name = "gbOpenExternal"
+        Me.gbOpenExternal.Size = New System.Drawing.Size(157, 80)
+        Me.gbOpenExternal.TabIndex = 15
+        Me.gbOpenExternal.TabStop = False
+        Me.gbOpenExternal.Text = "open file in external viewer:"
+        '
+        'btnOpenExternal
+        '
+        Me.btnOpenExternal.Location = New System.Drawing.Point(6, 46)
+        Me.btnOpenExternal.Name = "btnOpenExternal"
+        Me.btnOpenExternal.Size = New System.Drawing.Size(145, 23)
+        Me.btnOpenExternal.TabIndex = 15
+        Me.btnOpenExternal.Text = "open in external viewer"
+        Me.btnOpenExternal.UseVisualStyleBackColor = True
         '
         'cboExternalViewer
         '
@@ -331,26 +354,6 @@ Partial Class mScanImageViewer
         Me.lblColorCode.TabIndex = 14
         Me.lblColorCode.Text = "color scheme:"
         '
-        'gbOpenExternal
-        '
-        Me.gbOpenExternal.Controls.Add(Me.btnOpenExternal)
-        Me.gbOpenExternal.Controls.Add(Me.cboExternalViewer)
-        Me.gbOpenExternal.Location = New System.Drawing.Point(3, 226)
-        Me.gbOpenExternal.Name = "gbOpenExternal"
-        Me.gbOpenExternal.Size = New System.Drawing.Size(157, 80)
-        Me.gbOpenExternal.TabIndex = 15
-        Me.gbOpenExternal.TabStop = False
-        Me.gbOpenExternal.Text = "open file in external viewer:"
-        '
-        'btnOpenExternal
-        '
-        Me.btnOpenExternal.Location = New System.Drawing.Point(6, 46)
-        Me.btnOpenExternal.Name = "btnOpenExternal"
-        Me.btnOpenExternal.Size = New System.Drawing.Size(145, 23)
-        Me.btnOpenExternal.TabIndex = 15
-        Me.btnOpenExternal.Text = "open in external viewer"
-        Me.btnOpenExternal.UseVisualStyleBackColor = True
-        '
         'mScanImageViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -366,11 +369,11 @@ Partial Class mScanImageViewer
         Me.tsTools.ResumeLayout(False)
         Me.tsTools.PerformLayout()
         Me.dpLeft.ResumeLayout(False)
+        Me.gbOpenExternal.ResumeLayout(False)
         Me.gbChannel.ResumeLayout(False)
         Me.gbChannel.PerformLayout()
         Me.dpRight.ResumeLayout(False)
         Me.dpRight.PerformLayout()
-        Me.gbOpenExternal.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -405,4 +408,5 @@ Partial Class mScanImageViewer
     Friend WithEvents cboExternalViewer As ComboBox
     Friend WithEvents gbOpenExternal As GroupBox
     Friend WithEvents btnOpenExternal As Button
+    Friend WithEvents ttToolTip As ToolTip
 End Class
