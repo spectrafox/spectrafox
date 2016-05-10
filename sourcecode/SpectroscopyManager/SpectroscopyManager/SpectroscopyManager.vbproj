@@ -148,7 +148,7 @@
       <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.1.0\lib\net40-client\Magick.NET-Q8-AnyCPU.dll</HintPath>
+      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.1.101\lib\net40-client\Magick.NET-Q8-AnyCPU.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=3.11.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -1782,6 +1782,9 @@
     <None Include="Resources\curve.png" />
     <None Include="Resources\curve_16.png" />
     <None Include="Resources\curve_25.png" />
+    <Content Include="License-Magick.NET.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="LowPrivilegeSetup.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

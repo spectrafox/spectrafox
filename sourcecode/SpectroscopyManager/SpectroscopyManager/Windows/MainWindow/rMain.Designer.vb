@@ -65,9 +65,9 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to The web-browser could not be opened to navigate to the help file.
+        '''  Looks up a localized string similar to The web-browser could not be opened.
         '''
-        '''Please visit %url for the online-help.
+        '''Please visit %url manually.
         '''
         '''%e.
         '''</summary>

@@ -115,6 +115,7 @@
         Public PlotRadiusInScale As Double
 
         Public Label As String
+        Public Tag As String
 
         Public Color As Color
         Public Shape As PointMarkShapes
@@ -151,7 +152,8 @@
                        Optional ByVal PlotRadiusInScale As Double = -1,
                        Optional ByVal Color As Color = Nothing,
                        Optional ByVal Shape As PointMarkShapes = PointMarkShapes.Cross,
-                       Optional ByVal Label As String = Nothing)
+                       Optional ByVal Label As String = Nothing,
+                       Optional ByVal Tag As String = Nothing)
             Me.X = X
             Me.Y = Y
             Me.Z = Z
@@ -159,6 +161,7 @@
             Me.Shape = Shape
             Me.PlotRadiusInScale = PlotRadiusInScale
             Me.Label = Label
+            Me.Tag = Tag
         End Sub
 
         ''' <summary>

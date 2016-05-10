@@ -30,7 +30,7 @@
 
 
     'Das Formular überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         If disposing Then My.Application.SplashScreen = Nothing
         Threading.Thread.Sleep(200)
@@ -43,4 +43,16 @@
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Open the SpectraFox paper.
+    ''' </summary>
+    Private Sub lblHint_Click(sender As Object, e As EventArgs) Handles lblHint.Click
+        Try
+            Dim sInfo As ProcessStartInfo = New ProcessStartInfo(My.Resources.SpectraFoxPaperURL)
+            Process.Start(sInfo)
+        Catch ex As Exception
+            MessageBox.Show(My.Resources.rMain.Help_ErrorOpeningWebbrowser.Replace("%url", My.Resources.SpectraFoxPaperURL).Replace("%e", ex.Message),
+                            My.Resources.rMain.Help_ErrorOpeningWebbrowser_Title, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
 End Class

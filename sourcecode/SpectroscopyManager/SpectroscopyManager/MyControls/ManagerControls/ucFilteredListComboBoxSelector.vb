@@ -400,6 +400,7 @@ Public Class ucFilteredListComboBoxSelector
             If Me._AppereanceType = SelectorType.Listbox Then
 
                 With Me.lbEntry
+                    .ClearSelected()
                     For i As Integer = 0 To .Items.Count - 1 Step 1
                         Dim SelectedColumnName As String = DirectCast(.Items(i), String)
                         If SelectedColumnName = Entry Then

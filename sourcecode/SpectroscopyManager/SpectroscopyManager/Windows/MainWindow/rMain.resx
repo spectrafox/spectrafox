@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Help_ErrorOpeningWebbrowser" xml:space="preserve">
-    <value>The web-browser could not be opened to navigate to the help file.
+    <value>The web-browser could not be opened.
 
-Please visit %url for the online-help.
+Please visit %url manually.
 
 %e</value>
   </data>

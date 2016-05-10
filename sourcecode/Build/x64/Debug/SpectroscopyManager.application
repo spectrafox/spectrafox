@@ -4,17 +4,17 @@
   <description asmv2:publisher="Michael Ruby" co.v1:suiteName="SpectraFox Spectroscopy Manager" asmv2:product="SpectraFox" asmv2:supportUrl="http://spectrafox.com/" co.v1:errorReportUrl="http://spectrafox.com/" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <deployment install="true" mapFileExtensions="true" co.v1:createDesktopShortcut="true" />
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
-    <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
+    <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="SpectroscopyManager.exe.manifest" size="17946">
+    <dependentAssembly dependencyType="install" codebase="SpectroscopyManager.exe.manifest" size="41284">
       <assemblyIdentity name="SpectroscopyManager.exe" version="9.1.0.2" publicKeyToken="0000000000000000" language="en" processorArchitecture="amd64" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
-        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>K2elAF5uRXtLyTsWiQ4BEoWiTr0=</dsig:DigestValue>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>tX2eZROJPkJQflpxvWrDCnlM3km0ioc0xb2wn4e8Hcc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

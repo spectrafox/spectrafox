@@ -50,6 +50,7 @@ SpectraFox includes some external libraries that carry their own licensing.
 * [Cudafy.NET](http://cudafy.codeplex.com/), GNU Lesser General Public License (LGPL) v2.1
 * [DotNetZip](http://dotnetzip.codeplex.com/), Microsoft Public License (Ms-PL)
 * [ExpTreeLib](http://www.codeproject.com/Articles/8546/An-All-VB-NET-Explorer-Tree-Control-with-ImageList), The Code Project Open License (CPOL) v1.02
+* [Magick.NET](https://magick.codeplex.com/), Apache License 2.0
 * [Math.NET Numerics](http://numerics.mathdotnet.com/), The MIT License (MIT)
 * [SmartThreadPool](http://smartthreadpool.codeplex.com/), Microsoft Public License (Ms-PL)
 * [ZedGraph](http://sourceforge.net/projects/zedgraph/), GNU Lesser General Public License (LGPL) v2.1

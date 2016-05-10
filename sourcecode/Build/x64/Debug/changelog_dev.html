@@ -12,15 +12,72 @@
         Bugs may still occur in versions recieved by this channel.<br />
         Change your update-channel in the "Help"-menu of the main window.
     </span>
-
+    
     <p>
-        01.02.2015:<br />
+        Version 2016.05.xx.0<br />
         <ol>
-            <li>[improved] Non-linear fit routine improved. Locking between parameters of different models is now possible.</li>
-            <li>[NEW] coupled non-linear data fit of two data-sets</li>
-            <li>[NEW] point-selector in the data-explorer, for quick collection of characteristic data points</li>
+            <li>[improvement] spectra locations in images are now showing the name of the spectrum on hovering with the mouse over the point</li>
+            <li>[improvement] clicking on the location of a spectrum now jumps to that spectrum</li>
         </ol>
     </p>
-    
+
+    <p>
+        Version 2016.05.09.1<br />
+        <ol>
+            <li>[bugfix] importing of files failed, if the file extension was modified in lower and upper letters</li>
+        </ol>
+    </p>
+        
+    <p>
+        Version 2016.05.09.0<br />
+        <ol>
+            <li>[bugfix] fixed a bug introduced in the last dev-version on drawing scan images</li>
+            <li>[bugfix] fixed a small bug in the numeric text box</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2016.05.04.0<br />
+        <ol>
+            <li>[new] opening of scan images in external viewers is possible now</li>
+            <li>[new] new file type: spectroscopy grids (support so far for Nanonis files)</li>
+            <li>[new] create antimated gifs in the grip plotter</li>
+            <li>[improvement] grid plotter performance improved</li>
+            <li>[improvement] added path-textbox in the folder browser to be able to open a path directly</li>
+            <li>[improvement] backward channels in Createc files are now reversed during import</li>
+            <li>[bugfix] Fixed a crash occurring in the line profile selection, when being outside the image.</li>
+            <li>[bugfix] No spectrafox.sfc cache file is written anymore to folders without data files.</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2016.04.06.0<br />
+        <ol>
+            <li>[bugfix] Summing data columns of different files was always taking the alphabetically first selected file as source file.</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2016.04.01.0<br />
+        <ol>
+            <li>[improvement] in-memory compression of the cache file to be able to manage larger projects</li>
+            <li>[bugfix] Omicron import routine was setting the wrong unit to spectra's x-axis</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2016.03.31.0<br />
+        <ol>
+            <li>[import] Omicron Matrix spectroscopy and image files</li>
+            <li>[import] Nanotec spectroscopy and image files</li>
+            <li>[new] re-gauge tool for lock-in data which restores the physical dimensions by the given lock-in settings</li>
+            <li>[new] AFM: force and current deconvolution tool for frequency modulated AFM experiments</li>
+            <li>[improvement] rewritten backend for smoothing data</li>
+            <li>[bugfix] rare crash occured on point selection</li>
+            <li>[bugfix] On browsing through a list of scan image files the selected channel was jumping back to the first channel</li>
+            <li>[bugfix] Rare crash when opening multiple instances of SpectraFox.</li>
+        </ol>
+    </p>
+        
 </body>
 </html>

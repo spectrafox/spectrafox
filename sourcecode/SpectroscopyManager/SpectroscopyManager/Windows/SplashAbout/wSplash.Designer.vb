@@ -36,6 +36,7 @@ Partial Class wSplash
         Me.lblHint.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblHint.AutoSize = True
         Me.lblHint.BackColor = System.Drawing.Color.Transparent
+        Me.lblHint.Cursor = System.Windows.Forms.Cursors.Hand
         Me.lblHint.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHint.ForeColor = System.Drawing.Color.LightGray
         Me.lblHint.Location = New System.Drawing.Point(287, 41)

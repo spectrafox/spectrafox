@@ -2363,6 +2363,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to http://dx.doi.org/10.1016/j.softx.2016.04.001.
+        '''</summary>
+        Friend ReadOnly Property SpectraFoxPaperURL() As String
+            Get
+                Return ResourceManager.GetString("SpectraFoxPaperURL", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to ... (%% more).
         '''</summary>
         Friend ReadOnly Property Template_AdditionalMore() As String

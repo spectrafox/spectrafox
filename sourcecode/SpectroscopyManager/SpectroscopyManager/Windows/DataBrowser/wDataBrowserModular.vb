@@ -32,6 +32,11 @@ Public Class wDataBrowserModular
     ''' </summary>
     Private WithEvents DataBrowserList As mDataBrowserList
 
+    ''' <summary>
+    ''' Separator used in the point mark tags.
+    ''' </summary>
+    Private Const PointMarkTagSeparator As Char = CChar(">")
+
 #Region "Show and ShowDialog-Shadows"
     ''' <summary>
     ''' Sub shadowing the BaseClass to recieve a working directory
@@ -111,7 +116,9 @@ Public Class wDataBrowserModular
             Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
                                                         FO.RecordLocation_X,
                                                         FO.RecordLocation_Y,
-                                                        FO.RecordLocation_Z,,,, FO.FileNameWithoutPath
+                                                        FO.RecordLocation_Z,,,,
+                                                        FO.FileNameWithoutPath,
+                                                        cFileObject.FileTypes.SpectroscopyTable.ToString & PointMarkTagSeparator & FO.FileNameWithoutPath
                                                         ))
         Next
         Me.svScanViewer.RecalculateImageAsync()
@@ -172,11 +179,15 @@ Public Class wDataBrowserModular
         ' if the selected image contains the selected Spectroscopy-Files:
         Me.svScanViewer.ClearPointMarkList()
         If FileObject.GridFile IsNot Nothing Then
-            For Each ST As cSpectroscopyTable In FileObject.GridFile.SpectroscopyTables
+            Dim ST As cSpectroscopyTable
+            For i As Integer = 0 To FileObject.GridFile.SpectroscopyTables.Count - 1 Step 1
+                ST = FileObject.GridFile.SpectroscopyTables(i)
                 Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
                                                     ST.Location_X,
                                                     ST.Location_Y,
-                                                    ST.Location_Z,,,, ST.FileNameWithoutPath
+                                                    ST.Location_Z,,,,
+                                                    ST.FileNameWithoutPath,
+                                                    cFileObject.FileTypes.GridFile.ToString & PointMarkTagSeparator & FileObject.FileNameWithoutPath & PointMarkTagSeparator & i.ToString(Globalization.CultureInfo.InvariantCulture)
                                                     ))
             Next
         End If
@@ -194,17 +205,63 @@ Public Class wDataBrowserModular
     ''' </summary>
     Public Sub PointMarkSelectedInScanImage(PointMark As cScanImagePlot.PointMark) Handles svScanViewer.PointMarkClicked
 
-        Dim FileList As ReadOnlyDictionary(Of String, mDataBrowserList.FileListEntry) = Me.DataBrowserList.FileObjectListDisplayed
-        For Each FKV As KeyValuePair(Of String, mDataBrowserList.FileListEntry) In FileList
+        ' Get first the selected point mark type from the tag.
+        Dim PointMarkFileType As cFileObject.FileTypes = cFileObject.FileTypes.UNIDENTIFIED
+        If PointMark.Tag.StartsWith(cFileObject.FileTypes.SpectroscopyTable.ToString) Then
+            PointMarkFileType = cFileObject.FileTypes.SpectroscopyTable
+        ElseIf PointMark.Tag.StartsWith(cFileObject.FileTypes.GridFile.ToString) Then
+            PointMarkFileType = cFileObject.FileTypes.GridFile
+        End If
 
-            ' Ignore scan images.
-            If FKV.Value.FileObject.FileType = cFileObject.FileTypes.ScanImage Then Continue For
+        ' Check, if the point mark got identified.
+        If PointMarkFileType = cFileObject.FileTypes.UNIDENTIFIED Then Return
 
-            If FKV.Value.FileObject.FileNameWithoutPath = PointMark.Label Then
-                Me.DataBrowserList.ScrollToListEntry(FKV.Value.FileObject)
-                Exit For
+        ' For a spectroscopy file, jump directly to the entry.
+        If PointMarkFileType = cFileObject.FileTypes.SpectroscopyTable Then
+
+            Dim SplittedTag As String() = PointMark.Tag.Split({PointMarkTagSeparator}, 2)
+            If SplittedTag.Length = 2 Then
+
+                Dim FileList As ReadOnlyDictionary(Of String, mDataBrowserList.FileListEntry) = Me.DataBrowserList.FileObjectListDisplayed
+                For Each FKV As KeyValuePair(Of String, mDataBrowserList.FileListEntry) In FileList
+
+                    ' Ignore all file types, except for the one identified.
+                    If FKV.Value.FileObject.FileType <> PointMarkFileType Then Continue For
+
+                    If FKV.Value.FileObject.FileNameWithoutPath = SplittedTag(1) Then
+                        Me.DataBrowserList.ScrollToListEntry(FKV.Value.FileObject)
+                        Exit For
+                    End If
+                Next
+
             End If
-        Next
+        End If
+
+        ' For a grid file, jump directly to the entry of the grid file.
+        If PointMarkFileType = cFileObject.FileTypes.GridFile Then
+
+            Dim SplittedTag As String() = PointMark.Tag.Split({PointMarkTagSeparator}, 3)
+            If SplittedTag.Length = 3 Then
+                Dim GridFileName As String = SplittedTag(1)
+                Dim SpectrumIndex As Integer = -1
+                Integer.TryParse(SplittedTag(2), SpectrumIndex)
+
+                Dim FileList As ReadOnlyDictionary(Of String, mDataBrowserList.FileListEntry) = Me.DataBrowserList.FileObjectListDisplayed
+                For Each FKV As KeyValuePair(Of String, mDataBrowserList.FileListEntry) In FileList
+
+                    ' Ignore all file types, except for the one identified.
+                    If FKV.Value.FileObject.FileType <> PointMarkFileType Then Continue For
+
+                    If FKV.Value.FileObject.FileNameWithoutPath = GridFileName Then
+                        Me.DataBrowserList.ScrollToListEntry(FKV.Value.FileObject)
+                        Exit For
+                    End If
+                Next
+            End If
+
+        End If
+
+
 
     End Sub
 
@@ -237,7 +294,9 @@ Public Class wDataBrowserModular
             Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
                                                         SpectroscopyTable.Location_X,
                                                         SpectroscopyTable.Location_Y,
-                                                        SpectroscopyTable.Location_Z,,,, SpectroscopyTable.FileNameWithoutPath
+                                                        SpectroscopyTable.Location_Z,,,,
+                                                        SpectroscopyTable.FileNameWithoutPath,
+                                                        cFileObject.FileTypes.SpectroscopyTable.ToString & PointMarkTagSeparator & SpectroscopyTable.FileNameWithoutPath
                                                         ))
             Me.svScanViewer.RecalculateImageAsync()
         End If
@@ -265,7 +324,9 @@ Public Class wDataBrowserModular
                 Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
                                                         SpectroscopyTable.Location_X,
                                                         SpectroscopyTable.Location_Y,
-                                                        SpectroscopyTable.Location_Z,,,, SpectroscopyTable.FileNameWithoutPathAndExtension
+                                                        SpectroscopyTable.Location_Z,,,,
+                                                        SpectroscopyTable.FileNameWithoutPathAndExtension,
+                                                        cFileObject.FileTypes.SpectroscopyTable.ToString & PointMarkTagSeparator & SpectroscopyTable.FileNameWithoutPath
                                                         ))
             Next
             Me.svScanViewer.RecalculateImageAsync()

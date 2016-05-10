@@ -247,3 +247,207 @@ D:\SpectraFox\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\Spectroscopy
 D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\SpectroscopyManager.exe.config
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.exe
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-CUDAfy.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-ILSpy.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-Math.Net.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-NetSparkle.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-ZedGraph.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-zip.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\changelog_dev.html
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\changelog_stable.html
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License-Magick.NET.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\LowPrivilegeSetup.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\License.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\Tools\cudafycl.exe
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\Tools\CudafyViewer.exe
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\alpine colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\aquamarine.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\army colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\atlantic colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\aurora colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\avocado colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\beach colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\blue-green-yellow.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\brass tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\bright bands.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\brown-cyan tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\candy colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\cherry tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\CMYK colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\coffee tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\dark bands.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\dark rainbow.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\dark terrain.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\deep sea colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\fall colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\fruit punch colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\fuchsia tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\gray tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\gray-yellow tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\green-brown terrain.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\green-pink tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\island colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\lake colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\light temperature map.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\light terrain.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\mint colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\neon colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\pastel.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\pearl colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\pigeon tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\plum colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\rainbow.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\red-blue tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\red-green split.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\rose colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\rust tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\sandy terrain.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\sienna tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\solar colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\southwest colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\starry night colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\sunset colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\temperature map.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\thermometer colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\valentine tones.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\ColorSchemes\watermelon colors.sfc
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\SpectroscopyManager.exe.manifest
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\SpectroscopyManager.application
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\SpectroscopyManager.exe
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Debug\SpectroscopyManager.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.vbprojResolveAssemblyReference.cache
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rBugReporting.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rComputingCloud.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rExportMethods.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rExport.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Fano.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_FrotaDerivative.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_FrotaDerivative.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitProcedureSettingsPanel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitProcedureSettingsPanel_LMA.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rLMAFit.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitProcedureSettingsPanel_NMA.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitProcedure.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFitProcedureSettingsWindow.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rNMAFit.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_TipSampleConvolution.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_TipSampleConvolutionBase.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_BCSDoubleGap.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_BCSDoubleGap_TipAndSample.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_BCSDoubleGap_TwoLifetimes.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_BCSDoubleGap.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_BCSDoubleGap_SubGapPeaks.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_BCSDoubleGap_SubGapPeaks.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_BCS_NormalTip_SingleGap.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_BCS_NormalTip_SingleGap.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_BCSBase.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_BCSSingleGap.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_BCSSingleGap.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_StepGap_SubGapPeaks.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_StepGap_SubGapPeaks.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_SubGapPeaks.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingSubParameter_SubGapPeakPanel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rBCSFit_SubGapPeak.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Exponential.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Exponential.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Fano.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Frota.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Frota.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_IETS_SpinExcitation.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_IETS_SpinExcitation.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Lorentz.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Lorentz.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_MultiplePeaks.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Polynomial.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Polynomial.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Step_FermiFunction.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Step_FermiFunction.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingSubParameterPanel_4.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel_Gauss.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitFunction_Gauss.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wBoundarySelector.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cFitSettingPanel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitSettingPanel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mFitParameter.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitting.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rGPUComputing.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFileImport.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.ucFilteredListComboBoxSelector.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cNumericSmoothingPanel_AdjacentAverageSmooth.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rSmoothing.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.cNumericSmoothingPanel_SavitzkyGolay.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rScanImage.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rScanImageFilters.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mDataBrowserListCompact.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rLineScanViewer.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rScanImageViewer.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mValueRangeSelector2.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mSpectroscopyTableDataTable.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mSpectroscopyTableViewer.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rSpectroscopyTableViewer.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wComputingCloudDetails.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFileObjectActions.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mDataBrowserList.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mDataBrowserListEntry.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rDataBrowser.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rScanImageLineProfile.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wScanImageLineProfile.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wSettings_Program.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rAFMForceCurrentDeconvolution.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wAFMForceCurrentDeconvolution.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataSummationTwoSets.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rDataNormalization.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataReversion.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataBrowserModular.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataExplorer_ScanImage.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataExplorer_SpectroscopyTable.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitBase.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFitQueue.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFitParallelizationSettings.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFitQueue.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataSummation.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rDataRenormalization.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataRenormalization2.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFit_MultipleDataSets.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wSpectroscopyTableRenameColumns.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFolderBrowser.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFolderBrowser.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rFormBaseExpectsFiles.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFormBaseExpectsMultipleSpectroscopyTableFileObjectsOnLoad.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wGPUComputingSettings.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataRenormalizationByParameters.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataNumericDerivative.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataMultiplication.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rGridPlotter.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wGridPlotter.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rMain.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wMain.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFit_SingleDataSet.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFormBaseExpectsScanImageFileObjectOnLoad.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wFormBaseExpectsIndividualSpectroscopyTableFileObjectOnLoad.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wProgress.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wUnhandledExceptionReportForm.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.rProgramUpdateMessages.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wProgramUpdateAvailable.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mDataSmoothing.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mLineScanViewer.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mScanImageViewer.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.mValueRangeSelector.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.ucColorPalettePicker.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wProgramUpdate.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataCropping.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataNormalization.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wAbout.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataAveragingMultipleFiles.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataAveragingSingleFile.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wDataSmoothing.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wExportWizard_SpectroscopyTable.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wLineScanPlot.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.Resources.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wSplash.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wSpectroscopyTable_PointDistance.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wSXMTest.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wTest.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.vbproj.GenerateResource.Cache
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.exe.manifest
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.application

@@ -818,7 +818,9 @@ Public Class wGridPlotter
                                                                  Me._SpectroscopyTables(i).Location_Z,
                                                                  PointRadius,
                                                                  PointColorBrush.Color,
-                                                                 cScanImagePlot.PointMark.PointMarkShapes.CircleFilled)
+                                                                 cScanImagePlot.PointMark.PointMarkShapes.CircleFilled,
+                                                                 Me._SpectroscopyTables(i).FileNameWithoutPath,
+                                                                 i.ToString(Globalization.CultureInfo.InvariantCulture))
                 Me._PointMarkList.Add(NewPointMark)
 
             Next
@@ -1050,6 +1052,9 @@ Public Class wGridPlotter
         ' Only continue, if the averaging window is not zero.
         If Me._AverageWindowWidth <= 0 Then Return
 
+        ' Store the initial parameters
+        Dim OldAveragingWindowStart As Double = Me._AverageWindowStart
+
         ' Get the number of steps.
         Dim StartValue As Double = Me.txtGIFStartValue.DecimalValue
         Dim EndValue As Double = Me.txtGIFEndValue.DecimalValue
@@ -1165,6 +1170,9 @@ Public Class wGridPlotter
 
             End Using
 
+            ' last but not least, set back the old value.
+            Me.SetAverageWindowStart(OldAveragingWindowStart, False)
+
             If Me._GIFAnimationWorker.IsBusy Then Me._GIFAnimationWorker.ReportProgress(-1, String.Empty)
         Catch ex As Exception
             Debug.WriteLine("wGridPlotter:GifCreator--> error " & ex.Message)
@@ -1204,6 +1212,30 @@ Public Class wGridPlotter
     ''' </summary>
     Private Sub ckbGIFKeepValueRangeConstant_CheckedChanged(sender As Object, e As EventArgs) Handles ckbGIFKeepValueRangeConstant.CheckedChanged
         Me._KeepGridValueRangeConstant = Me.ckbGIFKeepValueRangeConstant.Checked
+    End Sub
+
+#End Region
+
+#Region "Event handling for selection in the preview image viewers"
+
+    ''' <summary>
+    ''' If a point mark is selected in the scan image viewer,
+    ''' then try to select the spectroscopy file in the spectroscopy list.
+    ''' </summary>
+    Public Sub PointMarkSelectedInScanImage(PointMark As cScanImagePlot.PointMark) Handles svOutputImage.PointMarkClicked
+
+        ' The tag contains always the index in the loaded spectroscopy list.
+        Dim SpectrumIndex As Integer = -1
+        Integer.TryParse(PointMark.Tag, SpectrumIndex)
+
+        If SpectrumIndex >= 0 AndAlso Me._SpectroscopyTables.Count > SpectrumIndex Then
+
+            ' Select the spectroscopy table with the index.
+            Me.spDataRangeSelector_DataToDisplay.SetSelectedEntry(Me._SpectroscopyTables(SpectrumIndex).FileNameWithoutPath)
+
+        End If
+
+
     End Sub
 
 #End Region

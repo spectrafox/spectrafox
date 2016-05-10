@@ -8669,6 +8669,20 @@
              When set to true the current operation will be canceled.
             </summary>
         </member>
+        <member name="T:ImageMagick.MagickPolicyErrorException">
+            <summary>
+             Encapsulation of the ImageMagick PolicyError exception.
+            </summary>
+        </member>
+        <member name="M:ImageMagick.MagickPolicyErrorException.#ctor(System.String,ImageMagick.MagickException)">
+            <summary>
+            Initializes a new instance of the MagickPolicyErrorException class with a specified error
+            message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a
+            null reference if no inner exception is specified.</param>
+        </member>
         <member name="T:ImageMagick.MagickResourceLimitErrorException">
             <summary>
              Encapsulation of the ImageMagick ResourceLimitError exception.
@@ -9053,6 +9067,20 @@
         <member name="M:ImageMagick.MagickFileOpenWarningException.#ctor(System.String,ImageMagick.MagickException)">
             <summary>
             Initializes a new instance of the MagickFileOpenWarningException class with a specified error
+            message and a reference to the inner exception that is the cause of this exception.
+            </summary>
+            <param name="message">The error message that explains the reason for the exception.</param>
+            <param name="innerException">The exception that is the cause of the current exception, or a
+            null reference if no inner exception is specified.</param>
+        </member>
+        <member name="T:ImageMagick.MagickPolicyWarningException">
+            <summary>
+             Encapsulation of the ImageMagick PolicyWarning exception.
+            </summary>
+        </member>
+        <member name="M:ImageMagick.MagickPolicyWarningException.#ctor(System.String,ImageMagick.MagickException)">
+            <summary>
+            Initializes a new instance of the MagickFilterWarningException class with a specified error
             message and a reference to the inner exception that is the cause of this exception.
             </summary>
             <param name="message">The error message that explains the reason for the exception.</param>

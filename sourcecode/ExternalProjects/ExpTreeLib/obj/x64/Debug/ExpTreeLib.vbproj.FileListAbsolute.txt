@@ -10,3 +10,9 @@ D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.ExpTree.resou
 D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.vbproj.GenerateResource.Cache
 D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.dll
 D:\SpectraFox\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\bin\x64\Debug\ExpTreeLib.dll
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\bin\x64\Debug\ExpTreeLib.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.ExpTree.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.vbproj.GenerateResource.Cache
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.dll
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.pdb
