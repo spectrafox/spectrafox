@@ -82,6 +82,15 @@ Public Class mDataBrowserList
     Private FileListDisplayed As New Dictionary(Of String, FileListEntry)
 
     ''' <summary>
+    ''' Returns the list of file names currently displayed in the control.
+    ''' </summary>
+    Public ReadOnly Property FileObjectListDisplayed As ReadOnlyDictionary(Of String, FileListEntry)
+        Get
+            Return New ReadOnlyDictionary(Of String, FileListEntry)(Me.FileListDisplayed)
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Currently loaded file-list.
     ''' Sorted according the actual sorting-settings.
     ''' Filtered according to the actual filter settings.
@@ -1128,7 +1137,7 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' Scrolls the list by a certain amount.
     ''' </summary>
-    Private Sub ScrollList(ByVal ScrollDistance As Integer,
+    Public Sub ScrollList(ByVal ScrollDistance As Integer,
                            Optional ByVal Relative As Boolean = True)
 
         ' close all context-menus if scrolling
@@ -1182,7 +1191,7 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' Scrolls the list to the given file-object, if it is displayed as list-entry..
     ''' </summary>
-    Private Sub ScrollToListEntry(ByRef FileObject As cFileObject)
+    Public Sub ScrollToListEntry(ByRef FileObject As cFileObject)
         If Me.FileListDisplayed_SortedAndFiltered.Contains(FileObject.FullFileNameInclPath) Then
             ' Go to the theoretic position.
             Me.ScrollList(Me.GetListEntryLocationByIndex(Me.FileListDisplayed_SortedAndFiltered.IndexOf(FileObject.FullFileNameInclPath)).Y, False)

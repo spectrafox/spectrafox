@@ -96,7 +96,7 @@ Public Class wDataBrowserModular
     End Sub
 #End Region
 
-#Region "Event Handling, e.g. if list-entry is selected in the data Browser list"
+#Region "Event handling in the data browser list, e.g. if list-entry is selected"
 
     ''' <summary>
     ''' Multiple Spectroscopy-Files selected.
@@ -111,7 +111,7 @@ Public Class wDataBrowserModular
             Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
                                                         FO.RecordLocation_X,
                                                         FO.RecordLocation_Y,
-                                                        FO.RecordLocation_Z,,,, FO.FileName
+                                                        FO.RecordLocation_Z,,,, FO.FileNameWithoutPath
                                                         ))
         Next
         Me.svScanViewer.RecalculateImageAsync()
@@ -166,7 +166,7 @@ Public Class wDataBrowserModular
     ''' Single Grid-File selected.
     ''' Fetch the file in the background!
     ''' </summary>
-    Private Sub OnMultipleSpectroscopyTablesSelected(ByRef FileObject As cFileObject) Handles DataBrowserList.SingleGridFileSelected
+    Private Sub OnSingleGridFileSelected(ByRef FileObject As cFileObject) Handles DataBrowserList.SingleGridFileSelected
 
         ' Set Point-Marks in the Preview-Window of the ScanImage,
         ' if the selected image contains the selected Spectroscopy-Files:
@@ -181,6 +181,30 @@ Public Class wDataBrowserModular
             Next
         End If
         Me.svScanViewer.RecalculateImageAsync()
+
+    End Sub
+
+#End Region
+
+#Region "Event handling for selection in the preview image viewers"
+
+    ''' <summary>
+    ''' If a point mark is selected in the scan image viewer,
+    ''' then try to select the spectroscopy file in the data browser list.
+    ''' </summary>
+    Public Sub PointMarkSelectedInScanImage(PointMark As cScanImagePlot.PointMark) Handles svScanViewer.PointMarkClicked
+
+        Dim FileList As ReadOnlyDictionary(Of String, mDataBrowserList.FileListEntry) = Me.DataBrowserList.FileObjectListDisplayed
+        For Each FKV As KeyValuePair(Of String, mDataBrowserList.FileListEntry) In FileList
+
+            ' Ignore scan images.
+            If FKV.Value.FileObject.FileType = cFileObject.FileTypes.ScanImage Then Continue For
+
+            If FKV.Value.FileObject.FileNameWithoutPath = PointMark.Label Then
+                Me.DataBrowserList.ScrollToListEntry(FKV.Value.FileObject)
+                Exit For
+            End If
+        Next
 
     End Sub
 
@@ -213,7 +237,7 @@ Public Class wDataBrowserModular
             Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
                                                         SpectroscopyTable.Location_X,
                                                         SpectroscopyTable.Location_Y,
-                                                        SpectroscopyTable.Location_Z,,,, SpectroscopyTable.FileNameWithoutPathAndExtension
+                                                        SpectroscopyTable.Location_Z,,,, SpectroscopyTable.FileNameWithoutPath
                                                         ))
             Me.svScanViewer.RecalculateImageAsync()
         End If

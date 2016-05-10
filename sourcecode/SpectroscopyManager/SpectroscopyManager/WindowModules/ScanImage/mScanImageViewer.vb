@@ -872,9 +872,6 @@ Public Class mScanImageViewer
     ''' </summary>
     Private Sub pbScanImage_MouseClick(sender As Object, e As MouseEventArgs) Handles pbScanImage.MouseClick
 
-        ' Ignore fully, if no selection mode is activated.
-        If Me.SelectionMode = SelectionModes.None Then Return
-
         ' Mouse point
         Dim MousePoint As Point
 
@@ -983,9 +980,12 @@ Public Class mScanImageViewer
                 If PointMarkHovered IsNot PointMarkShowingTooltip Then
                     PointMarkShowingTooltip = PointMarkHovered
                     Me.ttToolTip.Show(PointMarkHovered.Label, Me, e.Location)
+                    Me.Cursor = Cursors.Hand
                 End If
                 'RaiseEvent PointMarkClicked(PointMarkClickedOn)
             Else
+                PointMarkShowingTooltip = Nothing
+                Me.Cursor = Cursors.Default
                 Me.ttToolTip.Hide(Me)
             End If
 
