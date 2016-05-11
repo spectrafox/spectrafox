@@ -26,7 +26,7 @@ Public Class mLineScanViewer
     ''' <summary>
     ''' Background-Worker Object to load the Scan-Image in a separate Thread.
     ''' </summary>
-    Private ImageLoadingBackgroundWorker As New BackgroundWorker
+    Private WithEvents ImageLoadingBackgroundWorker As New BackgroundWorker
 
     Private ImageFetcherResult As Bitmap
     Private ImageFetcherTargetWidth As Integer
@@ -35,6 +35,9 @@ Public Class mLineScanViewer
     Private ImageFetcherColumnZ As String
     Private ImageFetcherColorScheme As cColorScheme
     Private ImageFetcherRedrawPending As Boolean = False
+
+    Private PlotRangeMin As Double = Double.NaN
+    Private PlotRangeMax As Double = Double.NaN
 #End Region
 
 #Region "Module Load Functions"
@@ -46,9 +49,6 @@ Public Class mLineScanViewer
         With Me.ImageLoadingBackgroundWorker
             .WorkerReportsProgress = True
             .WorkerSupportsCancellation = True
-            AddHandler .DoWork, AddressOf LineScanImageFetcher
-            AddHandler .ProgressChanged, AddressOf ImageFetcher_ReportProgress
-            AddHandler .RunWorkerCompleted, AddressOf ImageFetcher_FetchComplete
         End With
         Me.RecalculateImage()
     End Sub
@@ -80,7 +80,7 @@ Public Class mLineScanViewer
 
             Me.lSpectroscopyTables = SortedSpectroscopyFiles.Values.ToList
 
-            ' Create a new LineScanPlot From the Data:
+            ' Create a new LineScanPlot from the Data:
             Me.oLineScanPlot = New cLineScanPlot(Me.lSpectroscopyTables)
 
             ' Common Columns
@@ -125,7 +125,7 @@ Public Class mLineScanViewer
     ''' or, if another image is pending. If so, then do not paint the obtained image
     ''' and simply reload.
     ''' </summary>
-    Private Sub ImageFetcher_FetchComplete(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs)
+    Private Sub ImageFetcher_FetchComplete(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles ImageLoadingBackgroundWorker.RunWorkerCompleted
         ' Check, if a Scan-Image is pending, then just reload the Scan-Image
         If Not Me.oLineScanListPending Is Nothing Then
             ' Scan Image Pending
@@ -139,6 +139,11 @@ Public Class mLineScanViewer
                 'Me.pgProgress.Visible = False
                 Me.pbLineScan.Image = Me.ImageFetcherResult
                 Me.pbLineScan.Visible = True
+
+                ' Set the output range to the textboxes
+                Me.txtMinXRange.SetValue(Me.PlotRangeMin, , False)
+                Me.txtMaxXRange.SetValue(Me.PlotRangeMax, , False)
+
             End If
 
             If Me.ImageFetcherRedrawPending Then
@@ -151,31 +156,35 @@ Public Class mLineScanViewer
     ''' <summary>
     ''' Function for reporting the Progress of the Image-Creating Worker.
     ''' </summary>
-    Private Sub ImageFetcher_ReportProgress(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs)
-        If e.ProgressPercentage <= 100 Then
-            Me.pgProgress.Value = e.ProgressPercentage
-        Else
-            Me.pgProgress.Value = 100
-        End If
+    Private Sub ImageFetcher_ReportProgress(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles ImageLoadingBackgroundWorker.ProgressChanged
         'Me.lblProgressBar.Text = Convert.ToString(e.UserState)
     End Sub
 
     ''' <summary>
     ''' Scan-Image-Fetch-Function
     ''' </summary>
-    Private Sub LineScanImageFetcher(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
+    Private Sub LineScanImageFetcher(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles ImageLoadingBackgroundWorker.DoWork
         ' Calculate Image:
         Me.oLineScanPlot.ColorScheme = Me.ImageFetcherColorScheme
 
         Try
+
             ' Calculate Image:
             Dim bm As Bitmap = oLineScanPlot.CreateImage(Me.pbLineScan.Width,
                                                          Me.pbLineScan.Height,
                                                          Me.vsValueRangeSelector.SelectedMaxValue,
                                                          Me.vsValueRangeSelector.SelectedMinValue,
                                                          Me.ImageFetcherColumnX,
-                                                         Me.ImageFetcherColumnZ)
+                                                         Me.ImageFetcherColumnZ,
+                                                         Me.PlotRangeMax,
+                                                         Me.PlotRangeMin,
+                                                         Me.ckbLogZ.Checked)
             Me.ImageFetcherResult = Me.oLineScanPlot.Image
+
+            ' Set the new plot range choosed for the image:
+            Me.PlotRangeMax = Me.oLineScanPlot.PlotRangePlottedX_Max
+            Me.PlotRangeMin = Me.oLineScanPlot.PlotRangePlottedX_Min
+
         Catch ex As ArgumentOutOfRangeException
             MessageBox.Show(My.Resources.rLineScanViewer.ErrorDrawing & ex.Message,
                             My.Resources.rLineScanViewer.ErrorDrawing_Title,
@@ -219,14 +228,26 @@ Public Class mLineScanViewer
 #End Region
 
 #Region "Interface Functions"
+
     ''' <summary>
-    ''' Returns all Values in the Spectroscopy-Tables for displaying them in the ValueRangeSelector
+    ''' Returns all values in the Spectroscopy-Tables for displaying them in the ValueRangeSelector
     ''' </summary>
     Private Function GetTotalValueArray() As Double()
         Dim arr As New List(Of Double)
+
         For Each oSpectroscopyTable As cSpectroscopyTable In Me.lSpectroscopyTables
-            Dim ValueColumn As cSpectroscopyTable.DataColumn = oSpectroscopyTable.Column(Convert.ToString(Me.lbCommonColumnsZ.SelectedItem))
-            arr.AddRange(ValueColumn.Values)
+            Dim Values As ReadOnlyCollection(Of Double) = oSpectroscopyTable.Column(Convert.ToString(Me.lbCommonColumnsZ.SelectedItem)).Values
+
+            If Me.ckbLogZ.Checked Then
+                For i As Integer = 0 To Values.Count - 1 Step 1
+                    If Values(i) > 0 Then
+                        arr.Add(Math.Log10(Values(i)))
+                    End If
+                Next
+            Else
+                arr.AddRange(Values)
+            End If
+
         Next
         If arr.Count = 0 Then
             arr.Add(0)
@@ -308,7 +329,7 @@ Public Class mLineScanViewer
     ''' <summary>
     ''' SelectedColumns Changed
     ''' </summary>
-    Public Sub SelectedColumnsChanged() Handles lbCommonColumnsX.SelectedIndexChanged, lbCommonColumnsZ.SelectedIndexChanged
+    Public Sub SelectedColumnsChanged() Handles lbCommonColumnsX.SelectedIndexChanged, lbCommonColumnsZ.SelectedIndexChanged, ckbLogZ.CheckedChanged
         If Not Me.bReady Then Return
         If Me.lSpectroscopyTables Is Nothing Then Return
         If Me.lbCommonColumnsZ.SelectedItem Is Nothing Then Return
@@ -321,9 +342,24 @@ Public Class mLineScanViewer
         My.Settings.LastLineScan_ColumnZ = Convert.ToString(Me.lbCommonColumnsZ.SelectedItem)
         cGlobal.SaveSettings()
 
+        ' Reset the plot range:
+        Me.PlotRangeMax = Double.NaN
+        Me.PlotRangeMin = Double.NaN
+
         ' Recalculates Values
         Me.RecalculateImage()
     End Sub
+
+    ''' <summary>
+    ''' Value range changed.
+    ''' </summary>
+    Private Sub txtXRange_TextChanged(ByRef NT As NumericTextbox) Handles txtMinXRange.ValidValueChanged, txtMaxXRange.ValidValueChanged
+        Me.PlotRangeMax = Me.txtMaxXRange.DecimalValue
+        Me.PlotRangeMin = Me.txtMinXRange.DecimalValue
+        Me.RecalculateImage()
+    End Sub
+
+
 #End Region
 
 #Region "Addon Functions (Saving, Exporting)"
@@ -338,31 +374,32 @@ Public Class mLineScanViewer
     ''' Save Image to File:
     ''' </summary>
     Private Sub cmnuSaveAsImage_Click(sender As System.Object, e As System.EventArgs) Handles cmnuSaveAsImage.Click
-        Dim fs As New SaveFileDialog
-        With fs
-            .InitialDirectory = My.Settings.LastSelectedPath
-            .Title = My.Resources.Title_SaveImage
-            .Filter = "JPEG Image|*.jpg|PNG Image|*.png|Bitmap Image|*.bmp|Gif Image|*.gif|Tiff Image|*.tiff|Exif Image|*.exif"
-            If New cDialogInvoker(fs).Invoke = DialogResult.OK Then
-                Select Case .FilterIndex
-                    Case 1
-                        Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Jpeg)
-                    Case 2
-                        Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Png)
-                    Case 3
-                        Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Bmp)
-                    Case 4
-                        Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Gif)
-                    Case 5
-                        Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Tiff)
-                    Case 6
-                        Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Exif)
-                End Select
-            Else
-                ' If no FileName is given:
-                Return
-            End If
-        End With
+        Using fs As New SaveFileDialog
+            With fs
+                .InitialDirectory = My.Settings.LastSelectedPath
+                .Title = My.Resources.Title_SaveImage
+                .Filter = "JPEG Image|*.jpg|PNG Image|*.png|Bitmap Image|*.bmp|Gif Image|*.gif|Tiff Image|*.tiff|Exif Image|*.exif"
+                If New cDialogInvoker(fs).Invoke = DialogResult.OK Then
+                    Select Case .FilterIndex
+                        Case 1
+                            Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Jpeg)
+                        Case 2
+                            Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Png)
+                        Case 3
+                            Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Bmp)
+                        Case 4
+                            Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Gif)
+                        Case 5
+                            Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Tiff)
+                        Case 6
+                            Me.pbLineScan.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Exif)
+                    End Select
+                Else
+                    ' If no FileName is given:
+                    Return
+                End If
+            End With
+        End Using
     End Sub
 
     Private Delegate Sub _SaveAsWSXM()
@@ -417,6 +454,7 @@ Public Class mLineScanViewer
     Private Sub cmnuSaveAsWSXM_Click(sender As System.Object, e As System.EventArgs) Handles cmnuSaveAsWSXM.Click
         Me.SaveAsWSXM()
     End Sub
+
 #End Region
 
 End Class

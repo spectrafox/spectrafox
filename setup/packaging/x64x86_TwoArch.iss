@@ -90,6 +90,7 @@ Source: "{#BuildDirectory_x86}\changelog_dev.html"; DestDir: "{app}"; Flags: ign
 Source: "{#BuildDirectory_x86}\License.txt"; DestDir: "{app}"; 
 Source: "{#BuildDirectory_x86}\License-CUDAfy.txt"; DestDir: "{app}"; 
 Source: "{#BuildDirectory_x86}\License-ILSpy.txt"; DestDir: "{app}"; 
+Source: "{#BuildDirectory_x86}\License-Magick.NET.txt"; DestDir: "{app}";
 Source: "{#BuildDirectory_x86}\License-Math.Net.txt"; DestDir: "{app}"; 
 Source: "{#BuildDirectory_x86}\License-ZedGraph.txt"; DestDir: "{app}"; 
 Source: "{#BuildDirectory_x86}\License-zip.txt"; DestDir: "{app}";
@@ -105,6 +106,8 @@ Source: "{#BuildDirectory_x86}\*.resources.*"; DestDir: "{app}"; Flags: ignoreve
 Source: "{#BuildDirectory_x86}\Cudafy.NET.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\Cudafy.NET.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\Ionic.Zip.Reduced.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BuildDirectory_x86}\Magick.NET-Q8-AnyCPU.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "{#BuildDirectory_x86}\Magick.NET-Q8-AnyCPU.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.Data.Matlab.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.Data.Matlab.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.Data.Text.dll"; DestDir: "{app}"; Flags: ignoreversion

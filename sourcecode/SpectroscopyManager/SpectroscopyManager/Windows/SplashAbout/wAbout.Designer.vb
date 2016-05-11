@@ -149,11 +149,11 @@ Partial Class wAbout
         Me.lblHint.AutoSize = True
         Me.lblHint.BackColor = System.Drawing.Color.Transparent
         Me.lblHint.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.lblHint.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblHint.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblHint.ForeColor = System.Drawing.Color.LightGray
-        Me.lblHint.Location = New System.Drawing.Point(291, 34)
+        Me.lblHint.Location = New System.Drawing.Point(218, 36)
         Me.lblHint.Name = "lblHint"
-        Me.lblHint.Size = New System.Drawing.Size(353, 91)
+        Me.lblHint.Size = New System.Drawing.Size(426, 112)
         Me.lblHint.TabIndex = 5
         Me.lblHint.Text = resources.GetString("lblHint.Text")
         Me.lblHint.TextAlign = System.Drawing.ContentAlignment.MiddleRight

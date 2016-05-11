@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.5.9.0" language="neutral" processorArchitecture="amd64" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.5.10.0" language="neutral" processorArchitecture="amd64" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Magick.NET-Q8-AnyCPU.dll" size="11066880">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Magick.NET-Q8-AnyCPU.dll" size="11068928">
       <assemblyIdentity name="Magick.NET-Q8-AnyCPU" version="7.0.0.0" publicKeyToken="2004825BADFA91EC" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PM4QAtgxddyvUrrLwr92vrlKvkVMLH8AN2jrMxpIPUw=</dsig:DigestValue>
+        <dsig:DigestValue>7wiGDbjmOe7JmRgSrDzGlvPNHcL2mhVVCdQ1QAFZkg4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3610112">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.5.9.0" language="neutral" processorArchitecture="amd64" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3614720">
+      <assemblyIdentity name="SpectroscopyManager" version="2016.5.10.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>JrtOzF1HeQP5sr8ibxDHZPEnWgAhOXVeSr1ISBodU5w=</dsig:DigestValue>
+        <dsig:DigestValue>IX9Bf/rnCxd8LTyk6CXVZ7PNSouCyc6pUBEdX3bFyEc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,13 +186,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="3287">
+  <file name="changelog_dev.html" size="3954">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>UIkzqmEwPcJyiXbey7HCWh2ayySmhxki1zIrPED8QDc=</dsig:DigestValue>
+      <dsig:DigestValue>8UpEhyu4l+J1qjuF2wZwvbhOm+QKdZrEMkW3HHclWkg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="changelog_stable.html" size="35725">
@@ -699,13 +699,13 @@
       <dsig:DigestValue>oUQvrB+JmIhdID6LSguzdcvnSK9ASBQqHr7RD6Izexk=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="License.txt" size="9302">
+  <file name="License.txt" size="9448">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>L828rvZ7h+Iv5CrOIyBrG+Jqbff4gol5udspamEleqw=</dsig:DigestValue>
+      <dsig:DigestValue>MOhTOo3b2u1YSiykASGdZbAJvZAPEhmZfx/cn7ZoyLA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="License-CUDAfy.txt" size="24960">
@@ -724,6 +724,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>YG9tifMrV1Ff+u+ZQCMdFngpwaesqDZAsj6GO70USWQ=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="License-Magick.NET.txt" size="9234">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>LtLy2yHBJE486TwuaU3+c23Hp0gbosfMbtjfY/X5p9M=</dsig:DigestValue>
     </hash>
   </file>
   <file name="License-Math.Net.txt" size="5896">

@@ -43,6 +43,16 @@
     Public Property BackColor As Color = Color.White
 
     ''' <summary>
+    ''' Plotrange in X that was plotted in the image.
+    ''' </summary>
+    Public Property PlotRangePlottedX_Max As Double
+
+    ''' <summary>
+    ''' Plotrange in X that was plotted in the image.
+    ''' </summary>
+    Public Property PlotRangePlottedX_Min As Double
+
+    ''' <summary>
     ''' Creates an Image of the selected Columns of the SpectroscopyTables.
     ''' </summary>
     Public Shadows Function CreateImage(ByVal TargetWidth As Integer,
@@ -51,13 +61,25 @@
                                         ByVal MinIntensityCorrespondingToValue As Double,
                                         ByVal ColumnNameX As String,
                                         ByVal ColumnNameValues As String,
-                                        Optional ByVal LimitXAxis As Boolean = False,
                                         Optional ByVal MaxXToPlot As Double = Double.NaN,
-                                        Optional ByVal MinXToPlot As Double = Double.NaN) As Bitmap
+                                        Optional ByVal MinXToPlot As Double = Double.NaN,
+                                        Optional ByVal PlotLogZ As Boolean = False) As Bitmap
 
         If TargetHeight <= 0 Then Throw New ArgumentOutOfRangeException("TargetHeight", "The target height of the image has to be > 0")
         If TargetWidth <= 0 Then Throw New ArgumentOutOfRangeException("TargetWidth", "The target width of the image has to be > 0")
         If Me.lSpectroscopyTables.Count <= 0 Then Return New Bitmap(1, 1)
+
+        ' Check, if we have to reverse the plot range:
+        If Not Double.IsNaN(MaxXToPlot) AndAlso Not Double.IsNaN(MinXToPlot) Then
+            If MaxXToPlot < MinXToPlot Then
+                Dim TMP As Double = MaxXToPlot
+                MaxXToPlot = MinXToPlot
+                MinXToPlot = TMP
+            End If
+            If MaxXToPlot = MinXToPlot Then
+                Throw New ArgumentOutOfRangeException("PlotRange", "Plot range has to be > 0")
+            End If
+        End If
 
         ' Create the label dimensions
         Dim LabelFrameBottomHeight As Integer = Convert.ToInt32(0.09 * TargetHeight)
@@ -71,7 +93,7 @@
         ' Calculate the dimensions of the line-scan-plot
         Dim RowsOfValueMatrix As Integer = Me.lSpectroscopyTables.Count * Me._CurrentNumberOfRowRepetitions
         Dim ColumnsOfValueMatrix As Integer = TargetWidth
-        Me.ValueMatrix = New MathNet.Numerics.LinearAlgebra.Double.DenseMatrix(1, ColumnsOfValueMatrix)
+        Me.ValueMatrix = MathNet.Numerics.LinearAlgebra.Double.DenseMatrix.Create(1, ColumnsOfValueMatrix, Double.NaN)
 
         ' Initialize the FastImage-Class
         Dim FastOutputImage As New cFastImage(New Bitmap(TargetWidth, RowsOfValueMatrix))
@@ -80,40 +102,35 @@
         ' Reset the row-counter.
         Dim iPixelRowCounter As Integer = 0
 
-        ' Save the first cropped XColumn separately: needed for Axes generation
-        Dim FirstXColumnWithoutCroppedValues As List(Of Double) = Nothing
-        Dim FirstXColumn As cSpectroscopyTable.DataColumn = Nothing
-        ' Check, if all SpectroscopyTables have the same boundaries, which we plot in the x-axis
-        Dim FirstXColumnMax As Double = Double.NaN
-        Dim FirstXColumnMin As Double = Double.NaN
-
-        ' Create Value-Matrix to Plot,
+        ' Create Value-Matrix to plot,
         ' but always check, if the datacolumns have correct dimensions.
         For i As Integer = 0 To Me.lSpectroscopyTables.Count - 1 Step 1
 
-            ' Get local identifiers for the current X and Value Column
-            Dim CurrentXColumnCropped As List(Of Double) = Me.lSpectroscopyTables(i).Column(ColumnNameX).GetValuesWithoutNaNValues
-            Dim CurrentValueColumnCropped As List(Of Double) = Me.lSpectroscopyTables(i).Column(ColumnNameValues).GetValuesWithoutNaNValues '.GetColumnWithoutValuesWhereSourceColumnIsNaN(Me.lSpectroscopyTables(i).Column(ColumnNameX))
+            ' Get local identifiers for the current X and Y column
+            Dim XColumnCropped As List(Of Double) = Me.lSpectroscopyTables(i).Column(ColumnNameX).GetValuesWithoutNaNValues
+            Dim ValueColumnCropped As List(Of Double) = Me.lSpectroscopyTables(i).Column(ColumnNameValues).GetValuesWithoutNaNValues '.GetColumnWithoutValuesWhereSourceColumnIsNaN(Me.lSpectroscopyTables(i).Column(ColumnNameX))
 
-            If Not Double.IsNaN(FirstXColumnMax) AndAlso Not Double.IsNaN(FirstXColumnMin) Then
-                If CurrentXColumnCropped.Max <> FirstXColumnMax OrElse CurrentXColumnCropped.Min <> FirstXColumnMin Then
-                    Me.oFastImage = New cFastImage(My.Resources.cancel_25)
-                    Throw New ArgumentOutOfRangeException("FirstXColumnMax", My.Resources.rLineScanViewer.Error_DifferentRangeInXDetected.Replace("%max", FirstXColumnMax.ToString).Replace("%min", FirstXColumnMax.ToString))
-                End If
-                If CurrentValueColumnCropped.Count <> CurrentXColumnCropped.Count Then
-                    Me.oFastImage = New cFastImage(My.Resources.cancel_25)
-                    Throw New ArgumentOutOfRangeException("X vs Y count difference", "Mismatch between X and Y column count.")
-                End If
-            Else
-                ' This is the first Spectroscopy-Table in the list.
-                FirstXColumnWithoutCroppedValues = CurrentXColumnCropped
-                FirstXColumn = Me.lSpectroscopyTables(i).Column(ColumnNameX)
-                FirstXColumnMax = FirstXColumnWithoutCroppedValues.Max
-                FirstXColumnMin = FirstXColumnWithoutCroppedValues.Min
+            ' Check, that the length of both columns is the same
+            If XColumnCropped.Count <> ValueColumnCropped.Count Then
+                Me.oFastImage = New cFastImage(My.Resources.cancel_25)
+                Throw New ArgumentException(My.Resources.rLineScanViewer.Error_DifferentRangeInXDetected)
             End If
 
-            ' Create hight-value-array.
-            Dim HeightValues As List(Of Double)
+            ' Get column statistics used later
+            Dim XColumnMax As Double = XColumnCropped.Max
+            Dim XColumnMin As Double = XColumnCropped.Min
+
+            ' Check, if our plot range was defined from outside.
+            ' If not, we will take the first data column, and use the min and max values
+            ' for the boundaries.
+            If Double.IsNaN(MaxXToPlot) OrElse Double.IsNaN(MinXToPlot) Then
+                MaxXToPlot = XColumnMax
+                MinXToPlot = XColumnMin
+            End If
+
+            ' Store the plotted plotrange:
+            Me.PlotRangePlottedX_Max = MaxXToPlot
+            Me.PlotRangePlottedX_Min = MinXToPlot
 
             ' Check for monotonic data: we need strict monotonicity in the XColumn for ALL data!
             Dim Monotonicity As cSpectroscopyTable.DataColumn.Monotonicities = Me.lSpectroscopyTables(i).Column(ColumnNameX).Monotonicity
@@ -128,36 +145,74 @@
                 Throw New ArgumentException(My.Resources.rLineScanViewer.DataMustBeStrictlyMonotonic)
             End If
 
-            ' Check, if Data has to be taken the other way around
-            HeightValues = CurrentValueColumnCropped
-            If Monotonicity = cSpectroscopyTable.DataColumn.Monotonicities.StrictFalling Then
-                HeightValues.Reverse()
-            End If
-
             '######################
             ' Interpolate Data
-            ' Generate input X-Column for interpolation
-            Dim InputXColumn As New List(Of Double)(HeightValues.Count)
-            For x As Integer = 0 To HeightValues.Count - 1 Step 1
-                InputXColumn.Add(x)
-            Next
+
+            ' Get the interpolation range:
+            Dim MaxXToInterpolate As Double
+            Dim MinXToInterpolate As Double
+            If XColumnMax >= MaxXToPlot Then
+                MaxXToInterpolate = MaxXToPlot
+            Else
+                MaxXToInterpolate = XColumnMax
+            End If
+            If XColumnMin <= MinXToPlot Then
+                MinXToInterpolate = MinXToPlot
+            Else
+                MinXToInterpolate = XColumnMin
+            End If
+
+            ' Get the step width for the interpolation.
+            ' If we plot a range larger than the value range, we have to reduce the number of points.
+            Dim PixelToPlot As Integer
+            If MinXToInterpolate > MinXToPlot OrElse MaxXToInterpolate < MaxXToPlot Then
+                ' Reduce the number of pixels to plot:
+                PixelToPlot = CInt(ColumnsOfValueMatrix * (MaxXToInterpolate - MinXToInterpolate) / (MaxXToPlot - MinXToPlot))
+            Else
+                PixelToPlot = ColumnsOfValueMatrix
+            End If
+
+            Dim XInterpolationStepWidth As Double = (MaxXToInterpolate - MinXToInterpolate) / PixelToPlot
 
             ' Generate interpolated X-Column
-            Dim InterpolatedX As New List(Of Double)(ColumnsOfValueMatrix)
-            For x As Integer = 0 To ColumnsOfValueMatrix - 1 Step 1
-                InterpolatedX.Add(x * InputXColumn.Count / ColumnsOfValueMatrix)
+            Dim InterpolatedX As New List(Of Double)(PixelToPlot)
+            Dim InterpolationXValue As Double
+            For x As Integer = 0 To PixelToPlot - 1 Step 1
+                InterpolationXValue = MinXToInterpolate + x * XInterpolationStepWidth
+                InterpolatedX.Add(InterpolationXValue)
             Next
 
             Dim InterpolatedValues(InterpolatedX.Count - 1) As Double
-            cNumericalMethods.SplineInterpolationNative(InputXColumn.ToArray,
-                                                        HeightValues.ToArray,
+            cNumericalMethods.SplineInterpolationNative(XColumnCropped.ToArray,
+                                                        ValueColumnCropped.ToArray,
                                                         InterpolatedX.ToArray,
                                                         InterpolatedValues)
             ' END INTERPOLATE DATA
             '######################
-            For j As Integer = 0 To ColumnsOfValueMatrix - 1 Step 1
-                Me.ValueMatrix.Item(0, j) = InterpolatedValues(j)
-            Next
+
+            ' If we plot a range larger than the value range, we have generated a reduced number of points.
+            ' In this case, we have to offset the written value matrix to the start of the interpolation.
+            Dim jOffset As Integer = 0
+            If MinXToInterpolate > MinXToPlot OrElse MaxXToInterpolate < MaxXToPlot Then
+                jOffset = CInt(ColumnsOfValueMatrix * (MinXToInterpolate - MinXToPlot) / (MaxXToPlot - MinXToPlot))
+            End If
+
+            Dim JPlusOffset As Integer
+            If Not PlotLogZ Then
+                For j As Integer = 0 To PixelToPlot - 1 Step 1
+                    JPlusOffset = jOffset + j
+                    If JPlusOffset < 0 OrElse JPlusOffset > ColumnsOfValueMatrix Then Continue For
+                    Me.ValueMatrix.Item(0, JPlusOffset) = InterpolatedValues(j)
+                Next
+            Else
+                For j As Integer = 0 To PixelToPlot - 1 Step 1
+                    JPlusOffset = jOffset + j
+                    If JPlusOffset < 0 OrElse JPlusOffset > ColumnsOfValueMatrix Then Continue For
+                    If InterpolatedValues(j) > 0 Then
+                        Me.ValueMatrix.Item(0, JPlusOffset) = Math.Log10(InterpolatedValues(j))
+                    End If
+                Next
+            End If
 
             ' Create Pixel-Line of Image:
             MyBase.Plot2D(MaxIntensityCorrespondingToValue, MinIntensityCorrespondingToValue)
@@ -195,146 +250,136 @@
         '###########################################################################
         ' AXES and Labels
 
-        If Not FirstXColumnWithoutCroppedValues Is Nothing Then
-            ' Activate Antialiasing
-            DrawSurface.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+        ' Activate Antialiasing
+        DrawSurface.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
 
-            ' Get the Axis-Range
-            Dim LeftValue As Double = FirstXColumnMin
-            Dim RightValue As Double = FirstXColumnMax
-            If LeftValue > RightValue Then
-                Dim TmpLeft As Double = LeftValue
-                LeftValue = RightValue
-                RightValue = TmpLeft
-            End If
-            Dim AxesRange As Double = RightValue - LeftValue
+        ' Get the Axis-Range
+        Dim AxesRange As Double = MaxXToPlot - MinXToPlot
 
-            ' Format the range and get the ticks from this formatted value
-            Dim FormatedRange As Double = cUnits.GetPrefix(AxesRange).Value
-            Dim FormatFactor As Double = FormatedRange / AxesRange
-            Dim AxesRangePerPixel As Double = FormatedRange / DrawSurface.VisibleClipBounds.Width
+        ' Format the range and get the ticks from this formatted value
+        Dim FormatedRange As Double = cUnits.GetPrefix(AxesRange).Value
+        Dim FormatFactor As Double = FormatedRange / AxesRange
+        Dim AxesRangePerPixel As Double = FormatedRange / DrawSurface.VisibleClipBounds.Width
 
-            ' Generate X-Axis:
-            ' we place it in X direction, so take 100% of the image width as reference frame
-            Dim Axes_X_Position As New Point(0, TargetHeight - LabelFrameBottomHeight)
-            Dim Axes_X_Width As Integer = ColumnsOfValueMatrix
-            Me.AxesPen.Width = Convert.ToInt32(0.003 * TargetHeight)
-            Dim AxesPenHalf As Integer = Convert.ToInt32(Me.AxesPen.Width / 2)
-            Dim Axes_LimitersHeight_Large As Integer = Convert.ToInt32(4 * Me.AxesPen.Width)
-            Dim Axes_LimitersHeight_Small As Integer = Convert.ToInt32(3 * Me.AxesPen.Width)
+        ' Generate X-Axis:
+        ' we place it in X direction, so take 100% of the image width as reference frame
+        Dim Axes_X_Position As New Point(0, TargetHeight - LabelFrameBottomHeight)
+        Dim Axes_X_Width As Integer = ColumnsOfValueMatrix
+        Me.AxesPen.Width = Convert.ToInt32(0.003 * TargetHeight)
+        Dim AxesPenHalf As Integer = Convert.ToInt32(Me.AxesPen.Width / 2)
+        Dim Axes_LimitersHeight_Large As Integer = Convert.ToInt32(4 * Me.AxesPen.Width)
+        Dim Axes_LimitersHeight_Small As Integer = Convert.ToInt32(3 * Me.AxesPen.Width)
 
-            ' Generate the Axes-Labels
-            Dim AxesLabel_X As String = ColumnNameX & " (" & cUnits.GetPrefix(AxesRange).Key & cUnits.GetUnitSymbolFromType(FirstXColumn.UnitType) & ")"
+        ' Generate the Axes-Labels
+        Dim AxesLabel_X As String = ColumnNameX & " (" & cUnits.GetPrefix(AxesRange).Key & cUnits.GetUnitSymbolFromType(Me.lSpectroscopyTables(0).Column(ColumnNameX).UnitType) & ")"
 
-            ' Get the size of the label text
-            If Axes_LimitersHeight_Large = 0 Then Axes_LimitersHeight_Large = 1
-            Dim AxesLabel_Font As Font = New System.Drawing.Font(System.Drawing.FontFamily.GenericSansSerif,
+        ' Get the size of the label text
+        If Axes_LimitersHeight_Large = 0 Then Axes_LimitersHeight_Large = 1
+        Dim AxesLabel_Font As Font = New System.Drawing.Font(System.Drawing.FontFamily.GenericSansSerif,
                                                                  Axes_LimitersHeight_Small * 3)
-            Dim AxesLabel_Font_StringSize As SizeF = DrawSurface.MeasureString(AxesLabel_X, AxesLabel_Font)
+        Dim AxesLabel_Font_StringSize As SizeF = DrawSurface.MeasureString(AxesLabel_X, AxesLabel_Font)
 
-            Dim AxesTick_Font As Font = New System.Drawing.Font(System.Drawing.FontFamily.GenericSansSerif,
+        Dim AxesTick_Font As Font = New System.Drawing.Font(System.Drawing.FontFamily.GenericSansSerif,
                                                                 Axes_LimitersHeight_Small * 2)
-            Dim AxesTick_StringSize As SizeF = DrawSurface.MeasureString(AxesLabel_X, AxesTick_Font)
+        Dim AxesTick_StringSize As SizeF = DrawSurface.MeasureString(AxesLabel_X, AxesTick_Font)
 
-            ' Get the position of the scale-bar-label
-            Dim AxesLabel_X_Position As New PointF(Convert.ToSingle(Axes_X_Position.X + Axes_X_Width / 2 - AxesLabel_Font_StringSize.Width / 2),
+        ' Get the position of the scale-bar-label
+        Dim AxesLabel_X_Position As New PointF(Convert.ToSingle(Axes_X_Position.X + Axes_X_Width / 2 - AxesLabel_Font_StringSize.Width / 2),
                                                    Axes_X_Position.Y + AxesTick_StringSize.Height + Axes_LimitersHeight_Small)
 
-            With Axes_X_Position
+        With Axes_X_Position
 
-                '#####################
-                ' Draw Axes Line
-                Me.AxesPen.Width = AxesPenHalf * 4
-                DrawSurface.DrawLine(Me.AxesPen, .X, .Y, .X + Axes_X_Width, .Y)
+            '#####################
+            ' Draw Axes Line
+            Me.AxesPen.Width = AxesPenHalf * 4
+            DrawSurface.DrawLine(Me.AxesPen, .X, .Y, .X + Axes_X_Width, .Y)
 
-                ' Draw the axes label
-                DrawSurface.DrawString(AxesLabel_X,
+            ' Draw the axes label
+            DrawSurface.DrawString(AxesLabel_X,
                                        AxesLabel_Font,
                                        Me.AxesBrush,
                                        AxesLabel_X_Position)
 
-                '#######################################
-                ' Axes Ticks
-                Me.AxesPen.Width = AxesPenHalf * 2
+            '#######################################
+            ' Axes Ticks
+            Me.AxesPen.Width = AxesPenHalf * 2
 
-                ' Use truncate to check if we use tick-widths of 1
-                Dim TickRange As Double = 1
-                Dim Ticks As Integer = Convert.ToInt32(Math.Truncate(FormatedRange))
+            ' Use truncate to check if we use tick-widths of 1
+            Dim TickRange As Double = 1
+            Dim Ticks As Integer = Convert.ToInt32(Math.Truncate(FormatedRange))
 
-                ' If we would have no ticks, reduce the TickRange by factor of 10,
-                ' and calculate again the number of ticks
-                While Ticks < 2 And FormatedRange <> 0
-                    TickRange /= 10
-                    Ticks = Convert.ToInt32(Math.Truncate(FormatedRange / TickRange))
-                End While
-                ' If we would have to many ticks, reduce the TickRange by factor of 10,
-                ' and calculate again the number of ticks
-                While Ticks > 20 And FormatedRange <> 0
-                    TickRange *= 10
-                    Ticks = Convert.ToInt32(Math.Truncate(FormatedRange / TickRange))
-                End While
+            ' If we would have no ticks, reduce the TickRange by factor of 10,
+            ' and calculate again the number of ticks
+            While Ticks < 2 And FormatedRange <> 0
+                TickRange /= 10
+                Ticks = Convert.ToInt32(Math.Truncate(FormatedRange / TickRange))
+            End While
+            ' If we would have to many ticks, reduce the TickRange by factor of 10,
+            ' and calculate again the number of ticks
+            While Ticks > 20 And FormatedRange <> 0
+                TickRange *= 10
+                Ticks = Convert.ToInt32(Math.Truncate(FormatedRange / TickRange))
+            End While
 
-                ' Draw Ticks
-                Dim DrawTickX As Integer = 0
-                Dim XOffset As Integer = Convert.ToInt32((FormatedRange - Ticks * TickRange) / 2)
-                Dim TickRangePixel As Double = TickRange / AxesRangePerPixel
-                Dim AxesTickLabelValue As Double
-                Dim TickLabelPosition As PointF
-                For i As Integer = 0 To Ticks Step 1
+            ' Draw Ticks
+            Dim DrawTickX As Integer = 0
+            Dim XOffset As Integer = Convert.ToInt32((FormatedRange - Ticks * TickRange) / 2)
+            Dim TickRangePixel As Double = TickRange / AxesRangePerPixel
+            Dim AxesTickLabelValue As Double
+            Dim TickLabelPosition As PointF
+            For i As Integer = 0 To Ticks Step 1
 
-                    ' Draw Tick
-                    DrawTickX = XOffset + Convert.ToInt32(i * TickRangePixel)
+                ' Draw Tick
+                DrawTickX = XOffset + Convert.ToInt32(i * TickRangePixel)
 
-                    ' Draw Tick-Label
-                    AxesTickLabelValue = LeftValue * FormatFactor + DrawTickX * AxesRangePerPixel
+                ' Draw Tick-Label
+                AxesTickLabelValue = MinXToPlot * FormatFactor + DrawTickX * AxesRangePerPixel
 
-                    ' Cut the decimal places for values larger 100 ... they are then unnecessary!
-                    Dim TickValueFormatted As String
-                    If AxesTickLabelValue >= 100 Or CInt(AxesTickLabelValue * 10) Mod 10 = 0 Then
-                        TickValueFormatted = Math.Round(AxesTickLabelValue, 0).ToString("F0", Globalization.CultureInfo.InvariantCulture)
-                    Else
-                        TickValueFormatted = Math.Round(AxesTickLabelValue, 1).ToString("F1", Globalization.CultureInfo.InvariantCulture)
-                    End If
+                ' Cut the decimal places for values larger 100 ... they are then unnecessary!
+                Dim TickValueFormatted As String
+                If AxesTickLabelValue >= 100 Or CInt(AxesTickLabelValue * 10) Mod 10 = 0 Then
+                    TickValueFormatted = Math.Round(AxesTickLabelValue, 0).ToString("F0", Globalization.CultureInfo.InvariantCulture)
+                Else
+                    TickValueFormatted = Math.Round(AxesTickLabelValue, 1).ToString("F1", Globalization.CultureInfo.InvariantCulture)
+                End If
 
-                    AxesTick_StringSize = DrawSurface.MeasureString(TickValueFormatted, AxesTick_Font)
-                    TickLabelPosition = New PointF(Convert.ToSingle(DrawTickX - AxesTick_StringSize.Width / 2),
+                AxesTick_StringSize = DrawSurface.MeasureString(TickValueFormatted, AxesTick_Font)
+                TickLabelPosition = New PointF(Convert.ToSingle(DrawTickX - AxesTick_StringSize.Width / 2),
                                                    Axes_X_Position.Y + Axes_LimitersHeight_Large)
 
-                    ' Draw the tick
-                    DrawSurface.DrawLine(Me.AxesPen, DrawTickX + AxesPenHalf, .Y, DrawTickX + AxesPenHalf, .Y + Axes_LimitersHeight_Large)
+                ' Draw the tick
+                DrawSurface.DrawLine(Me.AxesPen, DrawTickX + AxesPenHalf, .Y, DrawTickX + AxesPenHalf, .Y + Axes_LimitersHeight_Large)
 
-                    ' draw small ticks in the middle behind and before each tick, if the size between the ticks is large enough
-                    If TickRangePixel > 5 * Me.AxesPen.Width Then
-                        Dim TickRangePixelHalf As Integer = CInt(TickRangePixel * 0.5)
-                        DrawSurface.DrawLine(Me.AxesPen, DrawTickX + TickRangePixelHalf, .Y, DrawTickX + TickRangePixelHalf, .Y + Axes_LimitersHeight_Small)
-                        'DrawSurface.DrawLine(Me.AxesPen, DrawTickX - TickRangePixelHalf, .Y, DrawTickX - TickRangePixelHalf, .Y + Axes_LimitersHeight_Small)
-                    End If
+                ' draw small ticks in the middle behind and before each tick, if the size between the ticks is large enough
+                If TickRangePixel > 5 * Me.AxesPen.Width Then
+                    Dim TickRangePixelHalf As Integer = CInt(TickRangePixel * 0.5)
+                    DrawSurface.DrawLine(Me.AxesPen, DrawTickX + TickRangePixelHalf, .Y, DrawTickX + TickRangePixelHalf, .Y + Axes_LimitersHeight_Small)
+                    'DrawSurface.DrawLine(Me.AxesPen, DrawTickX - TickRangePixelHalf, .Y, DrawTickX - TickRangePixelHalf, .Y + Axes_LimitersHeight_Small)
+                End If
 
-                    ' draw small ticks in the quarter behind and before each tick, if the size between the ticks is large enough
-                    If TickRangePixel > 9 * Me.AxesPen.Width Then
-                        Dim TickRangePixelQuarter As Integer = CInt(TickRangePixel * 0.25)
-                        DrawSurface.DrawLine(Me.AxesPen, DrawTickX + TickRangePixelQuarter, .Y, DrawTickX + TickRangePixelQuarter, .Y + Axes_LimitersHeight_Small)
-                        DrawSurface.DrawLine(Me.AxesPen, DrawTickX - TickRangePixelQuarter, .Y, DrawTickX - TickRangePixelQuarter, .Y + Axes_LimitersHeight_Small)
-                    End If
+                ' draw small ticks in the quarter behind and before each tick, if the size between the ticks is large enough
+                If TickRangePixel > 9 * Me.AxesPen.Width Then
+                    Dim TickRangePixelQuarter As Integer = CInt(TickRangePixel * 0.25)
+                    DrawSurface.DrawLine(Me.AxesPen, DrawTickX + TickRangePixelQuarter, .Y, DrawTickX + TickRangePixelQuarter, .Y + Axes_LimitersHeight_Small)
+                    DrawSurface.DrawLine(Me.AxesPen, DrawTickX - TickRangePixelQuarter, .Y, DrawTickX - TickRangePixelQuarter, .Y + Axes_LimitersHeight_Small)
+                End If
 
-                    ' Drop the tick-label, if it is drawn at 0, or if it would range to negative values,
-                    ' or the opposite, if it would range larger, than the image is broad.
-                    If DrawTickX = 0 Or TickLabelPosition.X < 0 Or
+                ' Drop the tick-label, if it is drawn at 0, or if it would range to negative values,
+                ' or the opposite, if it would range larger, than the image is broad.
+                If DrawTickX = 0 Or TickLabelPosition.X < 0 Or
                        DrawTickX = DrawSurface.VisibleClipBounds.Width Or TickLabelPosition.X + AxesTick_StringSize.Width > DrawSurface.VisibleClipBounds.Width Then
-                        Continue For
-                    End If
+                    Continue For
+                End If
 
-                    ' Draw tick-label
-                    DrawSurface.DrawString(TickValueFormatted,
+                ' Draw tick-label
+                DrawSurface.DrawString(TickValueFormatted,
                                            AxesTick_Font,
                                            Me.AxesBrush,
                                            TickLabelPosition)
 
-                Next
+            Next
 
-            End With
-
-        End If
+        End With
 
 
         Return OutputImage

@@ -4,6 +4,8 @@ However, if it contributes to your scientific work, please cite:
 "SpectraFox: A free open-source data management and analysis
 tool for scanning probe microscopy and spectroscopy."
 M. Ruby, SoftwareX ???, ??? (2016)
+DOI: 10.1016/j.softx.2016.04.001
+http://dx.doi.org/10.1016/j.softx.2016.04.001
 
 LICENSE AGREEMENT:
 
@@ -26,6 +28,9 @@ Microsoft Public License (Ms-PL)
 
 ExpTreeLib (http://www.codeproject.com/Articles/8546/An-All-VB-NET-Explorer-Tree-Control-with-ImageList)
 The Code Project Open License (CPOL) 1.02
+
+Magick.NET (https://magick.codeplex.com/)
+Apache License 2.0
 
 Math.NET Numerics (http://numerics.mathdotnet.com/)
 The MIT License (MIT)

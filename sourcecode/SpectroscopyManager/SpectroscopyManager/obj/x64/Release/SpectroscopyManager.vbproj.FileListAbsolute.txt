@@ -583,3 +583,4 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\o
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Release\SpectroscopyManager.wAFMForceCurrentDeconvolution.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Release\SpectroscopyManager.rExport.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Release\SpectroscopyManager.wSettings_Program.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x64\Release\License-Magick.NET.txt

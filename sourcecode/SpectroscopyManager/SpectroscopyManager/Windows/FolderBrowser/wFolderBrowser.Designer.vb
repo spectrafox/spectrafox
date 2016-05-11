@@ -220,7 +220,7 @@ Partial Class wFolderBrowser
         'lblPath
         '
         Me.lblPath.AutoSize = True
-        Me.lblPath.Location = New System.Drawing.Point(0, 29)
+        Me.lblPath.Location = New System.Drawing.Point(5, 29)
         Me.lblPath.Name = "lblPath"
         Me.lblPath.Size = New System.Drawing.Size(86, 13)
         Me.lblPath.TabIndex = 24

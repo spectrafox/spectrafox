@@ -56,13 +56,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExpTreeLib.dll" size="131584">
-      <assemblyIdentity name="ExpTreeLib" version="3.0.2.17683" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="ExpTreeLib" version="3.0.2.16598" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VL0MIXgVtRMxnsMhIDdrX8jGsHcqb0O5mdfEtEcQYEo=</dsig:DigestValue>
+        <dsig:DigestValue>rRPgPwU9F6rSgjDUSOMdlHrIACKtguW0XnfcYVuxfP4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -151,26 +151,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3749888">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3753984">
       <assemblyIdentity name="SpectroscopyManager" version="2016.5.10.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ezlmRnxi6yGbPlgHQFLRXv7wFmVR+S+jExddRuOkNoM=</dsig:DigestValue>
+        <dsig:DigestValue>Zf9k4GW/HCvni6BaVW58awafpZ1LVsrxQ+1/xQ3iFWs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ZedGraph.dll" size="325632">
-      <assemblyIdentity name="ZedGraph" version="5.1.5.17683" publicKeyToken="02A83CBD123FCD60" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="ZedGraph" version="5.1.5.16598" publicKeyToken="02A83CBD123FCD60" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sFfsxzuZ4MoGuZmOzmJp4m+qI9LGMsC/efWPIWTvRvs=</dsig:DigestValue>
+        <dsig:DigestValue>Iw0TqM7OK/EP1S4sxW6QvItxIpY427KEoWxyjbXOleg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

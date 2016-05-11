@@ -35,20 +35,26 @@ Partial Class mLineScanViewer
         Me.cmnuSaveAsWSXM = New System.Windows.Forms.ToolStripMenuItem()
         Me.lbCommonColumnsX = New System.Windows.Forms.ListBox()
         Me.gbXValues = New System.Windows.Forms.GroupBox()
+        Me.lblMaxXRange = New System.Windows.Forms.Label()
+        Me.lblMinXRange = New System.Windows.Forms.Label()
+        Me.txtMaxXRange = New SpectroscopyManager.NumericTextbox()
+        Me.txtMinXRange = New SpectroscopyManager.NumericTextbox()
         Me.gbZValues = New System.Windows.Forms.GroupBox()
+        Me.ckbLogZ = New System.Windows.Forms.CheckBox()
         Me.lbCommonColumnsZ = New System.Windows.Forms.ListBox()
         Me.dgvFileSortList = New System.Windows.Forms.DataGridView()
+        Me.colName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.btnSortFiles_OneUp = New System.Windows.Forms.Button()
         Me.btnSortFiles_OneDown = New System.Windows.Forms.Button()
         Me.gbSettings = New System.Windows.Forms.GroupBox()
         Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.btnSortFiles_Top = New System.Windows.Forms.Button()
         Me.btnSortFiles_Bottom = New System.Windows.Forms.Button()
-        Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
         Me.btnApplySorting = New System.Windows.Forms.Button()
-        Me.pgProgress = New System.Windows.Forms.ProgressBar()
         Me.pbLoading = New System.Windows.Forms.PictureBox()
-        Me.colName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
+        Me.gbSpectraSorting = New System.Windows.Forms.GroupBox()
+        Me.scColumnSelector = New System.Windows.Forms.SplitContainer()
         CType(Me.pbLineScan, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.gbXValues.SuspendLayout()
@@ -56,6 +62,11 @@ Partial Class mLineScanViewer
         CType(Me.dgvFileSortList, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbSettings.SuspendLayout()
         CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.gbSpectraSorting.SuspendLayout()
+        CType(Me.scColumnSelector, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.scColumnSelector.Panel1.SuspendLayout()
+        Me.scColumnSelector.Panel2.SuspendLayout()
+        Me.scColumnSelector.SuspendLayout()
         Me.SuspendLayout()
         '
         'pbLineScan
@@ -66,7 +77,7 @@ Partial Class mLineScanViewer
         Me.pbLineScan.ContextMenuStrip = Me.cmnuImageContextMenuStrip
         Me.pbLineScan.Location = New System.Drawing.Point(3, 3)
         Me.pbLineScan.Name = "pbLineScan"
-        Me.pbLineScan.Size = New System.Drawing.Size(345, 669)
+        Me.pbLineScan.Size = New System.Drawing.Size(761, 700)
         Me.pbLineScan.TabIndex = 0
         Me.pbLineScan.TabStop = False
         '
@@ -101,51 +112,128 @@ Partial Class mLineScanViewer
         '
         'lbCommonColumnsX
         '
-        Me.lbCommonColumnsX.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbCommonColumnsX.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbCommonColumnsX.FormattingEnabled = True
         Me.lbCommonColumnsX.Location = New System.Drawing.Point(3, 16)
         Me.lbCommonColumnsX.Name = "lbCommonColumnsX"
-        Me.lbCommonColumnsX.Size = New System.Drawing.Size(157, 79)
+        Me.lbCommonColumnsX.Size = New System.Drawing.Size(157, 121)
         Me.lbCommonColumnsX.TabIndex = 3
         '
         'gbXValues
         '
-        Me.gbXValues.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbXValues.Controls.Add(Me.lblMaxXRange)
+        Me.gbXValues.Controls.Add(Me.lblMinXRange)
+        Me.gbXValues.Controls.Add(Me.txtMaxXRange)
+        Me.gbXValues.Controls.Add(Me.txtMinXRange)
         Me.gbXValues.Controls.Add(Me.lbCommonColumnsX)
-        Me.gbXValues.Location = New System.Drawing.Point(352, 214)
+        Me.gbXValues.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gbXValues.Location = New System.Drawing.Point(0, 0)
         Me.gbXValues.Name = "gbXValues"
-        Me.gbXValues.Size = New System.Drawing.Size(163, 98)
+        Me.gbXValues.Size = New System.Drawing.Size(163, 194)
         Me.gbXValues.TabIndex = 4
         Me.gbXValues.TabStop = False
         Me.gbXValues.Text = "x-values:"
         '
+        'lblMaxXRange
+        '
+        Me.lblMaxXRange.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblMaxXRange.AutoSize = True
+        Me.lblMaxXRange.Location = New System.Drawing.Point(6, 172)
+        Me.lblMaxXRange.Name = "lblMaxXRange"
+        Me.lblMaxXRange.Size = New System.Drawing.Size(42, 13)
+        Me.lblMaxXRange.TabIndex = 5
+        Me.lblMaxXRange.Text = "max. X:"
+        '
+        'lblMinXRange
+        '
+        Me.lblMinXRange.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.lblMinXRange.AutoSize = True
+        Me.lblMinXRange.Location = New System.Drawing.Point(6, 146)
+        Me.lblMinXRange.Name = "lblMinXRange"
+        Me.lblMinXRange.Size = New System.Drawing.Size(39, 13)
+        Me.lblMinXRange.TabIndex = 5
+        Me.lblMinXRange.Text = "min. X:"
+        '
+        'txtMaxXRange
+        '
+        Me.txtMaxXRange.AllowZero = True
+        Me.txtMaxXRange.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.txtMaxXRange.BackColor = System.Drawing.Color.White
+        Me.txtMaxXRange.ForeColor = System.Drawing.Color.Black
+        Me.txtMaxXRange.FormatDecimalPlaces = 6
+        Me.txtMaxXRange.Location = New System.Drawing.Point(57, 169)
+        Me.txtMaxXRange.Name = "txtMaxXRange"
+        Me.txtMaxXRange.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
+        Me.txtMaxXRange.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
+        Me.txtMaxXRange.Size = New System.Drawing.Size(100, 20)
+        Me.txtMaxXRange.TabIndex = 4
+        Me.txtMaxXRange.Text = "0.000000"
+        Me.txtMaxXRange.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtMaxXRange.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
+        '
+        'txtMinXRange
+        '
+        Me.txtMinXRange.AllowZero = True
+        Me.txtMinXRange.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.txtMinXRange.BackColor = System.Drawing.Color.White
+        Me.txtMinXRange.ForeColor = System.Drawing.Color.Black
+        Me.txtMinXRange.FormatDecimalPlaces = 6
+        Me.txtMinXRange.Location = New System.Drawing.Point(57, 143)
+        Me.txtMinXRange.Name = "txtMinXRange"
+        Me.txtMinXRange.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
+        Me.txtMinXRange.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
+        Me.txtMinXRange.Size = New System.Drawing.Size(100, 20)
+        Me.txtMinXRange.TabIndex = 4
+        Me.txtMinXRange.Text = "0.000000"
+        Me.txtMinXRange.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtMinXRange.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
+        '
         'gbZValues
         '
-        Me.gbZValues.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbZValues.Controls.Add(Me.ckbLogZ)
         Me.gbZValues.Controls.Add(Me.lbCommonColumnsZ)
-        Me.gbZValues.Location = New System.Drawing.Point(352, 315)
+        Me.gbZValues.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gbZValues.Location = New System.Drawing.Point(0, 0)
         Me.gbZValues.Name = "gbZValues"
-        Me.gbZValues.Size = New System.Drawing.Size(163, 99)
+        Me.gbZValues.Size = New System.Drawing.Size(163, 190)
         Me.gbZValues.TabIndex = 4
         Me.gbZValues.TabStop = False
         Me.gbZValues.Text = "z-values:"
         '
+        'ckbLogZ
+        '
+        Me.ckbLogZ.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ckbLogZ.AutoSize = True
+        Me.ckbLogZ.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.ckbLogZ.Location = New System.Drawing.Point(6, 167)
+        Me.ckbLogZ.Name = "ckbLogZ"
+        Me.ckbLogZ.Size = New System.Drawing.Size(86, 17)
+        Me.ckbLogZ.TabIndex = 4
+        Me.ckbLogZ.Text = "logarithmic Z"
+        Me.ckbLogZ.UseVisualStyleBackColor = True
+        '
         'lbCommonColumnsZ
         '
-        Me.lbCommonColumnsZ.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lbCommonColumnsZ.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lbCommonColumnsZ.FormattingEnabled = True
         Me.lbCommonColumnsZ.Location = New System.Drawing.Point(3, 16)
         Me.lbCommonColumnsZ.Name = "lbCommonColumnsZ"
-        Me.lbCommonColumnsZ.Size = New System.Drawing.Size(157, 80)
+        Me.lbCommonColumnsZ.Size = New System.Drawing.Size(157, 147)
         Me.lbCommonColumnsZ.TabIndex = 3
         '
         'dgvFileSortList
         '
         Me.dgvFileSortList.AllowUserToAddRows = False
         Me.dgvFileSortList.AllowUserToDeleteRows = False
-        Me.dgvFileSortList.AllowUserToResizeRows = False
-        Me.dgvFileSortList.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.dgvFileSortList.AllowUserToResizeColumns = False
+        Me.dgvFileSortList.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dgvFileSortList.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -164,7 +252,7 @@ Partial Class mLineScanViewer
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
         Me.dgvFileSortList.DefaultCellStyle = DataGridViewCellStyle3
-        Me.dgvFileSortList.Location = New System.Drawing.Point(352, 493)
+        Me.dgvFileSortList.Location = New System.Drawing.Point(7, 18)
         Me.dgvFileSortList.MultiSelect = False
         Me.dgvFileSortList.Name = "dgvFileSortList"
         DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
@@ -176,114 +264,11 @@ Partial Class mLineScanViewer
         DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dgvFileSortList.RowHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.dgvFileSortList.RowHeadersVisible = False
+        Me.dgvFileSortList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgvFileSortList.RowTemplate.Height = 18
         Me.dgvFileSortList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvFileSortList.Size = New System.Drawing.Size(143, 179)
+        Me.dgvFileSortList.Size = New System.Drawing.Size(154, 597)
         Me.dgvFileSortList.TabIndex = 6
-        '
-        'btnSortFiles_OneUp
-        '
-        Me.btnSortFiles_OneUp.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSortFiles_OneUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.btnSortFiles_OneUp.Location = New System.Drawing.Point(498, 493)
-        Me.btnSortFiles_OneUp.Name = "btnSortFiles_OneUp"
-        Me.btnSortFiles_OneUp.Size = New System.Drawing.Size(20, 23)
-        Me.btnSortFiles_OneUp.TabIndex = 7
-        Me.btnSortFiles_OneUp.Text = "u"
-        Me.btnSortFiles_OneUp.UseVisualStyleBackColor = True
-        '
-        'btnSortFiles_OneDown
-        '
-        Me.btnSortFiles_OneDown.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSortFiles_OneDown.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.btnSortFiles_OneDown.Location = New System.Drawing.Point(498, 518)
-        Me.btnSortFiles_OneDown.Name = "btnSortFiles_OneDown"
-        Me.btnSortFiles_OneDown.Size = New System.Drawing.Size(20, 23)
-        Me.btnSortFiles_OneDown.TabIndex = 7
-        Me.btnSortFiles_OneDown.Text = "d"
-        Me.btnSortFiles_OneDown.UseVisualStyleBackColor = True
-        '
-        'gbSettings
-        '
-        Me.gbSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.gbSettings.Controls.Add(Me.cpColorPicker)
-        Me.gbSettings.Location = New System.Drawing.Point(352, 417)
-        Me.gbSettings.Name = "gbSettings"
-        Me.gbSettings.Size = New System.Drawing.Size(160, 72)
-        Me.gbSettings.TabIndex = 8
-        Me.gbSettings.TabStop = False
-        Me.gbSettings.Text = "color-scheme:"
-        '
-        'cpColorPicker
-        '
-        Me.cpColorPicker.Location = New System.Drawing.Point(7, 20)
-        Me.cpColorPicker.Name = "cpColorPicker"
-        Me.cpColorPicker.Size = New System.Drawing.Size(147, 46)
-        Me.cpColorPicker.TabIndex = 0
-        '
-        'btnSortFiles_Top
-        '
-        Me.btnSortFiles_Top.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSortFiles_Top.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.btnSortFiles_Top.Location = New System.Drawing.Point(498, 544)
-        Me.btnSortFiles_Top.Name = "btnSortFiles_Top"
-        Me.btnSortFiles_Top.Size = New System.Drawing.Size(20, 23)
-        Me.btnSortFiles_Top.TabIndex = 7
-        Me.btnSortFiles_Top.Text = "t"
-        Me.btnSortFiles_Top.UseVisualStyleBackColor = True
-        '
-        'btnSortFiles_Bottom
-        '
-        Me.btnSortFiles_Bottom.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSortFiles_Bottom.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.btnSortFiles_Bottom.Location = New System.Drawing.Point(498, 569)
-        Me.btnSortFiles_Bottom.Name = "btnSortFiles_Bottom"
-        Me.btnSortFiles_Bottom.Size = New System.Drawing.Size(20, 23)
-        Me.btnSortFiles_Bottom.TabIndex = 7
-        Me.btnSortFiles_Bottom.Text = "b"
-        Me.btnSortFiles_Bottom.UseVisualStyleBackColor = True
-        '
-        'vsValueRangeSelector
-        '
-        Me.vsValueRangeSelector.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.vsValueRangeSelector.Location = New System.Drawing.Point(355, 3)
-        Me.vsValueRangeSelector.Name = "vsValueRangeSelector"
-        Me.vsValueRangeSelector.SelectedMaxValue = 0R
-        Me.vsValueRangeSelector.SelectedMinValue = 0R
-        Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 208)
-        Me.vsValueRangeSelector.TabIndex = 5
-        '
-        'btnApplySorting
-        '
-        Me.btnApplySorting.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnApplySorting.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.btnApplySorting.Location = New System.Drawing.Point(498, 598)
-        Me.btnApplySorting.Name = "btnApplySorting"
-        Me.btnApplySorting.Size = New System.Drawing.Size(20, 72)
-        Me.btnApplySorting.TabIndex = 7
-        Me.btnApplySorting.Text = "ok"
-        Me.btnApplySorting.UseVisualStyleBackColor = True
-        '
-        'pgProgress
-        '
-        Me.pgProgress.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.pgProgress.Location = New System.Drawing.Point(73, 35)
-        Me.pgProgress.Name = "pgProgress"
-        Me.pgProgress.Size = New System.Drawing.Size(195, 14)
-        Me.pgProgress.TabIndex = 9
-        Me.pgProgress.Value = 90
-        Me.pgProgress.Visible = False
-        '
-        'pbLoading
-        '
-        Me.pbLoading.BackColor = System.Drawing.Color.Transparent
-        Me.pbLoading.Image = Global.SpectroscopyManager.My.Resources.Resources.loading_25
-        Me.pbLoading.Location = New System.Drawing.Point(3, 3)
-        Me.pbLoading.Name = "pbLoading"
-        Me.pbLoading.Size = New System.Drawing.Size(29, 29)
-        Me.pbLoading.TabIndex = 14
-        Me.pbLoading.TabStop = False
         '
         'colName
         '
@@ -295,32 +280,161 @@ Partial Class mLineScanViewer
         Me.colName.ReadOnly = True
         Me.colName.Width = 65
         '
+        'btnSortFiles_OneUp
+        '
+        Me.btnSortFiles_OneUp.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSortFiles_OneUp.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btnSortFiles_OneUp.Location = New System.Drawing.Point(167, 18)
+        Me.btnSortFiles_OneUp.Name = "btnSortFiles_OneUp"
+        Me.btnSortFiles_OneUp.Size = New System.Drawing.Size(20, 23)
+        Me.btnSortFiles_OneUp.TabIndex = 7
+        Me.btnSortFiles_OneUp.Text = "u"
+        Me.btnSortFiles_OneUp.UseVisualStyleBackColor = True
+        '
+        'btnSortFiles_OneDown
+        '
+        Me.btnSortFiles_OneDown.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSortFiles_OneDown.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btnSortFiles_OneDown.Location = New System.Drawing.Point(167, 43)
+        Me.btnSortFiles_OneDown.Name = "btnSortFiles_OneDown"
+        Me.btnSortFiles_OneDown.Size = New System.Drawing.Size(20, 23)
+        Me.btnSortFiles_OneDown.TabIndex = 7
+        Me.btnSortFiles_OneDown.Text = "d"
+        Me.btnSortFiles_OneDown.UseVisualStyleBackColor = True
+        '
+        'gbSettings
+        '
+        Me.gbSettings.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbSettings.Controls.Add(Me.cpColorPicker)
+        Me.gbSettings.Location = New System.Drawing.Point(939, 3)
+        Me.gbSettings.Name = "gbSettings"
+        Me.gbSettings.Size = New System.Drawing.Size(193, 72)
+        Me.gbSettings.TabIndex = 8
+        Me.gbSettings.TabStop = False
+        Me.gbSettings.Text = "color-scheme:"
+        '
+        'cpColorPicker
+        '
+        Me.cpColorPicker.Location = New System.Drawing.Point(7, 20)
+        Me.cpColorPicker.Name = "cpColorPicker"
+        Me.cpColorPicker.Size = New System.Drawing.Size(180, 46)
+        Me.cpColorPicker.TabIndex = 0
+        '
+        'btnSortFiles_Top
+        '
+        Me.btnSortFiles_Top.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSortFiles_Top.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btnSortFiles_Top.Location = New System.Drawing.Point(167, 69)
+        Me.btnSortFiles_Top.Name = "btnSortFiles_Top"
+        Me.btnSortFiles_Top.Size = New System.Drawing.Size(20, 23)
+        Me.btnSortFiles_Top.TabIndex = 7
+        Me.btnSortFiles_Top.Text = "t"
+        Me.btnSortFiles_Top.UseVisualStyleBackColor = True
+        '
+        'btnSortFiles_Bottom
+        '
+        Me.btnSortFiles_Bottom.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnSortFiles_Bottom.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btnSortFiles_Bottom.Location = New System.Drawing.Point(167, 94)
+        Me.btnSortFiles_Bottom.Name = "btnSortFiles_Bottom"
+        Me.btnSortFiles_Bottom.Size = New System.Drawing.Size(20, 23)
+        Me.btnSortFiles_Bottom.TabIndex = 7
+        Me.btnSortFiles_Bottom.Text = "b"
+        Me.btnSortFiles_Bottom.UseVisualStyleBackColor = True
+        '
+        'btnApplySorting
+        '
+        Me.btnApplySorting.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnApplySorting.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btnApplySorting.Location = New System.Drawing.Point(167, 123)
+        Me.btnApplySorting.Name = "btnApplySorting"
+        Me.btnApplySorting.Size = New System.Drawing.Size(20, 72)
+        Me.btnApplySorting.TabIndex = 7
+        Me.btnApplySorting.Text = "ok"
+        Me.btnApplySorting.UseVisualStyleBackColor = True
+        '
+        'pbLoading
+        '
+        Me.pbLoading.BackColor = System.Drawing.Color.Transparent
+        Me.pbLoading.Image = Global.SpectroscopyManager.My.Resources.Resources.loading_25
+        Me.pbLoading.Location = New System.Drawing.Point(3, 3)
+        Me.pbLoading.Name = "pbLoading"
+        Me.pbLoading.Size = New System.Drawing.Size(29, 29)
+        Me.pbLoading.TabIndex = 14
+        Me.pbLoading.TabStop = False
+        '
+        'vsValueRangeSelector
+        '
+        Me.vsValueRangeSelector.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.vsValueRangeSelector.Location = New System.Drawing.Point(770, 3)
+        Me.vsValueRangeSelector.Name = "vsValueRangeSelector"
+        Me.vsValueRangeSelector.SelectedMaxValue = 0R
+        Me.vsValueRangeSelector.SelectedMinValue = 0R
+        Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 309)
+        Me.vsValueRangeSelector.TabIndex = 5
+        '
+        'gbSpectraSorting
+        '
+        Me.gbSpectraSorting.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbSpectraSorting.Controls.Add(Me.dgvFileSortList)
+        Me.gbSpectraSorting.Controls.Add(Me.btnSortFiles_OneUp)
+        Me.gbSpectraSorting.Controls.Add(Me.btnSortFiles_Bottom)
+        Me.gbSpectraSorting.Controls.Add(Me.btnSortFiles_OneDown)
+        Me.gbSpectraSorting.Controls.Add(Me.btnApplySorting)
+        Me.gbSpectraSorting.Controls.Add(Me.btnSortFiles_Top)
+        Me.gbSpectraSorting.Location = New System.Drawing.Point(939, 82)
+        Me.gbSpectraSorting.Name = "gbSpectraSorting"
+        Me.gbSpectraSorting.Size = New System.Drawing.Size(193, 621)
+        Me.gbSpectraSorting.TabIndex = 15
+        Me.gbSpectraSorting.TabStop = False
+        Me.gbSpectraSorting.Text = "spectra sorting"
+        '
+        'scColumnSelector
+        '
+        Me.scColumnSelector.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.scColumnSelector.Location = New System.Drawing.Point(770, 315)
+        Me.scColumnSelector.Name = "scColumnSelector"
+        Me.scColumnSelector.Orientation = System.Windows.Forms.Orientation.Horizontal
+        '
+        'scColumnSelector.Panel1
+        '
+        Me.scColumnSelector.Panel1.Controls.Add(Me.gbXValues)
+        '
+        'scColumnSelector.Panel2
+        '
+        Me.scColumnSelector.Panel2.Controls.Add(Me.gbZValues)
+        Me.scColumnSelector.Size = New System.Drawing.Size(163, 388)
+        Me.scColumnSelector.SplitterDistance = 194
+        Me.scColumnSelector.TabIndex = 16
+        '
         'mLineScanViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.Controls.Add(Me.pgProgress)
         Me.Controls.Add(Me.gbSettings)
-        Me.Controls.Add(Me.btnSortFiles_Bottom)
-        Me.Controls.Add(Me.btnApplySorting)
-        Me.Controls.Add(Me.btnSortFiles_Top)
-        Me.Controls.Add(Me.btnSortFiles_OneDown)
-        Me.Controls.Add(Me.btnSortFiles_OneUp)
-        Me.Controls.Add(Me.dgvFileSortList)
         Me.Controls.Add(Me.vsValueRangeSelector)
         Me.Controls.Add(Me.pbLineScan)
-        Me.Controls.Add(Me.gbZValues)
-        Me.Controls.Add(Me.gbXValues)
         Me.Controls.Add(Me.pbLoading)
+        Me.Controls.Add(Me.gbSpectraSorting)
+        Me.Controls.Add(Me.scColumnSelector)
         Me.Name = "mLineScanViewer"
-        Me.Size = New System.Drawing.Size(521, 675)
+        Me.Size = New System.Drawing.Size(1135, 706)
         CType(Me.pbLineScan, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cmnuImageContextMenuStrip.ResumeLayout(False)
         Me.gbXValues.ResumeLayout(False)
+        Me.gbXValues.PerformLayout()
         Me.gbZValues.ResumeLayout(False)
+        Me.gbZValues.PerformLayout()
         CType(Me.dgvFileSortList, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbSettings.ResumeLayout(False)
         CType(Me.pbLoading, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.gbSpectraSorting.ResumeLayout(False)
+        Me.scColumnSelector.Panel1.ResumeLayout(False)
+        Me.scColumnSelector.Panel2.ResumeLayout(False)
+        CType(Me.scColumnSelector, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.scColumnSelector.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -343,7 +457,13 @@ Partial Class mLineScanViewer
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents cmnuSaveAsWSXM As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents btnApplySorting As System.Windows.Forms.Button
-    Friend WithEvents pgProgress As System.Windows.Forms.ProgressBar
     Friend WithEvents pbLoading As System.Windows.Forms.PictureBox
+    Friend WithEvents txtMaxXRange As NumericTextbox
+    Friend WithEvents txtMinXRange As NumericTextbox
+    Friend WithEvents gbSpectraSorting As GroupBox
+    Friend WithEvents lblMaxXRange As Label
+    Friend WithEvents lblMinXRange As Label
+    Friend WithEvents ckbLogZ As CheckBox
+    Friend WithEvents scColumnSelector As SplitContainer
     Friend WithEvents colName As DataGridViewTextBoxColumn
 End Class

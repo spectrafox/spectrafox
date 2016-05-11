@@ -261,10 +261,10 @@ Partial Public Class cNumericalMethods
 
         ' Take care of the outer most points.
         If EvaluatedAtX = InX(0) Then
-            Return InX(0)
+            Return InY(0)
         End If
         If EvaluatedAtX = InX(InX.Length - 1) Then
-            Return InX(InX.Length - 1)
+            Return InY(InX.Length - 1)
         End If
 
         ' Count the number of datapoints.
