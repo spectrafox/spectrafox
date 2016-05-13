@@ -574,6 +574,30 @@ Public Class cSpectroscopyTable
     End Property
 
     ''' <summary>
+    ''' Variable that stores a custom given name for that scan-image.
+    ''' For normal images it is empty.
+    ''' </summary>
+    Protected _DisplayName As String = String.Empty
+
+    ''' <summary>
+    ''' Returns a name to show it in plots, etc.
+    ''' Usually it returns the FileNameWithoutPath, but if
+    ''' the <code>_DisplayName</code> is set, it will display this variable.
+    ''' </summary>
+    Public Property DisplayName As String
+        Get
+            If Me._DisplayName <> String.Empty Then
+                Return Me._DisplayName
+            Else
+                Return Me.FileNameWithoutPath
+            End If
+        End Get
+        Set(value As String)
+            Me._DisplayName = value.Trim
+        End Set
+    End Property
+
+    ''' <summary>
     ''' List that stores KeyValuePairs of properties, that are unimportant for SpectraFox.
     ''' Here all interpreted properties in the file headers are written to,
     ''' that are not identified by SpectraFox.
@@ -934,6 +958,33 @@ Public Class cSpectroscopyTable
     ''' or to adapt the count of all present columns, if the added count is larger.
     ''' </summary>
     Private CurrentColumnLength As Integer = 0
+
+    ''' <summary>
+    ''' This array stores all properties, that are informative for the user,
+    ''' but unimportant for the software to work.
+    ''' </summary>
+    Protected _GeneralPropertyArray As New List(Of KeyValuePair(Of String, String))
+
+    ''' <summary>
+    ''' This array stores all properties, that are informative for the user,
+    ''' but unimportant for the software to work.
+    ''' </summary>
+    <DescriptionAttribute("Properties extracted from the file."),
+        CategoryAttribute("General Properties"),
+        ReadOnlyAttribute(True)>
+    Public ReadOnly Property GeneralPropertyArray As ReadOnlyCollection(Of KeyValuePair(Of String, String))
+        Get
+            Return New ReadOnlyCollection(Of KeyValuePair(Of String, String))(Me._GeneralPropertyArray)
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Adds a general property attribute to the property array.
+    ''' </summary>
+    Public Sub AddGeneralProperty(ByVal Key As String, ByVal Value As String)
+        Me._GeneralPropertyArray.Add(New KeyValuePair(Of String, String)(Key, Value))
+    End Sub
+
 #End Region
 
 #Region "Column Editing"

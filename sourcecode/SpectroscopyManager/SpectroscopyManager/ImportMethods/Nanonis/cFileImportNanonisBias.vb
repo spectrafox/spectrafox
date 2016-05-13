@@ -179,6 +179,10 @@ Public Class cFileImportNanonisBias
                         Case "Temperature 1>Temperature 1 (K)"
                             .Temperature = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
 
+                        Case Else
+                            ' Add to the general property array.
+                            .AddGeneralProperty(sPropertyName, sPropertyValue)
+
                     End Select
                 End With
             Loop

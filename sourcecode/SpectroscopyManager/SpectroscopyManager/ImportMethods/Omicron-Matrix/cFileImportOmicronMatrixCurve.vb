@@ -80,6 +80,7 @@ Public Class cFileImportOmicronMatrixCurve
         ' Create new SpectroscopyTable object.
         Dim oSpectroscopyTable As New cSpectroscopyTable
         oSpectroscopyTable.FullFileName = FullFileNamePlusPath
+        oSpectroscopyTable.DisplayName = BaseFileNameComponents.BaseName & "--" & BaseFileNameComponents.CurveNumber & "_" & BaseFileNameComponents.PassNumber & "_" & BaseFileNameComponents.DataIsUnitOf
 
         ' Omicron Matrix files consist out of a separate file for each trace.
         ' So we collect a list of all files from the folder that match with the basename.

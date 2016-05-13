@@ -200,9 +200,16 @@ Public Class cFileImportNanonisSXM
                             ReadNextTag = False ' Already read the next tag
                         Case Else
                             ' Not recognized tag: read as long until next tag comes
+                            Dim Content As String = String.Empty
                             While Not sLine.StartsWith(":")
+                                Content &= sLine
                                 sLine = cFileImport.ReadASCIILineFromBinaryStream(br, ReaderBuffer).Trim
                             End While
+
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, Content)
+
+                            ' Store the new header
                             sHeader = sLine
                             ReadNextTag = False ' Already read the next tag
                     End Select

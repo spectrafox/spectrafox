@@ -335,7 +335,7 @@ Public Class mScanImageViewer
 
                 ' Set additional properties
                 Dim InfoBarText As String = My.Resources.rScanImageViewer.InfobarTemplate_ScanImageName
-                InfoBarText = InfoBarText.Replace("%name", Me.oScanImage.ScanImageName)
+                InfoBarText = InfoBarText.Replace("%name", Me.oScanImage.DisplayName)
                 InfoBarText = InfoBarText.Replace("%channel", Me._CurrentlySelectedScanChannelName)
                 InfoBarText = InfoBarText.Replace("%wr", cUnits.GetFormatedValueString(Me.oScanImage.ScanRange_X))
                 InfoBarText = InfoBarText.Replace("%hr", cUnits.GetFormatedValueString(Me.oScanImage.ScanRange_Y))

@@ -117,6 +117,54 @@ Public Class cFileObject
         End Get
     End Property
 
+    ''' <summary>
+    ''' Name that is displayed in the file entry for this fileobject.
+    ''' </summary>
+    Private _DisplayName As String = String.Empty
+
+    ''' <summary>
+    ''' Name that is displayed in the file entry for this fileobject.
+    ''' If the custom name is empty, it returns the filenamewithoutpath.
+    ''' </summary>
+    Public Property DisplayName As String
+        Get
+            If Me._DisplayName = String.Empty Then
+                Return Me.FileNameWithoutPath
+            Else
+                Return Me._DisplayName
+            End If
+        End Get
+        Set(value As String)
+            Me._DisplayName = value.Trim
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' This list stores the filenames that a single file object is describing.
+    ''' This is important for systems with multiple files per spectrum or image,
+    ''' where we want to combine all files in a single entry.
+    ''' All files in this list are excluded from the import.
+    ''' 
+    ''' IMPORTANT: This list should only contain filenames! NO PATHS, as these are
+    '''            relative on each computer!
+    ''' </summary>
+    Protected Friend _FileObjectDescribedByMultipleFiles As List(Of String)
+
+    ''' <summary>
+    ''' This list stores the filenames that a single file object is describing.
+    ''' This is important for systems with multiple files per spectrum or image,
+    ''' where we want to combine all files in a single entry.
+    ''' All files in this list are excluded from the import.
+    ''' 
+    ''' IMPORTANT: This list should only contain filenames! NO PATHS, as these are
+    '''            relative on each computer!
+    ''' </summary>
+    Public ReadOnly Property FileObjectDescribedByMultipleFiles As List(Of String)
+        Get
+            Return Me._FileObjectDescribedByMultipleFiles
+        End Get
+    End Property
+
 #End Region
 
 #Region "Programmatically added data"
@@ -643,6 +691,8 @@ Public Class cFileObject
                                                 FileName = .Value
                                             Case "Path"
                                                 Path = .Value
+                                            Case "DisplayName"
+                                                FO._DisplayName = .Value
                                             Case "FileType"
                                                 FO.FileType = GetFileTypeFromString(.Value)
                                             Case "ImportRoutine"
@@ -755,6 +805,31 @@ Public Class cFileObject
                                     ' Save the source file comment.
                                     FO._SourceFileComment = .ReadElementContentAsString
 
+                                Case "FileObjectDescribedByDataFile"
+
+                                    ' Read the list that is storing the information
+                                    ' which files are described by this file object.
+                                    ' This is necessary for e.g. omicron files,
+                                    ' where each channel is stored in a separate file.
+
+                                    ' go through all attributes
+                                    If .AttributeCount > 0 Then
+
+                                        Dim FileName As String = String.Empty
+
+                                        While .MoveToNextAttribute
+                                            Select Case .Name
+                                                Case "FileName"
+                                                    FileName = .Value
+                                            End Select
+                                        End While
+
+                                        ' Add the file to the list
+                                        If FO._FileObjectDescribedByMultipleFiles Is Nothing Then FO._FileObjectDescribedByMultipleFiles = New List(Of String)
+                                        FO._FileObjectDescribedByMultipleFiles.Add(FileName)
+
+                                    End If
+
                             End Select
 
                     End Select
@@ -780,6 +855,7 @@ Public Class cFileObject
 
             .WriteStartElement("Properties")
             .WriteAttributeString("FileName", Me.FileNameWithoutPath)
+            .WriteAttributeString("DisplayName", Me._DisplayName)
             .WriteAttributeString("Path", Me.Path)
             .WriteAttributeString("FileType", Me.FileType.ToString)
             .WriteAttributeString("ImportRoutine", Me.ImportRoutine.ToString)
@@ -797,6 +873,19 @@ Public Class cFileObject
             .WriteStartElement("SourceFileComment")
             .WriteString(Me.SourceFileComment)
             .WriteEndElement()
+
+            ' Store the ignore file list for FileObjects consisting out of data of multiple files.
+            If Not Me._FileObjectDescribedByMultipleFiles Is Nothing Then
+                .WriteStartElement("FileObjectDescribedByMultipleFiles")
+                For Each FileName As String In Me._FileObjectDescribedByMultipleFiles
+                    .WriteStartElement("FileObjectDescribedByDataFile")
+                    .WriteAttributeString("FileName", FileName)
+                    .WriteEndElement()
+                Next
+                .WriteEndElement()
+            End If
+
+            '######################
 
             ' Begin the section of the additional data columns
             If Not Me.SpectroscopyTable Is Nothing Then

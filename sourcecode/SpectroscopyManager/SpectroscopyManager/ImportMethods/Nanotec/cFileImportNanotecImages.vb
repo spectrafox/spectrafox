@@ -66,7 +66,7 @@ Public Class cFileImportNanotecImages
         ' Create New ScanImage object
         Dim oScanImage As New cScanImage
         oScanImage.FullFileName = FullFileNamePlusPath
-        oScanImage.SetScanImageCustomName(BaseName)
+        oScanImage.DisplayName = BaseName
 
         ' Start to read ALL files of this scan image.
         ' Each file contains a single scan channel.
@@ -180,6 +180,11 @@ Public Class cFileImportNanotecImages
                                     ZRange = Value.Key * UnitFactor.Value
                                     ScanChannel.UnitSymbol = UnitFactor.Key
                                     ScanChannel.Unit = cUnits.GetUnitTypeFromSymbol(ScanChannel.UnitSymbol)
+
+
+                                Case Else
+                                    ' Add to the general property array.
+                                    oScanImage.AddGeneralProperty(SettingsName, SettingsValue)
 
                             End Select
 

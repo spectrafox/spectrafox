@@ -96,6 +96,17 @@ Public Class cFileImport
         ' This is necessary for file-formats that consist out of multiple files.
         Dim lFilesToIgnoreDuringImport As New List(Of String)
 
+        ' Go through an existing file buffer (during a refresh),
+        ' and exclude all data files, that are stored in a single fileobject.
+        For Each FileBufferKV As KeyValuePair(Of String, cFileObject) In diFileList
+            If FileBufferKV.Value IsNot Nothing AndAlso
+               FileBufferKV.Value.FileObjectDescribedByMultipleFiles IsNot Nothing Then
+                For Each FileNameWithoutPath As String In FileBufferKV.Value.FileObjectDescribedByMultipleFiles
+                    lFilesToIgnoreDuringImport.Add(oDirectoryInfo.FullName & IO.Path.DirectorySeparatorChar & FileNameWithoutPath)
+                Next
+            End If
+        Next
+
         ' Create a list that caches all parameter files,
         ' that are valid for many subfiles, and thus shall not be disposed!
         Dim lParameterFileCache As New List(Of iFileImport_ParameterFileToBeImportedOnce)
@@ -199,18 +210,65 @@ Public Class cFileImport
             ' If we have a valid FileObject, load the headers of the file.
             If Not oFileObject Is Nothing Then
 
+                ' Get a list of files that should be ignored after this specific import.
+                ' This list is stored then in the FileObject, and later
+                ' combined with the global import-ignore list.
+                Dim IgnoreFilesAfterThisImport As New List(Of String)
+
                 ' Fetch the headers of the files.
                 Select Case oFileObject.FileType
                     Case cFileObject.FileTypes.SpectroscopyTable
                         Dim oSpectroscopyTable As cSpectroscopyTable = Nothing
-                        cFileImport.GetSpectroscopyFile(oFileObject, oSpectroscopyTable, True, lFilesToIgnoreDuringImport, lParameterFileCache)
+                        cFileImport.GetSpectroscopyFile(oFileObject,
+                                                        oSpectroscopyTable,
+                                                        True,
+                                                        IgnoreFilesAfterThisImport,
+                                                        lParameterFileCache)
+
+                        ' Set custom parameters to the fileobject.
+                        oFileObject.DisplayName = oSpectroscopyTable.DisplayName
+
                     Case cFileObject.FileTypes.ScanImage
                         Dim oScanImage As cScanImage = Nothing
-                        cFileImport.GetScanImageFile(oFileObject, oScanImage, True, lFilesToIgnoreDuringImport, lParameterFileCache)
+                        cFileImport.GetScanImageFile(oFileObject,
+                                                     oScanImage,
+                                                     True,
+                                                     IgnoreFilesAfterThisImport,
+                                                     lParameterFileCache)
+
+                        ' Set custom parameters to the fileobject.
+                        oFileObject.DisplayName = oScanImage.DisplayName
+
                     Case cFileObject.FileTypes.GridFile
                         Dim oGridFile As cGridFile = Nothing
-                        cFileImport.GetGridFile(oFileObject, oGridFile, True, lFilesToIgnoreDuringImport, lParameterFileCache)
+                        cFileImport.GetGridFile(oFileObject,
+                                                oGridFile,
+                                                True,
+                                                IgnoreFilesAfterThisImport,
+                                                lParameterFileCache)
+
+                        ' Set custom parameters to the fileobject.
+                        oFileObject.DisplayName = oGridFile.DisplayName
+
                 End Select
+
+                ' The local list does sometimes contain a path. So add the path for each entry,
+                ' where it is missing, or remove it.
+                For Each FileName As String In IgnoreFilesAfterThisImport
+
+                    Dim FileNameWithoutPath As String = IO.Path.GetFileName(FileName)
+                    Dim FileNameWithPath As String = oFile.DirectoryName & IO.Path.DirectorySeparatorChar & FileNameWithoutPath
+
+                    ' Add the local ignore list to the global ignore list.
+                    lFilesToIgnoreDuringImport.Add(FileNameWithPath)
+
+                    ' Add the ignore list to the file object.
+                    If oFileObject._FileObjectDescribedByMultipleFiles Is Nothing Then
+                        oFileObject._FileObjectDescribedByMultipleFiles = New List(Of String)
+                    End If
+                    oFileObject._FileObjectDescribedByMultipleFiles.Add(FileNameWithoutPath)
+
+                Next
 
                 ' Add the file-object to the output list, if we do not have to overwrite it.
                 If diFileList.ContainsKey(oFileObject.FullFileNameInclPath) Then
@@ -218,6 +276,7 @@ Public Class cFileImport
                 Else
                     diFileList.Add(oFileObject.FullFileNameInclPath, oFileObject)
                 End If
+
             End If
 
             '#################################################
@@ -979,10 +1038,14 @@ Public Class cFileImport
             If ImportRoutine Is Nothing Then Return False
 
             '' Get again the FULL FileObject
-            FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , , {ImportRoutine}.ToList)
+            FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , ,
+                                                           {ImportRoutine}.ToList)
 
-            ' Start the import:
-            TargetScanImage = ImportRoutine.ImportScanImage(FileObject.FullFileNameInclPath, FetchOnlyFileHeader, , FilesToIgnoreAfterThisImport, ParameterFilesImportedOnce)
+            ' Start the import of the scan image file.
+            TargetScanImage = ImportRoutine.ImportScanImage(FileObject.FullFileNameInclPath,
+                                                            FetchOnlyFileHeader, ,
+                                                            FilesToIgnoreAfterThisImport,
+                                                            ParameterFilesImportedOnce)
             FileObject.ScanImage = TargetScanImage
 
             '' Get again the FULL FileObject

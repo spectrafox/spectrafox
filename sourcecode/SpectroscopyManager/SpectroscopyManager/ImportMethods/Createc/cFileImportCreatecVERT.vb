@@ -133,6 +133,13 @@ Public Class cFileImportCreatecVERT
                             ScanRange_Y = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
                         Case "memo"
                             .Comment &= sPropertyValue & vbCrLf
+
+                        Case Else
+                            ' Add to the general property array.
+                            If sPropertyName.Trim <> String.Empty AndAlso sPropertyValue.Trim <> String.Empty Then
+                                .AddGeneralProperty(sPropertyName.Trim, sPropertyValue.Trim)
+                            End If
+
                     End Select
                 End With
             Loop

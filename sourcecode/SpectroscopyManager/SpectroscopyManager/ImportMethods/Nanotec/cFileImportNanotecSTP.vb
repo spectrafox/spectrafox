@@ -133,6 +133,11 @@ Public Class cFileImportNanotecSTP
                                 ScanChannel.UnitSymbol = UnitFactor.Key
                                 ScanChannel.Unit = cUnits.GetUnitTypeFromSymbol(ScanChannel.UnitSymbol)
 
+
+                            Case Else
+                                ' Add to the general property array.
+                                oScanImage.AddGeneralProperty(SettingsName, SettingsValue)
+
                         End Select
 
                     End If

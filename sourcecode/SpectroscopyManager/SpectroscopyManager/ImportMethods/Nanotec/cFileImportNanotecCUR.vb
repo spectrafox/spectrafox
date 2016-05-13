@@ -73,6 +73,10 @@ Public Class cFileImportNanotecCUR
                             Case "Number of lines"
                                 NumberOfLines = Integer.Parse(SettingsValue, Globalization.CultureInfo.InvariantCulture)
 
+                            Case Else
+                                ' Add to the general property array.
+                                .AddGeneralProperty(SettingsName, SettingsValue)
+
                         End Select
                     End With
 

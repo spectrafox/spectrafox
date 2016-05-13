@@ -144,6 +144,13 @@ Public Class cFileImportCreatecDAT
                                 .ZControllerIntegralGain = Double.Parse(sPropertyValue.Trim, Globalization.CultureInfo.InvariantCulture)
                             Case "FBProp"
                                 .ZControllerProportionalGain = Double.Parse(sPropertyValue.Trim, Globalization.CultureInfo.InvariantCulture)
+
+                            Case Else
+                                ' Add to the general property array.
+                                If sPropertyName.Trim <> String.Empty AndAlso sPropertyValue.Trim <> String.Empty Then
+                                    .AddGeneralProperty(sPropertyName.Trim, sPropertyValue.Trim)
+                                End If
+
                         End Select
                     End With
                 Loop

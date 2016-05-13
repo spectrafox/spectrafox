@@ -31,6 +31,7 @@ Currently compatible with measurement files of the following manufacturers:
 * Createc STMAFM
 * Omicron Matrix
 * Nanotec WSxM
+* Bruker AFM
 
 
 Installation

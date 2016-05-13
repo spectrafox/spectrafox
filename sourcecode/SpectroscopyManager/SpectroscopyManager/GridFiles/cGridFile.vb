@@ -29,6 +29,30 @@ Public Class cGridFile
         End Get
     End Property
 
+    ''' <summary>
+    ''' Variable that stores a custom given name for that scan-image.
+    ''' For normal images it is empty.
+    ''' </summary>
+    Protected _DisplayName As String = String.Empty
+
+    ''' <summary>
+    ''' Returns a name to show it in plots, etc.
+    ''' Usually it returns the FileNameWithoutPath, but if
+    ''' the <code>_DisplayName</code> is set, it will display this variable.
+    ''' </summary>
+    Public Property DisplayName As String
+        Get
+            If Me._DisplayName <> String.Empty Then
+                Return Me._DisplayName
+            Else
+                Return Me.FileNameWithoutPath
+            End If
+        End Get
+        Set(value As String)
+            Me._DisplayName = value.Trim
+        End Set
+    End Property
+
     <DescriptionAttribute("Shows the date the grid file was started."),
        CategoryAttribute("General Image Properties"),
        ReadOnlyAttribute(True)>

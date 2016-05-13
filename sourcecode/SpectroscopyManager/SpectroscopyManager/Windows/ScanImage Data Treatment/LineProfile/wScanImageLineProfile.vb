@@ -60,7 +60,7 @@ Public Class wScanImageLineProfile
         End If
 
         ' Change the window title
-        Me.Text &= Me._ScanImagePlot.ScanImagePlotted.ScanImageName
+        Me.Text &= Me._ScanImagePlot.ScanImagePlotted.DisplayName
 
         ' Start the plot of the data
         Me.PlotLineProfile(Me.P1, Me.P2)

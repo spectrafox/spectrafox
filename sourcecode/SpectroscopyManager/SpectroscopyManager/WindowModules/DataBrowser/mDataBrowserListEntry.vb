@@ -352,6 +352,7 @@ Public Class mDataBrowserListEntry
 
         Public Property ColumnNames As List(Of String)
         Public Property Comment As String
+        Public Property DisplayName As String
         Public Property FileName As String
         Public Property FullFileName As String
         Public Property MeasurementPoints As String
@@ -398,6 +399,9 @@ Public Class mDataBrowserListEntry
                 ' Add column-list
                 Me.lbDataColumns.Items.Clear()
                 If .ColumnNames IsNot Nothing Then Me.lbDataColumns.Items.AddRange(.ColumnNames.ToArray)
+
+                ' Displayname
+                Me.lblFileName.Text = .DisplayName
 
                 ' Add comment
                 Me.txtComment.Text = .Comment
@@ -462,7 +466,14 @@ Public Class mDataBrowserListEntry
                 With Me._FileObject
                     Me._ListEntry.FullFileName = .FullFileNameInclPath
                     Me._ListEntry.FileName = .FileNameWithoutPath
-                    Me._ListEntry.Comment = .SourceFileComment
+                    Me._ListEntry.DisplayName = .DisplayName
+                    ' Show the source file comment, if it is not empty.
+                    ' Else, show the extended comment.
+                    If .SourceFileComment = String.Empty Then
+                        Me._ListEntry.Comment = .SourceFileComment
+                    Else
+                        Me._ListEntry.Comment = .ExtendedComment
+                    End If
                     Me._ListEntry.ColumnNames = .GetColumnNameList
                     Me._ListEntry.RecordDate = .RecordDate
                     Me._ListEntry.PreviewImage = PreviewImage
@@ -499,7 +510,14 @@ Public Class mDataBrowserListEntry
                 With Me._FileObject
                     Me._ListEntry.FullFileName = .FullFileNameInclPath
                     Me._ListEntry.FileName = .FileNameWithoutPath
-                    Me._ListEntry.Comment = .SourceFileComment
+                    Me._ListEntry.DisplayName = .DisplayName
+                    ' Show the source file comment, if it is not empty.
+                    ' Else, show the extended comment.
+                    If .SourceFileComment = String.Empty Then
+                        Me._ListEntry.Comment = .SourceFileComment
+                    Else
+                        Me._ListEntry.Comment = .ExtendedComment
+                    End If
                     Me._ListEntry.ColumnNames = .GetScanChannelNameList
                     Me._ListEntry.RecordDate = .RecordDate
                     Me._ListEntry.PreviewImage = PreviewImage
@@ -535,7 +553,14 @@ Public Class mDataBrowserListEntry
                 With Me._FileObject
                     Me._ListEntry.FullFileName = .FullFileNameInclPath
                     Me._ListEntry.FileName = .FileNameWithoutPath
-                    Me._ListEntry.Comment = .SourceFileComment
+                    Me._ListEntry.DisplayName = .DisplayName
+                    ' Show the source file comment, if it is not empty.
+                    ' Else, show the extended comment.
+                    If .SourceFileComment = String.Empty Then
+                        Me._ListEntry.Comment = .SourceFileComment
+                    Else
+                        Me._ListEntry.Comment = .ExtendedComment
+                    End If
                     Me._ListEntry.ColumnNames = .GetGridSpectroscopyTableNameList
                     Me._ListEntry.RecordDate = .RecordDate
                     Me._ListEntry.PreviewImage = PreviewImage

@@ -256,4 +256,17 @@
         Dim VK As KeyValuePair(Of String, Double) = GetPrefix(Value)
         Return VK.Value.ToString("N" & Digits) & VK.Key
     End Function
+
+    ''' <summary>
+    ''' Gets from a string "µm/V" a tuple of the two units!
+    ''' </summary>
+    Public Shared Function GetUnitVsUnitFromString(ByVal Value As String) As Tuple(Of String, String)
+        Dim Split As String() = Value.Split(CChar("/"))
+        If Split.Length = 2 Then
+            Return New Tuple(Of String, String)(Split(0), Split(1))
+        Else
+            Return New Tuple(Of String, String)(String.Empty, String.Empty)
+        End If
+    End Function
+
 End Class

@@ -507,6 +507,9 @@
     <Compile Include="HelperClasses\cSmartThreadPoolExtended.vb" />
     <Compile Include="HelperClasses\cStringCollectionHistory.vb" />
     <Compile Include="HelperClasses\ReadOnlyDictionary.vb" />
+    <Compile Include="ImportMethods\Bruker\cFileImportBruker.vb" />
+    <Compile Include="ImportMethods\Bruker\cFileImportBrukerDAT.vb" />
+    <Compile Include="ImportMethods\Bruker\cFileImportBrukerFLT.vb" />
     <Compile Include="ImportMethods\cFileObject.vb" />
     <Compile Include="ImportMethods\iFileImport_GridFile.vb" />
     <Compile Include="ImportMethods\iFileImport_ParameterFileToBeImportedOnce.vb" />

@@ -9,6 +9,7 @@ Public Class cScanImage
     Implements IDisposable
 
 #Region "Properties"
+
     ''' <summary>
     ''' Variable that saves the FileObject-Reference from which the ScanImage was created.
     ''' </summary>
@@ -18,28 +19,24 @@ Public Class cScanImage
     ''' Variable that stores a custom given name for that scan-image.
     ''' For normal images it is empty.
     ''' </summary>
-    Protected _ScanImageCustomName As String = String.Empty
-
-    ''' <summary>
-    ''' Sets a custom name for this image, that should be used instead of the file-name.
-    ''' </summary>
-    Public Sub SetScanImageCustomName(ByVal Name As String)
-        Me._ScanImageCustomName = Name
-    End Sub
+    Protected _DisplayName As String = String.Empty
 
     ''' <summary>
     ''' Returns a name to show it in plots, etc.
     ''' Usually it returns the FileNameWithoutPath, but if
-    ''' the <code>_ScanImageCustomName</code> is set, it will display this variable.
+    ''' the <code>_DisplayName</code> is set, it will display this variable.
     ''' </summary>
-    Public ReadOnly Property ScanImageName As String
+    Public Property DisplayName As String
         Get
-            If Me._ScanImageCustomName <> String.Empty Then
-                Return Me._ScanImageCustomName
+            If Me._DisplayName <> String.Empty Then
+                Return Me._DisplayName
             Else
                 Return Me.FileNameWithoutPath
             End If
         End Get
+        Set(value As String)
+            Me._DisplayName = value.Trim
+        End Set
     End Property
 
     <DescriptionAttribute("Shows the full path of the scan image file."),
@@ -175,6 +172,38 @@ Public Class cScanImage
     ''' Scan Channel list for this file
     ''' </summary>
     Protected _ScanChannels As New Dictionary(Of String, ScanChannel)
+
+    ''' <summary>
+    ''' This array stores all properties, that are informative for the user,
+    ''' but unimportant for the software to work.
+    ''' </summary>
+    Protected _GeneralPropertyArray As New Dictionary(Of String, String)
+
+    ''' <summary>
+    ''' This array stores all properties, that are informative for the user,
+    ''' but unimportant for the software to work.
+    ''' </summary>
+    <DescriptionAttribute("Properties extracted from the file."),
+        CategoryAttribute("General Properties"),
+        ReadOnlyAttribute(True)>
+    Public ReadOnly Property GeneralPropertyArray As Dictionary(Of String, String)
+        Get
+            Return Me._GeneralPropertyArray
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Adds a general property attribute to the property array.
+    ''' </summary>
+    Public Sub AddGeneralProperty(ByVal Key As String, ByVal Value As String)
+        If Me._GeneralPropertyArray.ContainsKey(Key) Then
+            ' Replace value:
+            Me._GeneralPropertyArray(Key) = Value
+        Else
+            ' Add a value.
+            Me._GeneralPropertyArray.Add(Key, Value)
+        End If
+    End Sub
 
 #End Region
 
@@ -798,7 +827,7 @@ Public Class cScanImage
 
         With OutputScanImage
             .AddScanChannel(OutputScanChannel)
-            .SetScanImageCustomName(My.Resources.rScanImage.CombinedScanImage.Replace("%n", ScanImages.Count.ToString("N0")))
+            .DisplayName = My.Resources.rScanImage.CombinedScanImage.Replace("%n", ScanImages.Count.ToString("N0"))
         End With
         Return OutputScanImage
     End Function

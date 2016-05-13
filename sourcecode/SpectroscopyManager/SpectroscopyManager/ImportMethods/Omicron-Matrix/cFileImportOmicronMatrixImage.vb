@@ -74,6 +74,7 @@ Public Class cFileImportOmicronMatrixImage
         ' Create new ScanImage object.
         Dim oScanImage As New cScanImage
         oScanImage.FullFileName = FullFileNamePlusPath
+        oScanImage.DisplayName = BaseFileNameComponents.BaseName & "-" & BaseFileNameComponents.CurveNumber & "_" & BaseFileNameComponents.PassNumber
 
         ' Omicron Matrix files consist out of a separate file for each trace.
         ' So we collect a list of all files from the folder that match with the basename.
