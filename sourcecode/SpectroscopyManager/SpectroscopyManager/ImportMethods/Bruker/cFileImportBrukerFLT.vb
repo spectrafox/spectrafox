@@ -67,6 +67,7 @@ Public Class cFileImportBrukerFLT
 
             ' Create the new scan-channel object.
             Dim ScanChannel As New cScanImage.ScanChannel
+            ScanChannel.IsSpectraFoxGenerated = False
 
             ' Load StreamReader with the Big Endian Encoding
             Using fs As New FileStream(DataFile, FileMode.Open, FileAccess.Read, FileShare.Read)

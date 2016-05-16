@@ -24,6 +24,7 @@ Public Class cFileImportNanotecSTP
 
         ' Create the new scan-channel object.
         Dim ScanChannel As New cScanImage.ScanChannel
+        ScanChannel.IsSpectraFoxGenerated = False
 
         ' Load StreamReader with the Big Endian Encoding
         Using fs As New FileStream(FullFileNamePlusPath, FileMode.Open, FileAccess.Read, FileShare.Read)

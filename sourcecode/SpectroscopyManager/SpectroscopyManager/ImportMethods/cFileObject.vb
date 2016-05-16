@@ -184,6 +184,12 @@ Public Class cFileObject
     Public RecordLocation_Z As Double
 
     ''' <summary>
+    ''' Special locations stored in the fileobject.
+    ''' E.g. used in the grid file to store the locations of the spectra.
+    ''' </summary>
+    Public SpecialLocationList As New List(Of cNumericalMethods.Point3D)
+
+    ''' <summary>
     ''' Variable that saves the Record-Range of a ScanImage
     ''' </summary>
     Public ScanImageRange_X As Double
@@ -621,6 +627,7 @@ Public Class cFileObject
             .FileType = Me.FileType
             .ImportRoutine = Me.ImportRoutine
             .FullFileNameInclPath = Me.FullFileNameInclPath
+            ._DisplayName = Me._DisplayName
 
             .LastFileChange = Me.LastFileChange
             .RecordDate = Me.RecordDate
@@ -632,6 +639,10 @@ Public Class cFileObject
             .MeasurementDimensions = Me.MeasurementDimensions
             ._ExtendedComment = Me._ExtendedComment
             ._SourceFileComment = Me._SourceFileComment
+            .SpecialLocationList.AddRange(Me.SpecialLocationList)
+            If Me._FileObjectDescribedByMultipleFiles IsNot Nothing Then
+                ._FileObjectDescribedByMultipleFiles.AddRange(Me._FileObjectDescribedByMultipleFiles)
+            End If
 
             ' Copy SpectroscopyTable information
             ._SpectroscopyTable_CropInformation = Me._SpectroscopyTable_CropInformation.GetCopy()
@@ -639,6 +650,9 @@ Public Class cFileObject
 
             ' Copy ScanImage information
             .ScanImage = Me.ScanImage
+
+            ' Copy GridFile information
+            .GridFile = Me.GridFile
         End With
         Return NewFileObject
     End Function
@@ -830,6 +844,36 @@ Public Class cFileObject
 
                                     End If
 
+                                Case "SpecialLocation"
+
+                                    ' Special locations are used to store positions in images
+                                    ' or spectra. Such as the record location of grid-spectra
+                                    ' in a single grid file.
+
+                                    ' go through all attributes
+                                    If .AttributeCount > 0 Then
+
+                                        Dim X As Double = Double.NaN
+                                        Dim Y As Double = Double.NaN
+                                        Dim Z As Double = Double.NaN
+
+                                        While .MoveToNextAttribute
+                                            Select Case .Name
+                                                Case "X"
+                                                    X = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                                Case "Y"
+                                                    Y = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                                Case "Z"
+                                                    Z = Convert.ToDouble(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                            End Select
+                                        End While
+
+                                        If Not Double.IsNaN(X) AndAlso Not Double.IsNaN(Y) AndAlso Not Double.IsNaN(Z) Then
+                                            FO.SpecialLocationList.Add(New cNumericalMethods.Point3D(X, Y, Z))
+                                        End If
+
+                                    End If
+
                             End Select
 
                     End Select
@@ -914,7 +958,6 @@ Public Class cFileObject
             ' Begin the section of the grid files
             If Not Me.GridFile Is Nothing Then
                 .WriteStartElement("GridFileChannels")
-
                 ' Write all initially recorded grid file channels
                 For Each ChannelName As String In Me.GridFile.ChannelsRecorded
                     .WriteStartElement("GridFileChannel")
@@ -922,13 +965,19 @@ Public Class cFileObject
                     .WriteAttributeString("InSourceFile", False.ToString(System.Globalization.CultureInfo.InvariantCulture))
                     .WriteEndElement()
                 Next
-                'For Each ChannelName As KeyValuePair(Of String, cSpectroscopyTable.DataColumn) In Me.GridFile.GeneratedChannels
-                '    .WriteStartElement("GridFileChannel")
-                '    .WriteAttributeString("Name", ChannelName)
-                '    .WriteAttributeString("InSourceFile", False.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                '    .WriteEndElement()
-                'Next
+                .WriteEndElement()
+            End If
 
+            If Me.SpecialLocationList IsNot Nothing AndAlso Me.SpecialLocationList.Count > 0 Then
+                .WriteStartElement("SpecialLocationList")
+                ' Write all locations.
+                For Each Location As cNumericalMethods.Point3D In Me.SpecialLocationList
+                    .WriteStartElement("SpecialLocation")
+                    .WriteAttributeString("X", Location.x.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    .WriteAttributeString("Y", Location.y.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    .WriteAttributeString("Z", Location.z.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    .WriteEndElement()
+                Next
                 .WriteEndElement()
             End If
 

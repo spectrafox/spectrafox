@@ -1800,6 +1800,7 @@
     <None Include="Resources\zoom_out.png" />
     <None Include="Resources\zoom_out_16.png" />
     <None Include="Resources\zoom_out_25.png" />
+    <None Include="Resources\gridfile_preview.png" />
     <Content Include="versioninfo_dev_lowpriv.xml">
       <SubType>Designer</SubType>
     </Content>

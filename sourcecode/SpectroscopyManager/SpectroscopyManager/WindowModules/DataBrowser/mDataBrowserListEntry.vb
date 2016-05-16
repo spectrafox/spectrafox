@@ -469,7 +469,7 @@ Public Class mDataBrowserListEntry
                     Me._ListEntry.DisplayName = .DisplayName
                     ' Show the source file comment, if it is not empty.
                     ' Else, show the extended comment.
-                    If .SourceFileComment = String.Empty Then
+                    If .SourceFileComment <> String.Empty Then
                         Me._ListEntry.Comment = .SourceFileComment
                     Else
                         Me._ListEntry.Comment = .ExtendedComment
@@ -513,7 +513,7 @@ Public Class mDataBrowserListEntry
                     Me._ListEntry.DisplayName = .DisplayName
                     ' Show the source file comment, if it is not empty.
                     ' Else, show the extended comment.
-                    If .SourceFileComment = String.Empty Then
+                    If .SourceFileComment <> String.Empty Then
                         Me._ListEntry.Comment = .SourceFileComment
                     Else
                         Me._ListEntry.Comment = .ExtendedComment
@@ -532,7 +532,7 @@ Public Class mDataBrowserListEntry
 
                 ' Load the Preview-Image, with the first Channel
                 ' Send Abort-Image, if the Columns were not found.
-                Dim PreviewImage As Image = My.Resources.cancel
+                Dim PreviewImage As Image = My.Resources.gridfile_preview
                 'If Me._FileObject.GetGridSpectroscopyTableList.Count > 0 Then
 
                 '    '' Check in the ScanImage, if there are
@@ -556,7 +556,7 @@ Public Class mDataBrowserListEntry
                     Me._ListEntry.DisplayName = .DisplayName
                     ' Show the source file comment, if it is not empty.
                     ' Else, show the extended comment.
-                    If .SourceFileComment = String.Empty Then
+                    If .SourceFileComment <> String.Empty Then
                         Me._ListEntry.Comment = .SourceFileComment
                     Else
                         Me._ListEntry.Comment = .ExtendedComment

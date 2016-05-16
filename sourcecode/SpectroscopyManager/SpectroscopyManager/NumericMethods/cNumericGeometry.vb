@@ -5,6 +5,7 @@
     ''' <summary>
     ''' Represents a 3D-point.
     ''' </summary>
+    <DebuggerDisplay("{x}, {y}, {z}")>
     Public Structure Point3D
         Public Sub New(X As Double, Y As Double, Z As Double)
             Me.x = X
@@ -14,11 +15,17 @@
         Public x As Double
         Public y As Double
         Public z As Double
+
+        Public Overrides Function ToString() As String
+            Return x.ToString & ", " & y.ToString & ", " & z.ToString
+        End Function
+
     End Structure
 
     ''' <summary>
     ''' Represents a 2D-point.
     ''' </summary>
+    <DebuggerDisplay("{x}, {y}")>
     Public Structure Point2D
         Public Sub New(X As Double, Y As Double)
             Me.x = X
@@ -26,6 +33,11 @@
         End Sub
         Public x As Double
         Public y As Double
+
+        Public Overrides Function ToString() As String
+            Return x.ToString & ", " & y.ToString
+        End Function
+
     End Structure
 
 #End Region

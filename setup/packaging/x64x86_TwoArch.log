@@ -107,6 +107,7 @@ Parsing [Files] section, line 126
 Parsing [Files] section, line 130
    Reading version info: D:\SpectraFoxGIT\spectrafox\setup\packaging\addons\dotNetFx45_Full_setup.exe
 Compiling [Code] section
+Deleting spectrafox-stable.exe from output directory
 Creating setup files
    Updating icons (SETUP.EXE)
    Compressing: D:\SpectraFoxGIT\spectrafox\setup\packaging\..\..\sourcecode\Build\x64\Release\SpectroscopyManager.exe
@@ -234,5 +235,5 @@ Creating setup files
 
 Warning: Line 163, Column 23: [Hint] Variable 'REQNETVER' never used
 
-Successful compile (8.656 sec). Resulting Setup program filename is:
+Successful compile (7.594 sec). Resulting Setup program filename is:
 D:\SpectraFoxGIT\spectrafox\setup\output\spectrafox-stable.exe

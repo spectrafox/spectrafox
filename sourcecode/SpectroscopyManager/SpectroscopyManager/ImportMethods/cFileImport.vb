@@ -1207,6 +1207,14 @@ Public Class cFileImport
             FileObject.ScanImageRange_X = TargetGridFile.GridDimensionsSI.x
             FileObject.ScanImageRange_Y = TargetGridFile.GridDimensionsSI.y
 
+            ' Extract settings from the underlying spectroscopy tables.
+            For Each SpectroscopyTable As cSpectroscopyTable In TargetGridFile.SpectroscopyTables
+
+                ' Extract the record location:
+                FileObject.SpecialLocationList.Add(SpectroscopyTable.Location)
+
+            Next
+
             ' Save the Record-Date
             FileObject.RecordDate = TargetGridFile.StartDate
 

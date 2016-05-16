@@ -703,21 +703,29 @@ Public Class cSpectroscopyTable
     Public Property NumberOfSweeps As Integer
 
 
-    <DescriptionAttribute("Shows the Position at which the Spectrum is taken."), _
-     CategoryAttribute("Location"), _
+    <DescriptionAttribute("Shows the position at which the spectrum is recorded."),
+     CategoryAttribute("Location"),
      ReadOnlyAttribute(True)>
     Public Property Location_X As Double
 
-    <DescriptionAttribute("Shows the Position at which the Spectrum is taken."), _
-     CategoryAttribute("Location"), _
+    <DescriptionAttribute("Shows the position at which the spectrum is recorded."),
+     CategoryAttribute("Location"),
      ReadOnlyAttribute(True)>
     Public Property Location_Y As Double
 
-    <DescriptionAttribute("Shows the Position at which the Spectrum is taken."), _
-     CategoryAttribute("Location"), _
+    <DescriptionAttribute("Shows the position at which the spectrum is recorded."),
+     CategoryAttribute("Location"),
      ReadOnlyAttribute(True)>
     Public Property Location_Z As Double
 
+    <DescriptionAttribute("Shows the position at which the spectrum is recorded."),
+     CategoryAttribute("Location"),
+     ReadOnlyAttribute(True)>
+    Public ReadOnly Property Location As cNumericalMethods.Point3D
+        Get
+            Return New cNumericalMethods.Point3D(Me.Location_X, Me.Location_Y, Me.Location_Z)
+        End Get
+    End Property
 
     <DescriptionAttribute("Distance the contoller sweeps the Z-Piezo."), _
       CategoryAttribute("_ Z-Spectroscopy Settings"), _

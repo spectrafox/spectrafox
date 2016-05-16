@@ -9,11 +9,32 @@
     <span style="font-size:15px; font-weight:bold;">Stable Update Channel:</span><br />
 
     <p>
-        Version 2016.04.06.0<br />
+        up to Version 2016.05.16.0<br />
         <ol>
+            <li>[new] opening of scan images in external viewers is possible now</li>
+            <li>[new] new file type: spectroscopy grids (support so far for Nanonis files)</li>
+            <li>[new] create antimated gifs in the grip plotter</li>
+            <li>[new] Bruker AFM data support</li>
+            <li>[improvement] finished basic handling of grid files</li>            
+            <li>[improvement] line scan plot now suuport limiting the plot range, and plotting to log10 basis</li>
+            <li>[improvement] spectra locations in images are now showing the name of the spectrum on hovering with the mouse over the point</li>
+            <li>[improvement] scan image viewer: clicking on the location of a spectrum now jumps to that spectrum</li>
+            <li>[improvement] grid plotter: clicking on the location of a spectrum now jumps to that spectrum</li>
+            <li>[improvement] grid plotter performance improved</li>
+            <li>[improvement] added path-textbox in the folder browser to be able to open a path directly</li>
+            <li>[improvement] backward channels in Createc files are now reversed during import</li>
+            <li>[bugfix] fixed a minor bug in the interpolation function</li>
+            <li>[bugfix] cache handling of files that consist out of multiple data files</li>
+            <li>[bugfix] importing of files failed, if the file extension was modified in lower and upper letters</li>
+            <li>[bugfix] fixed a bug introduced in the last dev-version on drawing scan images</li>
+            <li>[bugfix] fixed a small bug in the numeric text box</li>
+            <li>[bugfix] Fixed a crash occurring in the line profile selection, when being outside the image.</li>
+            <li>[bugfix] No spectrafox.sfc cache file is written anymore to folders without data files.</li>
             <li>[bugfix] Summing data columns of different files was always taking the alphabetically first selected file as source file.</li>
         </ol>
     </p>
+    
+    <span style="font-size:15px; font-weight:bold;">Earlier Changes:</span><br />
 
     <p>
         Version 2016.04.01.0<br />
@@ -36,9 +57,6 @@
             <li>[bugfix] Rare crash when opening multiple instances of SpectraFox.</li>
         </ol>
     </p>
-
-    
-    <span style="font-size:15px; font-weight:bold;">Earlier Changes:</span><br />
 
     <p>
         Version 2016.03.03.0<br />

@@ -178,19 +178,15 @@ Public Class wDataBrowserModular
         ' Set Point-Marks in the Preview-Window of the ScanImage,
         ' if the selected image contains the selected Spectroscopy-Files:
         Me.svScanViewer.ClearPointMarkList()
-        If FileObject.GridFile IsNot Nothing Then
-            Dim ST As cSpectroscopyTable
-            For i As Integer = 0 To FileObject.GridFile.SpectroscopyTables.Count - 1 Step 1
-                ST = FileObject.GridFile.SpectroscopyTables(i)
-                Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
-                                                    ST.Location_X,
-                                                    ST.Location_Y,
-                                                    ST.Location_Z,,,,
-                                                    ST.FileNameWithoutPath,
+        For i As Integer = 0 To FileObject.SpecialLocationList.Count - 1 Step 1
+            Me.svScanViewer.AddPointMark(New cScanImagePlot.PointMark(
+                                                    FileObject.SpecialLocationList(i).x,
+                                                    FileObject.SpecialLocationList(i).y,
+                                                    FileObject.SpecialLocationList(i).z,,,,
+                                                    FileObject.FileNameWithoutPath & " #" & i.ToString("N0"),
                                                     cFileObject.FileTypes.GridFile.ToString & PointMarkTagSeparator & FileObject.FileNameWithoutPath & PointMarkTagSeparator & i.ToString(Globalization.CultureInfo.InvariantCulture)
                                                     ))
-            Next
-        End If
+        Next
         Me.svScanViewer.RecalculateImageAsync()
 
     End Sub
