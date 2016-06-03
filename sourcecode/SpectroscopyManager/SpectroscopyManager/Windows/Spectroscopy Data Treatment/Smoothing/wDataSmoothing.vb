@@ -102,8 +102,11 @@
         ' Copy SpectroscopyTable to New SpectroscopyTable
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataSmoother.CurrentSpectroscopyTable.Column(Me._SelectedXColumn))
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataSmoother.CurrentSpectroscopyTable.Column(Me.csColumnToSmooth.SelectedColumnName))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataSmoother.CurrentSpectroscopyTable.Column(Me._SelectedXColumn))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataSmoother.CurrentSpectroscopyTable.Column(Me.csColumnToSmooth.SelectedColumnName))
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataSmoother.CurrentSpectroscopyTable.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(SmoothedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

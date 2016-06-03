@@ -135,7 +135,10 @@
         OutputSpectroscopyTable.FullFileName = "Normalization Preview"
 
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataNormalizer.CurrentSpectroscopyTable.Column(Me.pbBeforeNormalization.cbX.SelectedColumnName))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataNormalizer.CurrentSpectroscopyTable.Column(Me.pbBeforeNormalization.cbX.SelectedColumnName))
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataNormalizer.CurrentSpectroscopyTable.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(NormalizedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

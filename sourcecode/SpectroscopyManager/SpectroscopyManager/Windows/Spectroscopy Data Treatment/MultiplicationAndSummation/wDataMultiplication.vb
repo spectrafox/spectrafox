@@ -45,6 +45,7 @@
         With My.Settings
             Me.pbBeforeMultiplication.cbX.SelectedColumnName = .LastDataMultiplication_ColumnX
             Me.pbBeforeMultiplication.cbY.SelectedColumnName = .LastDataMultiplication_ColumnToMultiply
+            Me.csColumnToMultiply.SelectedColumnName = .LastDataMultiplication_ColumnToMultiply
             Me.csColumnToMultiplyWith.SelectedColumnName = .LastDataMultiplication_ColumnToBeMultipliedWith
             Me.txtMuliplicationFactor.SetValue(.LastDataMultiplication_Factor)
 
@@ -141,8 +142,14 @@
                                        ByRef MultipliedColumn As cSpectroscopyTable.DataColumn) Handles DataMultiplier.FileMultiplicationComplete
         ' Copy SpectroscopyTable to New SpectroscopyTable
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
+
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataMultiplier.CurrentSpectroscopyTable.Column(Me.pbBeforeMultiplication.cbX.SelectedColumnName))
+        'If Me.DataMultiplier.CurrentSpectroscopyTable.ColumnExists(Me.csColumnToMultiply.SelectedColumnName) Then
+        '    OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataMultiplier.CurrentSpectroscopyTable.Column(Me.csColumnToMultiply.SelectedColumnName))
+        'End If
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataMultiplier.CurrentSpectroscopyTable.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(MultipliedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

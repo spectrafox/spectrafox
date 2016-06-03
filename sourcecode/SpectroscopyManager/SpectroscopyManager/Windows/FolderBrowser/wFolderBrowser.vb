@@ -686,6 +686,10 @@ Public Class wFolderBrowser
     ''' Open the selected folder in the foldertree with a double click.
     ''' </summary>
     Private Sub lv1_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lv1.DoubleClick
+
+        ' Check, that we have enough entries.
+        If lv1.SelectedItems.Count <= 0 Then Return
+
         Dim csi As CShItem = DirectCast(lv1.SelectedItems(0).Tag, CShItem)
         If csi.IsFolder Then
             Me.dbDictionaryBrowser.ExpandANode(csi)

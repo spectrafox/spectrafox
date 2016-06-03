@@ -145,7 +145,10 @@
         ' Copy SpectroscopyTable to New SpectroscopyTable
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataSummer.SpectroscopyTables.First.Value.Column(Me.pbBeforeSummation.cbX.SelectedColumnName))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataSummer.SpectroscopyTables.First.Value.Column(Me.pbBeforeSummation.cbX.SelectedColumnName))
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataSummer.SpectroscopyTables.First.Value.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(SummedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

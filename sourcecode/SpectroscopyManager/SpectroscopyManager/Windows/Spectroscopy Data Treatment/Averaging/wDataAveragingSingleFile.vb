@@ -86,7 +86,10 @@
         ' Copy SpectroscopyTable to New SpectroscopyTable
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataAverager.CurrentSpectroscopyTable.Column(Me.pbAfterAveraging.cbX.SelectedColumnName))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataAverager.CurrentSpectroscopyTable.Column(Me.pbAfterAveraging.cbX.SelectedColumnName))
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataAverager.CurrentSpectroscopyTable.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(AveragedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

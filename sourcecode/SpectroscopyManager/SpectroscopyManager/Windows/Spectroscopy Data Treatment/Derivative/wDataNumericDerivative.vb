@@ -111,7 +111,10 @@
         ' Copy SpectroscopyTable to New SpectroscopyTable
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataDeriver.CurrentSpectroscopyTable.Column(Me.pbSourcePreview.cbX.SelectedColumnName))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataDeriver.CurrentSpectroscopyTable.Column(Me.pbSourcePreview.cbX.SelectedColumnName))
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataDeriver.CurrentSpectroscopyTable.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(DerivedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

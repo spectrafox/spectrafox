@@ -108,8 +108,11 @@
         ' Copy SpectroscopyTable to New SpectroscopyTable
         Dim OutputSpectroscopyTable As cSpectroscopyTable = New cSpectroscopyTable
         ' Add XColumn
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataReverser.CurrentSpectroscopyTable.Column(Me._SelectedXColumn))
-        OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataReverser.CurrentSpectroscopyTable.Column(Me.csColumnToRevert.SelectedColumnName))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataReverser.CurrentSpectroscopyTable.Column(Me._SelectedXColumn))
+        'OutputSpectroscopyTable.AddNonPersistentColumn(Me.DataReverser.CurrentSpectroscopyTable.Column(Me.csColumnToRevert.SelectedColumnName))
+        For Each Column As cSpectroscopyTable.DataColumn In Me.DataReverser.CurrentSpectroscopyTable.Columns.Values
+            OutputSpectroscopyTable.AddNonPersistentColumn(Column)
+        Next
         OutputSpectroscopyTable.AddNonPersistentColumn(ReversedColumn)
 
         ' Set Output Spectroscopy Table to Preview-Box.

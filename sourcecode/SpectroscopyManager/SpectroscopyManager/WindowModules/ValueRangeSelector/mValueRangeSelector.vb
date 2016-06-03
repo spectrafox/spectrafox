@@ -151,9 +151,9 @@ Public Class mValueRangeSelector
         If Me.ValueRangePerPixelRow > 0 Then
             For i As Integer = 0 To Me.ValueList.Length - 1 Step 1
                 If Double.IsNaN(Me.ValueList(i)) Then Continue For
-                Dim CorrespondingStackNumber As Integer = Convert.ToInt32((Me.ValueList(i) - Me.MinValue) / ValueRangePerPixelRow)
-                If CorrespondingStackNumber <= Me.pPaintArea.Height Then
-                    Me.PixelStackCounts(CorrespondingStackNumber) += 1
+                Dim CorrespondingStackNumber As Double = (Me.ValueList(i) - Me.MinValue) / ValueRangePerPixelRow
+                If CorrespondingStackNumber <= Me.pPaintArea.Height AndAlso CorrespondingStackNumber >= 0 Then
+                    Me.PixelStackCounts(CInt(CorrespondingStackNumber)) += 1
                 End If
             Next
         End If
