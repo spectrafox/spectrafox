@@ -227,6 +227,7 @@ Partial Class mScanImageViewer
         Me.cbChannel.SelectedEntry = ""
         Me.cbChannel.Size = New System.Drawing.Size(148, 27)
         Me.cbChannel.TabIndex = 1
+        Me.cbChannel.TabStop = False
         Me.cbChannel.TurnOnLastFilterSaving = False
         Me.cbChannel.TurnOnLastSelectionSaving = False
         '
@@ -344,6 +345,7 @@ Partial Class mScanImageViewer
         Me.cpColorPicker.Name = "cpColorPicker"
         Me.cpColorPicker.Size = New System.Drawing.Size(148, 45)
         Me.cpColorPicker.TabIndex = 2
+        Me.cpColorPicker.TabStop = False
         '
         'lblColorCode
         '

@@ -122,7 +122,7 @@ Partial Class wGridPlotter
         Me.tcGridFilesSelector.Name = "tcGridFilesSelector"
         Me.tcGridFilesSelector.SelectedIndex = 0
         Me.tcGridFilesSelector.Size = New System.Drawing.Size(225, 608)
-        Me.tcGridFilesSelector.TabIndex = 1
+        Me.tcGridFilesSelector.TabIndex = 20
         '
         'tpIndividualSpectroscopyFiles
         '
@@ -145,7 +145,7 @@ Partial Class wGridPlotter
         Me.dsSpectroscopyFiles.ShowScanImages = False
         Me.dsSpectroscopyFiles.ShowSpectroscopyTables = True
         Me.dsSpectroscopyFiles.Size = New System.Drawing.Size(211, 576)
-        Me.dsSpectroscopyFiles.TabIndex = 0
+        Me.dsSpectroscopyFiles.TabIndex = 21
         '
         'tpGridFiles
         '
@@ -168,7 +168,7 @@ Partial Class wGridPlotter
         Me.dsGridFiles.ShowScanImages = False
         Me.dsGridFiles.ShowSpectroscopyTables = False
         Me.dsGridFiles.Size = New System.Drawing.Size(211, 576)
-        Me.dsGridFiles.TabIndex = 1
+        Me.dsGridFiles.TabIndex = 22
         '
         'btnLoadData
         '
@@ -180,7 +180,7 @@ Partial Class wGridPlotter
         Me.btnLoadData.Location = New System.Drawing.Point(3, 3)
         Me.btnLoadData.Name = "btnLoadData"
         Me.btnLoadData.Size = New System.Drawing.Size(226, 37)
-        Me.btnLoadData.TabIndex = 1
+        Me.btnLoadData.TabIndex = 10
         Me.btnLoadData.Text = "load selected data set"
         Me.btnLoadData.UseVisualStyleBackColor = True
         '
@@ -206,7 +206,7 @@ Partial Class wGridPlotter
         Me.dsScanImages.ShowScanImages = True
         Me.dsScanImages.ShowSpectroscopyTables = False
         Me.dsScanImages.Size = New System.Drawing.Size(226, 237)
-        Me.dsScanImages.TabIndex = 0
+        Me.dsScanImages.TabIndex = 30
         '
         'scGridPlotter
         '
@@ -273,7 +273,7 @@ Partial Class wGridPlotter
         Me.btnSelectValueRangeWindow.Location = New System.Drawing.Point(322, 343)
         Me.btnSelectValueRangeWindow.Name = "btnSelectValueRangeWindow"
         Me.btnSelectValueRangeWindow.Size = New System.Drawing.Size(100, 23)
-        Me.btnSelectValueRangeWindow.TabIndex = 7
+        Me.btnSelectValueRangeWindow.TabIndex = 44
         Me.btnSelectValueRangeWindow.Text = "select in graph"
         Me.btnSelectValueRangeWindow.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnSelectValueRangeWindow.UseVisualStyleBackColor = True
@@ -301,7 +301,7 @@ Partial Class wGridPlotter
         Me.pbDataRangeSelector.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
         Me.pbDataRangeSelector.ShowColumnSelectors = True
         Me.pbDataRangeSelector.Size = New System.Drawing.Size(748, 312)
-        Me.pbDataRangeSelector.TabIndex = 3
+        Me.pbDataRangeSelector.TabIndex = 40
         Me.pbDataRangeSelector.TurnOnLastFilterSaving_Y = False
         Me.pbDataRangeSelector.TurnOnLastSelectionSaving_Y = False
         '
@@ -317,7 +317,7 @@ Partial Class wGridPlotter
         Me.txtValueRangeWindow.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtValueRangeWindow.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.Positive
         Me.txtValueRangeWindow.Size = New System.Drawing.Size(100, 20)
-        Me.txtValueRangeWindow.TabIndex = 5
+        Me.txtValueRangeWindow.TabIndex = 43
         Me.txtValueRangeWindow.Text = "0.000000"
         Me.txtValueRangeWindow.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtValueRangeWindow.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -330,7 +330,7 @@ Partial Class wGridPlotter
         Me.btnSelectValueRangeStart.Location = New System.Drawing.Point(105, 343)
         Me.btnSelectValueRangeStart.Name = "btnSelectValueRangeStart"
         Me.btnSelectValueRangeStart.Size = New System.Drawing.Size(100, 23)
-        Me.btnSelectValueRangeStart.TabIndex = 7
+        Me.btnSelectValueRangeStart.TabIndex = 42
         Me.btnSelectValueRangeStart.Text = "select in graph"
         Me.btnSelectValueRangeStart.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnSelectValueRangeStart.UseVisualStyleBackColor = True
@@ -367,7 +367,7 @@ Partial Class wGridPlotter
         Me.txtValueRangeStart.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtValueRangeStart.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
         Me.txtValueRangeStart.Size = New System.Drawing.Size(100, 20)
-        Me.txtValueRangeStart.TabIndex = 5
+        Me.txtValueRangeStart.TabIndex = 41
         Me.txtValueRangeStart.Text = "0.000000"
         Me.txtValueRangeStart.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtValueRangeStart.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -387,7 +387,7 @@ Partial Class wGridPlotter
         Me.spDataRangeSelector_DataToDisplay.SelectedTable = ""
         Me.spDataRangeSelector_DataToDisplay.SelectedTables = CType(resources.GetObject("spDataRangeSelector_DataToDisplay.SelectedTables"), System.Collections.Generic.List(Of String))
         Me.spDataRangeSelector_DataToDisplay.Size = New System.Drawing.Size(208, 312)
-        Me.spDataRangeSelector_DataToDisplay.TabIndex = 8
+        Me.spDataRangeSelector_DataToDisplay.TabIndex = 50
         Me.spDataRangeSelector_DataToDisplay.TurnOnLastFilterSaving = False
         Me.spDataRangeSelector_DataToDisplay.TurnOnLastSelectionSaving = False
         '
@@ -455,7 +455,7 @@ Partial Class wGridPlotter
         Me.txtGIFEndValue.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtGIFEndValue.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
         Me.txtGIFEndValue.Size = New System.Drawing.Size(96, 20)
-        Me.txtGIFEndValue.TabIndex = 9
+        Me.txtGIFEndValue.TabIndex = 92
         Me.txtGIFEndValue.Text = "0.000000"
         Me.txtGIFEndValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtGIFEndValue.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -471,7 +471,7 @@ Partial Class wGridPlotter
         Me.txtGIFStartValue.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtGIFStartValue.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
         Me.txtGIFStartValue.Size = New System.Drawing.Size(96, 20)
-        Me.txtGIFStartValue.TabIndex = 9
+        Me.txtGIFStartValue.TabIndex = 91
         Me.txtGIFStartValue.Text = "0.000000"
         Me.txtGIFStartValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtGIFStartValue.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -487,7 +487,7 @@ Partial Class wGridPlotter
         Me.txtAnimationTime.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtAnimationTime.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.Positive
         Me.txtAnimationTime.Size = New System.Drawing.Size(96, 20)
-        Me.txtAnimationTime.TabIndex = 9
+        Me.txtAnimationTime.TabIndex = 90
         Me.txtAnimationTime.Text = "0.000000"
         Me.txtAnimationTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtAnimationTime.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -499,7 +499,7 @@ Partial Class wGridPlotter
         Me.btnGenerateGIF.Location = New System.Drawing.Point(10, 86)
         Me.btnGenerateGIF.Name = "btnGenerateGIF"
         Me.btnGenerateGIF.Size = New System.Drawing.Size(173, 23)
-        Me.btnGenerateGIF.TabIndex = 8
+        Me.btnGenerateGIF.TabIndex = 93
         Me.btnGenerateGIF.Text = "generate GIF"
         Me.btnGenerateGIF.UseVisualStyleBackColor = True
         '
@@ -521,7 +521,7 @@ Partial Class wGridPlotter
         Me.btnExport_SaveAsXYZ.Location = New System.Drawing.Point(6, 20)
         Me.btnExport_SaveAsXYZ.Name = "btnExport_SaveAsXYZ"
         Me.btnExport_SaveAsXYZ.Size = New System.Drawing.Size(177, 35)
-        Me.btnExport_SaveAsXYZ.TabIndex = 0
+        Me.btnExport_SaveAsXYZ.TabIndex = 80
         Me.btnExport_SaveAsXYZ.Text = "save as xyz-file"
         Me.btnExport_SaveAsXYZ.UseVisualStyleBackColor = True
         '
@@ -546,7 +546,7 @@ Partial Class wGridPlotter
         Me.svOutputImage.SelectedPoints_PixelCoordinate = CType(resources.GetObject("svOutputImage.SelectedPoints_PixelCoordinate"), System.Collections.Generic.List(Of System.Drawing.Point))
         Me.svOutputImage.SelectionMode = SpectroscopyManager.mScanImageViewer.SelectionModes.None
         Me.svOutputImage.Size = New System.Drawing.Size(522, 497)
-        Me.svOutputImage.TabIndex = 0
+        Me.svOutputImage.TabIndex = 60
         '
         'gbPlotSettings
         '
@@ -574,7 +574,7 @@ Partial Class wGridPlotter
         Me.ckbGIFKeepValueRangeConstant.Location = New System.Drawing.Point(15, 139)
         Me.ckbGIFKeepValueRangeConstant.Name = "ckbGIFKeepValueRangeConstant"
         Me.ckbGIFKeepValueRangeConstant.Size = New System.Drawing.Size(198, 17)
-        Me.ckbGIFKeepValueRangeConstant.TabIndex = 12
+        Me.ckbGIFKeepValueRangeConstant.TabIndex = 74
         Me.ckbGIFKeepValueRangeConstant.Text = "stop auto-adjustment of value range:"
         Me.ckbGIFKeepValueRangeConstant.UseVisualStyleBackColor = True
         '
@@ -585,7 +585,7 @@ Partial Class wGridPlotter
         Me.ckbPlotSettings_BiasIndicatorSize.Location = New System.Drawing.Point(15, 117)
         Me.ckbPlotSettings_BiasIndicatorSize.Name = "ckbPlotSettings_BiasIndicatorSize"
         Me.ckbPlotSettings_BiasIndicatorSize.Size = New System.Drawing.Size(136, 17)
-        Me.ckbPlotSettings_BiasIndicatorSize.TabIndex = 6
+        Me.ckbPlotSettings_BiasIndicatorSize.TabIndex = 72
         Me.ckbPlotSettings_BiasIndicatorSize.Text = "value indicator size (%):"
         Me.ckbPlotSettings_BiasIndicatorSize.UseVisualStyleBackColor = True
         '
@@ -598,14 +598,14 @@ Partial Class wGridPlotter
         Me.vrsPlotSettings_ColorScaling.SelectedMaxValue = 0R
         Me.vrsPlotSettings_ColorScaling.SelectedMinValue = 0R
         Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 349)
-        Me.vrsPlotSettings_ColorScaling.TabIndex = 4
+        Me.vrsPlotSettings_ColorScaling.TabIndex = 75
         '
         'cpPlotSettings_ColorCode
         '
         Me.cpPlotSettings_ColorCode.Location = New System.Drawing.Point(12, 40)
         Me.cpPlotSettings_ColorCode.Name = "cpPlotSettings_ColorCode"
         Me.cpPlotSettings_ColorCode.Size = New System.Drawing.Size(212, 45)
-        Me.cpPlotSettings_ColorCode.TabIndex = 5
+        Me.cpPlotSettings_ColorCode.TabIndex = 70
         '
         'txtPlotSettings_BiasIndicatorSize
         '
@@ -618,7 +618,7 @@ Partial Class wGridPlotter
         Me.txtPlotSettings_BiasIndicatorSize.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.PlainNumber
         Me.txtPlotSettings_BiasIndicatorSize.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.Positive
         Me.txtPlotSettings_BiasIndicatorSize.Size = New System.Drawing.Size(77, 20)
-        Me.txtPlotSettings_BiasIndicatorSize.TabIndex = 1
+        Me.txtPlotSettings_BiasIndicatorSize.TabIndex = 73
         Me.txtPlotSettings_BiasIndicatorSize.Text = "0.000000"
         Me.txtPlotSettings_BiasIndicatorSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtPlotSettings_BiasIndicatorSize.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.IntegerValue
@@ -634,7 +634,7 @@ Partial Class wGridPlotter
         Me.txtPlotSettings_PointDiameter.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtPlotSettings_PointDiameter.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.Positive
         Me.txtPlotSettings_PointDiameter.Size = New System.Drawing.Size(113, 20)
-        Me.txtPlotSettings_PointDiameter.TabIndex = 1
+        Me.txtPlotSettings_PointDiameter.TabIndex = 71
         Me.txtPlotSettings_PointDiameter.Text = "0.000000"
         Me.txtPlotSettings_PointDiameter.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtPlotSettings_PointDiameter.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
