@@ -56,13 +56,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="ExpTreeLib.dll" size="115712">
-      <assemblyIdentity name="ExpTreeLib" version="3.0.2.21463" language="neutral" processorArchitecture="amd64" />
+      <assemblyIdentity name="ExpTreeLib" version="3.0.2.26124" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>tIT8v5XQpmsv6ALNPA9z3vyvsa6WzS7ya/rjdc1Pfps=</dsig:DigestValue>
+        <dsig:DigestValue>LvBgKjJcksKR2tEGuJfkBY6bvMmnRAG0TTYNwHGhiSg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3628544">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3629056">
       <assemblyIdentity name="SpectroscopyManager" version="2016.5.16.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>IZcck2KsbXBaCohEi8xLrQrSwBPaOz/T2uIqzhgoYLY=</dsig:DigestValue>
+        <dsig:DigestValue>3lLVuY2O3aZsTgM3u4L6UGCv5PMPNKe4OsTWBwaDulI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,13 +186,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="3732">
+  <file name="changelog_dev.html" size="4161">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>dyH6yfXxe5VelgUPUh/SkYKITpDjBXUN4Rq3wGnHM1Y=</dsig:DigestValue>
+      <dsig:DigestValue>lEf0BNodx9u7JpL5HLXFBbgoAzY4c8b1amiCJEPZiCs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="changelog_stable.html" size="37599">

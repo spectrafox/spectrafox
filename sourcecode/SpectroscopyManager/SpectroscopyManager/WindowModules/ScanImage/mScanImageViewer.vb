@@ -1307,4 +1307,16 @@ Public Class mScanImageViewer
 
 #End Region
 
+#Region "Clear point marks"
+
+    ''' <summary>
+    ''' Clear point marks
+    ''' </summary>
+    Private Sub btnClearPointMarks_Click(sender As Object, e As EventArgs) Handles btnClearPointMarks.Click
+        Me.ClearPointMarkList()
+        Me.RecalculateImageAsync()
+    End Sub
+
+#End Region
+
 End Class

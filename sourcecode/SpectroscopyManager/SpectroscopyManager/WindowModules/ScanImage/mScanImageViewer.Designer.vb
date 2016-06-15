@@ -55,6 +55,7 @@ Partial Class mScanImageViewer
         Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.lblColorCode = New System.Windows.Forms.Label()
         Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
+        Me.btnClearPointMarks = New System.Windows.Forms.Button()
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.tsTools.SuspendLayout()
@@ -291,6 +292,7 @@ Partial Class mScanImageViewer
         '
         'dpRight
         '
+        Me.dpRight.Controls.Add(Me.btnClearPointMarks)
         Me.dpRight.Controls.Add(Me.ckbScaleBarVisible)
         Me.dpRight.Controls.Add(Me.ckbUseHighQualityScaling)
         Me.dpRight.Controls.Add(Me.vsValueRangeSelector)
@@ -356,6 +358,15 @@ Partial Class mScanImageViewer
         Me.lblColorCode.TabIndex = 14
         Me.lblColorCode.Text = "color scheme:"
         '
+        'btnClearPointMarks
+        '
+        Me.btnClearPointMarks.Location = New System.Drawing.Point(6, 382)
+        Me.btnClearPointMarks.Name = "btnClearPointMarks"
+        Me.btnClearPointMarks.Size = New System.Drawing.Size(159, 23)
+        Me.btnClearPointMarks.TabIndex = 15
+        Me.btnClearPointMarks.Text = "clear data locations"
+        Me.btnClearPointMarks.UseVisualStyleBackColor = True
+        '
         'mScanImageViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -411,4 +422,5 @@ Partial Class mScanImageViewer
     Friend WithEvents gbOpenExternal As GroupBox
     Friend WithEvents btnOpenExternal As Button
     Friend WithEvents ttToolTip As ToolTip
+    Friend WithEvents btnClearPointMarks As Button
 End Class
