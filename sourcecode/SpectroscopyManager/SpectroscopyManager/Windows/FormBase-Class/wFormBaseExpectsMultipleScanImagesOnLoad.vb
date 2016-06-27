@@ -1,24 +1,51 @@
 ﻿''' <summary>
 ''' This class is an extension of the FormBase. It modifies the Show and ShowDialog
-''' functions to expect a FileObject to load during the opening of the window.
+''' functions to expect multiple FileObjects to load during the opening of the window.
 ''' </summary>
-Public Class wFormBaseExpectsScanImageFileObjectOnLoad
+Public Class wFormBaseExpectsMultipleScanImagesOnLoad
     Inherits wFormBase
 
     ''' <summary>
-    ''' File object to load and use by this window.
+    ''' File objects to load and use by this window.
     ''' </summary>
-    Protected FileObject As cFileObject
+    Protected _FileObjectList As List(Of cFileObject)
 
     ''' <summary>
-    ''' HardCopy of the initial File-Object, to revert changes.
+    ''' File-Object list loaded in this window.
     ''' </summary>
-    Protected FileObjectOriginal As cFileObject
+    Public ReadOnly Property CurrentFileObjectList As List(Of cFileObject)
+        Get
+            Return Me._FileObjectList
+        End Get
+    End Property
 
     ''' <summary>
-    ''' Loaded ScanImage-Object
+    ''' HardCopy of the initial File-Object-List, to be able to revert changes.
     ''' </summary>
-    Protected ScanImage As cScanImage
+    Protected _FileObjectCopyOfOriginal As New List(Of cFileObject)
+
+    ''' <summary>
+    ''' Original File-Object used for this window.
+    ''' </summary>
+    Public ReadOnly Property CurrentFileObjectCopyOfOriginal As List(Of cFileObject)
+        Get
+            Return Me._FileObjectCopyOfOriginal
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Loaded ScanImage-Objects
+    ''' </summary>
+    Protected _ScanImageList As New List(Of cScanImage)
+
+    ''' <summary>
+    ''' ScanImages used for this window.
+    ''' </summary>
+    Public ReadOnly Property CurrentScanImageList As List(Of cScanImage)
+        Get
+            Return Me._ScanImageList
+        End Get
+    End Property
 
     ' Progress-Panel
     Friend WithEvents panProgress As System.Windows.Forms.Panel
@@ -30,6 +57,11 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
     ''' Object for Data Fetching of the Selected ScanImage Files
     ''' </summary>
     Protected WithEvents DataFetcher As cScanImageFetcher
+
+    ''' <summary>
+    ''' Event that gets raised if all files were successfully fetched!
+    ''' </summary>
+    Public Event AllFilesFetched()
 
 #Region "Constructor and Close-Dialog Window"
 
@@ -45,13 +77,13 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
         End If
     End Sub
 
-    Private FileFetched As Boolean = False
+    Private FilesFetched As Boolean = False
 
     ''' <summary>
     ''' If the fetching is in progress, abort the closing of the window!
     ''' </summary>
     Public Sub FormCloseCatcher(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        If Not FileFetched Then
+        If Not FilesFetched Then
             MessageBox.Show(My.Resources.WindowClosing_FetchInProgress,
                             My.Resources.WindowClosing_FetchInProgress_title,
                             MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -66,10 +98,17 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
     ''' <summary>
     ''' Sub shadowing the BaseClass to recieve a working directory
     ''' before opening!
+    ''' 
+    ''' Filters initially all ScanImage-objects.
     ''' </summary>
-    Public Shadows Sub Show(ByRef WorkingFileObject As cFileObject)
-        Me.FileObject = WorkingFileObject
-        If Me.SetScanImageFile(Me.FileObject) Then
+    Public Shadows Sub Show(ByRef WorkingFileObjectList As List(Of cFileObject))
+        Me._FileObjectList = WorkingFileObjectList.Where(Function(obj) obj.FileType = cFileObject.FileTypes.ScanImage).ToList()
+
+        ' Show the progress panel
+        Me.panProgress.Visible = True
+        Me.panProgress.BringToFront()
+
+        If Me.FetchScanImageFiles() Then
             MyBase.Show()
         End If
     End Sub
@@ -77,37 +116,68 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
     ''' <summary>
     ''' Sub shadowing the BaseClass to recieve a working directory
     ''' before opening!
+    ''' 
+    ''' Filters initially all ScanImage-objects.
     ''' </summary>
-    Public Shadows Sub ShowDialog(ByRef WorkingFileObject As cFileObject)
-        Me.FileObject = WorkingFileObject
+    Public Shadows Sub ShowDialog(ByRef WorkingFileObjectList As List(Of cFileObject))
+        Me._FileObjectList = WorkingFileObjectList.Where(Function(obj) obj.FileType = cFileObject.FileTypes.ScanImage).ToList()
 
-        If Me.SetScanImageFile(Me.FileObject) Then
+        ' Show the progress panel
+        Me.panProgress.Visible = True
+        Me.panProgress.BringToFront()
+
+        If Me.FetchScanImageFiles() Then
             MyBase.ShowDialog()
         End If
     End Sub
 #End Region
 
 #Region "Initialization with ScanImage File-fetch"
+
     ''' <summary>
-    ''' Sets the used ScanImage-FileObject and enables the Interface.
+    ''' Tracks, which ScanImageFiles have been fetched already.
     ''' </summary>
-    Private Function SetScanImageFile(ByRef ScanImageFileObject As cFileObject) As Boolean
-        ' Check, if the File-Object is a spectroscopy table
-        If ScanImageFileObject.FileType <> cFileObject.FileTypes.ScanImage Then Return False
+    Private iScanImageLoadingCounter As Integer = 0
 
-        Me.FileObjectOriginal = ScanImageFileObject.GetCopy
+    ''' <summary>
+    ''' Loads all ScanImages for the given FileObject and enables the interface afterwards.
+    ''' </summary>
+    Private Function FetchScanImageFiles() As Boolean
 
-        ' Create new DataFetcher Object
-        Me.DataFetcher = New cScanImageFetcher(ScanImageFileObject)
+        ' Fetch all files one after another
+        If iScanImageLoadingCounter < Me._FileObjectList.Count Then
+            ' Fetch next file:
+            '##################
 
-        ' Show the progress
-        Me.panProgress.Visible = True
-        Me.lblProgressHeader.Text &= Me.FileObject.FileNameWithoutPath
-        Me.pgbProgress.Value = 50
-        Me.panProgress.BringToFront()
+            ' Show the progress
+            Me.pgbProgress.Value = CInt(iScanImageLoadingCounter / Me._FileObjectList.Count * 100)
+            Me.lblProgress.Text = My.Resources.rFormBaseExpectsFiles.LoadingScanImageFile _
+                                                        .Replace("%p", Me.pgbProgress.Value.ToString("N0")) _
+                                                        .Replace("%f", Me._FileObjectList(iScanImageLoadingCounter).FileNameWithoutPath)
 
-        ' Load the Spectroscopy-Table-File using Background-Class.
-        Me.DataFetcher.FetchAsync()
+            ' Create a hard-copy of the file-object for the backup storage
+            Me._FileObjectCopyOfOriginal.Add(Me._FileObjectList(iScanImageLoadingCounter).GetCopy)
+
+            ' Create new DataFetcher Object
+            Me.DataFetcher = New cScanImageFetcher(Me._FileObjectList(iScanImageLoadingCounter))
+
+            ' Load the ScanImage-File using Background-Class.
+            Me.DataFetcher.FetchAsync()
+        Else
+            ' All files fetched!
+            ' Call finalizer, and show the interface.
+            '#########################################
+
+            ' Activate the window, and hide the progress panel
+            'Me.ShowHideLoadingPanel(False)
+            Me.panProgress.Visible = False
+            Me.panProgress.SendToBack()
+
+            Me.FilesFetched = True
+
+            RaiseEvent AllFilesFetched()
+        End If
+
 
         Return True
     End Function
@@ -117,14 +187,12 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
     ''' </summary>
     Private Sub ScanImageFetched(ByRef ScanImage As cScanImage) Handles Me.ScanImageFetchedThreadSafeCall
 
-        ' Save SpectroscopyTable
-        Me.ScanImage = ScanImage
+        ' Save ScanImage
+        Me._ScanImageList.Add(ScanImage)
 
-        ' Activate the window, and hide the progress panel
-        'Me.ShowHideLoadingPanel(False)
-        Me.panProgress.Visible = False
-
-        Me.FileFetched = True
+        ' Fetch the next file:
+        iScanImageLoadingCounter += 1
+        Me.FetchScanImageFiles()
 
     End Sub
 
@@ -146,7 +214,7 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
     End Sub
 
 #End Region
-    
+
 
     Private Sub InitializeComponent()
         Me.panProgress = New ProgressPanel()

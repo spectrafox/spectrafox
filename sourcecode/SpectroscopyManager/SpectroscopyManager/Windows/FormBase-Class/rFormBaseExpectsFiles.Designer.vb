@@ -65,6 +65,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to (%p %) currently loading image file %f.
+        '''</summary>
+        Friend Shared ReadOnly Property LoadingScanImageFile() As String
+            Get
+                Return ResourceManager.GetString("LoadingScanImageFile", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to (%p %) currently loading data file %f.
         '''</summary>
         Friend Shared ReadOnly Property LoadingSpectroscopyFile() As String

@@ -73,8 +73,10 @@ Public Class cScanImageFetcher
 #Region "File Fetch Function"
     ''' <summary>
     ''' Starts the Fetching Procedure for the selected File.
+    ''' 
+    ''' Works Async with a Background class.
     ''' </summary>
-    Public Sub Fetch()
+    Public Sub FetchAsync()
         ' If no thread-pool is definied, use a non-managed thread to load the data.
         If Me._ThreadPool Is Nothing Then
             Dim NonMangedThread As New Threading.Thread(AddressOf Me.FileFetcherSub)
@@ -85,6 +87,13 @@ Public Class cScanImageFetcher
                                          Me.CurrentFileObject,
                                          Me.FetchThreadPriority)
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Starts the fetching procedure for the selected File (DIRECT)
+    ''' </summary>
+    Public Sub FetchDirect()
+        Me.FileFetcherSub(Me.CurrentFileObject)
     End Sub
 
     ''' <summary>
