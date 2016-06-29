@@ -43,6 +43,7 @@ Partial Class wScanImageSummation
         Me.lblXOffset = New System.Windows.Forms.Label()
         Me.gbOutput = New System.Windows.Forms.GroupBox()
         Me.scOutput = New SpectroscopyManager.mScanImageViewer()
+        Me.btnExchange1and2 = New System.Windows.Forms.Button()
         Me.gbSource1.SuspendLayout()
         CType(Me.scSourceData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scSourceData.Panel1.SuspendLayout()
@@ -130,6 +131,7 @@ Partial Class wScanImageSummation
         '
         'scSourceOutput.Panel2
         '
+        Me.scSourceOutput.Panel2.Controls.Add(Me.btnExchange1and2)
         Me.scSourceOutput.Panel2.Controls.Add(Me.gbMergeOperation)
         Me.scSourceOutput.Panel2.Controls.Add(Me.gbOffsetAdjustment)
         Me.scSourceOutput.Panel2.Controls.Add(Me.gbOutput)
@@ -307,6 +309,18 @@ Partial Class wScanImageSummation
         Me.scOutput.Size = New System.Drawing.Size(614, 487)
         Me.scOutput.TabIndex = 1
         '
+        'btnExchange1and2
+        '
+        Me.btnExchange1and2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnExchange1and2.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_12
+        Me.btnExchange1and2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnExchange1and2.Location = New System.Drawing.Point(630, 201)
+        Me.btnExchange1and2.Name = "btnExchange1and2"
+        Me.btnExchange1and2.Size = New System.Drawing.Size(199, 23)
+        Me.btnExchange1and2.TabIndex = 9
+        Me.btnExchange1and2.Text = "exchange first and second file"
+        Me.btnExchange1and2.UseVisualStyleBackColor = True
+        '
         'wScanImageSummation
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -354,4 +368,5 @@ Partial Class wScanImageSummation
     Friend WithEvents rdbMergeOperation_Summation As RadioButton
     Friend WithEvents rdbMergeOperation_Division As RadioButton
     Friend WithEvents rdbMergeOperation_Override As RadioButton
+    Friend WithEvents btnExchange1and2 As Button
 End Class

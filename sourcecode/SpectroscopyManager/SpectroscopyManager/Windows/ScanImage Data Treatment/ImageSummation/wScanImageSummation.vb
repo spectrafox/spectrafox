@@ -230,6 +230,21 @@
         Me.PlotData()
     End Sub
 
+    ''' <summary>
+    ''' Exchanges the files and replots.
+    ''' </summary>
+    Private Sub btnExchange1and2_Click(sender As Object, e As EventArgs) Handles btnExchange1and2.Click
+        If Not Me.bReady Then Return
+
+        ' Exchange the files
+        Me._ScanImageList.Reverse()
+        Me.ScanImagesFetched()
+
+        ' replot
+        Me.PlotData()
+
+    End Sub
+
 #End Region
 
 
