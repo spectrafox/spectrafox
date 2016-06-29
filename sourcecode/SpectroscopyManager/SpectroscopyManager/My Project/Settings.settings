@@ -131,72 +131,6 @@
     <Setting Name="MainWindow_Layout_ScanPropertiesVisible" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="LastBCSDoubleGapFit_Delta_Sample1" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1.38</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_Delta_Sample2" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1.23</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_Delta_Tip" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1.39</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_BroadeningType" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_BroadeningWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.022</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_RatioSample1ToSample2" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_GlobalXOffset" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_GlobalYOffset" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_GlobalYStretch" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.1</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_MinE" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">-5</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_MaxE" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">5</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_Temperature" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">1.19</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_FitDataType" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_LastPreviewPoints" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">500</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_ColumnNameX" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_ColumnNameY" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_SaveColTipDOS" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Tip DOS</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_SaveColSampleDOS" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Sample DOS</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_SaveColFitResult" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Fit result</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_SaveColFermiFunction" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Fermi function</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_ImaginaryDampingFactor" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0.015</Value>
-    </Setting>
-    <Setting Name="LastBCSDoubleGapFit_YCorrectionActive" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
-    </Setting>
     <Setting Name="Fit_SingleFile_LastCol_X" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
@@ -638,6 +572,18 @@
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;string&gt;Gwyddion&amp;gt;C:\Program Files (x86)\Gwyddion\bin\gwyddion.exe&amp;gt;--remote-new "%f"&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="ScanImageMerger_XOffset" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ScanImageMerger_YOffset" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ScanImageMerger_CombinationFactor" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ScanImageMerger_CombinationMethod" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -234,6 +234,9 @@
   <data name="MM_RenameColumns" xml:space="preserve">
     <value>using last settings: rename data-columns</value>
   </data>
+  <data name="MM_ScanImageSummation" xml:space="preserve">
+    <value>two scan images: image merging</value>
+  </data>
   <data name="TT_CropFile" xml:space="preserve">
     <value>crops measured data to certain ranges</value>
   </data>

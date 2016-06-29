@@ -572,270 +572,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1.38")>  _
-        Public Property LastBCSDoubleGapFit_Delta_Sample1() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_Delta_Sample1"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_Delta_Sample1") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1.23")>  _
-        Public Property LastBCSDoubleGapFit_Delta_Sample2() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_Delta_Sample2"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_Delta_Sample2") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1.39")>  _
-        Public Property LastBCSDoubleGapFit_Delta_Tip() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_Delta_Tip"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_Delta_Tip") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("3")>  _
-        Public Property LastBCSDoubleGapFit_BroadeningType() As Integer
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_BroadeningType"),Integer)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_BroadeningType") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0.022")>  _
-        Public Property LastBCSDoubleGapFit_BroadeningWidth() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_BroadeningWidth"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_BroadeningWidth") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0.1")>  _
-        Public Property LastBCSDoubleGapFit_RatioSample1ToSample2() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_RatioSample1ToSample2"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_RatioSample1ToSample2") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property LastBCSDoubleGapFit_GlobalXOffset() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_GlobalXOffset"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_GlobalXOffset") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property LastBCSDoubleGapFit_GlobalYOffset() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_GlobalYOffset"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_GlobalYOffset") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0.1")>  _
-        Public Property LastBCSDoubleGapFit_GlobalYStretch() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_GlobalYStretch"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_GlobalYStretch") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("-5")>  _
-        Public Property LastBCSDoubleGapFit_MinE() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_MinE"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_MinE") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("5")>  _
-        Public Property LastBCSDoubleGapFit_MaxE() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_MaxE"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_MaxE") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1.19")>  _
-        Public Property LastBCSDoubleGapFit_Temperature() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_Temperature"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_Temperature") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
-        Public Property LastBCSDoubleGapFit_FitDataType() As Integer
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_FitDataType"),Integer)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_FitDataType") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("500")>  _
-        Public Property LastBCSDoubleGapFit_LastPreviewPoints() As Integer
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_LastPreviewPoints"),Integer)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_LastPreviewPoints") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LastBCSDoubleGapFit_ColumnNameX() As String
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_ColumnNameX"),String)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_ColumnNameX") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property LastBCSDoubleGapFit_ColumnNameY() As String
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_ColumnNameY"),String)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_ColumnNameY") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Tip DOS")>  _
-        Public Property LastBCSDoubleGapFit_SaveColTipDOS() As String
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_SaveColTipDOS"),String)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_SaveColTipDOS") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Sample DOS")>  _
-        Public Property LastBCSDoubleGapFit_SaveColSampleDOS() As String
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_SaveColSampleDOS"),String)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_SaveColSampleDOS") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Fit result")>  _
-        Public Property LastBCSDoubleGapFit_SaveColFitResult() As String
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_SaveColFitResult"),String)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_SaveColFitResult") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Fermi function")>  _
-        Public Property LastBCSDoubleGapFit_SaveColFermiFunction() As String
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_SaveColFermiFunction"),String)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_SaveColFermiFunction") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0.015")>  _
-        Public Property LastBCSDoubleGapFit_ImaginaryDampingFactor() As Double
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_ImaginaryDampingFactor"),Double)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_ImaginaryDampingFactor") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property LastBCSDoubleGapFit_YCorrectionActive() As Boolean
-            Get
-                Return CType(Me("LastBCSDoubleGapFit_YCorrectionActive"),Boolean)
-            End Get
-            Set
-                Me("LastBCSDoubleGapFit_YCorrectionActive") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property Fit_SingleFile_LastCol_X() As String
             Get
@@ -2554,6 +2290,54 @@ Namespace My
             End Get
             Set
                 Me("ExternalViewers_PathList") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property ScanImageMerger_XOffset() As Double
+            Get
+                Return CType(Me("ScanImageMerger_XOffset"),Double)
+            End Get
+            Set
+                Me("ScanImageMerger_XOffset") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property ScanImageMerger_YOffset() As Double
+            Get
+                Return CType(Me("ScanImageMerger_YOffset"),Double)
+            End Get
+            Set
+                Me("ScanImageMerger_YOffset") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property ScanImageMerger_CombinationFactor() As Double
+            Get
+                Return CType(Me("ScanImageMerger_CombinationFactor"),Double)
+            End Get
+            Set
+                Me("ScanImageMerger_CombinationFactor") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property ScanImageMerger_CombinationMethod() As Integer
+            Get
+                Return CType(Me("ScanImageMerger_CombinationMethod"),Integer)
+            End Get
+            Set
+                Me("ScanImageMerger_CombinationMethod") = value
             End Set
         End Property
     End Class

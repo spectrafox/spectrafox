@@ -416,6 +416,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to two scan images: image merging.
+        '''</summary>
+        Friend Shared ReadOnly Property MM_ScanImageSummation() As String
+            Get
+                Return ResourceManager.GetString("MM_ScanImageSummation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to crops measured data to certain ranges.
         '''</summary>
         Friend Shared ReadOnly Property TT_CropFile() As String

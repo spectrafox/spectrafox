@@ -637,6 +637,7 @@
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationOtherColumn.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationTwoSetsAutomatic.vb" />
     <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_DataSummationTwoSetsManually.vb" />
+    <Compile Include="WindowModules\DataBrowser\FileObjectActions\cDataBrowserFileObjectAction_ScanImageSummation.vb" />
     <Compile Include="WindowModules\DataBrowser\mDataBrowserListCompact.Designer.vb">
       <DependentUpon>mDataBrowserListCompact.vb</DependentUpon>
     </Compile>
@@ -720,6 +721,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rDataBrowser.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\wFormBaseExpectsMultipleScanImagesOnLoad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\ImageSummation\wScanImageSummation.Designer.vb">
+      <DependentUpon>wScanImageSummation.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\ImageSummation\wScanImageSummation.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\ScanImage Data Treatment\LineProfile\rScanImageLineProfile.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -1359,6 +1369,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>rDataBrowser.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ScanImage Data Treatment\ImageSummation\wScanImageSummation.resx">
+      <DependentUpon>wScanImageSummation.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\ScanImage Data Treatment\LineProfile\rScanImageLineProfile.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>

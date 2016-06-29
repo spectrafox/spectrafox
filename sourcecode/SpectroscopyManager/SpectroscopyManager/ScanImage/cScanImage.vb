@@ -174,6 +174,13 @@ Public Class cScanImage
     Protected _ScanChannels As New Dictionary(Of String, ScanChannel)
 
     ''' <summary>
+    ''' Checks, if a scan channel with the given name exists.
+    ''' </summary>
+    Public Function ScanChannelExists(ByVal ChannelName As String) As Boolean
+        Return Me._ScanChannels.ContainsKey(ChannelName)
+    End Function
+
+    ''' <summary>
     ''' This array stores all properties, that are informative for the user,
     ''' but unimportant for the software to work.
     ''' </summary>
@@ -681,14 +688,53 @@ Public Class cScanImage
 #Region "Combine several scan channels to one big scan-channel image!"
 
     ''' <summary>
+    ''' Combination modes of the scan channel combination.
+    ''' </summary>
+    Public Enum ScanChannelCombinationMode
+        Override = 0
+        Summation = 1
+        Multiplication = 3
+        Division = 4
+    End Enum
+
+    ''' <summary>
+    ''' Returns the combination mode from the integer defined by the ENUM.
+    ''' </summary>
+    Public Shared Function GetCombinationModeFromInt(ByVal CombinationMode As Integer) As ScanChannelCombinationMode
+        Select Case CombinationMode
+            Case ScanChannelCombinationMode.Override
+                Return ScanChannelCombinationMode.Override
+            Case ScanChannelCombinationMode.Summation
+                Return ScanChannelCombinationMode.Summation
+            Case ScanChannelCombinationMode.Multiplication
+                Return ScanChannelCombinationMode.Multiplication
+            Case ScanChannelCombinationMode.Division
+                Return ScanChannelCombinationMode.Division
+            Case Else
+                Return ScanChannelCombinationMode.Override
+        End Select
+    End Function
+
+    ''' <summary>
     ''' Takes a list of scan-channels and creates a combined scan-channel with a
     ''' big matrix containing the data of each scan-channel at the defined location.
     ''' The rest of the data is filled with Double.NaN.
+    ''' 
+    ''' Combination of multiple images by default occurs in Override-Mode.
+    ''' If another mode is choosen, then there has to be a factor for each scan image given.
     ''' </summary>
     Public Shared Function CombineScanChannels(ByRef ScanImages As List(Of cScanImage),
                                                ByVal ChannelNameToPlot As String,
                                                ByVal Width As Integer,
-                                               ByVal Height As Integer) As cScanImage
+                                               ByVal Height As Integer,
+                                               Optional ByVal Mode As ScanChannelCombinationMode = ScanChannelCombinationMode.Override,
+                                               Optional ByVal CombinationFactors As List(Of Double) = Nothing) As cScanImage
+
+        If Mode <> ScanChannelCombinationMode.Override Then
+            If CombinationFactors Is Nothing OrElse CombinationFactors.Count <> ScanImages.Count Then
+                Throw New ArgumentException("Combination of images is only possible with given factors for each image.")
+            End If
+        End If
 
         ' Create output channel.
         Dim OutputScanImage As New cScanImage
@@ -738,7 +784,10 @@ Public Class cScanImage
 
         ' Create the new value-matrix
         Dim ValueMatrix As DenseMatrix = DenseMatrix.Create(Height, Width, Double.NaN)
-
+        ' Create the new matrix, which stores, if a value has been plotted already.
+        Dim FilledMatrix(Height - 1, Width - 1) As Boolean
+        ' Create the new matrix, which stores, if a value has been plotted already.
+        Dim CombinationMatrix(Height - 1, Width - 1, ScanImages.Count) As Boolean
 
         ' define some temporary variables needed in the loop.
         Dim DataPointPixelCoordinateInValueMatrix As Point
@@ -753,8 +802,81 @@ Public Class cScanImage
         Dim PixelMultiplierX As Integer
         Dim PixelMultiplierY As Integer
 
-        ' Ok, now go through all the scan-images and plot their data to the new value-matrix.
-        For i As Integer = 0 To ScanImages.Count - 1 Step 1
+        ' If we are in an image combination mode other than override,
+        ' we only plot common pixels in all images. For this we use the FilledMatrix
+        ' to obtain only pixels that are filled by all images.
+        If Mode <> ScanChannelCombinationMode.Override Then
+
+            For i As Integer = 0 To ScanImages.Count - 1 Step 1
+
+                ' Get the range per pixel, to plot more than one pixel in the 
+                ' target matrix, if we have to perform an upscaling.
+                RangePerPixel_XSource = ScanImages(i).ScanRange_X / ScanImages(i).ScanPixels_X
+                RangePerPixel_YSource = ScanImages(i).ScanRange_Y / ScanImages(i).ScanPixels_Y
+
+                ' Now if we do an upscaling place also the values in a range around the new point.
+                ' This we do by a for loop, that modifies the coordinates in a square around the point.
+                PixelMultiplierX = CInt(Math.Ceiling(RangePerPixel_XSource / RangePerPixel_XNew - 1))
+                If PixelMultiplierX < 0 Then PixelMultiplierX = 0
+                PixelMultiplierY = CInt(Math.Ceiling(RangePerPixel_YSource / RangePerPixel_YNew - 1))
+                If PixelMultiplierY < 0 Then PixelMultiplierY = 0
+
+                For x As Integer = 0 To ScanImages(i).ScanPixels_X - 1 Step 1
+                    For y As Integer = 0 To ScanImages(i).ScanPixels_Y - 1 Step 1
+
+                        ' Get the plot-location of the point.
+                        DataPointLocationCoordinateInSource = ScanImages(i).GetLocationOfScanData(x, y)
+                        DataPointPixelCoordinateInValueMatrix = OutputScanImage.GetCoordinateInValueMatrix(DataPointLocationCoordinateInSource)
+
+                        For yArea As Integer = -PixelMultiplierY To PixelMultiplierY Step 1
+                            For xArea As Integer = -PixelMultiplierX To PixelMultiplierX Step 1
+
+                                XPlotCoordinate = DataPointPixelCoordinateInValueMatrix.X + xArea
+                                YPlotCoordinate = DataPointPixelCoordinateInValueMatrix.Y + yArea
+
+                                ' Increase the counter of each pixel in the big value-matrix, if the coordinates are valid.
+                                If XPlotCoordinate >= 0 AndAlso YPlotCoordinate >= 0 AndAlso
+                                   XPlotCoordinate < Width AndAlso YPlotCoordinate < Height Then
+
+                                    If Not CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) Then
+                                        CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) = True
+                                    End If
+
+                                End If
+
+                            Next
+                        Next
+
+                    Next
+                Next
+            Next
+
+            Dim PresentInAll As Boolean
+            For x As Integer = 0 To Width - 1 Step 1
+                For y As Integer = 0 To Height - 1 Step 1
+                    PresentInAll = True
+
+                    ' Search for TRUE in all.
+                    For i As Integer = 0 To ScanImages.Count - 1 Step 1
+                        If Not CombinationMatrix(y, x, i) Then
+                            PresentInAll = False
+                            Exit For
+                        End If
+                    Next
+
+                    ' If not TRUE in all, set all to false
+                    If Not PresentInAll Then
+                        For i As Integer = 0 To ScanImages.Count - 1 Step 1
+                            CombinationMatrix(y, x, i) = False
+                        Next
+                    End If
+                Next
+            Next
+
+        End If
+
+            ' Ok, now go through all the scan-images and plot their data to the new value-matrix.
+            For i As Integer = 0 To ScanImages.Count - 1 Step 1
 
             ' Get a reference to the scan-channel to deal with
             C = ScanImages(i).ScanChannels(ChannelNameToPlot)
@@ -790,7 +912,60 @@ Public Class cScanImage
                                 ' Place the value into the big value-matrix, if the coordinates are valid.
                                 If XPlotCoordinate >= 0 AndAlso YPlotCoordinate >= 0 AndAlso
                                    XPlotCoordinate < Width AndAlso YPlotCoordinate < Height Then
-                                    ValueMatrix(YPlotCoordinate, XPlotCoordinate) = C.ScanData(y, x)
+
+                                    ' Add the data to the value-matrix, depending on the combination mode.
+                                    Select Case Mode
+                                        Case ScanChannelCombinationMode.Override
+
+                                            ' Ignore points already filled once
+                                            If FilledMatrix(YPlotCoordinate, XPlotCoordinate) Then
+                                                Continue For
+                                            Else
+                                                FilledMatrix(YPlotCoordinate, XPlotCoordinate) = True
+                                            End If
+
+                                            ValueMatrix(YPlotCoordinate, XPlotCoordinate) = C.ScanData(y, x)
+
+                                        Case ScanChannelCombinationMode.Summation
+
+                                            If CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) Then
+                                                If Not Double.IsNaN(ValueMatrix(YPlotCoordinate, XPlotCoordinate)) Then
+                                                    ValueMatrix(YPlotCoordinate, XPlotCoordinate) += CombinationFactors(i) * C.ScanData(y, x)
+                                                Else
+                                                    ValueMatrix(YPlotCoordinate, XPlotCoordinate) = CombinationFactors(i) * C.ScanData(y, x)
+                                                End If
+                                                CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) = False
+                                            End If
+
+                                        Case ScanChannelCombinationMode.Multiplication
+
+                                            If CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) Then
+                                                If Not Double.IsNaN(ValueMatrix(YPlotCoordinate, XPlotCoordinate)) Then
+                                                    ValueMatrix(YPlotCoordinate, XPlotCoordinate) *= CombinationFactors(i) * C.ScanData(y, x)
+                                                Else
+                                                    ValueMatrix(YPlotCoordinate, XPlotCoordinate) = CombinationFactors(i) * C.ScanData(y, x)
+                                                End If
+                                                CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) = False
+                                            End If
+
+                                        Case ScanChannelCombinationMode.Division
+
+                                            If CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) Then
+                                                If Not Double.IsNaN(ValueMatrix(YPlotCoordinate, XPlotCoordinate)) Then
+                                                    Dim DivisionValue As Double = CombinationFactors(i) * C.ScanData(y, x)
+                                                    If DivisionValue <> 0 Then
+                                                        ValueMatrix(YPlotCoordinate, XPlotCoordinate) /= DivisionValue
+                                                    Else
+                                                        ValueMatrix(YPlotCoordinate, XPlotCoordinate) = Double.NaN
+                                                    End If
+                                                Else
+                                                    ValueMatrix(YPlotCoordinate, XPlotCoordinate) = CombinationFactors(i) * C.ScanData(y, x)
+                                                End If
+                                                CombinationMatrix(YPlotCoordinate, XPlotCoordinate, i) = False
+                                            End If
+
+                                    End Select
+
                                 End If
 
                             Next

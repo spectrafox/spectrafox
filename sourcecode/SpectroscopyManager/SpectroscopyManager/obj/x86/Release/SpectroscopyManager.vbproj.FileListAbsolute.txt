@@ -913,3 +913,4 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\o
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.rExport.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wSettings_Program.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x86\Release\License-Magick.NET.txt
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wScanImageSummation.resources

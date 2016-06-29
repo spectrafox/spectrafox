@@ -103,6 +103,15 @@ Public Class mScanImageViewer
 
 #End Region
 
+#Region "Events"
+
+    ''' <summary>
+    ''' Event gets fired, when the scan channel gets changed.
+    ''' </summary>
+    Public Event SelectedScanChannelChanged(ChannelName As String)
+
+#End Region
+
 #Region "Module Load Function"
 
     ''' <summary>
@@ -410,6 +419,9 @@ Public Class mScanImageViewer
         ' Add data to the ValueRangeSelector
         Me.vsValueRangeSelector.SetValueArray(CurrentScanChannel.ScanData.Values,
                                               CurrentScanChannel.UnitSymbol)
+
+        ' Raise the event.
+        RaiseEvent SelectedScanChannelChanged(CurrentScanChannel.Name)
     End Sub
 
 #End Region
@@ -752,7 +764,7 @@ Public Class mScanImageViewer
     ''' </summary>
     Public Property SelectedPoints_PixelCoordinate As New List(Of Point)
 
-    ''' <summary>
+        ''' <summary>
     ''' New point selected. Also returns the number of the points selected.
     ''' </summary>
     Public Event PointSelected(ByVal P As Point, ByVal PointNumber As Integer)

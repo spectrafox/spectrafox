@@ -1858,7 +1858,7 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' On drop down opening, check, if settings are set for the API-buttons.
     ''' </summary>
-    Private Sub mnuMultipleFileActions_DropDownOpening(sender As Object, e As EventArgs) Handles mnuMultipleSpectroscopyFileActions.DropDownOpening
+    Private Sub mnuMultipleFileActions_DropDownOpening(sender As Object, e As EventArgs) Handles mnuMultipleSpectroscopyFileActions.DropDownOpening, mnuMultipleScanImageFileActions.DropDownOpening
 
         ' Go through all buttons, and check their settings.
         For Each APIButton As KeyValuePair(Of ToolStripMenuItem, iDataBrowser_FileObjectAction) In Me.FileActionAPIsToMenuButtons
