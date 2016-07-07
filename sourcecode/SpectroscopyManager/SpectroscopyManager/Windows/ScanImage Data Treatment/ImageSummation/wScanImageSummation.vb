@@ -41,6 +41,7 @@
         My.Settings.ScanImageMerger_YOffset = Me.txtYOffset.DecimalValue
         My.Settings.ScanImageMerger_CombinationFactor = Me.txtCombinationFactor.DecimalValue
         My.Settings.ScanImageMerger_CombinationMethod = Me.GetCombinationModeSelected
+        My.Settings.ScanImageMerger_AngleOffset = Me.txtAngleOffset.DecimalValue
         cGlobal.SaveSettings()
     End Sub
 
@@ -67,6 +68,7 @@
         ' Load settings used last time.
         Me.txtXOffset.SetValue(My.Settings.ScanImageMerger_XOffset)
         Me.txtYOffset.SetValue(My.Settings.ScanImageMerger_YOffset)
+        Me.txtAngleOffset.SetValue(My.Settings.ScanImageMerger_AngleOffset)
         Me.txtCombinationFactor.SetValue(My.Settings.ScanImageMerger_CombinationFactor)
         Me.SetCombinationModeSelected(cScanImage.GetCombinationModeFromInt(My.Settings.ScanImageMerger_CombinationMethod))
 
@@ -124,6 +126,7 @@
             .ScanPixels_Y = Me._ScanImage1.ScanPixels_Y
             .ScanOffset_X = Me._ScanImage1.ScanOffset_X
             .ScanOffset_Y = Me._ScanImage1.ScanOffset_Y
+            .ScanAngle = Me._ScanImage1.ScanAngle + Me.txtAngleOffset.DecimalValue
         End With
 
         Dim SourceImage2 As New cScanImage
@@ -134,6 +137,7 @@
             .ScanPixels_Y = Me._ScanImage2.ScanPixels_Y
             .ScanOffset_X = Me._ScanImage2.ScanOffset_X + Me.txtXOffset.DecimalValue
             .ScanOffset_Y = Me._ScanImage2.ScanOffset_Y + Me.txtYOffset.DecimalValue
+            .ScanAngle = Me._ScanImage2.ScanAngle + Me.txtAngleOffset.DecimalValue
         End With
 
         ' Add the source channels to the dummy images
@@ -209,7 +213,7 @@
     ''' <summary>
     ''' Plot the data due to a change in a numeric textbox.
     ''' </summary>
-    Private Sub ReplotDueToTextboxChange(ByRef NT As NumericTextbox) Handles txtXOffset.ValidValueChanged, txtYOffset.ValidValueChanged, txtCombinationFactor.ValidValueChanged
+    Private Sub ReplotDueToTextboxChange(ByRef NT As NumericTextbox) Handles txtXOffset.ValidValueChanged, txtYOffset.ValidValueChanged, txtCombinationFactor.ValidValueChanged, txtAngleOffset.ValidValueChanged
         If Not Me.bReady Then Return
         Me.PlotData()
     End Sub

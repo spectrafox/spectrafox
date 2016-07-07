@@ -2340,6 +2340,18 @@ Namespace My
                 Me("ScanImageMerger_CombinationMethod") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property ScanImageMerger_AngleOffset() As Double
+            Get
+                Return CType(Me("ScanImageMerger_AngleOffset"),Double)
+            End Get
+            Set
+                Me("ScanImageMerger_AngleOffset") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

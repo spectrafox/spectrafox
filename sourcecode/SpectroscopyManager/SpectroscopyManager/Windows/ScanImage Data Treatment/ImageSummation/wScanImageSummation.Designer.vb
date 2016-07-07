@@ -29,6 +29,7 @@ Partial Class wScanImageSummation
         Me.gbSource2 = New System.Windows.Forms.GroupBox()
         Me.scSource2 = New SpectroscopyManager.mScanImageViewer()
         Me.scSourceOutput = New System.Windows.Forms.SplitContainer()
+        Me.btnExchange1and2 = New System.Windows.Forms.Button()
         Me.gbMergeOperation = New System.Windows.Forms.GroupBox()
         Me.txtCombinationFactor = New SpectroscopyManager.NumericTextbox()
         Me.lblOperationFactor = New System.Windows.Forms.Label()
@@ -37,13 +38,14 @@ Partial Class wScanImageSummation
         Me.rdbMergeOperation_Multiplication = New System.Windows.Forms.RadioButton()
         Me.rdbMergeOperation_Summation = New System.Windows.Forms.RadioButton()
         Me.gbOffsetAdjustment = New System.Windows.Forms.GroupBox()
+        Me.txtAngleOffset = New SpectroscopyManager.NumericTextbox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.txtYOffset = New SpectroscopyManager.NumericTextbox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtXOffset = New SpectroscopyManager.NumericTextbox()
         Me.lblXOffset = New System.Windows.Forms.Label()
         Me.gbOutput = New System.Windows.Forms.GroupBox()
         Me.scOutput = New SpectroscopyManager.mScanImageViewer()
-        Me.btnExchange1and2 = New System.Windows.Forms.Button()
         Me.gbSource1.SuspendLayout()
         CType(Me.scSourceData, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.scSourceData.Panel1.SuspendLayout()
@@ -139,6 +141,18 @@ Partial Class wScanImageSummation
         Me.scSourceOutput.SplitterDistance = 390
         Me.scSourceOutput.TabIndex = 4
         '
+        'btnExchange1and2
+        '
+        Me.btnExchange1and2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnExchange1and2.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_12
+        Me.btnExchange1and2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnExchange1and2.Location = New System.Drawing.Point(630, 14)
+        Me.btnExchange1and2.Name = "btnExchange1and2"
+        Me.btnExchange1and2.Size = New System.Drawing.Size(199, 23)
+        Me.btnExchange1and2.TabIndex = 100
+        Me.btnExchange1and2.Text = "exchange first and second file"
+        Me.btnExchange1and2.UseVisualStyleBackColor = True
+        '
         'gbMergeOperation
         '
         Me.gbMergeOperation.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -148,7 +162,7 @@ Partial Class wScanImageSummation
         Me.gbMergeOperation.Controls.Add(Me.rdbMergeOperation_Override)
         Me.gbMergeOperation.Controls.Add(Me.rdbMergeOperation_Multiplication)
         Me.gbMergeOperation.Controls.Add(Me.rdbMergeOperation_Summation)
-        Me.gbMergeOperation.Location = New System.Drawing.Point(629, 3)
+        Me.gbMergeOperation.Location = New System.Drawing.Point(629, 43)
         Me.gbMergeOperation.Name = "gbMergeOperation"
         Me.gbMergeOperation.Size = New System.Drawing.Size(200, 109)
         Me.gbMergeOperation.TabIndex = 8
@@ -166,7 +180,7 @@ Partial Class wScanImageSummation
         Me.txtCombinationFactor.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.DecimalUnits
         Me.txtCombinationFactor.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
         Me.txtCombinationFactor.Size = New System.Drawing.Size(133, 20)
-        Me.txtCombinationFactor.TabIndex = 2
+        Me.txtCombinationFactor.TabIndex = 4
         Me.txtCombinationFactor.Text = "0.000000"
         Me.txtCombinationFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtCombinationFactor.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -186,7 +200,7 @@ Partial Class wScanImageSummation
         Me.rdbMergeOperation_Division.Location = New System.Drawing.Point(104, 41)
         Me.rdbMergeOperation_Division.Name = "rdbMergeOperation_Division"
         Me.rdbMergeOperation_Division.Size = New System.Drawing.Size(60, 17)
-        Me.rdbMergeOperation_Division.TabIndex = 0
+        Me.rdbMergeOperation_Division.TabIndex = 2
         Me.rdbMergeOperation_Division.Text = "division"
         Me.rdbMergeOperation_Division.UseVisualStyleBackColor = True
         '
@@ -196,7 +210,7 @@ Partial Class wScanImageSummation
         Me.rdbMergeOperation_Override.Location = New System.Drawing.Point(61, 61)
         Me.rdbMergeOperation_Override.Name = "rdbMergeOperation_Override"
         Me.rdbMergeOperation_Override.Size = New System.Drawing.Size(63, 17)
-        Me.rdbMergeOperation_Override.TabIndex = 0
+        Me.rdbMergeOperation_Override.TabIndex = 3
         Me.rdbMergeOperation_Override.Text = "override"
         Me.rdbMergeOperation_Override.UseVisualStyleBackColor = True
         '
@@ -206,7 +220,7 @@ Partial Class wScanImageSummation
         Me.rdbMergeOperation_Multiplication.Location = New System.Drawing.Point(14, 41)
         Me.rdbMergeOperation_Multiplication.Name = "rdbMergeOperation_Multiplication"
         Me.rdbMergeOperation_Multiplication.Size = New System.Drawing.Size(85, 17)
-        Me.rdbMergeOperation_Multiplication.TabIndex = 0
+        Me.rdbMergeOperation_Multiplication.TabIndex = 1
         Me.rdbMergeOperation_Multiplication.Text = "multiplication"
         Me.rdbMergeOperation_Multiplication.UseVisualStyleBackColor = True
         '
@@ -225,16 +239,43 @@ Partial Class wScanImageSummation
         'gbOffsetAdjustment
         '
         Me.gbOffsetAdjustment.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbOffsetAdjustment.Controls.Add(Me.txtAngleOffset)
+        Me.gbOffsetAdjustment.Controls.Add(Me.Label2)
         Me.gbOffsetAdjustment.Controls.Add(Me.txtYOffset)
         Me.gbOffsetAdjustment.Controls.Add(Me.Label1)
         Me.gbOffsetAdjustment.Controls.Add(Me.txtXOffset)
         Me.gbOffsetAdjustment.Controls.Add(Me.lblXOffset)
-        Me.gbOffsetAdjustment.Location = New System.Drawing.Point(629, 118)
+        Me.gbOffsetAdjustment.Location = New System.Drawing.Point(629, 158)
         Me.gbOffsetAdjustment.Name = "gbOffsetAdjustment"
-        Me.gbOffsetAdjustment.Size = New System.Drawing.Size(200, 76)
+        Me.gbOffsetAdjustment.Size = New System.Drawing.Size(200, 104)
         Me.gbOffsetAdjustment.TabIndex = 7
         Me.gbOffsetAdjustment.TabStop = False
         Me.gbOffsetAdjustment.Text = "offsets:"
+        '
+        'txtAngleOffset
+        '
+        Me.txtAngleOffset.AllowZero = True
+        Me.txtAngleOffset.BackColor = System.Drawing.Color.White
+        Me.txtAngleOffset.ForeColor = System.Drawing.Color.Black
+        Me.txtAngleOffset.FormatDecimalPlaces = 2
+        Me.txtAngleOffset.Location = New System.Drawing.Point(132, 71)
+        Me.txtAngleOffset.Name = "txtAngleOffset"
+        Me.txtAngleOffset.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
+        Me.txtAngleOffset.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
+        Me.txtAngleOffset.Size = New System.Drawing.Size(58, 20)
+        Me.txtAngleOffset.TabIndex = 13
+        Me.txtAngleOffset.Text = "0.000000"
+        Me.txtAngleOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtAngleOffset.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(21, 74)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(105, 13)
+        Me.Label2.TabIndex = 6
+        Me.Label2.Text = "global rotation angle:"
         '
         'txtYOffset
         '
@@ -247,7 +288,7 @@ Partial Class wScanImageSummation
         Me.txtYOffset.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtYOffset.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
         Me.txtYOffset.Size = New System.Drawing.Size(117, 20)
-        Me.txtYOffset.TabIndex = 5
+        Me.txtYOffset.TabIndex = 12
         Me.txtYOffset.Text = "0.000000"
         Me.txtYOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtYOffset.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -272,7 +313,7 @@ Partial Class wScanImageSummation
         Me.txtXOffset.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtXOffset.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
         Me.txtXOffset.Size = New System.Drawing.Size(117, 20)
-        Me.txtXOffset.TabIndex = 4
+        Me.txtXOffset.TabIndex = 11
         Me.txtXOffset.Text = "0.000000"
         Me.txtXOffset.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
         Me.txtXOffset.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
@@ -308,18 +349,6 @@ Partial Class wScanImageSummation
         Me.scOutput.SelectionMode = SpectroscopyManager.mScanImageViewer.SelectionModes.None
         Me.scOutput.Size = New System.Drawing.Size(614, 487)
         Me.scOutput.TabIndex = 1
-        '
-        'btnExchange1and2
-        '
-        Me.btnExchange1and2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnExchange1and2.Image = Global.SpectroscopyManager.My.Resources.Resources.rangeselection_12
-        Me.btnExchange1and2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnExchange1and2.Location = New System.Drawing.Point(630, 201)
-        Me.btnExchange1and2.Name = "btnExchange1and2"
-        Me.btnExchange1and2.Size = New System.Drawing.Size(199, 23)
-        Me.btnExchange1and2.TabIndex = 9
-        Me.btnExchange1and2.Text = "exchange first and second file"
-        Me.btnExchange1and2.UseVisualStyleBackColor = True
         '
         'wScanImageSummation
         '
@@ -369,4 +398,6 @@ Partial Class wScanImageSummation
     Friend WithEvents rdbMergeOperation_Division As RadioButton
     Friend WithEvents rdbMergeOperation_Override As RadioButton
     Friend WithEvents btnExchange1and2 As Button
+    Friend WithEvents txtAngleOffset As NumericTextbox
+    Friend WithEvents Label2 As Label
 End Class
