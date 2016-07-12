@@ -19,6 +19,17 @@ Public Class cContourPlot
     Protected ValueMatrix As LinearAlgebra.Double.DenseMatrix
 
     ''' <summary>
+    ''' Returns the currently plotted value matrix,
+    ''' which has only points according to the plot dimensions,
+    ''' so which is already interpolated.
+    ''' </summary>
+    Public ReadOnly Property ValueMatrixPlotted As LinearAlgebra.Double.DenseMatrix
+        Get
+            Return Me.ValueMatrix
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Saves a performance tuned version of the image.
     ''' </summary>
     Protected oFastImage As cFastImage

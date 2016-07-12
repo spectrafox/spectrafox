@@ -37,7 +37,7 @@
     End Sub
 
     ''' <summary>
-    ''' Scan-Image currently plotted
+    ''' ScanImage source
     ''' </summary>
     Private ScanImage As cScanImage
 

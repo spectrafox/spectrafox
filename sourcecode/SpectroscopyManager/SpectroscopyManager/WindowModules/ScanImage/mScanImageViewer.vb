@@ -538,7 +538,26 @@ Public Class mScanImageViewer
             With fs
                 .InitialDirectory = My.Settings.LastExport_Path
                 .Title = My.Resources.Title_SaveImage
-                .Filter = "Portable Network Graphics|*.png|JPEG Image|*.jpg|Windows Bitmap|*.bmp|Graphics Interchange Format|*.gif|Windows Enhanced Metafile|*.emf|Exchangeable Image File Format|*.exif"
+
+                Dim FilterString As New Text.StringBuilder()
+                With FilterString
+                    .Append("Portable Network Graphics|*.png")
+                    .Append("|")
+                    .Append("JPEG Image|*.jpg")
+                    .Append("|")
+                    .Append("Windows Bitmap|*.bmp")
+                    .Append("|")
+                    .Append("Graphics Interchange Format|*.gif")
+                    .Append("|")
+                    .Append("Windows Enhanced Metafile|*.emf")
+                    .Append("|")
+                    .Append("Exchangeable Image File Format|*.exif")
+                    .Append("|")
+                    .Append("WSxM STP|*.stp")
+                End With
+
+                .Filter = FilterString.ToString
+
                 If .ShowDialog = DialogResult.OK Then
                     Try
                         Select Case .FilterIndex
@@ -554,6 +573,12 @@ Public Class mScanImageViewer
                                 Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Emf)
                             Case 6
                                 Me.pbScanImage.Image.Save(.FileName, System.Drawing.Imaging.ImageFormat.Exif)
+                            Case 7
+                                cExport.Export2DMatrixToWSxM(.FileName,
+                                                             Me.oScanImagePlot.ValueMatrixPlotted,
+                                                             Me.ScanImagePlotted.ScanRange_X, "m",
+                                                             Me.ScanImagePlotted.ScanRange_Y, "m",
+                                                             (Me.oScanImagePlot.ScanChannelPlotted.GetMaximumValue - Me.oScanImagePlot.ScanChannelPlotted.GetMinimumValue), "m")
                         End Select
                     Catch ex As Exception
                         MessageBox.Show(My.Resources.rScanImageViewer.SaveImage_Error.Replace("%e", ex.Message),
