@@ -451,3 +451,4 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\o
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.vbproj.GenerateResource.Cache
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.exe.manifest
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.application
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x64\Debug\SpectroscopyManager.wScanImageSummation.resources

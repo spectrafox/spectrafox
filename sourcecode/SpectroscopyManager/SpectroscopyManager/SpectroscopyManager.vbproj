@@ -218,16 +218,17 @@
     <Compile Include="Export\cExternalViewers.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_CSV.vb" />
+    <Compile Include="Export\ExportMethods\cExportMethod_Ascii_SPACE.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_TAB.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_ORIGIN.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Mathematica.vb" />
-    <Compile Include="Export\iExport_CustomFormatSetting.vb" />
-    <Compile Include="Export\iExportMethod_Ascii.vb" />
     <Compile Include="Export\ExportMethods\rExportMethods.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rExportMethods.resx</DependentUpon>
     </Compile>
+    <Compile Include="Export\iExport_CustomFormatSetting.vb" />
+    <Compile Include="Export\iExportMethod_Ascii.vb" />
     <Compile Include="Export\rExport.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

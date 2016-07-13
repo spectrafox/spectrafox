@@ -2,7 +2,7 @@
     Inherits cExportMethod_Ascii
 
     Public Overrides Function ExportDescription() As String
-        Return My.Resources.rExportMethods.ExportTypeDesc_Ascii
+        Return My.Resources.rExportMethods.ExportTypeDesc_TAB
     End Function
 
     Public Overrides Function FileExtension() As String
@@ -37,6 +37,6 @@
     End Function
 
     Public Overrides Function ExportName() As String
-        Return My.Resources.rExportMethods.ExportTypeName_Ascii & " (" & Me.FileExtension & ")"
+        Return My.Resources.rExportMethods.ExportTypeName_TAB & " (" & Me.FileExtension & ")"
     End Function
 End Class

@@ -16,3 +16,4 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.vbproj.GenerateResource.Cache
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.dll
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Debug\ExpTreeLib.vbprojResolveAssemblyReference.cache

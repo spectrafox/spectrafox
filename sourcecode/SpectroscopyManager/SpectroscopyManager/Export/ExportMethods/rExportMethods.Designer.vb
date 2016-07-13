@@ -65,17 +65,6 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to File values are separated by tab spaces.
-        '''
-        '''The value format depends on the choosen selection..
-        '''</summary>
-        Friend Shared ReadOnly Property ExportTypeDesc_Ascii() As String
-            Get
-                Return ResourceManager.GetString("ExportTypeDesc_Ascii", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''  Looks up a localized string similar to Comma separated variable format, as accepted by
         '''various programs.
         '''
@@ -114,11 +103,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Tab-separated values.
+        '''  Looks up a localized string similar to File values are separated by blank spaces.
+        '''
+        '''The value format depends on the choosen selection..
         '''</summary>
-        Friend Shared ReadOnly Property ExportTypeName_Ascii() As String
+        Friend Shared ReadOnly Property ExportTypeDesc_SPACE() As String
             Get
-                Return ResourceManager.GetString("ExportTypeName_Ascii", resourceCulture)
+                Return ResourceManager.GetString("ExportTypeDesc_SPACE", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to File values are separated by tab spaces.
+        '''
+        '''The value format depends on the choosen selection..
+        '''</summary>
+        Friend Shared ReadOnly Property ExportTypeDesc_TAB() As String
+            Get
+                Return ResourceManager.GetString("ExportTypeDesc_TAB", resourceCulture)
             End Get
         End Property
         
@@ -146,6 +148,24 @@ Namespace My.Resources
         Friend Shared ReadOnly Property ExportTypeName_Origin() As String
             Get
                 Return ResourceManager.GetString("ExportTypeName_Origin", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Space-separated values.
+        '''</summary>
+        Friend Shared ReadOnly Property ExportTypeName_SPACE() As String
+            Get
+                Return ResourceManager.GetString("ExportTypeName_SPACE", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Tab-separated values.
+        '''</summary>
+        Friend Shared ReadOnly Property ExportTypeName_TAB() As String
+            Get
+                Return ResourceManager.GetString("ExportTypeName_TAB", resourceCulture)
             End Get
         End Property
         

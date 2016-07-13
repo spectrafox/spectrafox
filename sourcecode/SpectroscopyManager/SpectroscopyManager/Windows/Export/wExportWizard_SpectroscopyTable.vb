@@ -32,6 +32,7 @@
         ExportMethods.Add(New cExportMethod_Mathematica)
         ExportMethods.Add(New cExportMethod_Ascii_CSV)
         ExportMethods.Add(New cExportMethod_Ascii_TAB)
+        ExportMethods.Add(New cExportMethod_Ascii_SPACE)
 
         ' Fill the Combobox with these types
         With Me.cbExportType

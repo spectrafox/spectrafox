@@ -117,11 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ExportTypeDesc_Ascii" xml:space="preserve">
-    <value>File values are separated by tab spaces.
-
-The value format depends on the choosen selection.</value>
-  </data>
   <data name="ExportTypeDesc_CSV" xml:space="preserve">
     <value>Comma separated variable format, as accepted by
 various programs.
@@ -142,8 +137,15 @@ Values are formated as english exponentials.
 
 Files are directly dragable into Origin.</value>
   </data>
-  <data name="ExportTypeName_Ascii" xml:space="preserve">
-    <value>Tab-separated values</value>
+  <data name="ExportTypeDesc_SPACE" xml:space="preserve">
+    <value>File values are separated by blank spaces.
+
+The value format depends on the choosen selection.</value>
+  </data>
+  <data name="ExportTypeDesc_TAB" xml:space="preserve">
+    <value>File values are separated by tab spaces.
+
+The value format depends on the choosen selection.</value>
   </data>
   <data name="ExportTypeName_CSV" xml:space="preserve">
     <value>Comma-separated values</value>
@@ -153,6 +155,12 @@ Files are directly dragable into Origin.</value>
   </data>
   <data name="ExportTypeName_Origin" xml:space="preserve">
     <value>Origin drag&amp;drop compatible format</value>
+  </data>
+  <data name="ExportTypeName_SPACE" xml:space="preserve">
+    <value>Space-separated values</value>
+  </data>
+  <data name="ExportTypeName_TAB" xml:space="preserve">
+    <value>Tab-separated values</value>
   </data>
   <data name="Mathematica_Footer" xml:space="preserve">
     <value>"], "Input"]
