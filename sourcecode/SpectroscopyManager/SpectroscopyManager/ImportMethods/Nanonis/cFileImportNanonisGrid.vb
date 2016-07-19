@@ -184,6 +184,14 @@ Public Class cFileImportNanonisGrid
                                   Globalization.CultureInfo.CreateSpecificCulture("de-DE"),
                                   Globalization.DateTimeStyles.None,
                                   oGridFile.EndDate)
+
+                        Case "Delay before measuring (s)"
+                            ' Number of seconds before starting a spectrum
+                            Double.TryParse(SettingsValue,
+                                     Globalization.NumberStyles.Float,
+                                     Globalization.CultureInfo.InvariantCulture,
+                                     oGridFile.PreMeasurementDelay)
+
                     End Select
 
                     ' Spectroscopy-Table specific properties are written to the template spectroscopy table
@@ -347,6 +355,11 @@ Public Class cFileImportNanonisGrid
                             Dim NewLocation_Y As Double = PositionInRealSpace.y + oGridFile.GridCenterPosition.y
                             .Location_X = NewLocation_X
                             .Location_Y = NewLocation_Y
+
+                            ' Calculate the record time from the number of spectra and the delay:
+                            If NumberOfExperiments > 0 Then
+                                .RecordDate = oGridFile.StartDate.AddSeconds((oGridFile.EndDate - oGridFile.StartDate).TotalSeconds / NumberOfExperiments + (ExperimentCount + 1) * oGridFile.PreMeasurementDelay)
+                            End If
                         End With
 
                         ' Generate first of all the sweep signal column

@@ -209,6 +209,8 @@ Public Class wGridPlotter
         Me.txtAnimationTime.SetValue(5000)
         Me.txtPlotSettings_BiasIndicatorSize.SetValue(7)
         Me.ckbPlotSettings_BiasIndicatorSize.Checked = True
+        Me.txtCreepCorrectionX.SetValue(0)
+        Me.txtCreepCorrectionY.SetValue(0)
 
         Me.bReady = True
 
@@ -794,6 +796,19 @@ Public Class wGridPlotter
             ' Get the color-scheme colors
             Dim BrushArray As SolidBrush() = Me.cpPlotSettings_ColorCode.GetSelectedColorScheme.BrushArray
 
+            ' Get the chronological first spectrum in the list
+            Dim EarliestSpectrumTime As Date = Date.MaxValue
+            For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
+                If Me._SpectroscopyTables(i).RecordDate < EarliestSpectrumTime Then
+                    EarliestSpectrumTime = Me._SpectroscopyTables(i).RecordDate
+                End If
+            Next
+
+            ' Coordinate Buffers
+            Dim PointX As Double
+            Dim PointY As Double
+            Dim SecondsSinceFirstSpectrum As Double
+
             ' Now calculate the settings for all datapoints.
             Dim Progress As Double = 10
             Dim ProgressProgress As Double = (80 / (Me._SpectroscopyTables.Count + 1))
@@ -812,9 +827,18 @@ Public Class wGridPlotter
                 ' Check, if the color exists!
                 If PointColorBrush Is Nothing Then Continue For
 
+                ' Get the coordinates to plot:
+                PointX = Me._SpectroscopyTables(i).Location_X
+                PointY = Me._SpectroscopyTables(i).Location_Y
+
+                ' Correct them by a creep along X and Y over time
+                SecondsSinceFirstSpectrum = (Me._SpectroscopyTables(i).RecordDate - EarliestSpectrumTime).TotalSeconds
+                PointX += Me.txtCreepCorrectionX.DecimalValue * SecondsSinceFirstSpectrum
+                PointY += Me.txtCreepCorrectionY.DecimalValue * SecondsSinceFirstSpectrum
+
                 ' Create new point-mark.
-                Dim NewPointMark As New cScanImagePlot.PointMark(Me._SpectroscopyTables(i).Location_X,
-                                                                 Me._SpectroscopyTables(i).Location_Y,
+                Dim NewPointMark As New cScanImagePlot.PointMark(PointX,
+                                                                 PointY,
                                                                  Me._SpectroscopyTables(i).Location_Z,
                                                                  PointRadius,
                                                                  PointColorBrush.Color,
@@ -900,8 +924,15 @@ Public Class wGridPlotter
     ''' <summary>
     ''' Change the plot point diameter.
     ''' </summary>
-    Private Sub txtPlotSettings_PointDiameter_TextChanged(ByRef NT As NumericTextbox) Handles txtPlotSettings_PointDiameter.ValidValueChanged, txtPlotSettings_BiasIndicatorSize.ValidValueChanged
+    Private Sub txtPlotSettings_PointDiameter_TextChanged(ByRef NT As NumericTextbox) Handles txtPlotSettings_PointDiameter.ValidValueChanged
         Me._PointDiameter = Me.txtPlotSettings_PointDiameter.DecimalValue
+        Me.PlotGrid()
+    End Sub
+
+    ''' <summary>
+    ''' Plot settings changed
+    ''' </summary>
+    Private Sub txtPlotSettingsChanged(ByRef NT As NumericTextbox) Handles txtCreepCorrectionX.ValidValueChanged, txtCreepCorrectionY.ValidValueChanged, txtPlotSettings_BiasIndicatorSize.ValidValueChanged
         Me.PlotGrid()
     End Sub
 
@@ -984,11 +1015,35 @@ Public Class wGridPlotter
                             SB.Append(vbTab)
                             SB.Append("spectral intensity")
                             SB.Append(vbNewLine)
+
+                            ' Get the chronological first spectrum in the list
+                            Dim EarliestSpectrumTime As Date = Date.MaxValue
+                            For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
+                                If Me._SpectroscopyTables(i).RecordDate < EarliestSpectrumTime Then
+                                    EarliestSpectrumTime = Me._SpectroscopyTables(i).RecordDate
+                                End If
+                            Next
+
+                            ' Coordinate Buffers
+                            Dim PointX As Double
+                            Dim PointY As Double
+                            Dim SecondsSinceFirstSpectrum As Double
+
                             ' Create the XYZ-file from the averaging window values.
                             For i As Integer = 0 To Me._SpectroscopyTables.Count - 1 Step 1
-                                SB.Append(Me._SpectroscopyTables(i).Location_X.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
+
+                                ' Get the coordinates to plot:
+                                PointX = Me._SpectroscopyTables(i).Location_X
+                                PointY = Me._SpectroscopyTables(i).Location_Y
+
+                                ' Correct them by a creep along X and Y over time
+                                SecondsSinceFirstSpectrum = (Me._SpectroscopyTables(i).RecordDate - EarliestSpectrumTime).TotalSeconds
+                                PointX += Me.txtCreepCorrectionX.DecimalValue * SecondsSinceFirstSpectrum
+                                PointY += Me.txtCreepCorrectionY.DecimalValue * SecondsSinceFirstSpectrum
+
+                                SB.Append(PointX.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
                                 SB.Append(vbTab)
-                                SB.Append(Me._SpectroscopyTables(i).Location_Y.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
+                                SB.Append(PointY.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
                                 SB.Append(vbTab)
                                 SB.Append(Me._AveragingWindowValues(i).ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
                                 SB.Append(vbNewLine)

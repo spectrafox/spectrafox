@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.7.13.0" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.7.19.1" language="neutral" processorArchitecture="x86" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3787264">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.7.13.0" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3790848">
+      <assemblyIdentity name="SpectroscopyManager" version="2016.7.19.1" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>KqJq4hqFz713Ui0TQWkB9nv9kHNzTSDnaVX4lvJgFuQ=</dsig:DigestValue>
+        <dsig:DigestValue>D7mZqITHK8nJockCC1+zhCgMzvkGzXZQ4v8JHkDlCdg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,13 +186,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="4856">
+  <file name="changelog_dev.html" size="5228">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>lrrZqXV+6qx/ziUp6EQgbKvGrJ10QNKKPVdYMe5MuxU=</dsig:DigestValue>
+      <dsig:DigestValue>+uYK3OjdXnUSCPc4GAkDAy6o5QenN8O+OzRzQfk5wPs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="changelog_stable.html" size="37599">

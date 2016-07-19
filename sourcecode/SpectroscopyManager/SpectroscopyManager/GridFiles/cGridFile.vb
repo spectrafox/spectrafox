@@ -63,6 +63,11 @@ Public Class cGridFile
        ReadOnlyAttribute(True)>
     Public Property EndDate As Date
 
+    <DescriptionAttribute("Shows the delay in seconds before each spectrum is taken."),
+       CategoryAttribute("General Image Properties"),
+       ReadOnlyAttribute(True)>
+    Public Property PreMeasurementDelay As Double
+
     <DescriptionAttribute("Shows the dimensions of the recorded grid."),
        CategoryAttribute("General Image Properties"),
        ReadOnlyAttribute(True)>

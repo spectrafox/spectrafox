@@ -57,8 +57,13 @@ Partial Class wGridPlotter
         Me.gbOutput = New System.Windows.Forms.GroupBox()
         Me.svOutputImage = New SpectroscopyManager.mScanImageViewer()
         Me.gbPlotSettings = New System.Windows.Forms.GroupBox()
+        Me.lblCreepCorrection = New System.Windows.Forms.Label()
+        Me.txtCreepCorrectionY = New SpectroscopyManager.NumericTextbox()
+        Me.txtCreepCorrectionX = New SpectroscopyManager.NumericTextbox()
         Me.ckbGIFKeepValueRangeConstant = New System.Windows.Forms.CheckBox()
+        Me.lblCreepCorrection_YPerS = New System.Windows.Forms.Label()
         Me.ckbPlotSettings_BiasIndicatorSize = New System.Windows.Forms.CheckBox()
+        Me.lblCreepCorrection_XPerS = New System.Windows.Forms.Label()
         Me.vrsPlotSettings_ColorScaling = New SpectroscopyManager.mValueRangeSelector()
         Me.cpPlotSettings_ColorCode = New SpectroscopyManager.ucColorPalettePicker()
         Me.txtPlotSettings_BiasIndicatorSize = New SpectroscopyManager.NumericTextbox()
@@ -410,7 +415,7 @@ Partial Class wGridPlotter
         Me.gbGenerateGIF.Controls.Add(Me.txtGIFStartValue)
         Me.gbGenerateGIF.Controls.Add(Me.txtAnimationTime)
         Me.gbGenerateGIF.Controls.Add(Me.btnGenerateGIF)
-        Me.gbGenerateGIF.Location = New System.Drawing.Point(785, 77)
+        Me.gbGenerateGIF.Location = New System.Drawing.Point(785, 76)
         Me.gbGenerateGIF.Name = "gbGenerateGIF"
         Me.gbGenerateGIF.Size = New System.Drawing.Size(189, 118)
         Me.gbGenerateGIF.TabIndex = 10
@@ -481,7 +486,7 @@ Partial Class wGridPlotter
         Me.txtAnimationTime.AllowZero = True
         Me.txtAnimationTime.BackColor = System.Drawing.Color.White
         Me.txtAnimationTime.ForeColor = System.Drawing.Color.Black
-        Me.txtAnimationTime.FormatDecimalPlaces = 6
+        Me.txtAnimationTime.FormatDecimalPlaces = 3
         Me.txtAnimationTime.Location = New System.Drawing.Point(87, 17)
         Me.txtAnimationTime.Name = "txtAnimationTime"
         Me.txtAnimationTime.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
@@ -552,8 +557,13 @@ Partial Class wGridPlotter
         '
         Me.gbPlotSettings.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.gbPlotSettings.Controls.Add(Me.lblCreepCorrection)
+        Me.gbPlotSettings.Controls.Add(Me.txtCreepCorrectionY)
+        Me.gbPlotSettings.Controls.Add(Me.txtCreepCorrectionX)
         Me.gbPlotSettings.Controls.Add(Me.ckbGIFKeepValueRangeConstant)
+        Me.gbPlotSettings.Controls.Add(Me.lblCreepCorrection_YPerS)
         Me.gbPlotSettings.Controls.Add(Me.ckbPlotSettings_BiasIndicatorSize)
+        Me.gbPlotSettings.Controls.Add(Me.lblCreepCorrection_XPerS)
         Me.gbPlotSettings.Controls.Add(Me.vrsPlotSettings_ColorScaling)
         Me.gbPlotSettings.Controls.Add(Me.cpPlotSettings_ColorCode)
         Me.gbPlotSettings.Controls.Add(Me.txtPlotSettings_BiasIndicatorSize)
@@ -567,6 +577,47 @@ Partial Class wGridPlotter
         Me.gbPlotSettings.TabStop = False
         Me.gbPlotSettings.Text = "grid plot settings"
         '
+        'lblCreepCorrection
+        '
+        Me.lblCreepCorrection.AutoSize = True
+        Me.lblCreepCorrection.Location = New System.Drawing.Point(15, 160)
+        Me.lblCreepCorrection.Name = "lblCreepCorrection"
+        Me.lblCreepCorrection.Size = New System.Drawing.Size(196, 13)
+        Me.lblCreepCorrection.TabIndex = 76
+        Me.lblCreepCorrection.Text = "creep correction (1st spectrum = 0 time):"
+        '
+        'txtCreepCorrectionY
+        '
+        Me.txtCreepCorrectionY.AllowZero = True
+        Me.txtCreepCorrectionY.BackColor = System.Drawing.Color.White
+        Me.txtCreepCorrectionY.ForeColor = System.Drawing.Color.Black
+        Me.txtCreepCorrectionY.FormatDecimalPlaces = 3
+        Me.txtCreepCorrectionY.Location = New System.Drawing.Point(160, 181)
+        Me.txtCreepCorrectionY.Name = "txtCreepCorrectionY"
+        Me.txtCreepCorrectionY.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
+        Me.txtCreepCorrectionY.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
+        Me.txtCreepCorrectionY.Size = New System.Drawing.Size(68, 20)
+        Me.txtCreepCorrectionY.TabIndex = 2
+        Me.txtCreepCorrectionY.Text = "0.000000"
+        Me.txtCreepCorrectionY.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtCreepCorrectionY.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
+        '
+        'txtCreepCorrectionX
+        '
+        Me.txtCreepCorrectionX.AllowZero = True
+        Me.txtCreepCorrectionX.BackColor = System.Drawing.Color.White
+        Me.txtCreepCorrectionX.ForeColor = System.Drawing.Color.Black
+        Me.txtCreepCorrectionX.FormatDecimalPlaces = 3
+        Me.txtCreepCorrectionX.Location = New System.Drawing.Point(72, 181)
+        Me.txtCreepCorrectionX.Name = "txtCreepCorrectionX"
+        Me.txtCreepCorrectionX.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
+        Me.txtCreepCorrectionX.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
+        Me.txtCreepCorrectionX.Size = New System.Drawing.Size(68, 20)
+        Me.txtCreepCorrectionX.TabIndex = 1
+        Me.txtCreepCorrectionX.Text = "0.000000"
+        Me.txtCreepCorrectionX.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+        Me.txtCreepCorrectionX.ValueType = SpectroscopyManager.NumericTextbox.ValueTypes.FloatingPointValue
+        '
         'ckbGIFKeepValueRangeConstant
         '
         Me.ckbGIFKeepValueRangeConstant.AutoSize = True
@@ -577,6 +628,15 @@ Partial Class wGridPlotter
         Me.ckbGIFKeepValueRangeConstant.TabIndex = 74
         Me.ckbGIFKeepValueRangeConstant.Text = "stop auto-adjustment of value range:"
         Me.ckbGIFKeepValueRangeConstant.UseVisualStyleBackColor = True
+        '
+        'lblCreepCorrection_YPerS
+        '
+        Me.lblCreepCorrection_YPerS.AutoSize = True
+        Me.lblCreepCorrection_YPerS.Location = New System.Drawing.Point(146, 184)
+        Me.lblCreepCorrection_YPerS.Name = "lblCreepCorrection_YPerS"
+        Me.lblCreepCorrection_YPerS.Size = New System.Drawing.Size(15, 13)
+        Me.lblCreepCorrection_YPerS.TabIndex = 0
+        Me.lblCreepCorrection_YPerS.Text = "y:"
         '
         'ckbPlotSettings_BiasIndicatorSize
         '
@@ -589,15 +649,24 @@ Partial Class wGridPlotter
         Me.ckbPlotSettings_BiasIndicatorSize.Text = "value indicator size (%):"
         Me.ckbPlotSettings_BiasIndicatorSize.UseVisualStyleBackColor = True
         '
+        'lblCreepCorrection_XPerS
+        '
+        Me.lblCreepCorrection_XPerS.AutoSize = True
+        Me.lblCreepCorrection_XPerS.Location = New System.Drawing.Point(24, 184)
+        Me.lblCreepCorrection_XPerS.Name = "lblCreepCorrection_XPerS"
+        Me.lblCreepCorrection_XPerS.Size = New System.Drawing.Size(42, 13)
+        Me.lblCreepCorrection_XPerS.TabIndex = 0
+        Me.lblCreepCorrection_XPerS.Text = "x (m/s):"
+        '
         'vrsPlotSettings_ColorScaling
         '
         Me.vrsPlotSettings_ColorScaling.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.vrsPlotSettings_ColorScaling.Location = New System.Drawing.Point(15, 161)
+        Me.vrsPlotSettings_ColorScaling.Location = New System.Drawing.Point(15, 207)
         Me.vrsPlotSettings_ColorScaling.Name = "vrsPlotSettings_ColorScaling"
         Me.vrsPlotSettings_ColorScaling.SelectedMaxValue = 0R
         Me.vrsPlotSettings_ColorScaling.SelectedMinValue = 0R
-        Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 349)
+        Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 303)
         Me.vrsPlotSettings_ColorScaling.TabIndex = 75
         '
         'cpPlotSettings_ColorCode
@@ -764,4 +833,9 @@ Partial Class wGridPlotter
     Friend WithEvents txtPlotSettings_BiasIndicatorSize As NumericTextbox
     Friend WithEvents ckbPlotSettings_BiasIndicatorSize As CheckBox
     Friend WithEvents ckbGIFKeepValueRangeConstant As CheckBox
+    Friend WithEvents lblCreepCorrection As Label
+    Friend WithEvents txtCreepCorrectionY As NumericTextbox
+    Friend WithEvents txtCreepCorrectionX As NumericTextbox
+    Friend WithEvents lblCreepCorrection_YPerS As Label
+    Friend WithEvents lblCreepCorrection_XPerS As Label
 End Class
