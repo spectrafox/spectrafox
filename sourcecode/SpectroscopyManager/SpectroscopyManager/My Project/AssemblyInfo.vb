@@ -35,4 +35,4 @@ Imports System.Resources
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
 <Assembly: AssemblyVersion("2016.07.19.1")>
-<Assembly: AssemblyFileVersion("2016.07.19.0")>
+<Assembly: AssemblyFileVersion("2016.07.19.1")>
