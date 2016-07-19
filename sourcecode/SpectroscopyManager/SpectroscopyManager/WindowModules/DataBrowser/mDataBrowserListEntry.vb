@@ -321,6 +321,11 @@ Public Class mDataBrowserListEntry
     ''' </summary>
     Public Sub FetchListEntry()
 
+        '# added 07/19/2016: crash during list refreshs
+        ' Check, if our interface is disposed already.
+        If Me Is Nothing Then Return
+        If Me.IsDisposed Then Return
+
         ' Show loading screen
         ShowHidePanLoading(True)
 

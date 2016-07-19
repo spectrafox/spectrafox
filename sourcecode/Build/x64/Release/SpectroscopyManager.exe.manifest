@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.7.13.0" language="neutral" processorArchitecture="amd64" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.7.19.0" language="neutral" processorArchitecture="amd64" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -152,13 +152,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3649024">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.7.13.0" language="neutral" processorArchitecture="amd64" />
+      <assemblyIdentity name="SpectroscopyManager" version="2016.7.19.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>FAg0AxyPESfL/1fdwaNJnrgcGmWl3wYNHUIZ08s/0mU=</dsig:DigestValue>
+        <dsig:DigestValue>e0XP4rcWXfWeDJYcNOiPaM0P0rao5bDswF01TT464Qo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,13 +186,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="4856">
+  <file name="changelog_dev.html" size="5053">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>lrrZqXV+6qx/ziUp6EQgbKvGrJ10QNKKPVdYMe5MuxU=</dsig:DigestValue>
+      <dsig:DigestValue>6wcWZ5gWBeixHcHrwzGX7DkFlUtvCpd1/+nG/KKCP+0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="changelog_stable.html" size="37599">
