@@ -62,19 +62,20 @@ Public Class cNumericSmoothing_AdjacentAverageSmooth
     ''' </summary>
     Public Function Smooth(ByRef InColumn As ICollection(Of Double)) As List(Of Double) Implements iNumericSmoothingFunction.Smooth
 
-        Dim OutY As New List(Of Double)
+        Dim OutY As New List(Of Double)(InColumn.Count)
 
         Dim SumY As Double = 0D
         Dim iii As Integer = 0
         Dim iif As Integer = 0
         Dim ni As Integer = 0
         Dim nf As Integer = InColumn.Count - 1
+        Dim DividerCount As Integer = 0
 
         For n As Integer = ni To nf Step 1
             SumY = 0D
 
             If NearestNeighborWindow < n - ni Then
-                iii = n - ni - NearestNeighborWindow
+                iii = n - ni - NearestNeighborWindow - 1
             Else
                 iii = 0
             End If
@@ -82,13 +83,21 @@ Public Class cNumericSmoothing_AdjacentAverageSmooth
             If NearestNeighborWindow > nf - n Then
                 iif = nf - ni
             Else
-                iif = n - ni + NearestNeighborWindow
+                iif = n - ni + NearestNeighborWindow + 1
             End If
 
+            DividerCount = 0
             For i As Integer = iii To iif Step 1
-                SumY += InColumn(i)
+                If Not Double.IsNaN(InColumn(i)) Then
+                    SumY += InColumn(i)
+                    DividerCount += 1
+                End If
             Next
-            OutY.Add(SumY / (iif - iii + 1))
+            If DividerCount > 0 Then
+                OutY.Add(SumY / DividerCount)
+            Else
+                OutY.Add(Double.NaN)
+            End If
         Next
         Return OutY
 

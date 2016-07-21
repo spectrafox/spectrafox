@@ -130,6 +130,7 @@ Public Class cSpectroscopyTableDataReverter
         Me._ReversedColumn.SetValueList(Me._ReversedColumn.Values(True).Reverse.ToList)
         Me._ReversedColumn.UnitSymbol = SpectroscopyTable.Column(Me._ReverseColumnName).UnitSymbol
         Me._ReversedColumn.Name = Me._ReversedColumnTargetName
+        Me._ReversedColumn.IsSpectraFoxGenerated = True
 
         RaiseEvent FileReversionComplete(Me.CurrentSpectroscopyTable, Me._ReversedColumn)
     End Sub

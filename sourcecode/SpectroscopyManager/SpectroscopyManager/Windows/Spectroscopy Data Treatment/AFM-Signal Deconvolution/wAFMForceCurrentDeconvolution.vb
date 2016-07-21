@@ -138,6 +138,13 @@ Public Class wAFMForceCurrentDeconvolution
                                       ByRef ForceColumn As cSpectroscopyTable.DataColumn,
                                       ByRef CurrentColumn As cSpectroscopyTable.DataColumn) Handles AFMDeconvolver.CurrentForceDeconvolutionComplete
 
+        ' Activate Save-Button
+        Me.SetSaveButton(True)
+
+        If SpectroscopyTable Is Nothing Then Return
+        If ForceColumn Is Nothing Then Return
+        If CurrentColumn Is Nothing Then Return
+
         ' Set the output SpectroscopyTable to the preview box.
         Me.pbAfter.SetSinglePreviewImage(SpectroscopyTable,
                                          Me.pbBefore.cbX.SelectedColumnName,
@@ -147,9 +154,6 @@ Public Class wAFMForceCurrentDeconvolution
         ' Set Out-Preview-Box Columns to TargetBox-Columns
         Me.pbAfter.cbX.SelectedColumnName = Me.pbBefore.cbX.SelectedColumnName
         Me.pbAfter.cbY.SelectedColumnName = ForceColumn.Name
-
-        ' Activate Save-Button
-        Me.SetSaveButton(True)
 
     End Sub
 

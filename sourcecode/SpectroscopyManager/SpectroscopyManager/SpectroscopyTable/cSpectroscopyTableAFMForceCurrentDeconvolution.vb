@@ -254,6 +254,9 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
         Dim SpectroscopyTable As cSpectroscopyTable = CType(SpectroscopyTableObject, cSpectroscopyTable)
         Me._DeconvolutionInProgress = True
 
+        ' Output file
+        Dim OutputSpectroscopyTable As New cSpectroscopyTable
+
         Try
             '##########################################
             '
@@ -322,12 +325,16 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
             Dim EndLoop As Integer
             Dim StepLoop As Integer
             If ZMonotonicity = cSpectroscopyTable.DataColumn.Monotonicities.StrictRising Then
-                StartLoop = 0
-                EndLoop = Column_Z_Values.Count - 1
+                StartLoop = Column_Z.CurrentCropInformation.MinIndexIncl
+                EndLoop = Column_Z.CurrentCropInformation.MaxIndexIncl
+                'StartLoop = 0
+                'EndLoop = Column_Z_Values.Count - 1
                 StepLoop = 1
             Else
-                StartLoop = Column_Z_Values.Count - 1
-                EndLoop = 0
+                EndLoop = Column_Z.CurrentCropInformation.MinIndexIncl
+                StartLoop = Column_Z.CurrentCropInformation.MaxIndexIncl
+                'StartLoop = Column_Z_Values.Count - 1
+                'EndLoop = 0
                 StepLoop = -1
             End If
 
@@ -342,9 +349,14 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
                 ' Get a reference to the signal with the offset
                 Dim FrequencyShiftWithOffset As ReadOnlyCollection(Of Double) = Column_FrequencyShiftSmoothed.Values
 
-                ' take the five last values of the frequency-shift signal,
+                ' take the last values of the frequency-shift signal which are not NaN,
                 ' and set the average of this value as the new offset
                 Dim AverageOffset As Double = FrequencyShiftWithOffset(EndLoop)
+                Dim k As Integer = 1
+                While Double.IsNaN(AverageOffset) And ((EndLoop - k) >= 0 And (EndLoop - k) < FrequencyShiftWithOffset.Count)
+                    AverageOffset = FrequencyShiftWithOffset(EndLoop - k)
+                    k += StepLoop
+                End While
 
                 ' Now subtract the offset from the frequency shift signal.
                 Dim FrequencyShiftWITHOUTOffset(FrequencyShiftWithOffset.Count - 1) As Double
@@ -390,6 +402,9 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
             Dim Current_Part1 As Double
             Dim Current_Part2 As Double
 
+            Dim ForceAdd As Double
+            Dim CurrentAdd As Double
+
             For zCount As Integer = StartLoop To EndLoop Step StepLoop
 
                 ' Get the current Z-Value
@@ -415,18 +430,23 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
                         Force_Part2 = 0
                     End If
 
-                    ForceValue += (Force_Part1 * Column_FrequencyShift_Values(tCount) + Force_Part2 * Column_FrequencyShiftDerivative_Values(tCount))
+                    ForceAdd = (Force_Part1 * Column_FrequencyShift_Values(tCount) + Force_Part2 * Column_FrequencyShiftDerivative_Values(tCount))
+                    'ForceValue += (Force_Part1 * Column_FrequencyShift_Values(tCount) + Force_Part2 * Column_FrequencyShiftDerivative_Values(tCount))
+                    If Not Double.IsNaN(ForceAdd) Then ForceValue += ForceAdd
                     '
                     '################
 
                     '################
                     ' Current Integral
-                    Current_Part1 = Me.GetValueOfZArrayInterpolated(Column_Z_Values, ZMonotonicity, Column_AverageCurrentDerivative_Values, tValue)
-                    Current_Part2 = Me.GetValueOfZArrayInterpolated(Column_Z_Values, ZMonotonicity, Column_AverageCurrentDerivative_Values, tValue + Me.OscillationAmplitude)
+                    Current_Part1 = Me.GetValueOfZArrayInterpolated(Column_Z_Values, ZMonotonicity, Column_AverageCurrentDerivative_Values, tValue, StartLoop, EndLoop, StepLoop)
+                    Current_Part2 = Me.GetValueOfZArrayInterpolated(Column_Z_Values, ZMonotonicity, Column_AverageCurrentDerivative_Values, tValue + Me.OscillationAmplitude, StartLoop, EndLoop, StepLoop)
 
                     'If TMinusZ > Me.OscillationAmplitude * TMinusZCutoff Then
                     If TMinusZ <> 0 Then
-                        CurrentValue += Math.Sqrt((2 * Me.OscillationAmplitude) / (TMinusZ)) * (Current_Part1 - Math.Sqrt(2 / Math.PI) * Current_Part2)
+                        CurrentAdd = Math.Sqrt((2 * Me.OscillationAmplitude) / (TMinusZ)) * (Current_Part1 - Math.Sqrt(2 / Math.PI) * Current_Part2)
+                        If Not Double.IsNaN(CurrentAdd) Then
+                            CurrentValue += CurrentAdd
+                        End If
                     End If
                     '
                     '################
@@ -435,7 +455,7 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
 
                 ' Finally multiply the prefactors
                 ForceValue = ForceValue * 2 * Me.SpringConstant / Me.ResonanceFrequency * ZStepSize
-                CurrentValue = Me.GetValueOfZArrayInterpolated(Column_Z_Values, ZMonotonicity, Column_AverageCurrent_Values, zValue + Me.OscillationAmplitude) - CurrentValue * ZStepSize
+                CurrentValue = Me.GetValueOfZArrayInterpolated(Column_Z_Values, ZMonotonicity, Column_AverageCurrent_Values, zValue + Me.OscillationAmplitude, StartLoop, EndLoop, StepLoop) - CurrentValue * ZStepSize
 
                 ' Add the current and force integral values to the value array.
                 ForceValues(zCount) = ForceValue
@@ -458,7 +478,6 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
             Me._DeconvolutedCurrent.UnitSymbol = "A"
 
             ' Create the output SpectroscopyTable.
-            Dim OutputSpectroscopyTable As New cSpectroscopyTable
             OutputSpectroscopyTable.AddNonPersistentColumn(Column_Z)
             OutputSpectroscopyTable.AddNonPersistentColumn(Me._DeconvolutedCurrent)
             OutputSpectroscopyTable.AddNonPersistentColumn(Me._DeconvolutedForce)
@@ -471,14 +490,15 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
             OutputSpectroscopyTable.AddNonPersistentColumn(Column_AverageCurrentDerivativeSmoothed)
             OutputSpectroscopyTable.AddNonPersistentColumn(Column_FrequencyShiftDerivativeSmoothed)
 
-            ' Raise the event after the deconvolution.
-            RaiseEvent CurrentForceDeconvolutionComplete(OutputSpectroscopyTable,
-                                                         Me._DeconvolutedForce,
-                                                         Me._DeconvolutedCurrent)
         Catch ex As Exception
             MessageBox.Show(ex.Message, My.Resources.title_Error, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Me._DeconvolutionInProgress = False
+
+            ' Raise the event after the deconvolution.
+            RaiseEvent CurrentForceDeconvolutionComplete(OutputSpectroscopyTable,
+                                                         Me._DeconvolutedForce,
+                                                         Me._DeconvolutedCurrent)
         End Try
     End Sub
 
@@ -488,20 +508,12 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
     Private Function GetValueOfZArrayInterpolated(ByRef Zrel As ReadOnlyCollection(Of Double),
                                                   ByVal ZMonotonicity As cSpectroscopyTable.DataColumn.Monotonicities,
                                                   ByRef Values As ReadOnlyCollection(Of Double),
-                                                  ByVal Position As Double) As Double
+                                                  ByVal Position As Double,
+                                                  ByVal StartLoop As Integer,
+                                                  ByVal EndLoop As Integer,
+                                                  ByVal StepLoop As Integer) As Double
 
-        Dim StartLoop As Integer
-        Dim EndLoop As Integer
-        Dim StepLoop As Integer
-        If ZMonotonicity = cSpectroscopyTable.DataColumn.Monotonicities.StrictRising Then
-            StartLoop = 0
-            EndLoop = Zrel.Count - 1
-            StepLoop = 1
-        Else
-            StartLoop = Zrel.Count - 1
-            EndLoop = 0
-            StepLoop = -1
-        End If
+        If Double.IsNaN(Position) Then Return Double.NaN
 
         Dim ZStepSize As Double = (Zrel(EndLoop) - Zrel(StartLoop)) / Zrel.Count
         Dim ZStartValue As Double = Zrel(StartLoop)

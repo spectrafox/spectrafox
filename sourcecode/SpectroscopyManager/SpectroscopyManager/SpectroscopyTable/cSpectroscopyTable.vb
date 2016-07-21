@@ -65,7 +65,7 @@ Public Class cSpectroscopyTable
                 MinIndex = Me.CurrentCropInformation.MinIndexIncl
             End If
             If Me.CurrentCropInformation.MaxIndexIncl > 0 And Me.CurrentCropInformation.MaxIndexIncl < Me._Values.Count Then
-                MaxIndex = Me.CurrentCropInformation.MaxIndexIncl
+                MaxIndex = Me.CurrentCropInformation.MaxIndexIncl + 1
             End If
 
             ' Check, if MinIndex < MaxIndex

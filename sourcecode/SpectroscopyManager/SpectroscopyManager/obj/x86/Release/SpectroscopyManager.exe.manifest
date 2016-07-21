@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.7.19.1" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.7.21.1" language="neutral" processorArchitecture="x86" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -152,13 +152,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3653120">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.7.19.1" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="SpectroscopyManager" version="2016.7.21.1" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>i98hTD9ImVGihfHk1XSW1apyeIoiD+KX7ZzxKWy6c3c=</dsig:DigestValue>
+        <dsig:DigestValue>wOmfDC5mFrMaeEtNbxON3uSM9wWM9EW+EP5jvfEqDHY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
