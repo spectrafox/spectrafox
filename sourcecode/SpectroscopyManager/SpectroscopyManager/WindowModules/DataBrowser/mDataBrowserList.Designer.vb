@@ -88,8 +88,10 @@ Partial Class mDataBrowserList
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
         Me.lblStatus = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblTimerStatus = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripSplitButton1 = New System.Windows.Forms.ToolStripSplitButton()
+        Me.mnuTimerConfig = New System.Windows.Forms.ToolStripSplitButton()
         Me.smnuTimerOnOff = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuTimerConfig_TimeHeader = New System.Windows.Forms.ToolStripLabel()
+        Me.mnuTimerConfig_RefreshTime = New System.Windows.Forms.ToolStripTextBox()
         Me.vListScroll = New System.Windows.Forms.VScrollBar()
         Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.cmSpectroscopyFile = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -118,6 +120,7 @@ Partial Class mDataBrowserList
         Me.lblProgressHeading = New System.Windows.Forms.Label()
         Me.pbProgress = New System.Windows.Forms.ProgressBar()
         Me.panBrowserList = New SpectroscopyManager.VirtualVerticalPanel()
+        Me.mnuTimerConfig_ApplyTimer = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnu.SuspendLayout()
         Me.ssStatus.SuspendLayout()
         Me.cmSpectroscopyFile.SuspendLayout()
@@ -575,7 +578,7 @@ Partial Class mDataBrowserList
         '
         'ssStatus
         '
-        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus, Me.lblTimerStatus, Me.ToolStripSplitButton1})
+        Me.ssStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblStatus, Me.lblTimerStatus, Me.mnuTimerConfig})
         Me.ssStatus.Location = New System.Drawing.Point(0, 862)
         Me.ssStatus.Name = "ssStatus"
         Me.ssStatus.Size = New System.Drawing.Size(851, 26)
@@ -592,21 +595,21 @@ Partial Class mDataBrowserList
         'lblTimerStatus
         '
         Me.lblTimerStatus.Name = "lblTimerStatus"
-        Me.lblTimerStatus.Size = New System.Drawing.Size(768, 21)
+        Me.lblTimerStatus.Size = New System.Drawing.Size(737, 21)
         Me.lblTimerStatus.Spring = True
         Me.lblTimerStatus.Text = "time to refresh: 00:00:00"
         Me.lblTimerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
-        'ToolStripSplitButton1
+        'mnuTimerConfig
         '
-        Me.ToolStripSplitButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripSplitButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smnuTimerOnOff})
-        Me.ToolStripSplitButton1.Image = Global.SpectroscopyManager.My.Resources.Resources.timer_16
-        Me.ToolStripSplitButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.ToolStripSplitButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripSplitButton1.Name = "ToolStripSplitButton1"
-        Me.ToolStripSplitButton1.Size = New System.Drawing.Size(32, 24)
-        Me.ToolStripSplitButton1.Text = "ToolStripSplitButton1"
+        Me.mnuTimerConfig.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.mnuTimerConfig.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.smnuTimerOnOff, Me.mnuTimerConfig_TimeHeader, Me.mnuTimerConfig_RefreshTime, Me.mnuTimerConfig_ApplyTimer})
+        Me.mnuTimerConfig.Image = Global.SpectroscopyManager.My.Resources.Resources.timer_16
+        Me.mnuTimerConfig.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.mnuTimerConfig.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.mnuTimerConfig.Name = "mnuTimerConfig"
+        Me.mnuTimerConfig.Size = New System.Drawing.Size(32, 24)
+        Me.mnuTimerConfig.Text = "ToolStripSplitButton1"
         '
         'smnuTimerOnOff
         '
@@ -615,6 +618,21 @@ Partial Class mDataBrowserList
         Me.smnuTimerOnOff.Name = "smnuTimerOnOff"
         Me.smnuTimerOnOff.Size = New System.Drawing.Size(184, 22)
         Me.smnuTimerOnOff.Text = "automatic refresh on"
+        '
+        'mnuTimerConfig_TimeHeader
+        '
+        Me.mnuTimerConfig_TimeHeader.Image = Global.SpectroscopyManager.My.Resources.Resources.timer_16
+        Me.mnuTimerConfig_TimeHeader.Name = "mnuTimerConfig_TimeHeader"
+        Me.mnuTimerConfig_TimeHeader.Size = New System.Drawing.Size(115, 16)
+        Me.mnuTimerConfig_TimeHeader.Text = "refresh period (s):"
+        '
+        'mnuTimerConfig_RefreshTime
+        '
+        Me.mnuTimerConfig_RefreshTime.Name = "mnuTimerConfig_RefreshTime"
+        Me.mnuTimerConfig_RefreshTime.Size = New System.Drawing.Size(100, 23)
+        Me.mnuTimerConfig_RefreshTime.Text = "60"
+        Me.mnuTimerConfig_RefreshTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.mnuTimerConfig_RefreshTime.Width = 40
         '
         'vListScroll
         '
@@ -809,6 +827,13 @@ Partial Class mDataBrowserList
         Me.panBrowserList.TabIndex = 1
         Me.panBrowserList.VirtualHeightOfThePanel = 100
         '
+        'mnuTimerConfig_ApplyTimer
+        '
+        Me.mnuTimerConfig_ApplyTimer.Name = "mnuTimerConfig_ApplyTimer"
+        Me.mnuTimerConfig_ApplyTimer.Size = New System.Drawing.Size(184, 22)
+        Me.mnuTimerConfig_ApplyTimer.Text = "apply settings"
+        Me.mnuTimerConfig_ApplyTimer.Image = My.Resources.ok_16
+        '
         'mDataBrowserList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -839,7 +864,7 @@ Partial Class mDataBrowserList
     Friend WithEvents ssStatus As System.Windows.Forms.StatusStrip
     Friend WithEvents lblStatus As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents lblTimerStatus As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents ToolStripSplitButton1 As System.Windows.Forms.ToolStripSplitButton
+    Friend WithEvents mnuTimerConfig As System.Windows.Forms.ToolStripSplitButton
     Friend WithEvents smnuTimerOnOff As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents mnuPreviewSettings As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents panBrowserList As VirtualVerticalPanel
@@ -928,4 +953,7 @@ Partial Class mDataBrowserList
     Friend WithEvents ToolStripSeparator16 As ToolStripSeparator
     Friend WithEvents cmnuGridFile_OpenInSeparateWindow As ToolStripMenuItem
     Friend WithEvents mnuFilter_ShowGridFiles As ToolStripMenuItem
+    Friend WithEvents mnuTimerConfig_RefreshTime As ToolStripTextBox
+    Friend WithEvents mnuTimerConfig_TimeHeader As ToolStripLabel
+    Friend WithEvents mnuTimerConfig_ApplyTimer As ToolStripMenuItem
 End Class

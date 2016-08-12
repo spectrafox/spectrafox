@@ -321,22 +321,29 @@ Public Class mDataBrowserListEntry
     ''' </summary>
     Public Sub FetchListEntry()
 
-        '# added 07/19/2016: crash during list refreshs
-        ' Check, if our interface is disposed already.
-        If Me Is Nothing Then Return
-        If Me.IsDisposed Then Return
+        Try
+            '# added 07/19/2016: crash during list refreshs
+            ' Check, if our interface is disposed already.
+            If Me Is Nothing Then Return
+            If Me.IsDisposed Then Return
+            If Me.panLoading.IsDisposed Then Return
 
-        ' Show loading screen
-        ShowHidePanLoading(True)
+            ' Show loading screen
+            ShowHidePanLoading(True)
 
-        ' Set the loading background color.
-        Me.BackColor = Color.LightGray
+            ' Set the loading background color.
+            '# added 07/29/2016: crash still occured at this line here
+            Me.BackColor = Color.LightGray
 
-        ' Save list-entry fetch properties.
-        tmpFetch_PreviewImageSize = Me.pbPreview.Size
+            ' Save list-entry fetch properties.
+            tmpFetch_PreviewImageSize = Me.pbPreview.Size
 
-        ' Initialize the fetch of the file-object:
-        Me._ThreadPool.QueueWorkItem(ListEntryFetcherCallback, Me.ListEntryFetchPriority)
+            ' Initialize the fetch of the file-object:
+            Me._ThreadPool.QueueWorkItem(ListEntryFetcherCallback, Me.ListEntryFetchPriority)
+
+        Catch ex As Exception
+            Debug.WriteLine("FetchListEntry failed: " & ex.Message)
+        End Try
 
     End Sub
 

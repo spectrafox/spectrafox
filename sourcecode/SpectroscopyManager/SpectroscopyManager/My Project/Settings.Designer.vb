@@ -2352,6 +2352,18 @@ Namespace My
                 Me("ScanImageMerger_AngleOffset") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("60")>  _
+        Public Property DataBrowserFileList_RefreshTimer() As Integer
+            Get
+                Return CType(Me("DataBrowserFileList_RefreshTimer"),Integer)
+            End Get
+            Set
+                Me("DataBrowserFileList_RefreshTimer") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -366,6 +366,8 @@ Public Class mDataBrowserList
         ' Initialize the automatic folder check timer:
         Me.timRefreshListTimer.Interval = 1000
         Me.RefreshTimerCountInSeconds = 0
+        Me._RefreshTimerCountInSeconds = My.Settings.DataBrowserFileList_RefreshTimer
+        Me.mnuTimerConfig_RefreshTime.Text = Me._RefreshTimerCountInSeconds.ToString("N0")
 
         ' copy the initialization variables
         Me.sWorkingDirectory = FolderPath
@@ -1916,6 +1918,41 @@ Public Class mDataBrowserList
             Me.RefreshTimerCountInSeconds = Me.RefreshTimerCountInSeconds
         End If
     End Sub
+
+    ''' <summary>
+    ''' Change the timer period
+    ''' </summary>
+    Private Sub mnuTimerConfig_RefreshTime_TextChanged(sender As Object, e As EventArgs) Handles mnuTimerConfig_RefreshTime.TextChanged
+        With Me.mnuTimerConfig_RefreshTime
+            If IsNumeric(.Text) Then
+                .BackColor = Color.DarkGreen
+                .ForeColor = Color.White
+                Me.mnuTimerConfig_ApplyTimer.Enabled = True
+            Else
+                .BackColor = Color.Red
+                .ForeColor = Color.White
+                Me.mnuTimerConfig_ApplyTimer.Enabled = False
+            End If
+        End With
+    End Sub
+
+    ''' <summary>
+    ''' Apply the new timer settings.
+    ''' </summary>
+    Private Sub mnuTimerConfig_ApplyTimer_Click(sender As Object, e As EventArgs) Handles mnuTimerConfig_ApplyTimer.Click
+
+        ' Check for valid settings:
+        If Not IsNumeric(Me.mnuTimerConfig_RefreshTime.Text) Then Return
+
+        Dim NewTimerInterval As Integer = Integer.Parse(Me.mnuTimerConfig_RefreshTime.Text)
+        Me.mnuTimerConfig_RefreshTime.Text = NewTimerInterval.ToString("N0")
+
+        ' Apply the timer settings
+        Me.RefreshTimerCountInSeconds = NewTimerInterval
+        My.Settings.DataBrowserFileList_RefreshTimer = NewTimerInterval
+
+    End Sub
+
 
     ''' <summary>
     ''' Cronjob, that automatically checks the loaded folder for new content.

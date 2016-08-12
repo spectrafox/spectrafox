@@ -588,5 +588,8 @@
     <Setting Name="ScanImageMerger_AngleOffset" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="DataBrowserFileList_RefreshTimer" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">60</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
