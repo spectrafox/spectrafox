@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3793408">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3817984">
       <assemblyIdentity name="SpectroscopyManager" version="2016.8.12.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4JS/G5EfinbUfnLQ0uPA0YgDBDfwz+0u1fn+AZZUvno=</dsig:DigestValue>
+        <dsig:DigestValue>rxGNlKU0plDXTu+8swXS7k4J6brJLOefIQQ9hxjfsKE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

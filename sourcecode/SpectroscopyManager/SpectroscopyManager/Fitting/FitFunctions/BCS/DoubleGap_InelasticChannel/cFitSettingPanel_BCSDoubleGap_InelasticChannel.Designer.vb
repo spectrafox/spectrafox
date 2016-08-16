@@ -1,6 +1,6 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
-    Inherits SpectroscopyManager.cFitSettingPanel_TipSampleConvolution
+    Inherits SpectroscopyManager.cFitSettingPanel_InelasticChannel
 
     'UserControl überschreibt den Löschvorgang, um die Komponentenliste zu bereinigen.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -22,9 +22,6 @@ Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.gbIEC = New System.Windows.Forms.GroupBox()
-        Me.btnAddInelasticChannel = New System.Windows.Forms.Button()
-        Me.flpInelasticChannels = New System.Windows.Forms.FlowLayoutPanel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.gbTipParameters = New System.Windows.Forms.GroupBox()
         Me.fpTipTemperature = New SpectroscopyManager.mFitParameter()
@@ -45,46 +42,10 @@ Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
         Me.fpSampleGap1 = New SpectroscopyManager.mFitParameter()
         Me.btnSelect_Sample_Gap2 = New System.Windows.Forms.Button()
         Me.btnSelect_Sample_Gap1 = New System.Windows.Forms.Button()
-        Me.gbIEC.SuspendLayout()
         Me.gbTipParameters.SuspendLayout()
         Me.gbGeneralParameters.SuspendLayout()
         Me.gbSampleParameters.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'gbIEC
-        '
-        Me.gbIEC.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.gbIEC.Controls.Add(Me.btnAddInelasticChannel)
-        Me.gbIEC.Controls.Add(Me.flpInelasticChannels)
-        Me.gbIEC.Location = New System.Drawing.Point(262, 345)
-        Me.gbIEC.Name = "gbIEC"
-        Me.gbIEC.Size = New System.Drawing.Size(642, 338)
-        Me.gbIEC.TabIndex = 22
-        Me.gbIEC.TabStop = False
-        Me.gbIEC.Text = "Inelastic Channels:"
-        '
-        'btnAddInelasticChannel
-        '
-        Me.btnAddInelasticChannel.Image = Global.SpectroscopyManager.My.Resources.Resources.add_16
-        Me.btnAddInelasticChannel.Location = New System.Drawing.Point(6, 15)
-        Me.btnAddInelasticChannel.Name = "btnAddInelasticChannel"
-        Me.btnAddInelasticChannel.Size = New System.Drawing.Size(31, 23)
-        Me.btnAddInelasticChannel.TabIndex = 5
-        Me.btnAddInelasticChannel.TabStop = False
-        Me.btnAddInelasticChannel.UseVisualStyleBackColor = True
-        '
-        'flpInelasticChannels
-        '
-        Me.flpInelasticChannels.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.flpInelasticChannels.AutoScroll = True
-        Me.flpInelasticChannels.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.flpInelasticChannels.Location = New System.Drawing.Point(6, 40)
-        Me.flpInelasticChannels.Name = "flpInelasticChannels"
-        Me.flpInelasticChannels.Size = New System.Drawing.Size(630, 292)
-        Me.flpInelasticChannels.TabIndex = 1
         '
         'Label1
         '
@@ -108,23 +69,23 @@ Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
         '
         'fpTipTemperature
         '
-        Me.fpTipTemperature.DecimalValue = 0.0R
+        Me.fpTipTemperature.DecimalValue = 0R
         Me.fpTipTemperature.Location = New System.Drawing.Point(6, 36)
         Me.fpTipTemperature.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpTipTemperature.Name = "fpTipTemperature"
         Me.fpTipTemperature.Size = New System.Drawing.Size(285, 26)
         Me.fpTipTemperature.TabIndex = 20
-        Me.fpTipTemperature.Value = 0.0R
+        Me.fpTipTemperature.Value = 0R
         '
         'fpTipGap
         '
-        Me.fpTipGap.DecimalValue = 0.0R
+        Me.fpTipGap.DecimalValue = 0R
         Me.fpTipGap.Location = New System.Drawing.Point(6, 13)
         Me.fpTipGap.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpTipGap.Name = "fpTipGap"
         Me.fpTipGap.Size = New System.Drawing.Size(285, 26)
         Me.fpTipGap.TabIndex = 20
-        Me.fpTipGap.Value = 0.0R
+        Me.fpTipGap.Value = 0R
         '
         'gbGeneralParameters
         '
@@ -145,53 +106,53 @@ Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
         '
         'fpImaginaryDamping
         '
-        Me.fpImaginaryDamping.DecimalValue = 0.0R
+        Me.fpImaginaryDamping.DecimalValue = 0R
         Me.fpImaginaryDamping.Location = New System.Drawing.Point(6, 111)
         Me.fpImaginaryDamping.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpImaginaryDamping.Name = "fpImaginaryDamping"
         Me.fpImaginaryDamping.Size = New System.Drawing.Size(285, 26)
         Me.fpImaginaryDamping.TabIndex = 20
-        Me.fpImaginaryDamping.Value = 0.0R
+        Me.fpImaginaryDamping.Value = 0R
         '
         'fpBroadeningWidth
         '
-        Me.fpBroadeningWidth.DecimalValue = 0.0R
+        Me.fpBroadeningWidth.DecimalValue = 0R
         Me.fpBroadeningWidth.Location = New System.Drawing.Point(6, 86)
         Me.fpBroadeningWidth.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpBroadeningWidth.Name = "fpBroadeningWidth"
         Me.fpBroadeningWidth.Size = New System.Drawing.Size(285, 26)
         Me.fpBroadeningWidth.TabIndex = 20
-        Me.fpBroadeningWidth.Value = 0.0R
+        Me.fpBroadeningWidth.Value = 0R
         '
         'fpAmplitude
         '
-        Me.fpAmplitude.DecimalValue = 0.0R
+        Me.fpAmplitude.DecimalValue = 0R
         Me.fpAmplitude.Location = New System.Drawing.Point(6, 61)
         Me.fpAmplitude.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpAmplitude.Name = "fpAmplitude"
         Me.fpAmplitude.Size = New System.Drawing.Size(285, 26)
         Me.fpAmplitude.TabIndex = 20
-        Me.fpAmplitude.Value = 0.0R
+        Me.fpAmplitude.Value = 0R
         '
         'fpYOffset
         '
-        Me.fpYOffset.DecimalValue = 0.0R
+        Me.fpYOffset.DecimalValue = 0R
         Me.fpYOffset.Location = New System.Drawing.Point(6, 37)
         Me.fpYOffset.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpYOffset.Name = "fpYOffset"
         Me.fpYOffset.Size = New System.Drawing.Size(285, 26)
         Me.fpYOffset.TabIndex = 20
-        Me.fpYOffset.Value = 0.0R
+        Me.fpYOffset.Value = 0R
         '
         'fpXOffset
         '
-        Me.fpXOffset.DecimalValue = 0.0R
+        Me.fpXOffset.DecimalValue = 0R
         Me.fpXOffset.Location = New System.Drawing.Point(6, 14)
         Me.fpXOffset.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpXOffset.Name = "fpXOffset"
         Me.fpXOffset.Size = New System.Drawing.Size(285, 26)
         Me.fpXOffset.TabIndex = 20
-        Me.fpXOffset.Value = 0.0R
+        Me.fpXOffset.Value = 0R
         '
         'btnSelect_BroadeningWidth
         '
@@ -240,43 +201,43 @@ Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
         '
         'fpSampleTemperature
         '
-        Me.fpSampleTemperature.DecimalValue = 0.0R
+        Me.fpSampleTemperature.DecimalValue = 0R
         Me.fpSampleTemperature.Location = New System.Drawing.Point(6, 88)
         Me.fpSampleTemperature.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpSampleTemperature.Name = "fpSampleTemperature"
         Me.fpSampleTemperature.Size = New System.Drawing.Size(285, 26)
         Me.fpSampleTemperature.TabIndex = 21
-        Me.fpSampleTemperature.Value = 0.0R
+        Me.fpSampleTemperature.Value = 0R
         '
         'fpSampleGapRatio
         '
-        Me.fpSampleGapRatio.DecimalValue = 0.0R
+        Me.fpSampleGapRatio.DecimalValue = 0R
         Me.fpSampleGapRatio.Location = New System.Drawing.Point(6, 63)
         Me.fpSampleGapRatio.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpSampleGapRatio.Name = "fpSampleGapRatio"
         Me.fpSampleGapRatio.Size = New System.Drawing.Size(285, 26)
         Me.fpSampleGapRatio.TabIndex = 22
-        Me.fpSampleGapRatio.Value = 0.0R
+        Me.fpSampleGapRatio.Value = 0R
         '
         'fpSampleGap2
         '
-        Me.fpSampleGap2.DecimalValue = 0.0R
+        Me.fpSampleGap2.DecimalValue = 0R
         Me.fpSampleGap2.Location = New System.Drawing.Point(6, 39)
         Me.fpSampleGap2.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpSampleGap2.Name = "fpSampleGap2"
         Me.fpSampleGap2.Size = New System.Drawing.Size(285, 26)
         Me.fpSampleGap2.TabIndex = 22
-        Me.fpSampleGap2.Value = 0.0R
+        Me.fpSampleGap2.Value = 0R
         '
         'fpSampleGap1
         '
-        Me.fpSampleGap1.DecimalValue = 0.0R
+        Me.fpSampleGap1.DecimalValue = 0R
         Me.fpSampleGap1.Location = New System.Drawing.Point(6, 15)
         Me.fpSampleGap1.MaximumSize = New System.Drawing.Size(400, 26)
         Me.fpSampleGap1.Name = "fpSampleGap1"
         Me.fpSampleGap1.Size = New System.Drawing.Size(285, 26)
         Me.fpSampleGap1.TabIndex = 23
-        Me.fpSampleGap1.Value = 0.0R
+        Me.fpSampleGap1.Value = 0R
         '
         'btnSelect_Sample_Gap2
         '
@@ -303,26 +264,20 @@ Partial Class cFitSettingPanel_BCSDoubleGap_InelasticChannel
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.gbTipParameters)
-        Me.Controls.Add(Me.gbIEC)
         Me.Controls.Add(Me.gbSampleParameters)
         Me.Controls.Add(Me.gbGeneralParameters)
         Me.Name = "cFitSettingPanel_BCSDoubleGap_InelasticChannel"
         Me.Size = New System.Drawing.Size(907, 686)
         Me.Controls.SetChildIndex(Me.gbGeneralParameters, 0)
         Me.Controls.SetChildIndex(Me.gbSampleParameters, 0)
-        Me.Controls.SetChildIndex(Me.gbIEC, 0)
         Me.Controls.SetChildIndex(Me.gbTipParameters, 0)
-        Me.gbIEC.ResumeLayout(False)
         Me.gbTipParameters.ResumeLayout(False)
         Me.gbGeneralParameters.ResumeLayout(False)
         Me.gbSampleParameters.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents gbIEC As System.Windows.Forms.GroupBox
-    Friend WithEvents btnAddInelasticChannel As System.Windows.Forms.Button
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents flpInelasticChannels As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents gbTipParameters As System.Windows.Forms.GroupBox
     Friend WithEvents fpTipTemperature As SpectroscopyManager.mFitParameter
     Friend WithEvents fpTipGap As SpectroscopyManager.mFitParameter

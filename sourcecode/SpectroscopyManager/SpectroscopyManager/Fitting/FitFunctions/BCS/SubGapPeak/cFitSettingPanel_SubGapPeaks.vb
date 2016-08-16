@@ -59,7 +59,7 @@
             Me.SubGapPeak_ParameterValueChanged()
 
             ' Register the remove-button
-            AddHandler SubGapPeakPanel.RequestRemovalOfSubGapPeak, AddressOf RemoveSubGapPeak
+            AddHandler SubGapPeakPanel.RequestRemovalOfSubPanel, AddressOf RemoveSubGapPeak
             AddHandler SubGapPeakPanel.PeakEnabledChanged, AddressOf SubGapPeakEnabledChanged
             AddHandler SubGapPeakPanel.ParentDOSChanged, AddressOf SubGapPeakParentDOSChanged
             AddHandler SGP.SubGapPeakValueChanged, AddressOf SubGapPeak_ParameterValueChanged
@@ -154,7 +154,7 @@
         Me.SubGapPeak_ParameterValueChanged()
 
         ' Register the remove-button
-        AddHandler SubGapPeakPanel.RequestRemovalOfSubGapPeak, AddressOf RemoveSubGapPeak
+        AddHandler SubGapPeakPanel.RequestRemovalOfSubPanel, AddressOf RemoveSubGapPeak
         AddHandler SubGapPeakPanel.PeakEnabledChanged, AddressOf SubGapPeakEnabledChanged
         AddHandler SubGapPeakPanel.ParentDOSChanged, AddressOf SubGapPeakParentDOSChanged
         AddHandler Me._FitFunctionSGP.SubGapPeaks(iSGPIndex).SubGapPeakValueChanged, AddressOf SubGapPeak_ParameterValueChanged
@@ -176,7 +176,7 @@
         Dim iSGPIdentifier As Integer = Me.SubGapPeakIDsToPanelIndices(iSGPIndex)
 
         ' remove all the handlers
-        RemoveHandler PanelToRemove.RequestRemovalOfSubGapPeak, AddressOf RemoveSubGapPeak
+        RemoveHandler PanelToRemove.RequestRemovalOfSubPanel, AddressOf RemoveSubGapPeak
         RemoveHandler CType(PanelToRemove, cFitSettingSubParameter_SubGapPeakPanel).ParentDOSChanged, AddressOf SubGapPeakParentDOSChanged
         RemoveHandler CType(PanelToRemove, cFitSettingSubParameter_SubGapPeakPanel).PeakEnabledChanged, AddressOf SubGapPeakEnabledChanged
         RemoveHandler Me._FitFunctionSGP.SubGapPeaks(iSGPIndex).SubGapPeakValueChanged, AddressOf SubGapPeak_ParameterValueChanged

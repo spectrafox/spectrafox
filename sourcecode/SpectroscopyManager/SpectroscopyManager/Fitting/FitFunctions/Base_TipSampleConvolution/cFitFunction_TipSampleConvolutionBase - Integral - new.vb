@@ -139,48 +139,196 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
 #Region "InelasticChannel Definition"
 
     ''' <summary>
-    ''' Constants added to the Fit-Parameter identifiers
-    ''' </summary>
-    Private Enum IECParameterIdentifier
-        IECEnergy = 0
-        IECProbability = 1
-    End Enum
-
-    ''' <summary>
     ''' Sub-Class to define an inelastic channel with its parameters.
     ''' </summary>
     Public Class InelasticChannel
-        Public Property Energy As cFitParameter
-        Public Property Probability As cFitParameter
+
+        ''' <summary>
+        ''' Fit-Parameter identifiers
+        ''' </summary>
+        Public Enum ParameterIdentifier
+            IECEnergy = 0
+            IECProbability = 1
+        End Enum
+
+        ''' <summary>
+        ''' Internal index of the IEC.
+        ''' </summary>
+        Protected _IECIndex As Integer
+
+        ''' <summary>
+        ''' Index of the IEC.
+        ''' </summary>
+        Public Property IECIndex As Integer
+            Get
+                Return Me._IECIndex
+            End Get
+            Set(value As Integer)
+                Me.Energy.ChangeIdentifier(IECIdentifier_Energy(value))
+                Me.Probability.ChangeIdentifier(IECIdentifier_Probability(value))
+
+                Me.Energy.Description = IECDescription_Energy(value)
+                Me.Probability.Description = IECDescription_Probability(value)
+
+                Me._IECIndex = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Can be used to activate or deactivate the IEC.
+        ''' </summary>
+        Public SubGapPeakEnabled As Boolean = True
+
+        ''' <summary>
+        ''' Energy of the IEC
+        ''' </summary>
+        Public Energy As New cFitParameter(ParameterIdentifier.IECEnergy.ToString, 0, False, My.Resources.rFitFunction_TipSampleConvolutionBase.IEC_Energy)
+
+        ''' <summary>
+        ''' Probability of the IEC
+        ''' </summary>
+        Public Probability As New cFitParameter(ParameterIdentifier.IECProbability.ToString, 1, False, My.Resources.rFitFunction_TipSampleConvolutionBase.IEC_Probability)
+
+        ''' <summary>
+        ''' Returns a panel with all parameters locked to the parameter-selection boxes
+        ''' </summary>
+        Public Function GetInelasticChannelPanel(ByRef AllFitParameters As cFitParameterGroupGroup) As cFitSettingSubParameter_InelasticChannel
+            Dim P As New cFitSettingSubParameter_InelasticChannel(Me,
+                                                                  AllFitParameters)
+            P.Identifier = Me.IECIndex
+            Return P
+        End Function
+
+        ''' <summary>
+        ''' Constructor
+        ''' </summary>
+        Public Sub New()
+            AddHandler Energy.ValueChanged, AddressOf RaiseValueChangedEvent
+            AddHandler Probability.ValueChanged, AddressOf RaiseValueChangedEvent
+        End Sub
+
+        ''' <summary>
+        ''' Value changed of IEC
+        ''' </summary>
+        Public Event ValueChanged()
+
+        ''' <summary>
+        ''' Raise the Event
+        ''' </summary>
+        Private Sub RaiseValueChangedEvent(NewValue As Double)
+            RaiseEvent ValueChanged()
+        End Sub
+
+        ''' <summary>
+        ''' Returns the Nth identifier of an IEC
+        ''' </summary>
+        Public Shared Function IECDescription_Energy(ByVal i As Integer) As String
+            Return "#" & i.ToString & " " & My.Resources.rFitFunction_TipSampleConvolutionBase.IEC_Energy
+        End Function
+
+        ''' <summary>
+        ''' Returns the Nth identifier of an IEC
+        ''' </summary>
+        Public Shared Function IECDescription_Probability(ByVal i As Integer) As String
+            Return "#" & i.ToString & " " & My.Resources.rFitFunction_TipSampleConvolutionBase.IEC_Probability
+        End Function
+
+        ''' <summary>
+        ''' Returns the Nth identifier of an IEC
+        ''' </summary>
+        Public Shared Function IECIdentifier_Energy(ByVal i As Integer) As String
+            Return ParameterIdentifier.IECEnergy.ToString & i.ToString
+        End Function
+
+        ''' <summary>
+        ''' Returns the Nth identifier of an IEC
+        ''' </summary>
+        Public Shared Function IECIdentifier_Probability(ByVal i As Integer) As String
+            Return ParameterIdentifier.IECProbability.ToString & i.ToString
+        End Function
+
+        ''' <summary>
+        ''' The the IEC-Identifier from a String (last digit is number)
+        ''' </summary>
+        Public Shared Function IECIndexFromIdentifier(ByVal Identifier As String) As Integer
+            With ParameterIdentifier.IECEnergy
+                If Identifier.StartsWith(.ToString) Then Return Convert.ToInt32(Identifier.Remove(0, .ToString.Length))
+            End With
+            With ParameterIdentifier.IECProbability
+                If Identifier.StartsWith(.ToString) Then Return Convert.ToInt32(Identifier.Remove(0, .ToString.Length))
+            End With
+            Return -1
+        End Function
+
     End Class
 
     ''' <summary>
     ''' List to save all inelastic channels.
     ''' </summary>
-    Private InelasticChannels As New List(Of InelasticChannel)
+    Private _InelasticChannels As New List(Of InelasticChannel)
 
     ''' <summary>
-    ''' Adds a new inelastic channel peak to the fit-function.
+    ''' Adds a new inelastic channel to the fit-function.
     ''' Returns the index of the internal list, at which the channel got added.
     ''' </summary>
-    Public Function AddInelasticChannel(ByRef InelasticChannel As InelasticChannel) As Integer
-        Me.InelasticChannels.Add(InelasticChannel)
-        Return Me.InelasticChannels.Count - 1
+    Public Function AddInelasticChannel(Optional ByVal Index As Integer = -1) As Integer
+
+        If Index < 0 Then
+            Index = 0
+
+            ' find free index for the IEC
+            Dim IECIndexOccupied As Boolean = False
+            For i As Integer = 0 To Me.InelasticChannels.Count Step 1
+                IECIndexOccupied = False
+                For Each IEC As InelasticChannel In Me.InelasticChannels
+                    If IEC.IECIndex = i Then
+                        IECIndexOccupied = True
+                        Exit For
+                    End If
+                Next
+
+                If IECIndexOccupied = False Then
+                    Index = i
+                    Exit For
+                End If
+            Next
+        End If
+
+        Dim NewIEC As InelasticChannel = New InelasticChannel()
+        NewIEC.IECIndex = Index
+        Me._InelasticChannels.Add(NewIEC)
+        Return Index
+
+    End Function
+
+    ''' <summary>
+    ''' Removes the inelastic channel from the list.
+    ''' False, if the index was not found in the dictionary.
+    ''' </summary>
+    Public Function RemoveInelasticChannel(ByVal ChannelIndex As Integer) As Boolean
+        With Me._InelasticChannels
+            If .Count > ChannelIndex Then
+                .RemoveAt(ChannelIndex)
+                Return True
+            Else
+                Return False
+            End If
+        End With
     End Function
 
     ''' <summary>
     ''' Clears the list of all InelasticChannels.
     ''' </summary>
     Public Sub ClearInelasticChannels()
-        Me.InelasticChannels.Clear()
+        Me._InelasticChannels.Clear()
     End Sub
 
     ''' <summary>
     ''' Returns the list of all registered inelastic channels
     ''' </summary>
-    Public ReadOnly Property RegisteredInelasticChannels As List(Of InelasticChannel)
+    Public ReadOnly Property InelasticChannels As List(Of InelasticChannel)
         Get
-            Return Me.InelasticChannels
+            Return Me._InelasticChannels
         End Get
     End Property
 
@@ -195,8 +343,8 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
         Dim FitParameterIdentifiersToRemove As New List(Of String)
         For Each FP As cFitParameter In Me.FitParameters
 
-            If FP.Identifier.Contains(IECParameterIdentifier.IECEnergy.ToString) Or
-                FP.Identifier.Contains(IECParameterIdentifier.IECProbability.ToString) Then
+            If FP.Identifier.Contains(InelasticChannel.ParameterIdentifier.IECEnergy.ToString) OrElse
+               FP.Identifier.Contains(InelasticChannel.ParameterIdentifier.IECProbability.ToString) Then
                 FitParameterIdentifiersToRemove.Add(FP.Identifier)
             End If
 
@@ -208,11 +356,11 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
         Next
 
         ' Modify the Fit-Parameter-Array and add all inelastic channels
-        For i As Integer = 0 To Me.InelasticChannels.Count - 1 Step 1
+        For i As Integer = 0 To Me._InelasticChannels.Count - 1 Step 1
             ' add Fit-Parameters
             With Me.FitParameters
-                .Add(IECIdentifier_Energy(i), Me.InelasticChannels(i).Energy)
-                .Add(IECIdentifier_Probability(i), Me.InelasticChannels(i).Probability)
+                .Add(IECIdentifier_Energy(i), Me._InelasticChannels(i).Energy)
+                .Add(IECIdentifier_Probability(i), Me._InelasticChannels(i).Probability)
             End With
         Next
     End Sub
@@ -221,15 +369,55 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
     ''' Returns the Nth identifier of an IEC
     ''' </summary>
     Public Function IECIdentifier_Energy(ByVal i As Integer) As String
-        Return IECParameterIdentifier.IECEnergy.ToString & i.ToString
+        Return InelasticChannel.ParameterIdentifier.IECEnergy.ToString & i.ToString
     End Function
 
     ''' <summary>
     ''' Returns the Nth identifier of an IEC
     ''' </summary>
     Public Function IECIdentifier_Probability(ByVal i As Integer) As String
-        Return IECParameterIdentifier.IECProbability.ToString & i.ToString
+        Return InelasticChannel.ParameterIdentifier.IECProbability.ToString & i.ToString
     End Function
+
+#Region "Import / Export"
+
+    ''' <summary>
+    ''' Check after a successfull import of a fit-parameter, if it belongs to an inelastic channel.
+    ''' If so, add the channel to the internal list, if not yet done, and adjust its settings.
+    ''' </summary>
+    Protected Overrides Sub Import_ParameterIdentified(ByVal Identifier As String, ByRef Parameter As cFitParameter)
+
+        ' Do nothing, if we treat regular parameters
+        If (Identifier.Contains(InelasticChannel.ParameterIdentifier.IECEnergy.ToString) OrElse
+            Identifier.Contains(InelasticChannel.ParameterIdentifier.IECProbability.ToString)) Then
+
+            ' Get the index form the identifier
+            Dim IECIndex As Integer = InelasticChannel.IECIndexFromIdentifier(Identifier)
+
+            ' Check, if the necessary count of inelastic channels has been added:
+            Dim IECToModify As InelasticChannel = Nothing
+            For Each IEC As InelasticChannel In Me.InelasticChannels
+                If IEC.IECIndex = IECIndex Then
+                    IECToModify = IEC
+                    Exit For
+                End If
+            Next
+
+            If IECToModify Is Nothing Then
+                ' Create SGP
+                Me.AddInelasticChannel(IECIndex)
+                Me.ReInitializeFitParameters()
+                IECToModify = Me.InelasticChannels(Me.InelasticChannels.Count - 1)
+            End If
+
+            ' Return, since we treated this parameter already!
+            Return
+        End If
+
+        MyBase.Import_ParameterIdentified(Identifier, Parameter)
+    End Sub
+
+#End Region
 
 #End Region
 
@@ -933,7 +1121,7 @@ Public MustInherit Class cFitFunction_TipSampleConvolutionBase
         Dim E As Double
         Dim IEC_E As Double
         Dim IEC_P As Double
-        Dim IECCount As Integer = Me.InelasticChannels.Count
+        Dim IECCount As Integer = Me._InelasticChannels.Count
 
         ' Get the maximum inelastic channel energy
         Dim MaxInelasticChannelEnergy As Double = 0

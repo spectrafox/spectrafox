@@ -35,7 +35,7 @@
     End Property
 
     ''' <summary>
-    ''' First fit-parameter shown.
+    ''' Second fit-parameter shown.
     ''' </summary>
     Public Property FitParameter2 As cFitParameter
         Get
@@ -48,7 +48,7 @@
     End Property
 
     ''' <summary>
-    ''' First fit-parameter shown.
+    ''' Third fit-parameter shown.
     ''' </summary>
     Public Property FitParameter3 As cFitParameter
         Get
@@ -61,7 +61,7 @@
     End Property
 
     ''' <summary>
-    ''' First fit-parameter shown.
+    ''' Fourth fit-parameter shown.
     ''' </summary>
     Public Property FitParameter4 As cFitParameter
         Get
@@ -74,7 +74,7 @@
     End Property
 
     ''' <summary>
-    ''' First fit-parameter shown.
+    ''' All fit-parameter shown.
     ''' </summary>
     Public Property AllFitParameters As cFitParameterGroupGroup
         Get
@@ -126,15 +126,15 @@
 
 #Region "Remove the sub-parameter-panel"
     ''' <summary>
-    ''' Event to remove the sub-gap-peak out of the fit-functions-DOS.
+    ''' Event to request a removal of the sub-panel.
     ''' </summary>
-    Public Event RequestRemovalOfSubGapPeak(ByRef PanelToRemove As cFitSettingSubParameterPanel_4)
+    Public Event RequestRemovalOfSubPanel(ByRef PanelToRemove As cFitSettingSubParameterPanel_4)
 
     ''' <summary>
-    ''' Raise the event to remove the sub-parameter-panel
+    ''' Raise the event to request a remove the inelastic-channel-panel
     ''' </summary>
-    Private Sub btnRemoveSupParameterPanel_Click(sender As Object, e As EventArgs) Handles btnRemoveSubParameterPanel.Click
-        RaiseEvent RequestRemovalOfSubGapPeak(Me)
+    Private Sub btnRemoveSubPanel_Click(sender As Object, e As EventArgs) Handles btnRemoveSubParameterPanel.Click
+        RaiseEvent RequestRemovalOfSubPanel(Me)
     End Sub
 #End Region
 

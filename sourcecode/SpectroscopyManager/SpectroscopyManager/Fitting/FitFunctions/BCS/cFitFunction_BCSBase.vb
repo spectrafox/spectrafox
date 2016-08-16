@@ -310,9 +310,9 @@ Public MustInherit Class cFitFunction_BCSBase
         Dim FitParameterIdentifiersToRemove As New List(Of String)
         For Each FP As cFitParameter In Me.FitParameters
 
-            If FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPAmplitude.ToString) Or
-                FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPWidth.ToString) Or
-                FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPPosNegRatio.ToString) Or
+            If FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPAmplitude.ToString) OrElse
+                FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPWidth.ToString) OrElse
+                FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPPosNegRatio.ToString) OrElse
                 FP.Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPXCenter.ToString) Then
                 FitParameterIdentifiersToRemove.Add(FP.Identifier)
             End If
@@ -350,32 +350,35 @@ Public MustInherit Class cFitFunction_BCSBase
     Protected Overrides Sub Import_ParameterIdentified(ByVal Identifier As String, ByRef Parameter As cFitParameter)
 
         ' Do nothing, if we treat regular parameters
-        If Not (Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPAmplitude.ToString) Or
-            Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPWidth.ToString) Or
-            Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPPosNegRatio.ToString) Or
+        If (Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPAmplitude.ToString) OrElse
+            Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPWidth.ToString) OrElse
+            Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPPosNegRatio.ToString) OrElse
             Identifier.Contains(iFitFunction_SubGapPeaks.SubGapPeak.ParameterIdentifier.SGPXCenter.ToString)) Then
+
+            ' Get the index form the identifier
+            Dim SubGapPeakIndex As Integer = iFitFunction_SubGapPeaks.SubGapPeak.SGPIndexFromIdentifier(Identifier)
+
+            ' Check, if the necessary count of peaks has been added:
+            Dim SubGapPeakToModify As iFitFunction_SubGapPeaks.SubGapPeak = Nothing
+            For Each SGP As iFitFunction_SubGapPeaks.SubGapPeak In Me.SubGapPeaks
+                If SGP.SGPIndex = SubGapPeakIndex Then
+                    SubGapPeakToModify = SGP
+                    Exit For
+                End If
+            Next
+
+            If SubGapPeakToModify Is Nothing Then
+                ' Create SGP
+                Me.AddSubGapPeak(SubGapPeakIndex)
+                Me.ReInitializeFitParameters()
+                SubGapPeakToModify = Me.SubGapPeaks(Me.SubGapPeaks.Count - 1)
+            End If
+
+            ' Return, since we treated this parameter already!
             Return
         End If
 
-        ' Get the index form the identifier
-        Dim SubGapPeakIndex As Integer = iFitFunction_SubGapPeaks.SubGapPeak.SGPIndexFromIdentifier(Identifier)
-
-        ' Check, if the necessary count of peaks has been added:
-        Dim SubGapPeakToModify As iFitFunction_SubGapPeaks.SubGapPeak = Nothing
-        For Each SGP As iFitFunction_SubGapPeaks.SubGapPeak In Me.SubGapPeaks
-            If SGP.SGPIndex = SubGapPeakIndex Then
-                SubGapPeakToModify = SGP
-                Exit For
-            End If
-        Next
-
-        If SubGapPeakToModify Is Nothing Then
-            ' Create SGP
-            Me.AddSubGapPeak(SubGapPeakIndex)
-            Me.ReInitializeFitParameters()
-            SubGapPeakToModify = Me.SubGapPeaks(Me.SubGapPeaks.Count - 1)
-        End If
-
+        MyBase.Import_ParameterIdentified(Identifier, Parameter)
     End Sub
 
     ''' <summary>
@@ -414,47 +417,6 @@ Public MustInherit Class cFitFunction_BCSBase
         MyBase.Export_WriteAdditionalXMLElements(XMLWriter)
     End Sub
 
-    ' ''' <summary>
-    ' ''' Read unknown XML-Elements, if needed by the import.
-    ' ''' </summary>
-    'Protected Overrides Sub Import_UnknownXMLElementIdentified(ByVal XMLElementName As String, ByRef XMLReader As Xml.XmlReader)
-    '    If XMLElementName = "SGPEnabled" Then
-    '        ' Sub-Gap-Peak enabled/disabled data
-    '        ' get and check the properties:
-    '        '###############################
-    '        ' go through all attributes
-    '        Dim SubGapPeakIndex As Integer = -1
-    '        With XMLReader
-    '            If .AttributeCount > 0 Then
-    '                While .MoveToNextAttribute
-    '                    Select Case .Name
-    '                        Case "Identifier"
-    '                            SubGapPeakIndex = Convert.ToInt32(.Value)
-    '                        Case "Enabled"
-    '                            ' Only save, if the SGPIdentifier got read!
-    '                            If SubGapPeakIndex >= 0 Then
-    '                                ' Get the index of the SGP-Panel
-    '                                Dim iSGPPanelIndex As Integer = Me.SubGapPeakIDsToPanelIndices.IndexOf(SubGapPeakIndex)
-    '                                If iSGPPanelIndex = -1 Then Continue While
-
-    '                                ' Go to the Settingspanel and set the parameters
-    '                                Dim SGPPanel As cFitSettingSubParameter_SubGapPeakPanel = DirectCast(Me.flpSubGapPeaks.Controls(iSGPPanelIndex), cFitSettingSubParameter_SubGapPeakPanel)
-
-    '                                ' Enable or disable the SGP.
-    '                                Dim SGPEnabled As Boolean = Convert.ToBoolean(.Value)
-    '                                If Not SGPEnabled Then SGPPanel.SetSGPEnabled(SGPEnabled)
-    '                            End If
-    '                    End Select
-    '                End While
-    '            End If
-    '        End With
-    '    Else
-    '        ' else pass back to base-class
-    '        MyBase.Import_UnknownXMLElementIdentified(XMLElementName, XMLReader)
-    '    End If
-    'End Sub
-
 #End Region
-
 
 End Class

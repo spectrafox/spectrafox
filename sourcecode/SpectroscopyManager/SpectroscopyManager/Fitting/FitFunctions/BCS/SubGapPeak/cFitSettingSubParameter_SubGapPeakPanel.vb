@@ -133,6 +133,7 @@
         Me.cbSGPParentDOS.Name = "cbSGPParentDOS"
         Me.cbSGPParentDOS.Size = New System.Drawing.Size(121, 21)
         Me.cbSGPParentDOS.TabIndex = 3
+        Me.cbSGPParentDOS.Visible = False
         '
         'Label1
         '
@@ -142,6 +143,7 @@
         Me.Label1.Size = New System.Drawing.Size(238, 13)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "sub gap peak belongs to density of states (DOS):"
+        Me.Label1.Visible = False
         '
         'ckbSGPActive
         '

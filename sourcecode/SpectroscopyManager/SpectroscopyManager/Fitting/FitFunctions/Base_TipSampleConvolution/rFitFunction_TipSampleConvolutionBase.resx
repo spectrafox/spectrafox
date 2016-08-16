@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="IEC_Energy" xml:space="preserve">
+    <value>energy</value>
+  </data>
+  <data name="IEC_Probability" xml:space="preserve">
+    <value>probability</value>
+  </data>
   <data name="Parameter_GlobalXOffset" xml:space="preserve">
     <value>X offset</value>
   </data>

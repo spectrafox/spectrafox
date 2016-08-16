@@ -234,6 +234,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rExport.resx</DependentUpon>
     </Compile>
+    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\rFitFunction_TipSampleConvolutionBase.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rFitFunction_TipSampleConvolutionBase.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_InelasticChannel\cFitFunction_BCSDoubleGap_InelasticChannel.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_InelasticChannel\cFitSettingPanel_BCSDoubleGap_InelasticChannel.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_InelasticChannel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_InelasticChannel\cFitSettingPanel_BCSDoubleGap_InelasticChannel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\DoubleGap_InelasticChannel\rFitFunction_BCSDoubleGap_InelasticChannel.Designer.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingPanel_InelasticChannel.Designer.vb">
+      <DependentUpon>cFitSettingPanel_InelasticChannel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingPanel_InelasticChannel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingSubParameter_InelasicChannel.Designer.vb">
+      <DependentUpon>cFitSettingSubParameter_InelasicChannel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingSubParameter_InelasicChannel.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -307,7 +332,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\iFitFunction_TipSampleConvolutionBase.vb" />
-    <Compile Include="Fitting\FitFunctions\Base_TipSampleConvolution\rFitFunction_TipSampleConvolutionBase.Designer.vb" />
     <Compile Include="Fitting\FitFunctions\BCS\cFitFunction_BCSBase.vb" />
     <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitFunction_BCSDoubleGap.vb" />
     <Compile Include="Fitting\FitFunctions\BCS\DoubleGap\cFitFunction_BCSDoubleGap_TipAndSample.vb" />
@@ -438,6 +462,12 @@
     <Compile Include="Fitting\FitFunctions\Step - FermiFunction\rFitFunction_Step_FermiFunction.Designer.vb" />
     <Compile Include="Fitting\FitParameter\cFitParameterGroup.vb" />
     <Compile Include="Fitting\FitParameter\cFitParameterGroupGroup.vb" />
+    <Compile Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_2.Designer.vb">
+      <DependentUpon>cFitSettingSubParameterPanel_2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_4.Designer.vb">
       <DependentUpon>cFitSettingSubParameterPanel_4.vb</DependentUpon>
     </Compile>
@@ -1147,6 +1177,21 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>rExport.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\Base_TipSampleConvolution\rFitFunction_TipSampleConvolutionBase.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>rFitFunction_TipSampleConvolutionBase.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap_InelasticChannel\cFitSettingPanel_BCSDoubleGap_InelasticChannel.resx">
+      <DependentUpon>cFitSettingPanel_BCSDoubleGap_InelasticChannel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap_InelasticChannel\rFitFunction_BCSDoubleGap_InelasticChannel.resx" />
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingPanel_InelasticChannel.resx">
+      <DependentUpon>cFitSettingPanel_InelasticChannel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingSubParameter_InelasicChannel.resx">
+      <DependentUpon>cFitSettingSubParameter_InelasicChannel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -1190,7 +1235,6 @@
     <EmbeddedResource Include="Fitting\FitFunctions\Base_TipSampleConvolution\cFitSettingPanel_TipSampleConvolution.resx">
       <DependentUpon>cFitSettingPanel_TipSampleConvolution.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Fitting\FitFunctions\Base_TipSampleConvolution\rFitFunction_TipSampleConvolutionBase.resx" />
     <EmbeddedResource Include="Fitting\FitFunctions\BCS\DoubleGap\cFitSettingPanel_BCSDoubleGap.resx">
       <DependentUpon>cFitSettingPanel_BCSDoubleGap.vb</DependentUpon>
     </EmbeddedResource>
@@ -1261,6 +1305,9 @@
       <DependentUpon>cFitSettingPanel_Step_FermiFunction.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Fitting\FitFunctions\Step - FermiFunction\rFitFunction_Step_FermiFunction.resx" />
+    <EmbeddedResource Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_2.resx">
+      <DependentUpon>cFitSettingSubParameterPanel_2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Fitting\FitSettingPanel\cFitSettingSubParameterPanel_4.resx">
       <DependentUpon>cFitSettingSubParameterPanel_4.vb</DependentUpon>
     </EmbeddedResource>

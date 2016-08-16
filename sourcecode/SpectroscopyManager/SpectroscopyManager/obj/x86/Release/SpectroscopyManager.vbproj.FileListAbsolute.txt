@@ -914,3 +914,8 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\o
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wSettings_Program.resources
 D:\SpectraFoxGIT\spectrafox\sourcecode\Build\x86\Release\License-Magick.NET.txt
 D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.wScanImageSummation.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cFitSettingPanel_BCSDoubleGap_InelasticChannel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.rFitFunction_BCSDoubleGap_InelasticChannel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cFitSettingPanel_InelasticChannel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cFitSettingSubParameter_InelasticChannel.resources
+D:\SpectraFoxGIT\spectrafox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.cFitSettingSubParameterPanel_2.resources
