@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.7.29.0" language="neutral" processorArchitecture="amd64" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.8.17.0" language="neutral" processorArchitecture="amd64" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3652608">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.7.29.0" language="neutral" processorArchitecture="amd64" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3677696">
+      <assemblyIdentity name="SpectroscopyManager" version="2016.8.17.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sm0UF6B3HPNAbdM0/zjzt6ivlo9Avr9P9gsA43eKp70=</dsig:DigestValue>
+        <dsig:DigestValue>MFXmTAwcMknPRRXbwSACeClGd0RnvxKMv6W7L3hsJdM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,22 +186,22 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="5228">
+  <file name="changelog_dev.html" size="5829">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>+uYK3OjdXnUSCPc4GAkDAy6o5QenN8O+OzRzQfk5wPs=</dsig:DigestValue>
+      <dsig:DigestValue>BVFiVf0BWseAOrrLOU9PdtF9OFTUtOWTyOEMN6O+b9g=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="changelog_stable.html" size="37599">
+  <file name="changelog_stable.html" size="39019">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>8dZMBAETHYfnmVWcffJ0JJUJwoCRcIKrtX8kW+s4goE=</dsig:DigestValue>
+      <dsig:DigestValue>Jmu/NRuzvgqrwzqYHQZ2txeZUPTrrka3hnTtLPG7DL0=</dsig:DigestValue>
     </hash>
   </file>
   <file name="ColorSchemes\alpine colors.sfc" size="3162">
@@ -699,13 +699,13 @@
       <dsig:DigestValue>oUQvrB+JmIhdID6LSguzdcvnSK9ASBQqHr7RD6Izexk=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="License.txt" size="9448">
+  <file name="License.txt" size="9449">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>MOhTOo3b2u1YSiykASGdZbAJvZAPEhmZfx/cn7ZoyLA=</dsig:DigestValue>
+      <dsig:DigestValue>uoM78SgXGPrIV+JLC5Nakx1KfZ3RgNep3HsoXR8/91A=</dsig:DigestValue>
     </hash>
   </file>
   <file name="License-CUDAfy.txt" size="24960">
@@ -798,13 +798,13 @@
       <dsig:DigestValue>gQdH95JyXfxl6TVgM1vzyVG7D0AakNbt3sWK9Ee7FZU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SpectroscopyManager.exe.config" size="30487">
+  <file name="SpectroscopyManager.exe.config" size="30630">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>H9ohA4+gdX2Y8ST621VolXFT98WaOefgsi4sJmfMCLw=</dsig:DigestValue>
+      <dsig:DigestValue>WLLNzQ6B+UMvqHrmj1quBt3uFODfJvV9pIIRXn7H2EM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="versioninfo_dev.xml" size="805" writeableType="applicationData">

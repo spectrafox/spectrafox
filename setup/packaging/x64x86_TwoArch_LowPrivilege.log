@@ -238,5 +238,5 @@ Creating setup files
 
 Warning: Line 163, Column 23: [Hint] Variable 'REQNETVER' never used
 
-Successful compile (9.297 sec). Resulting Setup program filename is:
+Successful compile (8.453 sec). Resulting Setup program filename is:
 D:\SpectraFoxGIT\spectrafox\setup\output\spectrafox-stable_lowpriv.exe

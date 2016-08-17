@@ -156,7 +156,7 @@ Public Class ucFilteredListComboBoxSelector
         Me.ListOfEntries = Entries
 
         ' apply filter, and set the list of displayed entries
-        If UseLastUsedFilter Then Me.FilterColumnNames(Me.GetLastFilterText) Else Me.FilterColumnNames(String.Empty)
+        If UseLastUsedFilter Then Me.FilterColumnNames(Me.GetLastFilterText) Else Me.FilterColumnNames(Me.cmnuFilterText.Text)
 
         ' Try to set the selected ColumnName
         Me.SelectedEntry = PreSelectEntry
@@ -172,7 +172,7 @@ Public Class ucFilteredListComboBoxSelector
         Me.ListOfEntries = Entries
 
         ' apply filter, and set the list of displayed entries
-        If UseLastUsedFilter Then Me.FilterColumnNames(Me.GetLastFilterText) Else Me.FilterColumnNames(String.Empty)
+        If UseLastUsedFilter Then Me.FilterColumnNames(Me.GetLastFilterText) Else Me.FilterColumnNames(Me.cmnuFilterText.Text)
 
         ' Try to set the selected ColumnName
         If Not PreSelectedEntries Is Nothing Then Me.SelectedEntries = PreSelectedEntries
@@ -565,6 +565,11 @@ Public Class ucFilteredListComboBoxSelector
         ' Trim empty space
         FilterText = FilterText.Trim
 
+        ' Save the filtered text for the next time
+        If TurnOnLastFilterSaving Then
+            Me.SetLastFilterText(FilterText)
+        End If
+
         ' Empty filtered list
         Me.ListOfEntriesFiltered.Clear()
 
@@ -594,11 +599,6 @@ Public Class ucFilteredListComboBoxSelector
 
         ' refresh the displayed list
         Me.SetListValue(Me.ListOfEntriesFiltered)
-
-        ' Save the filtered text for the next time
-        If TurnOnLastFilterSaving Then
-            Me.SetLastFilterText(FilterText)
-        End If
 
     End Sub
 
