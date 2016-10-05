@@ -580,6 +580,7 @@ Public Class cFileObject
     ''' Returns the saved ScanChannel-List.
     ''' </summary>
     Public Function GetScanChannelList() As Dictionary(Of String, cScanImage.ScanChannel)
+        If Me.ScanImage Is Nothing Then Return New Dictionary(Of String, cScanImage.ScanChannel)
         Return Me.ScanImage.ScanChannels
     End Function
 

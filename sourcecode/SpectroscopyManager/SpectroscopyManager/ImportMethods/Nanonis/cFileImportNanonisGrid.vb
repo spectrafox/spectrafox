@@ -228,7 +228,7 @@ Public Class cFileImportNanonisGrid
                             Case "Current>Offset (A)"
                                 .Curr_Offset = Double.Parse(SettingsValue, Globalization.CultureInfo.InvariantCulture)
                             Case "Current>Gain"
-                                .Curr_Gain = Integer.Parse(SettingsValue.Replace("LN 10^", ""), Globalization.CultureInfo.InvariantCulture)
+                                .Curr_Gain = SettingsValue
 
 
                             Case "Z-Controller>Setpoint"

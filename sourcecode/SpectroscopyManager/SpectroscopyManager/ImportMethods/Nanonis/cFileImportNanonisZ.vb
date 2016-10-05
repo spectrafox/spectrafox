@@ -102,7 +102,7 @@ Public Class cFileImportNanonisZ
                         Case "Current>Offset (A)"
                             .Curr_Offset = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
                         Case "Current>Gain"
-                            .Curr_Gain = Integer.Parse(sPropertyValue.Replace("LN 10^", ""), Globalization.CultureInfo.InvariantCulture)
+                            .Curr_Gain = sPropertyValue
 
 
                         Case "Z-Controller>Setpoint"

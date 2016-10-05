@@ -757,9 +757,9 @@ Public Class cSpectroscopyTable
     Public Property Curr_Offset As Double
 
     <DescriptionAttribute("Applied gain in the current amplifier."), _
-      CategoryAttribute("_ Current Settings"), _
+      CategoryAttribute("_ Current Settings"),
       ReadOnlyAttribute(True)>
-    Public Property Curr_Gain As Integer
+    Public Property Curr_Gain As String
 
 #End Region
 

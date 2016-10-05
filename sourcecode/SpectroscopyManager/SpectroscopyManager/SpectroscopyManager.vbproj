@@ -547,6 +547,7 @@
     <Compile Include="ImportMethods\iFileImport_ScanImage.vb" />
     <Compile Include="ImportMethods\iFileImport_SpectroscopyTable.vb" />
     <Compile Include="ImportMethods\Nanonis\cFileImportNanonisGrid.vb" />
+    <Compile Include="ImportMethods\NanoObserver\cFileImportNanoObserverNAO.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotec.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecCUR.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecImages.vb" />

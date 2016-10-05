@@ -400,7 +400,7 @@ Public Class cFileImportCreatecVERT
                 Dim ColIV As New cSpectroscopyTable.DataColumn
                 With ColIV
                     ' Save Column-Name
-                    .Name = "dI/dV"
+                    .Name = "ADC 1"
                     ' Save Column-Unit
                     .UnitSymbol = "S"
                     .UnitType = cUnits.UnitType.Conductance
@@ -411,7 +411,7 @@ Public Class cFileImportCreatecVERT
                     Dim ColIVBW As New cSpectroscopyTable.DataColumn
                     With ColIVBW
                         ' Save Column-Name
-                        .Name = "dI/dV BW"
+                        .Name = "ADC 1 BW"
                         ' Save Column-Unit
                         .UnitSymbol = "S"
                         .UnitType = cUnits.UnitType.Conductance
@@ -472,7 +472,7 @@ Public Class cFileImportCreatecVERT
                 Dim ColIIVV As New cSpectroscopyTable.DataColumn
                 With ColIIVV
                     ' Save Column-Name
-                    .Name = "d/dV dI/dV"
+                    .Name = "ADC 2"
                     ' Save Column-Unit
                     .UnitSymbol = "S/V"
                     .UnitType = cUnits.UnitType.ConductanceDeriv
@@ -483,7 +483,7 @@ Public Class cFileImportCreatecVERT
                     Dim ColIIVVBW As New cSpectroscopyTable.DataColumn
                     With ColIIVVBW
                         ' Save Column-Name
-                        .Name = "d/dV dI/dV BW"
+                        .Name = "ADC 2 BW"
                         ' Save Column-Unit
                         .UnitSymbol = "S/V"
                         .UnitType = cUnits.UnitType.ConductanceDeriv
