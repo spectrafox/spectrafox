@@ -4,7 +4,7 @@
   <description asmv2:iconFile="Resources\SpectraFoxLogo3.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="SpectroscopyManager" version="2016.8.17.0" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="SpectroscopyManager" version="2016.10.5.0" language="neutral" processorArchitecture="x86" />
     <commandLine file="SpectroscopyManager.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -152,13 +152,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3821568">
-      <assemblyIdentity name="SpectroscopyManager" version="2016.8.17.0" language="neutral" processorArchitecture="x86" />
+      <assemblyIdentity name="SpectroscopyManager" version="2016.10.5.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mfyFM5Ho1ZNORbcmbZZp9eiLbBtrcbvWxpXzhvlS874=</dsig:DigestValue>
+        <dsig:DigestValue>gmYF80YosmrJiENrQHnXbwnNDPtrQFK5MG66dnXalZs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -186,13 +186,13 @@
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="changelog_dev.html" size="5829">
+  <file name="changelog_dev.html" size="1155">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>BVFiVf0BWseAOrrLOU9PdtF9OFTUtOWTyOEMN6O+b9g=</dsig:DigestValue>
+      <dsig:DigestValue>hxbTUNFgmfyBdCxOecFmsYWfDGsA9jUXje0lBtzdqn4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="changelog_stable.html" size="39019">

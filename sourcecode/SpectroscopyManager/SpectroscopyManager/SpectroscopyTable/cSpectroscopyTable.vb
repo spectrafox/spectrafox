@@ -142,11 +142,24 @@ Public Class cSpectroscopyTable
             Me._Values(Index) = Value
         End Sub
 
+        Private _CurrentCropInformation As CropInformation
         ''' <summary>
         ''' Sets/gets the crop information for this data column.
         ''' For values smaller 0, the data is not cropped!
         ''' </summary>
-        Public Property CurrentCropInformation As New CropInformation
+        Public Property CurrentCropInformation As CropInformation
+            Get
+                If Me._CurrentCropInformation = Nothing Then
+                    Return New CropInformation(0, Me.ValueCount - 1)
+                Else
+                    Return Me._CurrentCropInformation
+                End If
+            End Get
+            Set(value As CropInformation)
+                Me._CurrentCropInformation = value
+            End Set
+        End Property
+
 
 #End Region
 

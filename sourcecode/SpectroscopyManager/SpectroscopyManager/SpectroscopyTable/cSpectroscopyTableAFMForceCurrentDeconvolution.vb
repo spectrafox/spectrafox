@@ -514,6 +514,7 @@ Public Class cSpectroscopyTableAFMForceCurrentDeconvolution
                                                   ByVal StepLoop As Integer) As Double
 
         If Double.IsNaN(Position) Then Return Double.NaN
+        If EndLoop = StartLoop Then Return Double.NaN
 
         Dim ZStepSize As Double = (Zrel(EndLoop) - Zrel(StartLoop)) / Zrel.Count
         Dim ZStartValue As Double = Zrel(StartLoop)
