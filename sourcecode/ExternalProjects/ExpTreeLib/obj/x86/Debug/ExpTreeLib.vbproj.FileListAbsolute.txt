@@ -18,3 +18,5 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Debug
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Debug\ExpTreeLib.vbproj.GenerateResource.Cache
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Debug\ExpTreeLib.dll
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Debug\ExpTreeLib.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\bin\x86\Debug\ExpTreeLib.dll.CodeAnalysisLog.xml
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\bin\x86\Debug\ExpTreeLib.dll.lastcodeanalysissucceeded

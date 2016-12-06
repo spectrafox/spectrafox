@@ -142,3 +142,5 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Debug\z
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Debug\zh-tw\ZedGraph.resources.dll
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Debug\ZedGraph.dll
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Debug\ZedGraph.pdb
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ZedGraph\bin\x86\Debug\ZedGraph.dll.CodeAnalysisLog.xml
+D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ZedGraph\bin\x86\Debug\ZedGraph.dll.lastcodeanalysissucceeded

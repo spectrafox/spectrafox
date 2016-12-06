@@ -216,7 +216,7 @@ Public Class cSpectroscopyTableDataSummer
 
         If Me.SummationMethod <> SummationMode.ByValue Then
 
-            If SpectroscopyTable.ColumnExists(Me._SummationColumnName) Then
+            If Not SpectroscopyTable.ColumnExists(Me._SummationColumnName) Then
                 MessageBox.Show("Reference column for summation not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Return
             End If

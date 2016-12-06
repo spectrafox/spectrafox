@@ -127,7 +127,7 @@ Public Class cFileImportCreatecDAT
                             Case "Scanrotoffy / OffsetY"
                                 .ScanOffset_Y = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
                             Case "Biasvolt[mV]"
-                                .Bias = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture) * 0.01
+                                .Bias = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture) * 0.001
                             Case "Current[A]"
                                 .Current = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
                             Case "Sec/Image:"
@@ -265,7 +265,11 @@ Public Class cFileImportCreatecDAT
                                         ' Interpret 2 Byte Integer from the Data
                                         ScanChannel.ScanData(Y, X) = BitConverter.ToInt32(ReadBuffer, BytePerPixel * X)
                                     End If
-                                    If ScanChannel.ScanData(Y, X) = 0 Or Double.IsInfinity(ScanChannel.ScanData(Y, X)) Then ScanChannel.ScanData(Y, X) = Double.NaN
+                                    If ScanChannel.ScanData(Y, X) = 0 Or Double.IsInfinity(ScanChannel.ScanData(Y, X)) Then
+                                        ScanChannel.ScanData(Y, X) = Double.NaN
+                                    Else
+                                        ScanChannel.ScanData(Y, X) *= DACToZConversionFactor
+                                    End If
                                 Next
                                 ' PERFORMANCE OPTIMIZATION: Read whole line at once with bigger buffer!
                                 'For X As Integer = 0 To oScanImage.ScanPixels_X - 1 Step 1
