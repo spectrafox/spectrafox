@@ -13,7 +13,7 @@ Imports System.Resources
 <Assembly: AssemblyDescription("Manager for SxM spectroscopy and scan-image files.")> 
 <Assembly: AssemblyCompany("Michael Ruby")> 
 <Assembly: AssemblyProduct("SpectraFox Spectroscopy Manager")>
-<Assembly: AssemblyCopyright("Michael Ruby 2012 - 2016")>
+<Assembly: AssemblyCopyright("Michael Ruby 2012 - 2017")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: NeutralResourcesLanguage("en-US", UltimateResourceFallbackLocation.MainAssembly)> 
@@ -34,5 +34,5 @@ Imports System.Resources
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2016.12.06.0")>
-<Assembly: AssemblyFileVersion("2016.12.06.0")>
+<Assembly: AssemblyVersion("2017.01.02.0")>
+<Assembly: AssemblyFileVersion("2017.01.02.0")>

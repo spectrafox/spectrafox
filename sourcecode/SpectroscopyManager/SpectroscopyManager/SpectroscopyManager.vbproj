@@ -148,11 +148,11 @@
       <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.1.101\lib\net40-client\Magick.NET-Q8-AnyCPU.dll</HintPath>
+      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.4.100\lib\net40-client\Magick.NET-Q8-AnyCPU.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MathNet.Numerics, Version=3.11.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.3.11.1\lib\net40\MathNet.Numerics.dll</HintPath>
+    <Reference Include="MathNet.Numerics, Version=3.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.15.0\lib\net40\MathNet.Numerics.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="MathNet.Numerics.Data.Matlab, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -166,8 +166,9 @@
     <Reference Include="NetSparkle.Net40">
       <HintPath>..\packages\NetSparkle.1.1.0\lib\net40-full\NetSparkle.Net40.dll</HintPath>
     </Reference>
-    <Reference Include="SmartThreadPool">
-      <HintPath>..\packages\SmartThreadPool.dll.2.2.3\lib\SmartThreadPool.dll</HintPath>
+    <Reference Include="SmartThreadPool, Version=2.2.4.0, Culture=neutral, PublicKeyToken=1126fe8b671e8a79, processorArchitecture=MSIL">
+      <HintPath>..\packages\SmartThreadPool.dll.2.2.4\lib\net45\SmartThreadPool.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -259,6 +260,14 @@
     <Compile Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingSubParameter_InelasicChannel.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\TripleGap\cFitFunction_BCSTripleGap_SubGapPeaks.vb" />
+    <Compile Include="Fitting\FitFunctions\BCS\TripleGap\cFitSettingPanel_BCSTripleGap_SubGapPeaks.Designer.vb">
+      <DependentUpon>cFitSettingPanel_BCSTripleGap_SubGapPeaks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\TripleGap\cFitSettingPanel_BCSTripleGap_SubGapPeaks.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Fitting\FitFunctions\BCS\TripleGap\rFitFunction_BCSTripleGap_SubGapPeaks.Designer.vb" />
     <Compile Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1193,6 +1202,10 @@
     <EmbeddedResource Include="Fitting\FitFunctions\BCS\InelasticChannel\cFitSettingSubParameter_InelasicChannel.resx">
       <DependentUpon>cFitSettingSubParameter_InelasicChannel.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\TripleGap\cFitSettingPanel_BCSTripleGap_SubGapPeaks.resx">
+      <DependentUpon>cFitSettingPanel_BCSTripleGap_SubGapPeaks.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fitting\FitFunctions\BCS\TripleGap\rFitFunction_BCSTripleGap_SubGapPeaks.resx" />
     <EmbeddedResource Include="Fitting\FitFunctions\Fano\rFitFunction_Fano.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
