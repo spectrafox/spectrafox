@@ -173,11 +173,20 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to rename data-columns.
+        '''  Looks up a localized string similar to rename or delete data-columns.
         '''</summary>
         Friend Shared ReadOnly Property CM_RenameColumns() As String
             Get
                 Return ResourceManager.GetString("CM_RenameColumns", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Fourier transformation.
+        '''</summary>
+        Friend Shared ReadOnly Property CM_SpectroscopyFFT() As String
+            Get
+                Return ResourceManager.GetString("CM_SpectroscopyFFT", resourceCulture)
             End Get
         End Property
         
@@ -407,7 +416,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to using last settings: rename data-columns.
+        '''  Looks up a localized string similar to using last settings: rename or delete data-columns.
         '''</summary>
         Friend Shared ReadOnly Property MM_RenameColumns() As String
             Get
@@ -421,6 +430,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property MM_ScanImageSummation() As String
             Get
                 Return ResourceManager.GetString("MM_ScanImageSummation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to using last settings: Fourier transformation.
+        '''</summary>
+        Friend Shared ReadOnly Property MM_SpectroscopyFFT() As String
+            Get
+                Return ResourceManager.GetString("MM_SpectroscopyFFT", resourceCulture)
             End Get
         End Property
         

@@ -6,7 +6,7 @@
     ''' </summary>
     Protected ColumnRenamer As cSpectroscopyTableColumnRenamer
 
-#Region "Form Contructor"
+#Region "Form Constructor"
     ''' <summary>
     ''' Form load
     ''' </summary>
@@ -35,15 +35,25 @@
         End With
 
         ' Load Properties from Settings if possible!
-        Dim RenameRules As Dictionary(Of String, String) = cSpectroscopyTableColumnRenamer.GetRenameRulesFromSettings
+        Dim RenameRules As List(Of cSpectroscopyTableColumnRenamer.ReplaceRule) = cSpectroscopyTableColumnRenamer.GetRenameRulesFromSettings
 
         ' Write the rules
         Me.dgvColumnNames.Rows.Clear()
-        For Each RenameRule As KeyValuePair(Of String, String) In RenameRules
+        For Each RenameRule As cSpectroscopyTableColumnRenamer.ReplaceRule In RenameRules
             Dim i As Integer = Me.dgvColumnNames.Rows.Add
             With Me.dgvColumnNames.Rows(i)
-                .Cells(Me.colSourceName.Index).Value = RenameRule.Key
-                .Cells(Me.colTargetColumnName.Index).Value = RenameRule.Value
+                .Cells(Me.colSourceName.Index).Value = RenameRule.SearchFor
+                .Cells(Me.colDeleteColumn.Index).Value = RenameRule.DeleteInsteadOfReplace
+                .Cells(Me.colTargetColumnName.Index).Value = RenameRule.ReplaceBy
+
+                If RenameRule.DeleteInsteadOfReplace Then
+                    .Cells(Me.colTargetColumnName.Index).ReadOnly = True
+                    .Cells(Me.colTargetColumnName.Index).Style.BackColor = Color.DarkGray
+                Else
+                    .Cells(Me.colTargetColumnName.Index).ReadOnly = False
+                    .Cells(Me.colTargetColumnName.Index).Style.BackColor = Color.White
+                End If
+
             End With
         Next
 
@@ -117,19 +127,57 @@
     End Sub
 
     ''' <summary>
-    ''' Delete row by clicking on the delete button.
+    ''' Cell-Content Click
     ''' </summary>
-    Private Sub dgvColumnNames_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvColumnNames.CellContentClick
+    Private Sub dgvColumnNames_OnCellMouseUp(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dgvColumnNames.CellMouseUp
 
         ' just react on existing rows
+        If e.RowIndex < 0 Then Return
         If Me.dgvColumnNames.Rows(e.RowIndex).IsNewRow Then Return
 
         ' delete, when clicking on the delete column
         If e.ColumnIndex = Me.colDelete.Index Then
             Me.dgvColumnNames.Rows.RemoveAt(e.RowIndex)
+        ElseIf e.ColumnIndex = Me.colDeleteColumn.Index Then
+
+            ' Commit the current status
+            Me.dgvColumnNames.CommitEdit(DataGridViewDataErrorContexts.Commit)
+            Me.dgvColumnNames.EndEdit()
+
         End If
 
     End Sub
+
+    ''' <summary>
+    ''' CellValueChanged event
+    ''' </summary>
+    Private Sub dgvColumnNames_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgvColumnNames.CellValueChanged
+
+        ' just react on existing rows
+        If e.RowIndex < 0 Then Return
+        If Me.dgvColumnNames.Rows(e.RowIndex).IsNewRow Then Return
+
+        If e.ColumnIndex = Me.colDeleteColumn.Index Then
+
+            ' Checkbox status changed
+            Dim CurrentStatus As Boolean = Convert.ToBoolean(Me.dgvColumnNames.Rows(e.RowIndex).Cells(Me.colDeleteColumn.Index).Value)
+            If CurrentStatus Then
+                With Me.dgvColumnNames.Rows(e.RowIndex).Cells(Me.colTargetColumnName.Index)
+                    .ReadOnly = True
+                    .Style.BackColor = Color.DarkGray
+                End With
+            Else
+                With Me.dgvColumnNames.Rows(e.RowIndex).Cells(Me.colTargetColumnName.Index)
+                    .ReadOnly = False
+                    .Style.BackColor = Color.White
+                End With
+            End If
+
+        End If
+
+    End Sub
+
+
 
 #End Region
 
@@ -141,21 +189,18 @@
     Private Sub btnOK_Click(sender As Object, e As EventArgs) Handles btnOK.Click
 
         ' Get RenameRules from the DGV
-        Dim RenameRules As New Dictionary(Of String, String)
+        Dim RenameRules As New List(Of cSpectroscopyTableColumnRenamer.ReplaceRule)
 
         Dim OldName As String = ""
         Dim NewName As String = ""
+        Dim DeleteInsteadOfRenaming As Boolean = False
         For Each Row As DataGridViewRow In Me.dgvColumnNames.Rows
             If Row.IsNewRow Then Continue For
             OldName = Convert.ToString(Row.Cells(Me.colSourceName.Index).Value)
             NewName = Convert.ToString(Row.Cells(Me.colTargetColumnName.Index).Value)
+            DeleteInsteadOfRenaming = Convert.ToBoolean(Row.Cells(Me.colDeleteColumn.Index).Value)
 
-            ' Only add, if not still existing
-            If Not RenameRules.ContainsKey(OldName) Then
-                RenameRules.Add(OldName, NewName)
-            Else
-                RenameRules(OldName) = NewName
-            End If
+            RenameRules.Add(New cSpectroscopyTableColumnRenamer.ReplaceRule(OldName, NewName, DeleteInsteadOfRenaming))
         Next
 
         ' Apply the rules

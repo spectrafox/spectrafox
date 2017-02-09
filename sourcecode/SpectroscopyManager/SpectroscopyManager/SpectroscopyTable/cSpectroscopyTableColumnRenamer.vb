@@ -12,6 +12,25 @@ Public Class cSpectroscopyTableColumnRenamer
 
 #End Region
 
+#Region "Rule definition"
+
+    ''' <summary>
+    ''' Structure to store the properties of the rule
+    ''' </summary>
+    Public Structure ReplaceRule
+        Public SearchFor As String
+        Public ReplaceBy As String
+        Public DeleteInsteadOfReplace As Boolean
+
+        Public Sub New(SearchFor As String, ReplaceBy As String, DeleteInsteadOfReplace As Boolean)
+            Me.SearchFor = SearchFor
+            Me.ReplaceBy = ReplaceBy
+            Me.DeleteInsteadOfReplace = DeleteInsteadOfReplace
+        End Sub
+    End Structure
+
+#End Region
+
 #Region "Rename rules: store in settings or get from settings"
 
     Private Const RenameRuleSplit As String = "#SPLIT#"
@@ -19,16 +38,24 @@ Public Class cSpectroscopyTableColumnRenamer
     ''' <summary>
     ''' Returns the rename-rules stored in the settings as a dictionary of "Search", "Replace" values.
     ''' </summary>
-    Public Shared Function GetRenameRulesFromSettings() As Dictionary(Of String, String)
+    Public Shared Function GetRenameRulesFromSettings() As List(Of ReplaceRule)
 
         Dim RenameRules As System.Collections.Specialized.StringCollection = My.Settings.LastRenameColumnRules
-        Dim RuleCollection As New Dictionary(Of String, String)
+        Dim RuleCollection As New List(Of ReplaceRule)
 
         Dim SplitRule As String()
         For Each Rule As String In RenameRules
             SplitRule = System.Text.RegularExpressions.Regex.Split(Rule, RenameRuleSplit)
             If SplitRule.Length = 2 Then
-                RuleCollection.Add(SplitRule(0), SplitRule(1))
+                ' old rules which only allow renaming
+                RuleCollection.Add(New ReplaceRule(SplitRule(0), SplitRule(1), False))
+            ElseIf SplitRule.Length = 3 Then
+                ' new rule which allow deleting a row
+                Dim DeleteInsteadOfReplace As Boolean
+                If Not Boolean.TryParse(SplitRule(2), DeleteInsteadOfReplace) Then
+                    DeleteInsteadOfReplace = False
+                End If
+                RuleCollection.Add(New ReplaceRule(SplitRule(0), SplitRule(1), DeleteInsteadOfReplace))
             End If
         Next
 
@@ -38,11 +65,11 @@ Public Class cSpectroscopyTableColumnRenamer
     ''' <summary>
     ''' Returns the rename-rules stored in the settings as a dictionary of "Search", "Replace" values.
     ''' </summary>
-    Public Shared Sub SaveRenameRulesToSettings(ByRef RenameRules As Dictionary(Of String, String))
+    Public Shared Sub SaveRenameRulesToSettings(ByRef RenameRules As List(Of ReplaceRule))
 
         Dim SettingsRuleCollection As New System.Collections.Specialized.StringCollection
-        For Each Rule As KeyValuePair(Of String, String) In RenameRules
-            SettingsRuleCollection.Add(Rule.Key & RenameRuleSplit & Rule.Value)
+        For Each Rule As ReplaceRule In RenameRules
+            SettingsRuleCollection.Add(Rule.SearchFor & RenameRuleSplit & Rule.ReplaceBy & RenameRuleSplit & Rule.DeleteInsteadOfReplace.ToString)
         Next
 
         My.Settings.LastRenameColumnRules = SettingsRuleCollection
@@ -73,30 +100,38 @@ Public Class cSpectroscopyTableColumnRenamer
     ''' Function that renames all the columns in a SpectroscopyTable by the given rules,
     ''' and stores the FileObject.
     ''' </summary>
-    Public Sub RenameColumns(ByRef RenameRules As Dictionary(Of String, String))
+    Public Sub RenameColumns(ByRef RenameRules As List(Of ReplaceRule))
         If Me.oSpectroscopyTable Is Nothing Then Me.FetchDirect()
 
         Dim bColumnsChanged As Boolean = False
 
-        For Each RenameRule As KeyValuePair(Of String, String) In RenameRules
+        ' Go through all columns, and search for a match with the rule
+        For Each RenameRule As ReplaceRule In RenameRules
 
             ' Check, if the column exists in the file:
-            If Me.oSpectroscopyTable.Columns.ContainsKey(RenameRule.Key) Then
+            If Me.oSpectroscopyTable.Columns.ContainsKey(RenameRule.SearchFor) Then
 
-                Dim Col As cSpectroscopyTable.DataColumn = Me.oSpectroscopyTable.Columns(RenameRule.Key)
+                Dim Col As cSpectroscopyTable.DataColumn = Me.oSpectroscopyTable.Columns(RenameRule.SearchFor)
 
                 ' Just modify it, if we are allowed to!
                 If Col.IsSpectraFoxGenerated Then
 
-                    ' Rename the column
-                    If Col.Name = RenameRule.Key Then
-                        Col.Name = RenameRule.Value
+                    ' Rename the column or delete the column, depending on the selection
+                    If Not RenameRule.DeleteInsteadOfReplace Then
+                        ' RENAME
+                        If Col.Name = RenameRule.SearchFor Then
+                            Col.Name = RenameRule.ReplaceBy
+                            bColumnsChanged = True
+
+                            Me.oSpectroscopyTable.Columns.Remove(RenameRule.SearchFor)
+                            ' Change also the key in the dictionary.
+                            Me.oSpectroscopyTable.Columns.Add(RenameRule.ReplaceBy, Col)
+                        End If
+                    Else
+                        ' JUST DELETE
+                        Me.oSpectroscopyTable.Columns.Remove(RenameRule.SearchFor)
                         bColumnsChanged = True
                     End If
-
-                    ' Change also the key in the dictionary.
-                    Me.oSpectroscopyTable.Columns.Remove(RenameRule.Key)
-                    Me.oSpectroscopyTable.Columns.Add(RenameRule.Value, Col)
 
                 End If
 

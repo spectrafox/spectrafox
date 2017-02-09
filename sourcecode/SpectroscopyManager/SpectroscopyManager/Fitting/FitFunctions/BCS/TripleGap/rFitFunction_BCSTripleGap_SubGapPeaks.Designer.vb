@@ -76,12 +76,26 @@ Namespace My.Resources
         
         '''<summary>
         '''  Looks up a localized string similar to BCS deconvolution fit of:
-        '''Sample: double gap + multiple sub gap peaks
+        '''
+        '''Sample: triple gap + multiple sub gap peaks
+        '''
         '''Tip: single gap.
         '''</summary>
         Friend Shared ReadOnly Property Description_SampleSGP() As String
             Get
                 Return ResourceManager.GetString("Description_SampleSGP", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to BCS deconvolution fit of:
+        '''Sample: triple gap + multiple sub gap peaks
+        '''Tip: single gap
+        '''All with free lifetimes!.
+        '''</summary>
+        Friend Shared ReadOnly Property Description_SampleSGPTwoLifeTimes() As String
+            Get
+                Return ResourceManager.GetString("Description_SampleSGPTwoLifeTimes", resourceCulture)
             End Get
         End Property
         
@@ -183,6 +197,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to SC Tip + SC Sample (3 gap) + SGP ; free lifetimes.
+        '''</summary>
+        Friend Shared ReadOnly Property Name_SampleSGPTwoLifetimes() As String
+            Get
+                Return ResourceManager.GetString("Name_SampleSGPTwoLifetimes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to SC Tip + SGP + SC Sample (2 gap).
         '''</summary>
         Friend Shared ReadOnly Property Name_TipSGP() As String
@@ -224,6 +247,33 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Parameter_Delta_Tip() As String
             Get
                 Return ResourceManager.GetString("Parameter_Delta_Tip", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to depair factor 2.
+        '''</summary>
+        Friend Shared ReadOnly Property Parameter_LifeTime2() As String
+            Get
+                Return ResourceManager.GetString("Parameter_LifeTime2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to depair factor 3.
+        '''</summary>
+        Friend Shared ReadOnly Property Parameter_LifeTime3() As String
+            Get
+                Return ResourceManager.GetString("Parameter_LifeTime3", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to depair factor tip.
+        '''</summary>
+        Friend Shared ReadOnly Property Parameter_LifeTimeTip() As String
+            Get
+                Return ResourceManager.GetString("Parameter_LifeTimeTip", resourceCulture)
             End Get
         End Property
         

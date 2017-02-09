@@ -2364,6 +2364,30 @@ Namespace My
                 Me("DataBrowserFileList_RefreshTimer") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property LastFFT_ColumnName() As String
+            Get
+                Return CType(Me("LastFFT_ColumnName"),String)
+            End Get
+            Set
+                Me("LastFFT_ColumnName") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("FFT result")>  _
+        Public Property LastFFT_ColumnTargetName() As String
+            Get
+                Return CType(Me("LastFFT_ColumnTargetName"),String)
+            End Get
+            Set
+                Me("LastFFT_ColumnTargetName") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

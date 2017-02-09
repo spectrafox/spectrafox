@@ -591,5 +591,11 @@
     <Setting Name="DataBrowserFileList_RefreshTimer" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60</Value>
     </Setting>
+    <Setting Name="LastFFT_ColumnName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LastFFT_ColumnTargetName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FFT result</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

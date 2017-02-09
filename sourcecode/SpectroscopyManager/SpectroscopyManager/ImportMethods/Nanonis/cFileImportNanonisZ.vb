@@ -82,17 +82,13 @@ Public Class cFileImportNanonisZ
                             .Bias_OffSet_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
 
 
-                        Case "Bias Spectroscopy>Sweep Start (V)"
-                            .BiasSpec_SweepStart_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
-                        Case "Bias Spectroscopy>Sweep End (V)"
-                            .BiasSpec_SweepEnd_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
-                        Case "Bias Spectroscopy>Num Pixel"
+                        Case "Z Spectroscopy>Num Pixel"
                             .MeasurementPoints = Integer.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
-                        Case "Bias Spectroscopy>Z Avg time"
+                        Case "Z Spectroscopy>Z Avg time (s)"
                             .Z_Avg_Time_s = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
-                        Case "Bias Spectroscopy>backward sweep"
+                        Case "Z Spectroscopy>backward sweep"
                             .Backward_Sweep = Boolean.Parse(sPropertyValue)
-                        Case "Bias Spectroscopy>Number of sweeps"
+                        Case "Z Spectroscopy>Number of sweeps"
                             .NumberOfSweeps = Integer.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
 
                         Case "Current>Current (A)"

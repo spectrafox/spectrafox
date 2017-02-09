@@ -23,9 +23,9 @@ Public Class cFitFunction_BCSDoubleGap_TwoLifetimes
     ''' Method that sets all Initial FitParameters
     ''' </summary>
     Protected Overrides Sub InitializeFitParameters()
-        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.Delta_Tip.ToString, 0.00134, True, My.Resources.rFitFunction_BCSDoubleGap.Parameter_Delta_Tip))
+        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.Delta_Tip.ToString, 0.00136, True, My.Resources.rFitFunction_BCSDoubleGap.Parameter_Delta_Tip))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.Delta_Sample1.ToString, 0.00142, False, My.Resources.rFitFunction_BCSDoubleGap.Parameter_Delta_Sample1))
-        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.Delta_Sample2.ToString, 0.00132, False, My.Resources.rFitFunction_BCSDoubleGap.Parameter_Delta_Sample2))
+        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.Delta_Sample2.ToString, 0.00128, False, My.Resources.rFitFunction_BCSDoubleGap.Parameter_Delta_Sample2))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.RatioSample1ToSample2.ToString, 0.1, False, My.Resources.rFitFunction_BCSDoubleGap.Parameter_RatioSample1ToSample2))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.ImaginaryDamping2.ToString, 0.000005, False, My.Resources.rFitFunction_BCSBase.Parameter_ImaginaryDamping))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSDoubleGap.ImaginaryDampingTip.ToString, 0.000005, False, My.Resources.rFitFunction_BCSBase.Parameter_ImaginaryDamping))

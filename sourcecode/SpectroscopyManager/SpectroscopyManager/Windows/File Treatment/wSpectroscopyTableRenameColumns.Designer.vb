@@ -28,6 +28,7 @@ Partial Class wSpectroscopyTableRenameColumns
         Me.lblHint = New System.Windows.Forms.Label()
         Me.colSourceColumnSelector = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.colSourceName = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colDeleteColumn = New System.Windows.Forms.DataGridViewCheckBoxColumn()
         Me.colTargetColumnName = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.colDelete = New System.Windows.Forms.DataGridViewButtonColumn()
         CType(Me.dgvColumnNames, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -40,10 +41,10 @@ Partial Class wSpectroscopyTableRenameColumns
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.dgvColumnNames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvColumnNames.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colSourceColumnSelector, Me.colSourceName, Me.colTargetColumnName, Me.colDelete})
+        Me.dgvColumnNames.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colSourceColumnSelector, Me.colSourceName, Me.colDeleteColumn, Me.colTargetColumnName, Me.colDelete})
         Me.dgvColumnNames.Location = New System.Drawing.Point(0, 38)
         Me.dgvColumnNames.Name = "dgvColumnNames"
-        Me.dgvColumnNames.Size = New System.Drawing.Size(770, 433)
+        Me.dgvColumnNames.Size = New System.Drawing.Size(806, 433)
         Me.dgvColumnNames.TabIndex = 1
         '
         'btnCancel
@@ -51,7 +52,7 @@ Partial Class wSpectroscopyTableRenameColumns
         Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnCancel.Image = Global.SpectroscopyManager.My.Resources.Resources.cancel_16
         Me.btnCancel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnCancel.Location = New System.Drawing.Point(677, 477)
+        Me.btnCancel.Location = New System.Drawing.Point(713, 477)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(91, 23)
         Me.btnCancel.TabIndex = 2
@@ -63,7 +64,7 @@ Partial Class wSpectroscopyTableRenameColumns
         Me.btnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnOK.Image = Global.SpectroscopyManager.My.Resources.Resources.ok_16
         Me.btnOK.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.btnOK.Location = New System.Drawing.Point(586, 477)
+        Me.btnOK.Location = New System.Drawing.Point(622, 477)
         Me.btnOK.Name = "btnOK"
         Me.btnOK.Size = New System.Drawing.Size(85, 23)
         Me.btnOK.TabIndex = 2
@@ -91,6 +92,12 @@ Partial Class wSpectroscopyTableRenameColumns
         Me.colSourceName.Name = "colSourceName"
         Me.colSourceName.Width = 200
         '
+        'colDeleteColumn
+        '
+        Me.colDeleteColumn.HeaderText = "delete column"
+        Me.colDeleteColumn.Name = "colDeleteColumn"
+        Me.colDeleteColumn.Width = 50
+        '
         'colTargetColumnName
         '
         Me.colTargetColumnName.HeaderText = "new column name"
@@ -99,17 +106,18 @@ Partial Class wSpectroscopyTableRenameColumns
         '
         'colDelete
         '
-        Me.colDelete.HeaderText = "delete row"
+        Me.colDelete.HeaderText = "delete rule"
         Me.colDelete.Name = "colDelete"
-        Me.colDelete.Text = "delete row"
-        Me.colDelete.ToolTipText = "delete row"
+        Me.colDelete.Text = "delete rule"
+        Me.colDelete.ToolTipText = "delete rule"
         Me.colDelete.UseColumnTextForButtonValue = True
+        Me.colDelete.Width = 80
         '
         'wSpectroscopyTableRenameColumns
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(771, 503)
+        Me.ClientSize = New System.Drawing.Size(807, 503)
         Me.Controls.Add(Me.lblHint)
         Me.Controls.Add(Me.btnOK)
         Me.Controls.Add(Me.btnCancel)
@@ -132,6 +140,7 @@ Partial Class wSpectroscopyTableRenameColumns
     Friend WithEvents lblHint As Label
     Friend WithEvents colSourceColumnSelector As DataGridViewComboBoxColumn
     Friend WithEvents colSourceName As DataGridViewTextBoxColumn
+    Friend WithEvents colDeleteColumn As DataGridViewCheckBoxColumn
     Friend WithEvents colTargetColumnName As DataGridViewTextBoxColumn
     Friend WithEvents colDelete As DataGridViewButtonColumn
 End Class

@@ -23,9 +23,9 @@ Public Class cFitFunction_BCSTripleGap_SubGapPeaks
     ''' Method that sets all Initial FitParameters
     ''' </summary>
     Protected Overrides Sub InitializeFitParameters()
-        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.Delta_Tip.ToString, 0.00134, True, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_Delta_Tip))
+        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.Delta_Tip.ToString, 0.00136, True, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_Delta_Tip))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.Delta_Sample1.ToString, 0.00142, False, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_Delta_Sample1))
-        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.Delta_Sample2.ToString, 0.00132, False, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_Delta_Sample2))
+        Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.Delta_Sample2.ToString, 0.00128, False, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_Delta_Sample2))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.RatioSample1ToSample2.ToString, 0.1, False, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_RatioSample1ToSample2))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.Delta_Sample3.ToString, 0.00112, False, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_Delta_Sample3))
         Me.FitParameters.Add(New cFitParameter(FitParameterIdentifierBCSTripleGap.RatioSample1ToSample3.ToString, 0.1, False, My.Resources.rFitFunction_BCSTripleGap_SubGapPeaks.Parameter_RatioSample1ToSample3))

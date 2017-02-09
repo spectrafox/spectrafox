@@ -133,7 +133,7 @@
         Tool.FetchDirect()
 
         ' Get the rename-rules from the settings
-        Dim RenameRules As Dictionary(Of String, String) = cSpectroscopyTableColumnRenamer.GetRenameRulesFromSettings
+        Dim RenameRules As List(Of cSpectroscopyTableColumnRenamer.ReplaceRule) = cSpectroscopyTableColumnRenamer.GetRenameRulesFromSettings
 
         ' Rename!
         Tool.RenameColumns(RenameRules)

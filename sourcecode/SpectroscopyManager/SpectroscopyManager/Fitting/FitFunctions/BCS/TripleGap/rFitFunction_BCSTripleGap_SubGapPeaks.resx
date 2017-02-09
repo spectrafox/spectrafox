@@ -123,8 +123,16 @@ Michael Ruby</value>
   </data>
   <data name="Description_SampleSGP" xml:space="preserve">
     <value>BCS deconvolution fit of:
-Sample: double gap + multiple sub gap peaks
+
+Sample: triple gap + multiple sub gap peaks
+
 Tip: single gap</value>
+  </data>
+  <data name="Description_SampleSGPTwoLifeTimes" xml:space="preserve">
+    <value>BCS deconvolution fit of:
+Sample: triple gap + multiple sub gap peaks
+Tip: single gap
+All with free lifetimes!</value>
   </data>
   <data name="Description_TipSGP" xml:space="preserve">
     <value>BCS deconvolution fit of:
@@ -163,6 +171,9 @@ vice versa!!!</value>
   <data name="Name_SampleSGP" xml:space="preserve">
     <value>SC Tip + SC Sample (3 gap) + SGP</value>
   </data>
+  <data name="Name_SampleSGPTwoLifetimes" xml:space="preserve">
+    <value>SC Tip + SC Sample (3 gap) + SGP ; free lifetimes</value>
+  </data>
   <data name="Name_TipSGP" xml:space="preserve">
     <value>SC Tip + SGP + SC Sample (2 gap)</value>
   </data>
@@ -177,6 +188,15 @@ vice versa!!!</value>
   </data>
   <data name="Parameter_Delta_Tip" xml:space="preserve">
     <value>tip gap</value>
+  </data>
+  <data name="Parameter_LifeTime2" xml:space="preserve">
+    <value>depair factor 2</value>
+  </data>
+  <data name="Parameter_LifeTime3" xml:space="preserve">
+    <value>depair factor 3</value>
+  </data>
+  <data name="Parameter_LifeTimeTip" xml:space="preserve">
+    <value>depair factor tip</value>
   </data>
   <data name="Parameter_RatioSample1ToSample2" xml:space="preserve">
     <value>ratio gap 1 to 2</value>

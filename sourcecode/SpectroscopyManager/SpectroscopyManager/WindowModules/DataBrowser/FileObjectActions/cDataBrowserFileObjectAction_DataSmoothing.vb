@@ -3,7 +3,7 @@
 
 #Region "Class abilities"
     ''' <summary>
-    ''' This class can handle single file-objects.
+    ''' This class can handle multiple file-objects.
     ''' </summary>
     Public ReadOnly Property CanHandleMultipleFileObjects As Boolean Implements iDataBrowser_FileObjectAction.CanHandleMultipleFileObjects
         Get

@@ -154,7 +154,10 @@
     <value>numeric derivative</value>
   </data>
   <data name="CM_RenameColumns" xml:space="preserve">
-    <value>rename data-columns</value>
+    <value>rename or delete data-columns</value>
+  </data>
+  <data name="CM_SpectroscopyFFT" xml:space="preserve">
+    <value>Fourier transformation</value>
   </data>
   <data name="MM_AFMDeconvolutionForce" xml:space="preserve">
     <value>using last settings: force and current deconvolution</value>
@@ -232,10 +235,13 @@
     <value>plot spectra as stacked contour-plot</value>
   </data>
   <data name="MM_RenameColumns" xml:space="preserve">
-    <value>using last settings: rename data-columns</value>
+    <value>using last settings: rename or delete data-columns</value>
   </data>
   <data name="MM_ScanImageSummation" xml:space="preserve">
     <value>two scan images: image merging</value>
+  </data>
+  <data name="MM_SpectroscopyFFT" xml:space="preserve">
+    <value>using last settings: Fourier transformation</value>
   </data>
   <data name="TT_CropFile" xml:space="preserve">
     <value>crops measured data to certain ranges</value>
