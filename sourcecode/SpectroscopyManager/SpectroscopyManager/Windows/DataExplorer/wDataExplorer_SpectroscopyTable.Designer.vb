@@ -43,6 +43,10 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.tpAdditionalComment = New System.Windows.Forms.TabPage()
         Me.btnSaveAdditionalComment = New System.Windows.Forms.Button()
         Me.txtAdditionalComment = New System.Windows.Forms.TextBox()
+        Me.tpGeneralProperties = New System.Windows.Forms.TabPage()
+        Me.dtGeneralPropertyArray = New System.Windows.Forms.DataGridView()
+        Me.colGeneralPropertyArray_Key = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colGeneralPropertyArray_Value = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.gbSpectraComment = New System.Windows.Forms.GroupBox()
         Me.txtSpectraComment = New System.Windows.Forms.TextBox()
         Me.gbSpectroscopyTablePropertyGrid = New System.Windows.Forms.GroupBox()
@@ -58,6 +62,8 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.gbDataCollector.SuspendLayout()
         Me.tpShow.SuspendLayout()
         Me.tpAdditionalComment.SuspendLayout()
+        Me.tpGeneralProperties.SuspendLayout()
+        CType(Me.dtGeneralPropertyArray, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbSpectraComment.SuspendLayout()
         Me.gbSpectroscopyTablePropertyGrid.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,6 +81,7 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.tcSpectroscopyTable.Controls.Add(Me.tpPlot)
         Me.tcSpectroscopyTable.Controls.Add(Me.tpShow)
         Me.tcSpectroscopyTable.Controls.Add(Me.tpAdditionalComment)
+        Me.tcSpectroscopyTable.Controls.Add(Me.tpGeneralProperties)
         Me.tcSpectroscopyTable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tcSpectroscopyTable.Location = New System.Drawing.Point(0, 0)
         Me.tcSpectroscopyTable.Name = "tcSpectroscopyTable"
@@ -126,6 +133,7 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.svDataViewer.ClearPointSelectionModeAfterSelection = False
         Me.svDataViewer.Dock = System.Windows.Forms.DockStyle.Fill
         Me.svDataViewer.Location = New System.Drawing.Point(0, 0)
+        Me.svDataViewer.MultipleSpectraStackOffset = 0R
         Me.svDataViewer.MultipleYColumnSelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
         Me.svDataViewer.Name = "svDataViewer"
         Me.svDataViewer.PointSelectionMode = SpectroscopyManager.mSpectroscopyTableViewer.SelectionModes.None
@@ -281,7 +289,7 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.tpShow.Location = New System.Drawing.Point(4, 22)
         Me.tpShow.Name = "tpShow"
         Me.tpShow.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpShow.Size = New System.Drawing.Size(1103, 816)
+        Me.tpShow.Size = New System.Drawing.Size(1056, 816)
         Me.tpShow.TabIndex = 1
         Me.tpShow.Text = "data table"
         Me.tpShow.UseVisualStyleBackColor = True
@@ -291,7 +299,7 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.dtSpectroscopyTable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtSpectroscopyTable.Location = New System.Drawing.Point(3, 3)
         Me.dtSpectroscopyTable.Name = "dtSpectroscopyTable"
-        Me.dtSpectroscopyTable.Size = New System.Drawing.Size(1097, 810)
+        Me.dtSpectroscopyTable.Size = New System.Drawing.Size(1050, 810)
         Me.dtSpectroscopyTable.TabIndex = 0
         '
         'tpAdditionalComment
@@ -301,7 +309,7 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.tpAdditionalComment.Location = New System.Drawing.Point(4, 22)
         Me.tpAdditionalComment.Name = "tpAdditionalComment"
         Me.tpAdditionalComment.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpAdditionalComment.Size = New System.Drawing.Size(1103, 816)
+        Me.tpAdditionalComment.Size = New System.Drawing.Size(1056, 816)
         Me.tpAdditionalComment.TabIndex = 2
         Me.tpAdditionalComment.Text = "extended comment"
         Me.tpAdditionalComment.UseVisualStyleBackColor = True
@@ -332,6 +340,48 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.txtAdditionalComment.Size = New System.Drawing.Size(1092, 781)
         Me.txtAdditionalComment.TabIndex = 0
         Me.txtAdditionalComment.WordWrap = False
+        '
+        'tpGeneralProperties
+        '
+        Me.tpGeneralProperties.Controls.Add(Me.dtGeneralPropertyArray)
+        Me.tpGeneralProperties.Location = New System.Drawing.Point(4, 22)
+        Me.tpGeneralProperties.Name = "tpGeneralProperties"
+        Me.tpGeneralProperties.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpGeneralProperties.Size = New System.Drawing.Size(1056, 816)
+        Me.tpGeneralProperties.TabIndex = 3
+        Me.tpGeneralProperties.Text = "headers extracted from data file"
+        Me.tpGeneralProperties.UseVisualStyleBackColor = True
+        '
+        'dtGeneralPropertyArray
+        '
+        Me.dtGeneralPropertyArray.AllowUserToAddRows = False
+        Me.dtGeneralPropertyArray.AllowUserToDeleteRows = False
+        Me.dtGeneralPropertyArray.AllowUserToResizeRows = False
+        Me.dtGeneralPropertyArray.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dtGeneralPropertyArray.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtGeneralPropertyArray.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtGeneralPropertyArray.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colGeneralPropertyArray_Key, Me.colGeneralPropertyArray_Value})
+        Me.dtGeneralPropertyArray.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtGeneralPropertyArray.Location = New System.Drawing.Point(3, 3)
+        Me.dtGeneralPropertyArray.Name = "dtGeneralPropertyArray"
+        Me.dtGeneralPropertyArray.ReadOnly = True
+        Me.dtGeneralPropertyArray.RowHeadersVisible = False
+        Me.dtGeneralPropertyArray.Size = New System.Drawing.Size(1050, 810)
+        Me.dtGeneralPropertyArray.TabIndex = 0
+        '
+        'colGeneralPropertyArray_Key
+        '
+        Me.colGeneralPropertyArray_Key.HeaderText = "property name"
+        Me.colGeneralPropertyArray_Key.Name = "colGeneralPropertyArray_Key"
+        Me.colGeneralPropertyArray_Key.ReadOnly = True
+        Me.colGeneralPropertyArray_Key.Width = 99
+        '
+        'colGeneralPropertyArray_Value
+        '
+        Me.colGeneralPropertyArray_Value.HeaderText = "property value"
+        Me.colGeneralPropertyArray_Value.Name = "colGeneralPropertyArray_Value"
+        Me.colGeneralPropertyArray_Value.ReadOnly = True
+        Me.colGeneralPropertyArray_Value.Width = 99
         '
         'gbSpectraComment
         '
@@ -430,6 +480,8 @@ Partial Class wDataExplorer_SpectroscopyTable
         Me.tpShow.ResumeLayout(False)
         Me.tpAdditionalComment.ResumeLayout(False)
         Me.tpAdditionalComment.PerformLayout()
+        Me.tpGeneralProperties.ResumeLayout(False)
+        CType(Me.dtGeneralPropertyArray, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbSpectraComment.ResumeLayout(False)
         Me.gbSpectraComment.PerformLayout()
         Me.gbSpectroscopyTablePropertyGrid.ResumeLayout(False)
@@ -471,4 +523,8 @@ Partial Class wDataExplorer_SpectroscopyTable
     Friend WithEvents ckbDataCollector_UseTab As System.Windows.Forms.CheckBox
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
     Friend WithEvents SplitContainer2 As System.Windows.Forms.SplitContainer
+    Friend WithEvents tpGeneralProperties As TabPage
+    Friend WithEvents dtGeneralPropertyArray As DataGridView
+    Friend WithEvents colGeneralPropertyArray_Key As DataGridViewTextBoxColumn
+    Friend WithEvents colGeneralPropertyArray_Value As DataGridViewTextBoxColumn
 End Class

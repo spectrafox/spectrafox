@@ -100,6 +100,8 @@ Public MustInherit Class cExportMethod_Ascii
             End If
         Next
 
+        S.Append(Me.GetFooter(SpectroscopyTable))
+
         Return S.ToString
     End Function
 
@@ -146,6 +148,13 @@ Public MustInherit Class cExportMethod_Ascii
         S.Append(vbCrLf)
 
         Return S.ToString
+    End Function
+
+    ''' <summary>
+    ''' Returns an empty footer by default
+    ''' </summary>
+    Public Overridable Function GetFooter(ByRef SpectroscopyTable As cSpectroscopyTable) As String Implements iExportMethod_Ascii.GetFooter
+        Return String.Empty
     End Function
 
     ''' <summary>

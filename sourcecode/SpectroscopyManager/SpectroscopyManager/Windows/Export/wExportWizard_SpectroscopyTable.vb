@@ -33,6 +33,7 @@
         ExportMethods.Add(New cExportMethod_Ascii_CSV)
         ExportMethods.Add(New cExportMethod_Ascii_TAB)
         ExportMethods.Add(New cExportMethod_Ascii_SPACE)
+        ExportMethods.Add(New cExportMethod_Ascii_IGORWave)
 
         ' Fill the Combobox with these types
         With Me.cbExportType

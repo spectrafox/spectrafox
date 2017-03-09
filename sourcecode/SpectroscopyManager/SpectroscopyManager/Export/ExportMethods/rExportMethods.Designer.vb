@@ -77,6 +77,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to IGOR wave compatible format.
+        '''</summary>
+        Friend Shared ReadOnly Property ExportTypeDesc_IGORWave() As String
+            Get
+                Return ResourceManager.GetString("ExportTypeDesc_IGORWave", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to File contains a table in Mathematica syntax.
         '''
         '''Value format is english, with *10^(x) syntax.
@@ -130,6 +139,15 @@ Namespace My.Resources
         Friend Shared ReadOnly Property ExportTypeName_CSV() As String
             Get
                 Return ResourceManager.GetString("ExportTypeName_CSV", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to IGOR wave file.
+        '''</summary>
+        Friend Shared ReadOnly Property ExportTypeName_IGORWave() As String
+            Get
+                Return ResourceManager.GetString("ExportTypeName_IGORWave", resourceCulture)
             End Get
         End Property
         

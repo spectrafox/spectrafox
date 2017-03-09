@@ -219,6 +219,7 @@
     <Compile Include="Export\cExternalViewers.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_CSV.vb" />
+    <Compile Include="Export\ExportMethods\cExportMethod_Ascii_IGORWave.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_SPACE.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_TAB.vb" />
     <Compile Include="Export\ExportMethods\cExportMethod_Ascii_ORIGIN.vb" />
@@ -566,7 +567,10 @@
     <Compile Include="ImportMethods\iFileImport_ParameterFileToBeImportedOnce.vb" />
     <Compile Include="ImportMethods\iFileImport_ScanImage.vb" />
     <Compile Include="ImportMethods\iFileImport_SpectroscopyTable.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisBias.vb" />
     <Compile Include="ImportMethods\Nanonis\cFileImportNanonisGrid.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisSpectroscopyFile.vb" />
+    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisZ.vb" />
     <Compile Include="ImportMethods\NanoObserver\cFileImportNanoObserverNAO.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotec.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecCUR.vb" />
@@ -1006,9 +1010,7 @@
     <Compile Include="SpectroscopyTable\cSpectroscopyTableDataNormalizer.vb" />
     <Compile Include="Export\cExport.vb" />
     <Compile Include="Export\cExportSpectroscopyTable.vb" />
-    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisBias.vb" />
     <Compile Include="ImportMethods\Createc\cFileImportCreatecDAT.vb" />
-    <Compile Include="ImportMethods\Nanonis\cFileImportNanonisZ.vb" />
     <Compile Include="NumericMethods\cConstants.vb" />
     <Compile Include="NumericMethods\cNumericAveraging.vb" />
     <Compile Include="NumericMethods\cNumericNormalization.vb" />

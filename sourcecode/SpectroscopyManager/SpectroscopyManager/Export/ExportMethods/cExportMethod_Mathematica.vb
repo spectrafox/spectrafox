@@ -54,10 +54,16 @@ Public Class cExportMethod_Mathematica
     End Function
 
     ''' <summary>
-    ''' Returns the full header placed in the beginning of the file!
-    ''' Default Method places all "Column-Name (Unit)" in the first row.
+    ''' Returns an empty header
     ''' </summary>
     Public Overridable Function GetHeader(ByRef SpectroscopyTable As cSpectroscopyTable) As String Implements iExportMethod_Ascii.GetHeader
+        Return String.Empty
+    End Function
+
+    ''' <summary>
+    ''' Returns an empty footer.
+    ''' </summary>
+    Public Overridable Function GetFooter(ByRef SpectroscopyTable As cSpectroscopyTable) As String Implements iExportMethod_Ascii.GetFooter
         Return String.Empty
     End Function
 

@@ -58,6 +58,11 @@ Public Interface iExportMethod_Ascii
     ''' Creates the ASCII header written to the exported File!
     ''' </summary>
     Function GetHeader(ByRef SpectroscopyTable As cSpectroscopyTable) As String
+
+    ''' <summary>
+    ''' Creates the ASCII footer written to the exported File!
+    ''' </summary>
+    Function GetFooter(ByRef SpectroscopyTable As cSpectroscopyTable) As String
 #End Region
 
 

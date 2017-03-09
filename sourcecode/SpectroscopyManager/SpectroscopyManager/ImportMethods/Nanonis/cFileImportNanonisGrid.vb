@@ -366,7 +366,7 @@ Public Class cFileImportNanonisGrid
                         Dim SweepSignalColumn As New cSpectroscopyTable.DataColumn
                         With SweepSignalColumn
                             ' Get the column name
-                            Dim SweepSignalMatch As Match = cFileImportNanonisBias.ColumnHeaderRegex.Match(oGridFile.SweepSignalColumn)
+                            Dim SweepSignalMatch As Match = cFileImportNanonisSpectroscopyFile.ColumnHeaderRegex.Match(oGridFile.SweepSignalColumn)
                             If SweepSignalMatch.Success Then
                                 .Name = SweepSignalMatch.Groups("ColumnName").Value
                                 .UnitSymbol = SweepSignalMatch.Groups("Unit").Value
@@ -385,7 +385,7 @@ Public Class cFileImportNanonisGrid
                             With DataColumn
 
                                 ' Get the column name
-                                Dim ChannelNameMatch As Match = cFileImportNanonisBias.ColumnHeaderRegex.Match(oGridFile.ChannelsRecorded(i))
+                                Dim ChannelNameMatch As Match = cFileImportNanonisSpectroscopyFile.ColumnHeaderRegex.Match(oGridFile.ChannelsRecorded(i))
                                 If ChannelNameMatch.Success Then
                                     .Name = ChannelNameMatch.Groups("ColumnName").Value
                                     .UnitSymbol = ChannelNameMatch.Groups("Unit").Value
@@ -513,7 +513,7 @@ Public Class cFileImportNanonisGrid
 
                         ' Generate first of all generate the data of the sweep signal column
                         ' Get the column name
-                        Dim SweepSignalMatch As Match = cFileImportNanonisBias.ColumnHeaderRegex.Match(oGridFile.SweepSignalColumn)
+                        Dim SweepSignalMatch As Match = cFileImportNanonisSpectroscopyFile.ColumnHeaderRegex.Match(oGridFile.SweepSignalColumn)
                         Dim ColumnName As String = ""
                         If SweepSignalMatch.Success Then
                             ColumnName = SweepSignalMatch.Groups("ColumnName").Value
@@ -541,7 +541,7 @@ Public Class cFileImportNanonisGrid
                         For i As Integer = 0 To ExperimentDataLists.Count - 1 Step 1
 
                             ' Get the column name
-                            Dim ChannelNameMatch As Match = cFileImportNanonisBias.ColumnHeaderRegex.Match(oGridFile.ChannelsRecorded(i))
+                            Dim ChannelNameMatch As Match = cFileImportNanonisSpectroscopyFile.ColumnHeaderRegex.Match(oGridFile.ChannelsRecorded(i))
                             If ChannelNameMatch.Success Then
                                 ColumnName = ChannelNameMatch.Groups("ColumnName").Value
                             Else

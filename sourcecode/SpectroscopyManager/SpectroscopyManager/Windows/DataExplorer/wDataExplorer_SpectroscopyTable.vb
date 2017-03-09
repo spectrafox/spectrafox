@@ -41,6 +41,7 @@
         Me.SetSpectraCommentThreadSafe(SpectroscopyTable.Comment)
         Me.SetAdditionalCommentThreadSafe(MyBase._FileObject.ExtendedComment)
         Me.SetDataTableThreadSafe(SpectroscopyTable)
+        Me.SetGeneralPropertyArrayThreadSafe(SpectroscopyTable)
 
         ' Non-Thread-Safe
         'Me.svDataViewer.SetSinglePreviewImage(SpectroscopyTable)
@@ -105,6 +106,25 @@
                 .Invoke(New _ThreadSafeSpectroscopyTableDelegate(AddressOf SetDataTableThreadSafe), SpectroscopyTable)
             Else
                 .SetSpectroscopyTable(SpectroscopyTable)
+            End If
+        End With
+    End Sub
+
+    Public Sub SetGeneralPropertyArrayThreadSafe(ByRef SpectroscopyTable As cSpectroscopyTable)
+        With Me.dtGeneralPropertyArray
+            If .InvokeRequired Then
+                .Invoke(New _ThreadSafeSpectroscopyTableDelegate(AddressOf SetGeneralPropertyArrayThreadSafe), SpectroscopyTable)
+            Else
+                ' Set all properties
+                For Each KV As KeyValuePair(Of String, String) In SpectroscopyTable.GeneralPropertyArray
+                    With Me.dtGeneralPropertyArray.Rows
+                        Dim i As Integer = .Add
+                        With .Item(i)
+                            .Cells(Me.colGeneralPropertyArray_Key.Index).Value = KV.Key
+                            .Cells(Me.colGeneralPropertyArray_Value.Index).Value = KV.Value
+                        End With
+                    End With
+                Next
             End If
         End With
     End Sub

@@ -169,7 +169,7 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' Cache-name to write the file-buffer to.
     ''' </summary>
-    Public Const FileBufferCache_FileName As String = "spectrafox.sfc"
+    Public Const FileBufferCache_FileName As String = "spectrafox.sfcc"
 
     ''' <summary>
     ''' Returns the full cache file path.
@@ -550,7 +550,8 @@ Public Class mDataBrowserList
         Me.timAutomaticScrollTimer.Dispose()
 
         ' Write finally the file-buffer to the disk
-        Me.FlushFileCacheToDisk(True)
+        'Me.FlushFileCacheToDisk(True)
+        Me.FlushFileCacheToDisk_DoWork(True)
 
         ' Release streams
         Me.FileBufferCache.Close()
@@ -658,9 +659,40 @@ Public Class mDataBrowserList
     End Sub
 
     ''' <summary>
+    ''' Callback-Function to flush the cache to the disk using a thread pool instance
+    ''' </summary>
+    Private FlushFileCacheToDisk_Callback As New WorkItemCallback(AddressOf FlushFileCacheToDisk)
+
+    ''' <summary>
+    ''' Delegate function
+    ''' </summary>
+    Public Function FlushFileCacheToDisk(state As Object) As Object
+        Dim Force As Boolean = False
+        If TypeOf state Is Boolean Then Force = CType(state, Boolean)
+        Me.FlushFileCacheToDisk_DoWork(Force)
+        Return Nothing
+    End Function
+
+    ''' <summary>
     ''' Writes the current file-cache file to the disk.
     ''' </summary>
     Public Sub FlushFileCacheToDisk(Optional ByVal Force As Boolean = False)
+        ' Do it in a background thread!
+        Me._ThreadPool.QueueWorkItem(FlushFileCacheToDisk_Callback, Force)
+    End Sub
+
+    ''' <summary>
+    ''' Flushes the File-cache to the disk. Not forcable.
+    ''' </summary>
+    Private Sub FlushFileCacheToDisk() Handles timFileBufferCache_FlushTimer.Tick
+        ' Do it in a background thread!
+        Me._ThreadPool.QueueWorkItem(FlushFileCacheToDisk_Callback, False)
+    End Sub
+
+    ''' <summary>
+    ''' Writes the current file-cache file to the disk.
+    ''' </summary>
+    Public Sub FlushFileCacheToDisk_DoWork(Optional ByVal Force As Boolean = False)
         ' First create the file-buffer in the memory.
         Me.SaveFileBuffer()
 
@@ -674,7 +706,7 @@ Public Class mDataBrowserList
         If Me.FileBufferCache_FileLock.GetFileLockOrWait() Then
 
             ' Write the buffer as a file
-            Me.oFileImporter.WriteFileBufferAsFile(Me.FileBufferCache_FullPathPlusFile)
+            Me.oFileImporter.WriteFileBufferAsFile(Me.FileBufferCache_FullPathPlusFile, , True)
 
             ' Mark the memory-stream as unchanged.
             Me.FileBufferCache_IsModified = False
@@ -683,13 +715,6 @@ Public Class mDataBrowserList
             Me.FileBufferCache_FileLock.ReleaseLock()
 
         End If
-    End Sub
-
-    ''' <summary>
-    ''' Flushes the File-cache to the disk. Not forcable.
-    ''' </summary>
-    Private Sub FlushFileCacheToDisk() Handles timFileBufferCache_FlushTimer.Tick
-        Me.FlushFileCacheToDisk(False)
     End Sub
 
     ''' <summary>

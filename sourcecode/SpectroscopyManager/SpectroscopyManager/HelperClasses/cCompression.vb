@@ -121,6 +121,44 @@ Public Class cCompression
     End Function
 #End Region
 
+#Region "Analyze compressed data"
+
+    Public Shared GZipHeaderBytes As Byte() = {&H1F, &H8B, 8, 0, 0, 0, 0, 0, 4, 0}
+    Public Shared GZipLevel10HeaderBytes As Byte() = {&H1F, &H8B, 8, 0, 0, 0, 0, 0, 2, 0}
+
+    ''' <summary>
+    ''' Returns, if a byte stream is a possible GZIPStream
+    ''' </summary>
+    Public Shared Function IsPossiblyGZippedBytes(a As Byte()) As Boolean
+        Dim yes As Boolean = (a.Length > 10)
+
+        If Not yes Then Return False
+
+        Dim header(9) As Byte
+        Array.Copy(a, 0, header, 0, 10)
+
+        Return header.SequenceEqual(GZipHeaderBytes) OrElse header.SequenceEqual(GZipLevel10HeaderBytes)
+    End Function
+
+    ''' <summary>
+    ''' Returns, if a byte stream is a possible GZIPStream
+    ''' </summary>
+    Public Shared Function IsPossiblyGZippedBytes(a As Stream) As Boolean
+        Dim yes As Boolean = (a.Length > 10)
+
+        If Not yes Then Return False
+
+        Dim header(9) As Byte
+        If a.CanSeek() Then a.Seek(0, SeekOrigin.Begin)
+        a.Read(header, 0, 10)
+        If a.CanSeek() Then a.Seek(0, SeekOrigin.Begin)
+
+        Return header.SequenceEqual(GZipHeaderBytes) OrElse header.SequenceEqual(GZipLevel10HeaderBytes)
+    End Function
+
+#End Region
+
+
 #Region "Compression of a list of files"
 
     ''' <summary>

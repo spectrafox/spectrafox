@@ -424,7 +424,8 @@ Public Class cFileImport
     ''' Returns, if writing has been successfull.
     ''' </summary>
     Public Function WriteFileBufferAsFile(ByVal PathToFileInclFullFile As String,
-                                          Optional ByRef BackgroundWorker As System.ComponentModel.BackgroundWorker = Nothing) As Boolean
+                                          Optional ByRef BackgroundWorker As System.ComponentModel.BackgroundWorker = Nothing,
+                                          Optional ByVal CompressFile As Boolean = False) As Boolean
 
         If Me.FileBufferIsFetching Then Return False
 
@@ -441,7 +442,7 @@ Public Class cFileImport
                 ExportSuccessFull = Me.WriteFileBufferToStream(MS, BackgroundWorker)
 
                 ' Write the stream to the file.
-                Me.WriteFileBufferStreamAsFile(MS, PathToFileInclFullFile, BackgroundWorker)
+                Me.WriteFileBufferStreamAsFile(MS, PathToFileInclFullFile, BackgroundWorker, CompressFile)
 
                 ' Report progress
                 If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(98, "Closing file, and releasing ressources ...")
@@ -463,7 +464,8 @@ Public Class cFileImport
     ''' </summary>
     Public Function WriteFileBufferStreamAsFile(ByRef FileBufferStream As MemoryStream,
                                                 ByVal PathToFileInclFullFile As String,
-                                                Optional ByRef BackgroundWorker As System.ComponentModel.BackgroundWorker = Nothing) As Boolean
+                                                Optional ByRef BackgroundWorker As System.ComponentModel.BackgroundWorker = Nothing,
+                                                Optional ByVal CompressFile As Boolean = False) As Boolean
 
         Dim TargetFileName As String = PathToFileInclFullFile
         Dim TMPFileName As String = PathToFileInclFullFile & ".~TMP~"
@@ -482,15 +484,17 @@ Public Class cFileImport
                 ' Go to the beginning of the stream.
                 FileBufferStream.Seek(0, SeekOrigin.Begin)
 
-                ' Create the Unzip-Stream
-                Using GZ As New Compression.GZipStream(FileBufferStream, Compression.CompressionMode.Decompress, True)
-                    GZ.CopyTo(FS)
+                ' Create the Unzip-Stream, if the file should not be compressed.
+                ' If it should be compressed, just copy the compressed MemoryStream
+                If CompressFile Then
+                    FileBufferStream.CopyTo(FS)
                     ExportSuccessFull = True
-                End Using
-
-                '' Write the stream to the file.
-                'FileBufferStream.WriteTo(FS)
-                'ExportSuccessFull = True
+                Else
+                    Using GZ As New Compression.GZipStream(FileBufferStream, Compression.CompressionMode.Decompress, True)
+                        GZ.CopyTo(FS)
+                        ExportSuccessFull = True
+                    End Using
+                End If
 
                 ' Report progress
                 If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(98, "Closing file, and releasing ressources ...")
@@ -648,10 +652,16 @@ Public Class cFileImport
                 ' Create a filestream.
                 Using FS As New FileStream(FullFilenameIncludingPath, FileMode.Open)
 
-                    Using GZ As New Compression.GZipStream(MS, Compression.CompressionMode.Compress, True)
-                        ' Read the file, and compress the content in the memory
-                        FS.CopyTo(GZ)
-                    End Using
+                    ' If the file is already a compressed file, directly copy it to memory.
+                    ' Else, compress it, before putting it into memory.
+                    If cCompression.IsPossiblyGZippedBytes(FS) Then
+                        FS.CopyTo(MS)
+                    Else
+                        Using GZ As New Compression.GZipStream(MS, Compression.CompressionMode.Compress, True)
+                            ' Read the file, and compress the content in memory
+                            FS.CopyTo(GZ)
+                        End Using
+                    End If
 
                 End Using
 

@@ -123,6 +123,9 @@ various programs.
 
 The value format depends on the choosen selection.</value>
   </data>
+  <data name="ExportTypeDesc_IGORWave" xml:space="preserve">
+    <value>IGOR wave compatible format</value>
+  </data>
   <data name="ExportTypeDesc_Mathematica" xml:space="preserve">
     <value>File contains a table in Mathematica syntax.
 
@@ -149,6 +152,9 @@ The value format depends on the choosen selection.</value>
   </data>
   <data name="ExportTypeName_CSV" xml:space="preserve">
     <value>Comma-separated values</value>
+  </data>
+  <data name="ExportTypeName_IGORWave" xml:space="preserve">
+    <value>IGOR wave file</value>
   </data>
   <data name="ExportTypeName_Mathematica" xml:space="preserve">
     <value>Mathematica Notebook</value>
