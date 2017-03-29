@@ -2282,8 +2282,9 @@ Namespace My
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
             "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <s"& _ 
-            "tring>Gwyddion&gt;C:\Program Files (x86)\Gwyddion\bin\gwyddion.exe&gt;--remote-n"& _ 
-            "ew ""%f""</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</ArrayOfString>")>  _
+            "tring>Gwyddion x86&gt;C:\Program Files (x86)\Gwyddion\bin\gwyddion.exe&gt;--remo"& _ 
+            "te-new ""%f""</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>Gwyddion x64&gt;C:\Program Files\Gwyddion\bin\gw"& _ 
+            "yddion.exe&gt;--remote-new ""%f""</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</ArrayOfString>")>  _
         Public Property ExternalViewers_PathList() As Global.System.Collections.Specialized.StringCollection
             Get
                 Return CType(Me("ExternalViewers_PathList"),Global.System.Collections.Specialized.StringCollection)

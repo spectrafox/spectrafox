@@ -570,7 +570,8 @@
     <Setting Name="ExternalViewers_PathList" Type="System.Collections.Specialized.StringCollection" Scope="User">
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;string&gt;Gwyddion&amp;gt;C:\Program Files (x86)\Gwyddion\bin\gwyddion.exe&amp;gt;--remote-new "%f"&lt;/string&gt;
+  &lt;string&gt;Gwyddion x86&amp;gt;C:\Program Files (x86)\Gwyddion\bin\gwyddion.exe&amp;gt;--remote-new "%f"&lt;/string&gt;
+  &lt;string&gt;Gwyddion x64&amp;gt;C:\Program Files\Gwyddion\bin\gwyddion.exe&amp;gt;--remote-new "%f"&lt;/string&gt;
 &lt;/ArrayOfString&gt;</Value>
     </Setting>
     <Setting Name="ScanImageMerger_XOffset" Type="System.Double" Scope="User">

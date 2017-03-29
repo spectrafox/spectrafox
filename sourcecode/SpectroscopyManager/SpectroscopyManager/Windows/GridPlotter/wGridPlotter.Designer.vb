@@ -592,7 +592,7 @@ Partial Class wGridPlotter
         Me.txtCreepCorrectionY.BackColor = System.Drawing.Color.White
         Me.txtCreepCorrectionY.ForeColor = System.Drawing.Color.Black
         Me.txtCreepCorrectionY.FormatDecimalPlaces = 3
-        Me.txtCreepCorrectionY.Location = New System.Drawing.Point(160, 181)
+        Me.txtCreepCorrectionY.Location = New System.Drawing.Point(163, 181)
         Me.txtCreepCorrectionY.Name = "txtCreepCorrectionY"
         Me.txtCreepCorrectionY.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtCreepCorrectionY.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
@@ -608,7 +608,7 @@ Partial Class wGridPlotter
         Me.txtCreepCorrectionX.BackColor = System.Drawing.Color.White
         Me.txtCreepCorrectionX.ForeColor = System.Drawing.Color.Black
         Me.txtCreepCorrectionX.FormatDecimalPlaces = 3
-        Me.txtCreepCorrectionX.Location = New System.Drawing.Point(72, 181)
+        Me.txtCreepCorrectionX.Location = New System.Drawing.Point(59, 181)
         Me.txtCreepCorrectionX.Name = "txtCreepCorrectionX"
         Me.txtCreepCorrectionX.NumberFormat = SpectroscopyManager.NumericTextbox.NumberFormatTypes.ScientificUnits
         Me.txtCreepCorrectionX.NumberRange = SpectroscopyManager.NumericTextbox.NumberRanges.PositiveAndNegative
@@ -632,11 +632,11 @@ Partial Class wGridPlotter
         'lblCreepCorrection_YPerS
         '
         Me.lblCreepCorrection_YPerS.AutoSize = True
-        Me.lblCreepCorrection_YPerS.Location = New System.Drawing.Point(146, 184)
+        Me.lblCreepCorrection_YPerS.Location = New System.Drawing.Point(133, 184)
         Me.lblCreepCorrection_YPerS.Name = "lblCreepCorrection_YPerS"
-        Me.lblCreepCorrection_YPerS.Size = New System.Drawing.Size(15, 13)
+        Me.lblCreepCorrection_YPerS.Size = New System.Drawing.Size(32, 13)
         Me.lblCreepCorrection_YPerS.TabIndex = 0
-        Me.lblCreepCorrection_YPerS.Text = "y:"
+        Me.lblCreepCorrection_YPerS.Text = "y (m):"
         '
         'ckbPlotSettings_BiasIndicatorSize
         '
@@ -652,11 +652,11 @@ Partial Class wGridPlotter
         'lblCreepCorrection_XPerS
         '
         Me.lblCreepCorrection_XPerS.AutoSize = True
-        Me.lblCreepCorrection_XPerS.Location = New System.Drawing.Point(24, 184)
+        Me.lblCreepCorrection_XPerS.Location = New System.Drawing.Point(29, 184)
         Me.lblCreepCorrection_XPerS.Name = "lblCreepCorrection_XPerS"
-        Me.lblCreepCorrection_XPerS.Size = New System.Drawing.Size(42, 13)
+        Me.lblCreepCorrection_XPerS.Size = New System.Drawing.Size(32, 13)
         Me.lblCreepCorrection_XPerS.TabIndex = 0
-        Me.lblCreepCorrection_XPerS.Text = "x (m/s):"
+        Me.lblCreepCorrection_XPerS.Text = "x (m):"
         '
         'vrsPlotSettings_ColorScaling
         '

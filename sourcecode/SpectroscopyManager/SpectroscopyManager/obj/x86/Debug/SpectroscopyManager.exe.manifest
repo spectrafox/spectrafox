@@ -158,7 +158,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>S6DpzNQ/JJ1lkDeompO8N7nACyZnmvp4mhlJupbmvgE=</dsig:DigestValue>
+        <dsig:DigestValue>WV5+5YyJQq4WqQJdYY0UN7zlVgSIKJUM4v1kZRtiUu4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -798,13 +798,13 @@
       <dsig:DigestValue>gQdH95JyXfxl6TVgM1vzyVG7D0AakNbt3sWK9Ee7FZU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SpectroscopyManager.exe.config" size="30894">
+  <file name="SpectroscopyManager.exe.config" size="31020">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>aSKgGT8QjNP34ZdknAs8mQwiCA1irzfXcXoVmUNhVO0=</dsig:DigestValue>
+      <dsig:DigestValue>S762J6ycLH+8CGTRm+oxbwZsfgCrtJ25HyURovlyB8w=</dsig:DigestValue>
     </hash>
   </file>
   <file name="versioninfo_dev.xml" size="805" writeableType="applicationData">
