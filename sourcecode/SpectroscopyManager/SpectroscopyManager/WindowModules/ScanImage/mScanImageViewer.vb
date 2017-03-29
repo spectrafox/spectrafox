@@ -73,6 +73,21 @@ Public Class mScanImageViewer
     Private ListOfTextObjects As New List(Of cScanImagePlot.TextObject)
 
     ''' <summary>
+    ''' Text-Object, das im Bild für zusätzliche Informationen geplottet wird.
+    ''' </summary>
+    Private ParameterDisplayTextObject As cScanImagePlot.TextObject
+
+    ''' <summary>
+    ''' Key of the parameter that should be additionally plotted.
+    ''' </summary>
+    Private ParameterDisplayKey As String
+
+    ''' <summary>
+    ''' Block interface events on a refresh.
+    ''' </summary>
+    Private BlockInterfaceEvents As Boolean
+
+    ''' <summary>
     ''' Saves the currently selected scan-channel-ID.
     ''' </summary>
     Private _CurrentlySelectedScanChannelName As String = String.Empty
@@ -200,6 +215,35 @@ Public Class mScanImageViewer
             Me.oScanImages = ScanImages
             Me.oScanImagesPending = Nothing
 
+            ' Only show the parameter selection for single images.
+            If ScanImages.Count = 1 Then
+                ' Get all parameters of the image, and populate the combobox
+                ' where one can select a parameter for plotting.
+                With Me.cbParameterDisplay
+                    Me.BlockInterfaceEvents = True
+                    .DataSource = New BindingSource(ScanImages(0).GeneralPropertyArray, Nothing)
+                    .DisplayMember = "Key"
+                    .ValueMember = "Key"
+
+                    ' Get the last selected value from the settings
+                    Me.ParameterDisplayKey = My.Settings.ScanImageViewer_LastSelectedParameterDisplay
+                    If Me.ParameterDisplayKey IsNot Nothing AndAlso
+                       ScanImages(0).GeneralPropertyArray.ContainsKey(Me.ParameterDisplayKey) Then
+                        .SelectedValue = Me.ParameterDisplayKey
+                    End If
+                    Me.ckbParameterDisplay.Checked = My.Settings.ScanImageViewer_ParameterDisplayEnabled
+                    Me.BlockInterfaceEvents = False
+                End With
+                Me.cbParameterDisplay.Enabled = True
+                Me.ckbParameterDisplay.Enabled = True
+            Else
+                Me.cbParameterDisplay.DataSource = Nothing
+                Me.cbParameterDisplay.Items.Clear()
+                Me.cbParameterDisplay.Enabled = False
+                Me.ckbParameterDisplay.Enabled = False
+                ParameterDisplayKey = Nothing
+            End If
+
             ' Write Scan-Channels to Combobox and select first:
             Me.cbChannel.InitializeColumns(cScanImage.GetCommonColumns(Me.oScanImages), ScanChannelName)
             Me.UpdateSelectedScanChannelName()
@@ -296,6 +340,33 @@ Public Class mScanImageViewer
         Else
             MaxValueToPlot = Me.vsValueRangeSelector.SelectedMaxValue
             MinValueToPlot = Me.vsValueRangeSelector.SelectedMinValue
+        End If
+
+        ' Get the additional property to show in the file.
+        If Me.ckbParameterDisplay.Checked AndAlso ParameterDisplayKey IsNot Nothing AndAlso Me.oScanImages.Count = 1 Then
+            If Me.oScanImages(0).GeneralPropertyArray.ContainsKey(ParameterDisplayKey) Then
+                ' Delete an old text:
+                If ParameterDisplayTextObject IsNot Nothing Then Me.ListOfTextObjects.Remove(ParameterDisplayTextObject)
+
+                ' Create and format the possible value:
+                Dim PropertyValueToPrint As String
+
+                If IsNumeric(Me.oScanImages(0).GeneralPropertyArray(ParameterDisplayKey)) Then
+                    PropertyValueToPrint = cUnits.GetFormatedValueString(Convert.ToDouble(Me.oScanImages(0).GeneralPropertyArray(ParameterDisplayKey)))
+                Else
+                    PropertyValueToPrint = Me.oScanImages(0).GeneralPropertyArray(ParameterDisplayKey)
+                End If
+                PropertyValueToPrint = ParameterDisplayKey & vbNewLine & PropertyValueToPrint
+
+                ' Create the new text, and add it:
+                ParameterDisplayTextObject = New cScanImagePlot.TextObject(New PointF(5, 5), PropertyValueToPrint)
+                Me.ListOfTextObjects.Add(ParameterDisplayTextObject)
+            End If
+        Else
+            If ParameterDisplayTextObject IsNot Nothing Then
+                Me.ListOfTextObjects.Remove(ParameterDisplayTextObject)
+                ParameterDisplayTextObject = Nothing
+            End If
         End If
 
         ' Calculate Image:
@@ -1353,6 +1424,36 @@ Public Class mScanImageViewer
         Me.ClearPointMarkList()
         Me.RecalculateImageAsync()
     End Sub
+
+#End Region
+
+#Region "Display additional parameters"
+
+    ''' <summary>
+    ''' Zeigt einen zusätzlichen Parameter im Bild an.
+    ''' </summary>
+    Private Sub gbParameterDisplay_CheckChange() Handles ckbParameterDisplay.CheckedChanged
+        If Me.BlockInterfaceEvents Then Return
+
+        My.Settings.ScanImageViewer_ParameterDisplayEnabled = Me.ckbParameterDisplay.Checked
+        Me.RecalculateImageAsync()
+    End Sub
+
+    ''' <summary>
+    ''' Change the selected text in the image.
+    ''' </summary>
+    Private Sub cbParameterDisplay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cbParameterDisplay.SelectedIndexChanged
+        If Me.BlockInterfaceEvents Then Return
+
+        ' Store the selected value:
+        If TypeOf Me.cbParameterDisplay.SelectedValue Is String Then
+            Me.ParameterDisplayKey = CType(Me.cbParameterDisplay.SelectedValue, String)
+            My.Settings.ScanImageViewer_LastSelectedParameterDisplay = Me.ParameterDisplayKey
+            Me.RecalculateImageAsync()
+        End If
+
+    End Sub
+
 
 #End Region
 

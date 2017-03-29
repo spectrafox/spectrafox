@@ -2389,6 +2389,30 @@ Namespace My
                 Me("LastFFT_ColumnTargetName") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ScanImageViewer_LastSelectedParameterDisplay() As String
+            Get
+                Return CType(Me("ScanImageViewer_LastSelectedParameterDisplay"),String)
+            End Get
+            Set
+                Me("ScanImageViewer_LastSelectedParameterDisplay") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ScanImageViewer_ParameterDisplayEnabled() As Boolean
+            Get
+                Return CType(Me("ScanImageViewer_ParameterDisplayEnabled"),Boolean)
+            End Get
+            Set
+                Me("ScanImageViewer_ParameterDisplayEnabled") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

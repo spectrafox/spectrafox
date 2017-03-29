@@ -36,6 +36,7 @@ Partial Class mScanImageViewer
         Me.tsbtnChannelSetup = New System.Windows.Forms.ToolStripButton()
         Me.tssLeft1 = New System.Windows.Forms.ToolStripSeparator()
         Me.tslblInfobar = New System.Windows.Forms.ToolStripLabel()
+        Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.dpLeft = New SpectroscopyManager.DockablePanel()
         Me.gbOpenExternal = New System.Windows.Forms.GroupBox()
         Me.btnOpenExternal = New System.Windows.Forms.Button()
@@ -49,13 +50,14 @@ Partial Class mScanImageViewer
         Me.lbFilters = New System.Windows.Forms.ListBox()
         Me.lblFilters = New System.Windows.Forms.Label()
         Me.dpRight = New SpectroscopyManager.DockablePanel()
+        Me.ckbParameterDisplay = New System.Windows.Forms.CheckBox()
+        Me.cbParameterDisplay = New System.Windows.Forms.ComboBox()
+        Me.btnClearPointMarks = New System.Windows.Forms.Button()
         Me.ckbScaleBarVisible = New System.Windows.Forms.CheckBox()
         Me.ckbUseHighQualityScaling = New System.Windows.Forms.CheckBox()
         Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
         Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.lblColorCode = New System.Windows.Forms.Label()
-        Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
-        Me.btnClearPointMarks = New System.Windows.Forms.Button()
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.tsTools.SuspendLayout()
@@ -292,6 +294,8 @@ Partial Class mScanImageViewer
         '
         'dpRight
         '
+        Me.dpRight.Controls.Add(Me.ckbParameterDisplay)
+        Me.dpRight.Controls.Add(Me.cbParameterDisplay)
         Me.dpRight.Controls.Add(Me.btnClearPointMarks)
         Me.dpRight.Controls.Add(Me.ckbScaleBarVisible)
         Me.dpRight.Controls.Add(Me.ckbUseHighQualityScaling)
@@ -307,13 +311,41 @@ Partial Class mScanImageViewer
         Me.dpRight.SuspendMessageFiltering = False
         Me.dpRight.TabIndex = 14
         '
+        'ckbParameterDisplay
+        '
+        Me.ckbParameterDisplay.AutoSize = True
+        Me.ckbParameterDisplay.Location = New System.Drawing.Point(9, 321)
+        Me.ckbParameterDisplay.Name = "ckbParameterDisplay"
+        Me.ckbParameterDisplay.Size = New System.Drawing.Size(115, 17)
+        Me.ckbParameterDisplay.TabIndex = 18
+        Me.ckbParameterDisplay.Text = "print file parameter:"
+        Me.ckbParameterDisplay.UseVisualStyleBackColor = True
+        '
+        'cbParameterDisplay
+        '
+        Me.cbParameterDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbParameterDisplay.FormattingEnabled = True
+        Me.cbParameterDisplay.Location = New System.Drawing.Point(10, 339)
+        Me.cbParameterDisplay.Name = "cbParameterDisplay"
+        Me.cbParameterDisplay.Size = New System.Drawing.Size(154, 21)
+        Me.cbParameterDisplay.TabIndex = 16
+        '
+        'btnClearPointMarks
+        '
+        Me.btnClearPointMarks.Location = New System.Drawing.Point(6, 290)
+        Me.btnClearPointMarks.Name = "btnClearPointMarks"
+        Me.btnClearPointMarks.Size = New System.Drawing.Size(159, 23)
+        Me.btnClearPointMarks.TabIndex = 15
+        Me.btnClearPointMarks.Text = "clear location markers"
+        Me.btnClearPointMarks.UseVisualStyleBackColor = True
+        '
         'ckbScaleBarVisible
         '
         Me.ckbScaleBarVisible.AutoSize = True
         Me.ckbScaleBarVisible.Checked = Global.SpectroscopyManager.My.MySettings.Default.ScanImageViewer_ShowScaleBar
         Me.ckbScaleBarVisible.CheckState = System.Windows.Forms.CheckState.Checked
         Me.ckbScaleBarVisible.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.SpectroscopyManager.My.MySettings.Default, "ScanImageViewer_ShowScaleBar", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.ckbScaleBarVisible.Location = New System.Drawing.Point(6, 359)
+        Me.ckbScaleBarVisible.Location = New System.Drawing.Point(6, 267)
         Me.ckbScaleBarVisible.Name = "ckbScaleBarVisible"
         Me.ckbScaleBarVisible.Size = New System.Drawing.Size(97, 17)
         Me.ckbScaleBarVisible.TabIndex = 10
@@ -325,7 +357,7 @@ Partial Class mScanImageViewer
         Me.ckbUseHighQualityScaling.AutoSize = True
         Me.ckbUseHighQualityScaling.Checked = Global.SpectroscopyManager.My.MySettings.Default.ScanImageViewer_HQPlot
         Me.ckbUseHighQualityScaling.DataBindings.Add(New System.Windows.Forms.Binding("Checked", Global.SpectroscopyManager.My.MySettings.Default, "ScanImageViewer_HQPlot", True, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged))
-        Me.ckbUseHighQualityScaling.Location = New System.Drawing.Point(6, 341)
+        Me.ckbUseHighQualityScaling.Location = New System.Drawing.Point(6, 249)
         Me.ckbUseHighQualityScaling.Name = "ckbUseHighQualityScaling"
         Me.ckbUseHighQualityScaling.Size = New System.Drawing.Size(124, 17)
         Me.ckbUseHighQualityScaling.TabIndex = 9
@@ -338,7 +370,7 @@ Partial Class mScanImageViewer
         Me.vsValueRangeSelector.Name = "vsValueRangeSelector"
         Me.vsValueRangeSelector.SelectedMaxValue = 0R
         Me.vsValueRangeSelector.SelectedMinValue = 0R
-        Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 264)
+        Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 170)
         Me.vsValueRangeSelector.TabIndex = 8
         '
         'cpColorPicker
@@ -357,15 +389,6 @@ Partial Class mScanImageViewer
         Me.lblColorCode.Size = New System.Drawing.Size(73, 13)
         Me.lblColorCode.TabIndex = 14
         Me.lblColorCode.Text = "color scheme:"
-        '
-        'btnClearPointMarks
-        '
-        Me.btnClearPointMarks.Location = New System.Drawing.Point(6, 382)
-        Me.btnClearPointMarks.Name = "btnClearPointMarks"
-        Me.btnClearPointMarks.Size = New System.Drawing.Size(159, 23)
-        Me.btnClearPointMarks.TabIndex = 15
-        Me.btnClearPointMarks.Text = "clear data locations"
-        Me.btnClearPointMarks.UseVisualStyleBackColor = True
         '
         'mScanImageViewer
         '
@@ -423,4 +446,6 @@ Partial Class mScanImageViewer
     Friend WithEvents btnOpenExternal As Button
     Friend WithEvents ttToolTip As ToolTip
     Friend WithEvents btnClearPointMarks As Button
+    Friend WithEvents cbParameterDisplay As ComboBox
+    Friend WithEvents ckbParameterDisplay As CheckBox
 End Class

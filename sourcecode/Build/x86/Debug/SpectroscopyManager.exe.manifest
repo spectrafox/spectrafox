@@ -151,14 +151,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3860992">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SpectroscopyManager.exe" size="3864064">
       <assemblyIdentity name="SpectroscopyManager" version="2017.3.9.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>WV5+5YyJQq4WqQJdYY0UN7zlVgSIKJUM4v1kZRtiUu4=</dsig:DigestValue>
+        <dsig:DigestValue>g9O53EoPj/QLu5Mkkz5YuWyQyONmxK496J/LHsvlFEw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -798,13 +798,13 @@
       <dsig:DigestValue>gQdH95JyXfxl6TVgM1vzyVG7D0AakNbt3sWK9Ee7FZU=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SpectroscopyManager.exe.config" size="31020">
+  <file name="SpectroscopyManager.exe.config" size="31337">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>S762J6ycLH+8CGTRm+oxbwZsfgCrtJ25HyURovlyB8w=</dsig:DigestValue>
+      <dsig:DigestValue>8FSO1tIDnYH/Y+s69BpsEgz5y4RjWjxff+IcQvqAs7s=</dsig:DigestValue>
     </hash>
   </file>
   <file name="versioninfo_dev.xml" size="805" writeableType="applicationData">
