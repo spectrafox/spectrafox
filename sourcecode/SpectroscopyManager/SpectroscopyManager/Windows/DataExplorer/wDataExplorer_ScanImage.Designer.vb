@@ -22,6 +22,7 @@ Partial Class wDataExplorer_ScanImage
     'Das Bearbeiten mit dem Code-Editor ist nicht möglich.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(wDataExplorer_ScanImage))
         Me.gbSpectroscopyTablePropertyGrid = New System.Windows.Forms.GroupBox()
         Me.pgSpectrumProperies = New System.Windows.Forms.PropertyGrid()
         Me.gbSpectraComment = New System.Windows.Forms.GroupBox()
@@ -32,11 +33,17 @@ Partial Class wDataExplorer_ScanImage
         Me.tpAdditionalComment = New System.Windows.Forms.TabPage()
         Me.btnSaveAdditionalComment = New System.Windows.Forms.Button()
         Me.txtAdditionalComment = New System.Windows.Forms.TextBox()
+        Me.tbGeneralProperties = New System.Windows.Forms.TabPage()
+        Me.dtGeneralPropertyArray = New System.Windows.Forms.DataGridView()
+        Me.colGeneralPropertyArray_Key = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colGeneralPropertyArray_Value = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.gbSpectroscopyTablePropertyGrid.SuspendLayout()
         Me.gbSpectraComment.SuspendLayout()
         Me.tcSpectroscopyTable.SuspendLayout()
         Me.tpPlot.SuspendLayout()
         Me.tpAdditionalComment.SuspendLayout()
+        Me.tbGeneralProperties.SuspendLayout()
+        CType(Me.dtGeneralPropertyArray, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'gbSpectroscopyTablePropertyGrid
@@ -88,6 +95,7 @@ Partial Class wDataExplorer_ScanImage
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.tcSpectroscopyTable.Controls.Add(Me.tpPlot)
         Me.tcSpectroscopyTable.Controls.Add(Me.tpAdditionalComment)
+        Me.tcSpectroscopyTable.Controls.Add(Me.tbGeneralProperties)
         Me.tcSpectroscopyTable.Location = New System.Drawing.Point(253, 3)
         Me.tcSpectroscopyTable.Name = "tcSpectroscopyTable"
         Me.tcSpectroscopyTable.SelectedIndex = 0
@@ -110,6 +118,8 @@ Partial Class wDataExplorer_ScanImage
         Me.svScanImage.Dock = System.Windows.Forms.DockStyle.Fill
         Me.svScanImage.Location = New System.Drawing.Point(3, 3)
         Me.svScanImage.Name = "svScanImage"
+        Me.svScanImage.SelectedPoints_PixelCoordinate = CType(resources.GetObject("svScanImage.SelectedPoints_PixelCoordinate"), System.Collections.Generic.List(Of System.Drawing.Point))
+        Me.svScanImage.SelectionMode = SpectroscopyManager.mScanImageViewer.SelectionModes.None
         Me.svScanImage.Size = New System.Drawing.Size(919, 724)
         Me.svScanImage.TabIndex = 0
         '
@@ -151,6 +161,47 @@ Partial Class wDataExplorer_ScanImage
         Me.txtAdditionalComment.TabIndex = 2
         Me.txtAdditionalComment.WordWrap = False
         '
+        'tbGeneralProperties
+        '
+        Me.tbGeneralProperties.Controls.Add(Me.dtGeneralPropertyArray)
+        Me.tbGeneralProperties.Location = New System.Drawing.Point(4, 22)
+        Me.tbGeneralProperties.Name = "tbGeneralProperties"
+        Me.tbGeneralProperties.Size = New System.Drawing.Size(925, 730)
+        Me.tbGeneralProperties.TabIndex = 3
+        Me.tbGeneralProperties.Text = "headers extracted from data file"
+        Me.tbGeneralProperties.UseVisualStyleBackColor = True
+        '
+        'dtGeneralPropertyArray
+        '
+        Me.dtGeneralPropertyArray.AllowUserToAddRows = False
+        Me.dtGeneralPropertyArray.AllowUserToDeleteRows = False
+        Me.dtGeneralPropertyArray.AllowUserToResizeRows = False
+        Me.dtGeneralPropertyArray.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dtGeneralPropertyArray.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtGeneralPropertyArray.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtGeneralPropertyArray.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colGeneralPropertyArray_Key, Me.colGeneralPropertyArray_Value})
+        Me.dtGeneralPropertyArray.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtGeneralPropertyArray.Location = New System.Drawing.Point(0, 0)
+        Me.dtGeneralPropertyArray.Name = "dtGeneralPropertyArray"
+        Me.dtGeneralPropertyArray.ReadOnly = True
+        Me.dtGeneralPropertyArray.RowHeadersVisible = False
+        Me.dtGeneralPropertyArray.Size = New System.Drawing.Size(925, 730)
+        Me.dtGeneralPropertyArray.TabIndex = 1
+        '
+        'colGeneralPropertyArray_Key
+        '
+        Me.colGeneralPropertyArray_Key.HeaderText = "property name"
+        Me.colGeneralPropertyArray_Key.Name = "colGeneralPropertyArray_Key"
+        Me.colGeneralPropertyArray_Key.ReadOnly = True
+        Me.colGeneralPropertyArray_Key.Width = 99
+        '
+        'colGeneralPropertyArray_Value
+        '
+        Me.colGeneralPropertyArray_Value.HeaderText = "property value"
+        Me.colGeneralPropertyArray_Value.Name = "colGeneralPropertyArray_Value"
+        Me.colGeneralPropertyArray_Value.ReadOnly = True
+        Me.colGeneralPropertyArray_Value.Width = 99
+        '
         'wDataExplorer_ScanImage
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -171,6 +222,8 @@ Partial Class wDataExplorer_ScanImage
         Me.tpPlot.ResumeLayout(False)
         Me.tpAdditionalComment.ResumeLayout(False)
         Me.tpAdditionalComment.PerformLayout()
+        Me.tbGeneralProperties.ResumeLayout(False)
+        CType(Me.dtGeneralPropertyArray, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -184,4 +237,8 @@ Partial Class wDataExplorer_ScanImage
     Friend WithEvents tpAdditionalComment As System.Windows.Forms.TabPage
     Friend WithEvents btnSaveAdditionalComment As System.Windows.Forms.Button
     Friend WithEvents txtAdditionalComment As System.Windows.Forms.TextBox
+    Friend WithEvents tbGeneralProperties As TabPage
+    Friend WithEvents dtGeneralPropertyArray As DataGridView
+    Friend WithEvents colGeneralPropertyArray_Key As DataGridViewTextBoxColumn
+    Friend WithEvents colGeneralPropertyArray_Value As DataGridViewTextBoxColumn
 End Class

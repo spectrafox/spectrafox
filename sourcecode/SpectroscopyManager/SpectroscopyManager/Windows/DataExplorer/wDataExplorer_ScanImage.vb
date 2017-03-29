@@ -23,6 +23,7 @@
         Me.SetSpectrumPropertiesThreadSafe(ScanImage)
         Me.SetSpectraCommentThreadSafe(ScanImage.Comment)
         Me.SetAdditionalCommentThreadSafe(MyBase.FileObject.ExtendedComment)
+        Me.SetGeneralPropertyArrayThreadSafe(ScanImage)
 
         Me.svScanImage.cbChannel.SelectedEntry = InitialChannelName
     End Sub
@@ -35,7 +36,7 @@
     Public Sub SetScanImageViewerThreadSafe(ByRef ScanImage As cScanImage)
         With Me.svScanImage
             If .InvokeRequired Then
-                .Invoke(New ThreadSafeScanImageDelegate(AddressOf SetScanImageViewerThreadSafe), ScanImage)
+                .Invoke(New _ThreadSafeScanImageDelegate(AddressOf SetScanImageViewerThreadSafe), ScanImage)
             Else
                 .SetScanImageObjects(ScanImage)
             End If
@@ -45,7 +46,7 @@
     Public Sub SetSpectrumPropertiesThreadSafe(ByRef ScanImage As cScanImage)
         With Me.pgSpectrumProperies
             If .InvokeRequired Then
-                .Invoke(New ThreadSafeScanImageDelegate(AddressOf SetSpectrumPropertiesThreadSafe), ScanImage)
+                .Invoke(New _ThreadSafeScanImageDelegate(AddressOf SetSpectrumPropertiesThreadSafe), ScanImage)
             Else
                 .SelectedObject = ScanImage
             End If
@@ -68,6 +69,25 @@
                 .Invoke(New StringDelegate(AddressOf SetAdditionalCommentThreadSafe), Text)
             Else
                 .Text = Text
+            End If
+        End With
+    End Sub
+
+    Public Sub SetGeneralPropertyArrayThreadSafe(ByRef ScanImage As cScanImage)
+        With Me.dtGeneralPropertyArray
+            If .InvokeRequired Then
+                .Invoke(New _ThreadSafeScanImageDelegate(AddressOf SetGeneralPropertyArrayThreadSafe), ScanImage)
+            Else
+                ' Set all properties
+                For Each KV As KeyValuePair(Of String, String) In ScanImage.GeneralPropertyArray
+                    With Me.dtGeneralPropertyArray.Rows
+                        Dim i As Integer = .Add
+                        With .Item(i)
+                            .Cells(Me.colGeneralPropertyArray_Key.Index).Value = KV.Key
+                            .Cells(Me.colGeneralPropertyArray_Value.Index).Value = KV.Value
+                        End With
+                    End With
+                Next
             End If
         End With
     End Sub

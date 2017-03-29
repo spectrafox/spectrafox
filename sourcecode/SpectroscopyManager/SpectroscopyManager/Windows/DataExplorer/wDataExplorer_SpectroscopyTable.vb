@@ -43,14 +43,6 @@
         Me.SetDataTableThreadSafe(SpectroscopyTable)
         Me.SetGeneralPropertyArrayThreadSafe(SpectroscopyTable)
 
-        ' Non-Thread-Safe
-        'Me.svDataViewer.SetSinglePreviewImage(SpectroscopyTable)
-        'Me.pgSpectrumProperies.SelectedObject = SpectroscopyTable
-        'Me.txtSpectraComment.Text = SpectroscopyTable.Comment
-        'Me.dtSpectroscopyTable.SetSpectroscopyTable(SpectroscopyTable)
-
-        'Me.txtAdditionalComment.Text = MyBase.FileObject.ExtendedComment
-
         Me.svDataViewer.cbX.SelectedEntry = InitialColumnNameX
         Me.svDataViewer.cbY.SelectedEntry = InitialColumnNameY
     End Sub

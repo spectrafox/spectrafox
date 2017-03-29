@@ -133,13 +133,13 @@ Public Class wFormBaseExpectsScanImageFileObjectOnLoad
     ''' </summary>
     Public Event ScanImageFetchedThreadSafeCall(ByRef ScanImage As cScanImage)
 
-    Public Delegate Sub ThreadSafeScanImageDelegate(ByRef ScanImage As cScanImage)
+    Public Delegate Sub _ThreadSafeScanImageDelegate(ByRef ScanImage As cScanImage)
     ''' <summary>
     ''' Call an Invoke to get a thread-save event fired!
     ''' </summary>
     Private Sub ScanImageFetched_RaiseThreadSafeEvent(ByRef ScanImage As cScanImage) Handles DataFetcher.FileFetchedComplete
         If Me.InvokeRequired Then
-            Me.Invoke(New ThreadSafeScanImageDelegate(AddressOf Me.ScanImageFetched_RaiseThreadSafeEvent), ScanImage)
+            Me.Invoke(New _ThreadSafeScanImageDelegate(AddressOf Me.ScanImageFetched_RaiseThreadSafeEvent), ScanImage)
         Else
             RaiseEvent ScanImageFetchedThreadSafeCall(ScanImage)
         End If
