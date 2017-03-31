@@ -1506,6 +1506,8 @@ Public Class mDataBrowserList
         ' to enable the menu buttons.
         Me.mnuMultipleSpectroscopyFileActions.Enabled = iCountSpectroscopyTables > 0
         Me.mnuMultipleScanImageFileActions.Enabled = iCountScanImages > 0
+        Me.mnuGridTools.Enabled = iCountGridFiles > 0
+        Me.mnuGridTools_ExportGridSpectra.Enabled = (iCountGridFiles = 1)
 
         ' If we have selected only a single spectroscopy-table, report this to the hosting window.
         ' Do the same for scan-images
@@ -2425,9 +2427,10 @@ Public Class mDataBrowserList
     ''' <summary>
     ''' Open spectroscopy-table or scan image in separate window (similar to double click on the list-entry).
     ''' </summary>
-    Private Sub cmnuSpectroscopy_SpectroscopyTableShowDetails_Click(sender As Object, e As EventArgs) _
+    Private Sub ShowDataExplorers(sender As Object, e As EventArgs) _
         Handles cmnuSpectroscopy_SpectroscopyTableShowDetails.Click,
-                cmnuScanImage_OpenInSeparateWindow.Click
+                cmnuScanImage_OpenInSeparateWindow.Click,
+                cmnuGridFile_OpenInSeparateWindow.Click
 
         ' Open detail window for the file-object.
         Select Case Me._CurrentContextMenuFileObject.FileType
@@ -2443,6 +2446,11 @@ Public Class mDataBrowserList
                 Dim DataExplorer As New wDataExplorer_ScanImage
                 DataExplorer.Show(Me._CurrentContextMenuFileObject)
                 DataExplorer.SetInitialChannelSelection(Me._CurrentPreviewImageSettings.ScanImage_Channel)
+
+            Case cFileObject.FileTypes.GridFile
+                ' Show GridFile Details
+                Dim DataExplorer As New wDataExplorer_GridFile
+                DataExplorer.Show(Me._CurrentContextMenuFileObject)
         End Select
     End Sub
 #End Region
@@ -2756,6 +2764,21 @@ Public Class mDataBrowserList
     Private Sub mnuSpecialTools_GridViewer_Click(sender As Object, e As EventArgs) Handles mnuSpecialTools_GridViewer.Click
         Dim GV As New wGridPlotter
         GV.Show(Me.oFileImporter)
+    End Sub
+
+#End Region
+
+#Region "Grid Tools Menu"
+
+    ''' <summary>
+    ''' Open the GridFile exporter
+    ''' </summary>
+    Private Sub mnuGridTools_ExportGridSpectra_Click(sender As Object, e As EventArgs) Handles mnuGridTools_ExportGridSpectra.Click, cmnuGridFile_ExportGridSpectra.Click
+        If Me.FileObjectsSelected.Count = 1 AndAlso
+           Me.FileObjectsSelected(0).FileType = cFileObject.FileTypes.GridFile Then
+            Dim GE As New wGridExporter
+            GE.Show(Me.FileObjectsSelected(0))
+        End If
     End Sub
 
 #End Region

@@ -218,12 +218,14 @@ Public Class ucFilteredListComboBoxSelector
                     .DisplayMember = "Value"
                     .ValueMember = "Key"
 
+                    .BeginUpdate()
                     For Each EntryName As String In ListOfEntires
                         Me.ComboBoxAddItemThreadSafe(EntryName)
                         If Me.SelectedEntry = EntryName Then
                             .SelectedIndex = (.Items.Count - 1)
                         End If
                     Next
+                    .EndUpdate()
 
                     If Me.SelectedEntry = String.Empty And ListOfEntires.Count > 0 Then
                         .SelectedIndex = 0
@@ -243,12 +245,14 @@ Public Class ucFilteredListComboBoxSelector
                     .DisplayMember = "Value"
                     .ValueMember = "Key"
 
+                    .BeginUpdate()
                     For Each EntryName As String In ListOfEntires
                         Me.ListBoxAddItemThreadSafe(EntryName)
                         If Me.SelectedEntry = EntryName Then
                             .SelectedIndex = (.Items.Count - 1)
                         End If
                     Next
+                    .EndUpdate()
 
                     If Me.SelectedEntry = String.Empty And ListOfEntires.Count > 0 Then
                         .SelectedIndex = 0
@@ -381,12 +385,14 @@ Public Class ucFilteredListComboBoxSelector
             If Me._AppereanceType = SelectorType.Combobox Then
 
                 With Me.cbEntry
+                    Me.cbEntry.BeginUpdate()
                     For i As Integer = 0 To .Items.Count - 1 Step 1
                         Dim SelectedColumnName As String = DirectCast(.Items(i), String)
                         If SelectedColumnName = Entry Then
                             .SelectedIndex = i
                         End If
                     Next
+                    Me.cbEntry.EndUpdate()
                 End With
 
                 ' Just call the selection changed event once!
@@ -400,6 +406,7 @@ Public Class ucFilteredListComboBoxSelector
             If Me._AppereanceType = SelectorType.Listbox Then
 
                 With Me.lbEntry
+                    .BeginUpdate()
                     .ClearSelected()
                     For i As Integer = 0 To .Items.Count - 1 Step 1
                         Dim SelectedColumnName As String = DirectCast(.Items(i), String)
@@ -407,7 +414,7 @@ Public Class ucFilteredListComboBoxSelector
                             .SelectedIndex = i
                         End If
                     Next
-
+                    .EndUpdate()
                 End With
 
                 ' Just call the selection changed event once!
@@ -435,10 +442,12 @@ Public Class ucFilteredListComboBoxSelector
             '##########
             ' ListBox
             Dim SelectedColumnName As String
+            Me.lbEntry.BeginUpdate()
             For i As Integer = 0 To Me.lbEntry.Items.Count - 1 Step 1
                 SelectedColumnName = DirectCast(Me.lbEntry.Items(i), String)
-                Me.lbEntry.SetSelected(i, Entries.Contains(SelectedColumnName))
+                If Entries.Contains(SelectedColumnName) Then Me.lbEntry.SelectedIndices.Add(i)
             Next
+            Me.lbEntry.EndUpdate()
             Me.bReady = True
             If Me._AppereanceType = SelectorType.Listbox Then Me.LB_SelectedColumnIndexChanged()
 

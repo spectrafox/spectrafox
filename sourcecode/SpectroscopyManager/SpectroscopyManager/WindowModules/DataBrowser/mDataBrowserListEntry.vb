@@ -748,6 +748,11 @@ Public Class mDataBrowserListEntry
                 Dim DataExplorer As New wDataExplorer_ScanImage
                 DataExplorer.Show(Me._FileObject)
                 DataExplorer.SetInitialChannelSelection(Me.PreviewImageSettings.ScanImage_Channel)
+
+            Case cFileObject.FileTypes.GridFile
+                ' Show GridFile Details
+                Dim DataExplorer As New wDataExplorer_GridFile
+                DataExplorer.Show(Me._FileObject)
         End Select
     End Sub
 

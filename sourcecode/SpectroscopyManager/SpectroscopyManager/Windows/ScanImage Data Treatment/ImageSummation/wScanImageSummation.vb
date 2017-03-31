@@ -36,7 +36,7 @@
     ''' Form closing
     ''' </summary>
     Private Sub Form_Close() Handles MyBase.FormClosing
-        ' Load settings used last time.
+        ' Save settings.
         My.Settings.ScanImageMerger_XOffset = Me.txtXOffset.DecimalValue
         My.Settings.ScanImageMerger_YOffset = Me.txtYOffset.DecimalValue
         My.Settings.ScanImageMerger_CombinationFactor = Me.txtCombinationFactor.DecimalValue

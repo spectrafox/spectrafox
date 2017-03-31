@@ -374,6 +374,7 @@ Public Class cFileImportNanonisGrid
                             Else
                                 .Name = oGridFile.SweepSignalColumn
                             End If
+                            SweepSignalColumn.IsSpectraFoxGenerated = False
                         End With
                         ' Add the SpectroscopyTable to the GridFile
                         DuplicatedSpectroscopyTable.AddNonPersistentColumn(SweepSignalColumn)
@@ -394,6 +395,7 @@ Public Class cFileImportNanonisGrid
                                     .Name = oGridFile.ChannelsRecorded(i)
                                 End If
 
+                                DataColumn.IsSpectraFoxGenerated = False
                             End With
                             DuplicatedSpectroscopyTable.AddNonPersistentColumn(DataColumn)
                         Next

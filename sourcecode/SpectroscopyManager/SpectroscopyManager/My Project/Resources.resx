@@ -990,4 +990,13 @@ If the initialization of GPU computing fails, SpectraFox will always fall back t
   <data name="gridfile_preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gridfile_preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="movie" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\movie.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="movie_16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\movie_16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="movie_25" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\movie_25.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

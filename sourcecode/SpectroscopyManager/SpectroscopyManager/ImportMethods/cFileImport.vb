@@ -547,78 +547,75 @@ Public Class cFileImport
                 If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(5, "Opening cache file ...")
 
                 ' Open the XML-reader object for the specified file
-                Dim XMLReader As New Xml.XmlTextReader(GZ)
+                Using XMLReader As New Xml.XmlTextReader(GZ)
 
-                ' Save the Spectrafox-version that created the file to 
-                ' check against old files and new features.
-                Dim SpectraFoxVersionOfFile As String = ""
+                    ' Save the Spectrafox-version that created the file to 
+                    ' check against old files and new features.
+                    Dim SpectraFoxVersionOfFile As String = ""
 
-                ' Number of files expected in the file-cache.
-                Dim CacheCount As Integer = -1
+                    ' Number of files expected in the file-cache.
+                    Dim CacheCount As Integer = -1
 
-                ' Now read the XML-file, and import the settings.
-                With XMLReader
-                    ' read up to the end of the file
-                    Do While .Read
-                        ' Check for the type of data
-                        Select Case .NodeType
-                            Case Xml.XmlNodeType.Element
-                                ' An element comes: this is what we are looking for!
-                                '####################################################
-                                Select Case .Name
-                                    Case "SpectraFox"
-                                        ' get and check the properties:
-                                        '###############################
-                                        If .AttributeCount > 0 Then
-                                            While .MoveToNextAttribute
-                                                Select Case .Name
-                                                    Case "Version"
-                                                        SpectraFoxVersionOfFile = .Value
-                                                End Select
-                                            End While
-                                        End If
+                    ' Now read the XML-file, and import the settings.
+                    With XMLReader
+                        ' read up to the end of the file
+                        Do While .Read
+                            ' Check for the type of data
+                            Select Case .NodeType
+                                Case Xml.XmlNodeType.Element
+                                    ' An element comes: this is what we are looking for!
+                                    '####################################################
+                                    Select Case .Name
+                                        Case "SpectraFox"
+                                            ' get and check the properties:
+                                            '###############################
+                                            If .AttributeCount > 0 Then
+                                                While .MoveToNextAttribute
+                                                    Select Case .Name
+                                                        Case "Version"
+                                                            SpectraFoxVersionOfFile = .Value
+                                                    End Select
+                                                End While
+                                            End If
 
-                                    Case "CacheInformation"
-                                        ' get and check the properties:
-                                        '###############################
-                                        If .AttributeCount > 0 Then
-                                            While .MoveToNextAttribute
-                                                Select Case .Name
-                                                    Case "Count"
-                                                        CacheCount = Convert.ToInt32(.Value, System.Globalization.CultureInfo.InvariantCulture)
-                                                End Select
-                                            End While
-                                        End If
+                                        Case "CacheInformation"
+                                            ' get and check the properties:
+                                            '###############################
+                                            If .AttributeCount > 0 Then
+                                                While .MoveToNextAttribute
+                                                    Select Case .Name
+                                                        Case "Count"
+                                                            CacheCount = Convert.ToInt32(.Value, System.Globalization.CultureInfo.InvariantCulture)
+                                                    End Select
+                                                End While
+                                            End If
 
-                                    Case "FileObject"
+                                        Case "FileObject"
 
-                                        Dim NewFileObject As cFileObject = cFileObject.GetFileObjectFromSingleXMLCacheLine(.ReadSubtree)
+                                            Dim NewFileObject As cFileObject = cFileObject.GetFileObjectFromSingleXMLCacheLine(.ReadSubtree)
 
-                                        If Not NewFileObject Is Nothing Then
-                                            ' Set additional settings
-                                            With NewFileObject
-                                                ' Use the current path to the file, since this may change on different computers.
-                                                .FullFileNameInclPath = BasePath & IO.Path.DirectorySeparatorChar & .FileName
-                                            End With
+                                            If Not NewFileObject Is Nothing Then
+                                                ' Set additional settings
+                                                With NewFileObject
+                                                    ' Use the current path to the file, since this may change on different computers.
+                                                    .FullFileNameInclPath = BasePath & IO.Path.DirectorySeparatorChar & .FileName
+                                                End With
 
-                                            ' Add the current path + the new file-object.
-                                            diFileList.Add(NewFileObject.FullFileNameInclPath, NewFileObject)
+                                                ' Add the current path + the new file-object.
+                                                diFileList.Add(NewFileObject.FullFileNameInclPath, NewFileObject)
 
-                                            ' Report progress
-                                            If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(CInt(diFileList.Count / CacheCount), "Reading cached file objects ...")
+                                                ' Report progress
+                                                If Not BackgroundWorker Is Nothing Then BackgroundWorker.ReportProgress(CInt(diFileList.Count / CacheCount), "Reading cached file objects ...")
 
-                                        End If
+                                            End If
 
-                                End Select
+                                    End Select
 
-                        End Select
-                    Loop
+                            End Select
+                        Loop
+                    End With
 
-                    ' Close the XML-Reader
-                    .Close()
-                    .Dispose()
-                End With
-                XMLReader = Nothing
+                End Using
 
             End Using
 

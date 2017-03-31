@@ -83,6 +83,8 @@ Partial Class mDataBrowserList
         Me.mnuTools_OpenScanImagesSeparately = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuTools_ScanImageDataCache = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuGridTools = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuGridTools_ExportGridSpectra = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSpecialTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSpecialTools_GridViewer = New System.Windows.Forms.ToolStripMenuItem()
         Me.ssStatus = New System.Windows.Forms.StatusStrip()
@@ -92,6 +94,7 @@ Partial Class mDataBrowserList
         Me.smnuTimerOnOff = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuTimerConfig_TimeHeader = New System.Windows.Forms.ToolStripLabel()
         Me.mnuTimerConfig_RefreshTime = New System.Windows.Forms.ToolStripTextBox()
+        Me.mnuTimerConfig_ApplyTimer = New System.Windows.Forms.ToolStripMenuItem()
         Me.vListScroll = New System.Windows.Forms.VScrollBar()
         Me.ttToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.cmSpectroscopyFile = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -115,12 +118,12 @@ Partial Class mDataBrowserList
         Me.cmnuGridFile_Header = New System.Windows.Forms.ToolStripLabel()
         Me.ToolStripSeparator16 = New System.Windows.Forms.ToolStripSeparator()
         Me.cmnuGridFile_OpenInSeparateWindow = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmnuGridFile_ExportGridSpectra = New System.Windows.Forms.ToolStripMenuItem()
         Me.panBrowserListContainer = New SpectroscopyManager.MouseBoundPanel()
         Me.panProgress = New System.Windows.Forms.Panel()
         Me.lblProgressHeading = New System.Windows.Forms.Label()
         Me.pbProgress = New System.Windows.Forms.ProgressBar()
         Me.panBrowserList = New SpectroscopyManager.VirtualVerticalPanel()
-        Me.mnuTimerConfig_ApplyTimer = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnu.SuspendLayout()
         Me.ssStatus.SuspendLayout()
         Me.cmSpectroscopyFile.SuspendLayout()
@@ -132,7 +135,7 @@ Partial Class mDataBrowserList
         '
         'mnu
         '
-        Me.mnu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuRefreshList, Me.mnuSorting, Me.mnuFilter, Me.mnuPreviewSettings, Me.mnuMultipleSpectroscopyFileActions, Me.mnuMultipleScanImageFileActions, Me.mnuSpecialTools})
+        Me.mnu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuRefreshList, Me.mnuSorting, Me.mnuFilter, Me.mnuPreviewSettings, Me.mnuMultipleSpectroscopyFileActions, Me.mnuMultipleScanImageFileActions, Me.mnuGridTools, Me.mnuSpecialTools})
         Me.mnu.Location = New System.Drawing.Point(0, 0)
         Me.mnu.Name = "mnu"
         Me.mnu.Size = New System.Drawing.Size(851, 24)
@@ -446,8 +449,8 @@ Partial Class mDataBrowserList
         Me.mnuMultipleSpectroscopyFileActions.Enabled = False
         Me.mnuMultipleSpectroscopyFileActions.Image = Global.SpectroscopyManager.My.Resources.Resources.plot_16
         Me.mnuMultipleSpectroscopyFileActions.Name = "mnuMultipleSpectroscopyFileActions"
-        Me.mnuMultipleSpectroscopyFileActions.Size = New System.Drawing.Size(160, 20)
-        Me.mnuMultipleSpectroscopyFileActions.Text = "spectroscopy data tools"
+        Me.mnuMultipleSpectroscopyFileActions.Size = New System.Drawing.Size(105, 20)
+        Me.mnuMultipleSpectroscopyFileActions.Text = "spectroscopy"
         Me.mnuMultipleSpectroscopyFileActions.ToolTipText = "these tools apply to the current selection of spectroscopy data files"
         '
         'mnuTools_OpenSpectroscopyFilesSeparately
@@ -535,8 +538,8 @@ Partial Class mDataBrowserList
         Me.mnuMultipleScanImageFileActions.Enabled = False
         Me.mnuMultipleScanImageFileActions.Image = Global.SpectroscopyManager.My.Resources.Resources.topography_16
         Me.mnuMultipleScanImageFileActions.Name = "mnuMultipleScanImageFileActions"
-        Me.mnuMultipleScanImageFileActions.Size = New System.Drawing.Size(97, 20)
-        Me.mnuMultipleScanImageFileActions.Text = "image tools"
+        Me.mnuMultipleScanImageFileActions.Size = New System.Drawing.Size(73, 20)
+        Me.mnuMultipleScanImageFileActions.Text = "images"
         Me.mnuMultipleScanImageFileActions.ToolTipText = "these tools apply to the current selection of image data files"
         '
         'mnuTools_OpenScanImagesSeparately
@@ -558,14 +561,30 @@ Partial Class mDataBrowserList
         Me.mnuTools_ScanImageDataCache.Size = New System.Drawing.Size(217, 22)
         Me.mnuTools_ScanImageDataCache.Text = "persistent data storage"
         '
+        'mnuGridTools
+        '
+        Me.mnuGridTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuGridTools_ExportGridSpectra})
+        Me.mnuGridTools.Enabled = False
+        Me.mnuGridTools.Image = Global.SpectroscopyManager.My.Resources.Resources.gridplotter_16
+        Me.mnuGridTools.Name = "mnuGridTools"
+        Me.mnuGridTools.Size = New System.Drawing.Size(61, 20)
+        Me.mnuGridTools.Text = "grids"
+        '
+        'mnuGridTools_ExportGridSpectra
+        '
+        Me.mnuGridTools_ExportGridSpectra.Image = Global.SpectroscopyManager.My.Resources.Resources.export_16
+        Me.mnuGridTools_ExportGridSpectra.Name = "mnuGridTools_ExportGridSpectra"
+        Me.mnuGridTools_ExportGridSpectra.Size = New System.Drawing.Size(201, 22)
+        Me.mnuGridTools_ExportGridSpectra.Text = "export spectra from grid"
+        '
         'mnuSpecialTools
         '
         Me.mnuSpecialTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuSpecialTools_GridViewer})
         Me.mnuSpecialTools.Enabled = False
         Me.mnuSpecialTools.Image = Global.SpectroscopyManager.My.Resources.Resources.tools_special_16
         Me.mnuSpecialTools.Name = "mnuSpecialTools"
-        Me.mnuSpecialTools.Size = New System.Drawing.Size(100, 20)
-        Me.mnuSpecialTools.Text = "special tools"
+        Me.mnuSpecialTools.Size = New System.Drawing.Size(61, 20)
+        Me.mnuSpecialTools.Text = "tools"
         Me.mnuSpecialTools.ToolTipText = "special tools which do not apply to the current selection," & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "but handle the files " &
     "in the project folder itself"
         '
@@ -573,8 +592,8 @@ Partial Class mDataBrowserList
         '
         Me.mnuSpecialTools_GridViewer.Image = Global.SpectroscopyManager.My.Resources.Resources.gridplotter_16
         Me.mnuSpecialTools_GridViewer.Name = "mnuSpecialTools_GridViewer"
-        Me.mnuSpecialTools_GridViewer.Size = New System.Drawing.Size(228, 22)
-        Me.mnuSpecialTools_GridViewer.Text = "spectral intensity map plotter"
+        Me.mnuSpecialTools_GridViewer.Size = New System.Drawing.Size(278, 22)
+        Me.mnuSpecialTools_GridViewer.Text = "plot grid data as spectral intensity map"
         '
         'ssStatus
         '
@@ -595,7 +614,7 @@ Partial Class mDataBrowserList
         'lblTimerStatus
         '
         Me.lblTimerStatus.Name = "lblTimerStatus"
-        Me.lblTimerStatus.Size = New System.Drawing.Size(737, 21)
+        Me.lblTimerStatus.Size = New System.Drawing.Size(768, 21)
         Me.lblTimerStatus.Spring = True
         Me.lblTimerStatus.Text = "time to refresh: 00:00:00"
         Me.lblTimerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -632,7 +651,13 @@ Partial Class mDataBrowserList
         Me.mnuTimerConfig_RefreshTime.Size = New System.Drawing.Size(100, 23)
         Me.mnuTimerConfig_RefreshTime.Text = "60"
         Me.mnuTimerConfig_RefreshTime.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        Me.mnuTimerConfig_RefreshTime.Width = 40
+        '
+        'mnuTimerConfig_ApplyTimer
+        '
+        Me.mnuTimerConfig_ApplyTimer.Image = Global.SpectroscopyManager.My.Resources.Resources.ok_16
+        Me.mnuTimerConfig_ApplyTimer.Name = "mnuTimerConfig_ApplyTimer"
+        Me.mnuTimerConfig_ApplyTimer.Size = New System.Drawing.Size(184, 22)
+        Me.mnuTimerConfig_ApplyTimer.Text = "apply settings"
         '
         'vListScroll
         '
@@ -752,9 +777,9 @@ Partial Class mDataBrowserList
         '
         'cmGridFile
         '
-        Me.cmGridFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuGridFile_Header, Me.ToolStripSeparator16, Me.cmnuGridFile_OpenInSeparateWindow})
+        Me.cmGridFile.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmnuGridFile_Header, Me.ToolStripSeparator16, Me.cmnuGridFile_OpenInSeparateWindow, Me.cmnuGridFile_ExportGridSpectra})
         Me.cmGridFile.Name = "cmScanImageFile"
-        Me.cmGridFile.Size = New System.Drawing.Size(207, 50)
+        Me.cmGridFile.Size = New System.Drawing.Size(207, 72)
         '
         'cmnuGridFile_Header
         '
@@ -773,6 +798,13 @@ Partial Class mDataBrowserList
         Me.cmnuGridFile_OpenInSeparateWindow.Name = "cmnuGridFile_OpenInSeparateWindow"
         Me.cmnuGridFile_OpenInSeparateWindow.Size = New System.Drawing.Size(206, 22)
         Me.cmnuGridFile_OpenInSeparateWindow.Text = "open in separate window"
+        '
+        'cmnuGridFile_ExportGridSpectra
+        '
+        Me.cmnuGridFile_ExportGridSpectra.Image = Global.SpectroscopyManager.My.Resources.Resources.export_16
+        Me.cmnuGridFile_ExportGridSpectra.Name = "cmnuGridFile_ExportGridSpectra"
+        Me.cmnuGridFile_ExportGridSpectra.Size = New System.Drawing.Size(206, 22)
+        Me.cmnuGridFile_ExportGridSpectra.Text = "export spectra from grid"
         '
         'panBrowserListContainer
         '
@@ -826,13 +858,6 @@ Partial Class mDataBrowserList
         Me.panBrowserList.Size = New System.Drawing.Size(814, 157)
         Me.panBrowserList.TabIndex = 1
         Me.panBrowserList.VirtualHeightOfThePanel = 100
-        '
-        'mnuTimerConfig_ApplyTimer
-        '
-        Me.mnuTimerConfig_ApplyTimer.Name = "mnuTimerConfig_ApplyTimer"
-        Me.mnuTimerConfig_ApplyTimer.Size = New System.Drawing.Size(184, 22)
-        Me.mnuTimerConfig_ApplyTimer.Text = "apply settings"
-        Me.mnuTimerConfig_ApplyTimer.Image = My.Resources.ok_16
         '
         'mDataBrowserList
         '
@@ -956,4 +981,7 @@ Partial Class mDataBrowserList
     Friend WithEvents mnuTimerConfig_RefreshTime As ToolStripTextBox
     Friend WithEvents mnuTimerConfig_TimeHeader As ToolStripLabel
     Friend WithEvents mnuTimerConfig_ApplyTimer As ToolStripMenuItem
+    Friend WithEvents mnuGridTools As ToolStripMenuItem
+    Friend WithEvents mnuGridTools_ExportGridSpectra As ToolStripMenuItem
+    Friend WithEvents cmnuGridFile_ExportGridSpectra As ToolStripMenuItem
 End Class

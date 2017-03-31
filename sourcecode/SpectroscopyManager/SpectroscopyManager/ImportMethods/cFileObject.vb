@@ -1258,111 +1258,108 @@ Public Class cFileObject
             Dim enc As New System.Text.UnicodeEncoding
 
             ' Create the XmlTextWriter object
-            Dim XMLobj As New Xml.XmlTextWriter(TMPFileName, enc)
+            Using XMLobj As New Xml.XmlTextWriter(TMPFileName, enc)
 
-            With XMLobj
-                ' Set the proper formatting
-                .Formatting = Xml.Formatting.Indented
-                .Indentation = 4
+                With XMLobj
+                    ' Set the proper formatting
+                    .Formatting = Xml.Formatting.Indented
+                    .Indentation = 4
 
-                ' create the document header
-                .WriteStartDocument()
-                .WriteStartElement("root")
+                    ' create the document header
+                    .WriteStartDocument()
+                    .WriteStartElement("root")
 
-                ' Begin with SpectraFox program properties
-                .WriteStartElement("SpectraFox")
-                .WriteAttributeString("Version", cProgrammDeployment.GetProgramVersionString)
-                .WriteEndElement()
+                    ' Begin with SpectraFox program properties
+                    .WriteStartElement("SpectraFox")
+                    .WriteAttributeString("Version", cProgrammDeployment.GetProgramVersionString)
+                    .WriteEndElement()
 
-                ' Begin the base file description
-                ' Write properties of the base-file-object
-                .WriteStartElement("BaseFileInformation")
-                .WriteElementString("Name", Me.FileNameWithoutPath)
-                .WriteElementString("Type", Me.FileType.ToString)
-                '.WriteElementString("DetailedType", Me.DetailedFileType.ToString)
-                .WriteEndElement()
+                    ' Begin the base file description
+                    ' Write properties of the base-file-object
+                    .WriteStartElement("BaseFileInformation")
+                    .WriteElementString("Name", Me.FileNameWithoutPath)
+                    .WriteElementString("Type", Me.FileType.ToString)
+                    '.WriteElementString("DetailedType", Me.DetailedFileType.ToString)
+                    .WriteEndElement()
 
-                ' Begin the section of the additionally created data-columns
-                If Not Me.SpectroscopyTable Is Nothing Then
-                    .WriteStartElement("SpectroscopyColumnsAdded")
-                    For Each Col As cSpectroscopyTable.DataColumn In Me.SpectroscopyTable.Columns.Values
-                        If Not Col.IsSpectraFoxGenerated Then Continue For
+                    ' Begin the section of the additionally created data-columns
+                    If Not Me.SpectroscopyTable Is Nothing Then
+                        .WriteStartElement("SpectroscopyColumnsAdded")
+                        For Each Col As cSpectroscopyTable.DataColumn In Me.SpectroscopyTable.Columns.Values
+                            If Not Col.IsSpectraFoxGenerated Then Continue For
 
-                        ' Write an element for each data-column
-                        .WriteStartElement("SpectroscopyColumn")
-                        .WriteAttributeString("Name", Col.Name)
-                        .WriteAttributeString("UnitSymbol", Col.UnitSymbol)
-                        .WriteAttributeString("UnitType", Col.UnitType.ToString)
-                        .WriteAttributeString("ValueCount", Col.Values(True).Count.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                        For j As Integer = 0 To Col.Values(True).Count - 1 Step 1
-                            .WriteString(Col.Values(True)(j).ToString("E5", System.Globalization.CultureInfo.InvariantCulture))
-                            .WriteString(";")
+                            ' Write an element for each data-column
+                            .WriteStartElement("SpectroscopyColumn")
+                            .WriteAttributeString("Name", Col.Name)
+                            .WriteAttributeString("UnitSymbol", Col.UnitSymbol)
+                            .WriteAttributeString("UnitType", Col.UnitType.ToString)
+                            .WriteAttributeString("ValueCount", Col.Values(True).Count.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                            For j As Integer = 0 To Col.Values(True).Count - 1 Step 1
+                                .WriteString(Col.Values(True)(j).ToString("E5", System.Globalization.CultureInfo.InvariantCulture))
+                                .WriteString(";")
+                            Next
+                            .WriteEndElement()
                         Next
                         .WriteEndElement()
-                    Next
+                    End If
+
+                    ' Begin the section of the crop informations stored for spectroscopy tables.
+                    .WriteStartElement("SpectroscopyTable_CropInformation")
+                    .WriteAttributeString("MaxIndexIncl", Me._SpectroscopyTable_CropInformation.MaxIndexIncl.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                    .WriteAttributeString("MinIndexIncl", Me._SpectroscopyTable_CropInformation.MinIndexIncl.ToString(System.Globalization.CultureInfo.InvariantCulture))
                     .WriteEndElement()
-                End If
 
-                ' Begin the section of the crop informations stored for spectroscopy tables.
-                .WriteStartElement("SpectroscopyTable_CropInformation")
-                .WriteAttributeString("MaxIndexIncl", Me._SpectroscopyTable_CropInformation.MaxIndexIncl.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                .WriteAttributeString("MinIndexIncl", Me._SpectroscopyTable_CropInformation.MinIndexIncl.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                .WriteEndElement()
+                    ' Begin the section of the additionally created scan-channels
+                    If Not Me.ScanImage Is Nothing Then
+                        .WriteStartElement("ScanChannelsAdded")
+                        For Each Chan As cScanImage.ScanChannel In Me.ScanImage.ScanChannels.Values
+                            If Not Chan.IsSpectraFoxGenerated Then Continue For
+                            ' Write an element for each data-column
+                            .WriteStartElement("ScanChannel")
+                            .WriteAttributeString("Name", Chan.Name)
+                            .WriteAttributeString("InSourceFile", Chan.IsSpectraFoxGenerated.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                            .WriteAttributeString("UnitSymbol", Chan.UnitSymbol)
+                            .WriteAttributeString("UnitType", Chan.Unit.ToString)
+                            .WriteAttributeString("ScanDirection", Chan.ScanDirection.ToString)
+                            .WriteAttributeString("Bias", Chan.Bias.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
+                            .WriteAttributeString("Calibration", Chan.Calibration.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
+                            .WriteAttributeString("Offset", Chan.Offset.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
+                            .WriteAttributeString("Columns", Chan.ScanData.ColumnCount.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                            .WriteAttributeString("Rows", Chan.ScanData.RowCount.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                            For y As Integer = 0 To Chan.ScanData.RowCount - 1 Step 1
+                                For x As Integer = 0 To Chan.ScanData.ColumnCount - 1 Step 1
+                                    .WriteString(Chan.ScanData(y, x).ToString("E5", System.Globalization.CultureInfo.InvariantCulture))
+                                    .WriteString(";")
+                                Next
+                            Next
+                            .WriteEndElement()
+                        Next
+                        .WriteEndElement()
 
-                ' Begin the section of the additionally created scan-channels
-                If Not Me.ScanImage Is Nothing Then
-                    .WriteStartElement("ScanChannelsAdded")
-                    For Each Chan As cScanImage.ScanChannel In Me.ScanImage.ScanChannels.Values
-                        If Not Chan.IsSpectraFoxGenerated Then Continue For
-                        ' Write an element for each data-column
-                        .WriteStartElement("ScanChannel")
-                        .WriteAttributeString("Name", Chan.Name)
-                        .WriteAttributeString("InSourceFile", Chan.IsSpectraFoxGenerated.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                        .WriteAttributeString("UnitSymbol", Chan.UnitSymbol)
-                        .WriteAttributeString("UnitType", Chan.Unit.ToString)
-                        .WriteAttributeString("ScanDirection", Chan.ScanDirection.ToString)
-                        .WriteAttributeString("Bias", Chan.Bias.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
-                        .WriteAttributeString("Calibration", Chan.Calibration.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
-                        .WriteAttributeString("Offset", Chan.Offset.ToString("E6", System.Globalization.CultureInfo.InvariantCulture))
-                        .WriteAttributeString("Columns", Chan.ScanData.ColumnCount.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                        .WriteAttributeString("Rows", Chan.ScanData.RowCount.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                        For y As Integer = 0 To Chan.ScanData.RowCount - 1 Step 1
-                            For x As Integer = 0 To Chan.ScanData.ColumnCount - 1 Step 1
-                                .WriteString(Chan.ScanData(y, x).ToString("E5", System.Globalization.CultureInfo.InvariantCulture))
-                                .WriteString(";")
+                        ' Begin the section of the additional scan channels
+                        .WriteStartElement("ScanImageFilters")
+                        For Each Chan As cScanImage.ScanChannel In Me.ScanImage.ScanChannels.Values
+                            For i As Integer = 0 To Chan.FilterCount - 1 Step 1
+                                .WriteStartElement("ScanImageFilter")
+                                .WriteAttributeString("ChannelName", Chan.Name.ToString(System.Globalization.CultureInfo.InvariantCulture))
+                                .WriteAttributeString("FilterType", Chan.Filter(i).GetType.ToString)
+                                .WriteAttributeString("Settings", Chan.Filter(i).FilterSettingsString)
+                                .WriteEndElement()
                             Next
                         Next
                         .WriteEndElement()
-                    Next
+                    End If
+
+                    ' Write AdditionalComment
+                    .WriteElementString("AdditionalComment", Me.ExtendedComment)
+
+                    ' End <root>
                     .WriteEndElement()
 
-                    ' Begin the section of the additional scan channels
-                    .WriteStartElement("ScanImageFilters")
-                    For Each Chan As cScanImage.ScanChannel In Me.ScanImage.ScanChannels.Values
-                        For i As Integer = 0 To Chan.FilterCount - 1 Step 1
-                            .WriteStartElement("ScanImageFilter")
-                            .WriteAttributeString("ChannelName", Chan.Name.ToString(System.Globalization.CultureInfo.InvariantCulture))
-                            .WriteAttributeString("FilterType", Chan.Filter(i).GetType.ToString)
-                            .WriteAttributeString("Settings", Chan.Filter(i).FilterSettingsString)
-                            .WriteEndElement()
-                        Next
-                    Next
-                    .WriteEndElement()
-                End If
-
-                ' Write AdditionalComment
-                .WriteElementString("AdditionalComment", Me.ExtendedComment)
-
-                ' End <root>
-                .WriteEndElement()
-
-                ' Close the document
-                .WriteEndDocument()
-
-                ' Close the XML-Document
-                .Close() ' Document 
-                .Dispose()
-            End With
+                    ' Close the document
+                    .WriteEndDocument()
+                End With
+            End Using
 
             ' If everything was ok so far, so if we are at this point,
             ' move the temporary file to the real target-file-name,

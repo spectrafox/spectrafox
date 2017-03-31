@@ -41,39 +41,40 @@ Public Class cFileImportSpectraFoxSFX
                                     Case "BaseFileInformation"
                                         ' get and check the properties:
                                         '###############################
-                                        Dim SubTreeReader As Xml.XmlReader = .ReadSubtree
-                                        While SubTreeReader.Read
-                                            If SubTreeReader.NodeType <> Xml.XmlNodeType.Element Then Continue While
+                                        Using SubTreeReader As Xml.XmlReader = .ReadSubtree
+                                            While SubTreeReader.Read
+                                                If SubTreeReader.NodeType <> Xml.XmlNodeType.Element Then Continue While
 
-                                            Select Case SubTreeReader.Name
-                                                Case "Name"
-                                                    SubTreeReader.Read()
+                                                Select Case SubTreeReader.Name
+                                                    Case "Name"
+                                                        SubTreeReader.Read()
 
-                                                    If InputFileObject.FileNameWithoutPath.ToString <> SubTreeReader.Value Then
-                                                        Exit Do
-                                                    End If
-                                                Case "Type"
-                                                    SubTreeReader.Read()
+                                                        If InputFileObject.FileNameWithoutPath.ToString <> SubTreeReader.Value Then
+                                                            Exit Do
+                                                        End If
+                                                    Case "Type"
+                                                        SubTreeReader.Read()
 
-                                                    If InputFileObject.FileType.ToString <> SubTreeReader.Value Then
-                                                        Exit Do
-                                                    End If
+                                                        If InputFileObject.FileType.ToString <> SubTreeReader.Value Then
+                                                            Exit Do
+                                                        End If
 
-                                                    ' Create file-type specific objects
-                                                    Select Case InputFileObject.FileType
-                                                        Case cFileObject.FileTypes.SpectroscopyTable
-                                                            ' Create Spectroscopy-Table Object, if not yet created in the file-object.
-                                                            If InputFileObject.SpectroscopyTable Is Nothing Then
-                                                                InputFileObject.SpectroscopyTable = New cSpectroscopyTable
-                                                            End If
+                                                        ' Create file-type specific objects
+                                                        Select Case InputFileObject.FileType
+                                                            Case cFileObject.FileTypes.SpectroscopyTable
+                                                                ' Create Spectroscopy-Table Object, if not yet created in the file-object.
+                                                                If InputFileObject.SpectroscopyTable Is Nothing Then
+                                                                    InputFileObject.SpectroscopyTable = New cSpectroscopyTable
+                                                                End If
 
-                                                    End Select
-                                                Case "DetailedType"
-                                                    'If InputFileObject.DetailedFileType.ToString <> .Value Then
-                                                    '    Exit Do
-                                                    'End If
-                                            End Select
-                                        End While
+                                                        End Select
+                                                    Case "DetailedType"
+                                                        'If InputFileObject.DetailedFileType.ToString <> .Value Then
+                                                        '    Exit Do
+                                                        'End If
+                                                End Select
+                                            End While
+                                        End Using
 
                                     Case "SpectroscopyColumn"
 
@@ -99,16 +100,9 @@ Public Class cFileImportSpectraFoxSFX
 
                                             ' Get the data from the innerxml
                                             Dim ColumnValues As New List(Of Double)(SpectroscopyColumn.ValueCount)
-                                            Dim Values As String = .ReadString()
-                                            Dim Buffer As String = String.Empty
-                                            For i As Integer = 0 To Values.Length - 1 Step 1
-                                                ' Read value
-                                                If Values(i) <> ";" Then
-                                                    Buffer = Buffer & Values(i)
-                                                Else
-                                                    ColumnValues.Add(Convert.ToDouble(Buffer, System.Globalization.CultureInfo.InvariantCulture))
-                                                    Buffer = ""
-                                                End If
+                                            Dim SingleValues As String() = .ReadString().Split({";"}, StringSplitOptions.RemoveEmptyEntries)
+                                            For i As Integer = 0 To SingleValues.Length - 1 Step 1
+                                                ColumnValues.Add(Convert.ToDouble(SingleValues(i), System.Globalization.CultureInfo.InvariantCulture))
                                             Next
                                             SpectroscopyColumn.SetValueList(ColumnValues)
 
@@ -328,10 +322,10 @@ Public Class cFileImportSpectraFoxSFX
     Public Shared Function IdentifyFile(FullFileName As String) As Boolean
         ' Load StreamReader and Read first line.
         ' Is the only one needed for Identification.
-        Dim sr As New StreamReader(FullFileName)
-        Dim sFirstLine As String = sr.ReadLine
-        sr.Close()
-        sr.Dispose()
+        Dim sFirstLine As String
+        Using sr As New StreamReader(FullFileName)
+            sFirstLine = sr.ReadLine
+        End Using
 
         If Not sFirstLine Is Nothing Then
             ' SpectraFox File is an XML-File:

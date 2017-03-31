@@ -543,6 +543,7 @@
       <DependentUpon>rGPUComputing.resx</DependentUpon>
     </Compile>
     <Compile Include="GridFiles\cGridFile.vb" />
+    <Compile Include="GridFiles\cGridFileFetcher.vb" />
     <Compile Include="HelperClasses\cArrayHelper.vb" />
     <Compile Include="HelperClasses\cClipboardInvoker.vb" />
     <Compile Include="HelperClasses\cColorHelper.vb" />
@@ -585,6 +586,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rFileImport.resx</DependentUpon>
     </Compile>
+    <Compile Include="ImportMethods\SpectraFox-SFD\cFileImportSpectraFoxSFD.vb" />
     <Compile Include="ImportMethods\SpectraFox-SFX\cFileImportSpectraFoxSFX.vb" />
     <Compile Include="MyControls\GeneralControls\ColorPickerComboBox.vb">
       <SubType>Component</SubType>
@@ -778,7 +780,22 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>rDataBrowser.resx</DependentUpon>
     </Compile>
+    <Compile Include="Windows\DataExplorer\wDataExplorer_GridFile.Designer.vb">
+      <DependentUpon>wDataExplorer_GridFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DataExplorer\wDataExplorer_GridFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\FormBase-Class\wFormBaseExpectsGridFileOnLoad.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\FormBase-Class\wFormBaseExpectsMultipleScanImagesOnLoad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\GridExporter\wGridExporter.Designer.vb">
+      <DependentUpon>wGridExporter.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\GridExporter\wGridExporter.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\ScanImage Data Treatment\ImageSummation\wScanImageSummation.Designer.vb">
@@ -796,6 +813,12 @@
       <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\MovieGenerator\wScanImageMovieGenerator.Designer.vb">
+      <DependentUpon>wScanImageMovieGenerator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\ScanImage Data Treatment\MovieGenerator\wScanImageMovieGenerator.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Settings\wSettings_Program.Designer.vb">
@@ -1452,6 +1475,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>rDataBrowser.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DataExplorer\wDataExplorer_GridFile.resx">
+      <DependentUpon>wDataExplorer_GridFile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\GridExporter\wGridExporter.resx">
+      <DependentUpon>wGridExporter.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\ScanImage Data Treatment\ImageSummation\wScanImageSummation.resx">
       <DependentUpon>wScanImageSummation.vb</DependentUpon>
     </EmbeddedResource>
@@ -1462,6 +1491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\ScanImage Data Treatment\LineProfile\wScanImageLineProfile.resx">
       <DependentUpon>wScanImageLineProfile.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\ScanImage Data Treatment\MovieGenerator\wScanImageMovieGenerator.resx">
+      <DependentUpon>wScanImageMovieGenerator.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Settings\wSettings_Program.resx">
       <DependentUpon>wSettings_Program.vb</DependentUpon>
@@ -1896,6 +1928,9 @@
     <None Include="Resources\zoom_out_16.png" />
     <None Include="Resources\zoom_out_25.png" />
     <None Include="Resources\gridfile_preview.png" />
+    <None Include="Resources\movie_16.png" />
+    <None Include="Resources\movie_25.png" />
+    <None Include="Resources\movie.png" />
     <Content Include="versioninfo_dev_lowpriv.xml">
       <SubType>Designer</SubType>
     </Content>
