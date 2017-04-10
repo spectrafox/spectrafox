@@ -368,8 +368,6 @@ Partial Class mScanImageViewer
         '
         Me.vsValueRangeSelector.Location = New System.Drawing.Point(2, 73)
         Me.vsValueRangeSelector.Name = "vsValueRangeSelector"
-        Me.vsValueRangeSelector.SelectedMaxValue = 0R
-        Me.vsValueRangeSelector.SelectedMinValue = 0R
         Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 170)
         Me.vsValueRangeSelector.TabIndex = 8
         '

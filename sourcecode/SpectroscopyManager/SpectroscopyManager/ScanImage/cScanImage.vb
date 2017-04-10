@@ -1010,30 +1010,31 @@ Public Class cScanImage
 #End Region
 
 #Region "Get common features between different ScanImages"
+
     ''' <summary>
     ''' Takes several scan-images and return the channel-names that the files have in common.
     ''' </summary>
-    Public Shared Function GetCommonColumns(ByRef ScanImageList As List(Of cScanImage)) As List(Of String)
+    Public Shared Function GetCommonScanChannelNames(ByRef ScanImageList As List(Of cScanImage)) As List(Of String)
         Dim ListOfCommonChannelNames As New List(Of String)
 
         ' List to count the channels by name to determine all common channels
-        Dim ListOfCommonChannels As New Dictionary(Of String, Integer)
+        Dim ChannelNameCount As New Dictionary(Of String, Integer)
 
-        ' Run through all Spectroscopy-Tables and increase
-        ' the presence-counter for each Column in the Spectroscopy-File
+        ' Run through all ScanImages and increase
+        ' the presence-counter for each channel in the ScanImage-File
         For i As Integer = 0 To ScanImageList.Count - 1 Step 1
             For Each ChannelName As String In ScanImageList(i).GetChannelNameList
-                ' Save Column in the Counter-List
-                If ListOfCommonChannels.ContainsKey(ChannelName) Then
-                    ListOfCommonChannels(ChannelName) += 1
+                ' Save channel in the Counter-List
+                If ChannelNameCount.ContainsKey(ChannelName) Then
+                    ChannelNameCount(ChannelName) += 1
                 Else
-                    ListOfCommonChannels.Add(ChannelName, 1)
+                    ChannelNameCount.Add(ChannelName, 1)
                 End If
             Next
         Next
 
-        ' Now extract all Column-Names into the Combobox, that exist in each Spectroscopy-Table
-        For Each Col As KeyValuePair(Of String, Integer) In ListOfCommonChannels
+        ' Now extract all Channel-Names into the List, that exist in each ScanImage
+        For Each Col As KeyValuePair(Of String, Integer) In ChannelNameCount
             If Col.Value = ScanImageList.Count Then
                 ListOfCommonChannelNames.Add(Col.Key)
             End If
@@ -1041,6 +1042,40 @@ Public Class cScanImage
 
         Return ListOfCommonChannelNames
     End Function
+
+    ''' <summary>
+    ''' Takes several scan-images and return the a list with common file properties
+    ''' extracted from the file header, stored in the GeneralPropertyArray.
+    ''' </summary>
+    Public Shared Function GetCommonFilePropertyArrayKeys(ByRef ScanImageList As List(Of cScanImage)) As List(Of String)
+        Dim ListOfCommonPropertyKeys As New List(Of String)
+
+        ' List to count the properties.
+        Dim PropertyCount As New Dictionary(Of String, Integer)
+
+        ' Run through all Spectroscopy-Tables and increase
+        ' the presence-counter for each Column in the Spectroscopy-File
+        For i As Integer = 0 To ScanImageList.Count - 1 Step 1
+            For Each PropertyName As String In ScanImageList(i).GeneralPropertyArray.Keys
+                ' Save Column in the Counter-List
+                If PropertyCount.ContainsKey(PropertyName) Then
+                    PropertyCount(PropertyName) += 1
+                Else
+                    PropertyCount.Add(PropertyName, 1)
+                End If
+            Next
+        Next
+
+        ' Now extract all Column-Names into the Combobox, that exist in each Spectroscopy-Table
+        For Each Col As KeyValuePair(Of String, Integer) In PropertyCount
+            If Col.Value = ScanImageList.Count Then
+                ListOfCommonPropertyKeys.Add(Col.Key)
+            End If
+        Next
+
+        Return ListOfCommonPropertyKeys
+    End Function
+
 #End Region
 
 

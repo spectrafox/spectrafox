@@ -3139,7 +3139,7 @@ UPDATED:        ResetInfo()
     ''' no one cares about the content.  m_xxxx.Count = 0 means that someone does care, but there were 
     ''' no such items known until (perhaps) now.</remarks>
     Public Function UpdateRefresh(Optional ByVal UpdateFiles As Boolean = True, Optional ByVal UpdateFolders As Boolean = True) As Boolean
-        Return False
+        'Return False
         UpdateRefresh = False
         If m_IsFolder Then
             SyncLock LockObj
@@ -3163,70 +3163,76 @@ UPDATED:        ResetInfo()
                         oldPidls(i) = ILFindLastID(tmpItems(i).PIDL)
                     Next
 
-                    Dim InvalidItemsSyncLock As New Object
-                    Dim ItemsChecked(tmpCurrent.Count - 1) As Boolean
-                    Tasks.Parallel.For(0, oldPidls.Length - 1, Sub(iold As Integer)
+                    'Dim InvalidItemsSyncLock As New Object
+                    'Dim ItemsChecked(tmpCurrent.Count - 1) As Boolean
+                    'Tasks.Parallel.For(0, oldPidls.Length - 1, Sub(iold As Integer)
 
-                                                                   For icur As Integer = tmpCurrent.Count - 1 To 0 Step -1     '5/21/2012 changed to bottom-up loop
-                                                                       If ItemsChecked(icur) Then Continue For
-                                                                       ' 5/23/2012 revised the following block of code to also check vs AreBytesEqual
-                                                                       If IsEqual(oldPidls(iold), tmpCurrent(icur)) Then   'found the same item
-                                                                           ''# EXCLUDED AGAIN 1/04/2016, Mike Ruby !
-                                                                           'If Me IsNot m_Recycle AndAlso Not AreBytesEqual(oldPidls(iold), tmpCurrent(icur)) Then  '7/14/2012
-                                                                           '    'in this case, some aspect besides name has changed treat as UpdateItem for the old one
-                                                                           '    Dim UpdCSI As CShItem = tmpItems(iold)
-                                                                           '    'Debug.WriteLine("***Raising Updated based on AreBytesEqual - " & UpdCSI.Name)
-                                                                           '    UpdCSI.ResetInfo()
-                                                                           '    If UpdCSI.IsFolder Then
-                                                                           '        UpdCSI.ResetChildren()
-                                                                           '    End If
-                                                                           '    RaiseEvent CShItemUpdate(UpdCSI.Parent, New ShellItemUpdateEventArgs(UpdCSI, CShItemUpdateType.Updated)) '6/3/2012
-                                                                           '    UpdateRefresh = True        '5/24/2012  
-                                                                           'End If
-                                                                           'either way, we have found the matching PIDL so continue with the next "old" one (in tree)
-                                                                           ItemsChecked(icur) = True
-                                                                           'tmpCurrent.RemoveAt(icur) 'Have match, don't look at this one again - and do not add it in the following code
-                                                                           Return
-                                                                       End If
-                                                                       ' 5/23/2012 end of revised code
-                                                                   Next
-                                                                   'falling thru here means couldn't find iold entry
-                                                                   SyncLock InvalidItemsSyncLock
-                                                                       InvalidItems.Add(tmpItems(iold))
-                                                                   End SyncLock
+                    '                                               For icur As Integer = tmpCurrent.Count - 1 To 0 Step -1     '5/21/2012 changed to bottom-up loop
+                    '                                                   If ItemsChecked(icur) Then Continue For
+                    '                                                   ' 5/23/2012 revised the following block of code to also check vs AreBytesEqual
+                    '                                                   If IsEqual(oldPidls(iold), tmpCurrent(icur)) Then   'found the same item
+                    '                                                       '# EXCLUDED AGAIN 1/04/2016, Mike Ruby !
+                    '                                                       If Me IsNot m_Recycle AndAlso Not AreBytesEqual(oldPidls(iold), tmpCurrent(icur)) Then  '7/14/2012
+                    '                                                           'in this case, some aspect besides name has changed treat as UpdateItem for the old one
+                    '                                                           Dim UpdCSI As CShItem = tmpItems(iold)
+                    '                                                           'Debug.WriteLine("***Raising Updated based on AreBytesEqual - " & UpdCSI.Name)
+                    '                                                           UpdCSI.ResetInfo()
+                    '                                                           If UpdCSI.IsFolder Then
+                    '                                                               UpdCSI.ResetChildren()
+                    '                                                           End If
+                    '                                                           RaiseEvent CShItemUpdate(UpdCSI.Parent, New ShellItemUpdateEventArgs(UpdCSI, CShItemUpdateType.Updated)) '6/3/2012
+                    '                                                           UpdateRefresh = True        '5/24/2012  
+                    '                                                       End If
+                    '                                                       'either way, we have found the matching PIDL so continue with the next "old" one (in tree)
+                    '                                                       ItemsChecked(icur) = True
+                    '                                                       'tmpCurrent.RemoveAt(icur) 'Have match, don't look at this one again - and do not add it in the following code
+                    '                                                       Return
+                    '                                                   End If
+                    '                                                   ' 5/23/2012 end of revised code
+                    '                                               Next
+                    '                                               'falling thru here means couldn't find iold entry
+                    '                                               SyncLock InvalidItemsSyncLock
+                    '                                                   InvalidItems.Add(tmpItems(iold))
+                    '                                               End SyncLock
 
-                                                               End Sub)
+                    '                                           End Sub)
 
-                    ' Remove the checked items form the current list, otherwise they are treated as new items!
-                    For i As Integer = ItemsChecked.Length - 1 To 0 Step -1
-                        If ItemsChecked(i) Then tmpCurrent.RemoveAt(i)
+                    '' Remove the checked items form the current list, otherwise they are treated as new items!
+                    'For i As Integer = ItemsChecked.Length - 1 To 0 Step -1
+                    '    If ItemsChecked(i) Then tmpCurrent.RemoveAt(i)
+                    'Next
+
+                    Dim bFound As Boolean
+                    For iold As Integer = 0 To oldPidls.Length - 1
+                        bFound = False
+                        For icur As Integer = tmpCurrent.Count - 1 To 0 Step -1     '5/21/2012 changed to bottom-up loop
+                            ' 5/23/2012 revised the following block of code to also check vs AreBytesEqual
+                            If IsEqual(oldPidls(iold), tmpCurrent(icur)) Then   'found the same item
+                                ''# EXCLUDED AGAIN 1/04/2016, Mike Ruby !
+                                If Me IsNot m_Recycle AndAlso Not AreBytesEqual(oldPidls(iold), tmpCurrent(icur)) Then  '7/14/2012
+                                    'in this case, some aspect besides name has changed treat as UpdateItem for the old one
+                                    Dim UpdCSI As CShItem = tmpItems(iold)
+                                    Debug.WriteLine("***Raising Updated based on AreBytesEqual - " & UpdCSI.Name)
+                                    UpdCSI.ResetInfo()
+                                    If UpdCSI.IsFolder Then
+                                        UpdCSI.ResetChildren()
+                                    End If
+                                    RaiseEvent CShItemUpdate(UpdCSI.Parent, New ShellItemUpdateEventArgs(UpdCSI, CShItemUpdateType.Updated)) '6/3/2012
+                                    UpdateRefresh = True        '5/24/2012  
+                                End If
+                                'either way, we have found the matching PIDL so continue with the next "old" one (in tree)
+                                tmpCurrent.RemoveAt(icur) 'Have match, don't look at this one again - and do not add it in the following code
+                                bFound = True
+                                Exit For
+                            End If
+                            ' 5/23/2012 end of revised code
+                        Next
+
+                        If Not bFound Then
+                            'falling thru here means couldn't find iold entry
+                            InvalidItems.Add(tmpItems(iold))
+                        End If
                     Next
-
-                    '                    For iold As Integer = 0 To oldPidls.Length - 1
-                    '                        For icur As Integer = tmpCurrent.Count - 1 To 0 Step -1     '5/21/2012 changed to bottom-up loop
-                    '                            ' 5/23/2012 revised the following block of code to also check vs AreBytesEqual
-                    '                            If IsEqual(oldPidls(iold), tmpCurrent(icur)) Then   'found the same item
-                    '                                ''# EXCLUDED AGAIN 1/04/2016, Mike Ruby !
-                    '                                'If Me IsNot m_Recycle AndAlso Not AreBytesEqual(oldPidls(iold), tmpCurrent(icur)) Then  '7/14/2012
-                    '                                '    'in this case, some aspect besides name has changed treat as UpdateItem for the old one
-                    '                                '    Dim UpdCSI As CShItem = tmpItems(iold)
-                    '                                '    'Debug.WriteLine("***Raising Updated based on AreBytesEqual - " & UpdCSI.Name)
-                    '                                '    UpdCSI.ResetInfo()
-                    '                                '    If UpdCSI.IsFolder Then
-                    '                                '        UpdCSI.ResetChildren()
-                    '                                '    End If
-                    '                                '    RaiseEvent CShItemUpdate(UpdCSI.Parent, New ShellItemUpdateEventArgs(UpdCSI, CShItemUpdateType.Updated)) '6/3/2012
-                    '                                '    UpdateRefresh = True        '5/24/2012  
-                    '                                'End If
-                    '                                'either way, we have found the matching PIDL so continue with the next "old" one (in tree)
-                    '                                tmpCurrent.RemoveAt(icur) 'Have match, don't look at this one again - and do not add it in the following code
-                    '                                GoTo NXTOLD
-                    '                            End If
-                    '                            ' 5/23/2012 end of revised code
-                    '                        Next
-                    '                        'falling thru here means couldn't find iold entry
-                    '                        InvalidItems.Add(tmpItems(iold))
-                    'NXTOLD:             Next
 
                 End If
                 'any not found should be removed from my collections (raising event)

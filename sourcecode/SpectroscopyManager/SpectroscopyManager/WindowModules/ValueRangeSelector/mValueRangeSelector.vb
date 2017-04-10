@@ -12,12 +12,12 @@ Public Class mValueRangeSelector
     ''' <summary>
     ''' Selected Maximum Value
     ''' </summary>
-    Public Property SelectedMaxValue As Double
+    Public ReadOnly Property SelectedMaxValue As Double
 
     ''' <summary>
     ''' Selected Minimum Value
     ''' </summary>
-    Public Property SelectedMinValue As Double
+    Public ReadOnly Property SelectedMinValue As Double
 
     ''' <summary>
     ''' Saves the values to analyze.
@@ -107,14 +107,14 @@ Public Class mValueRangeSelector
 
         If AutomaticallySetMinMaxValues Then
             ' Reset selected Min and Max Values:
-            Me.SelectedMinValue = Me.MinValue
-            Me.SelectedMaxValue = Me.MaxValue
+            Me._SelectedMinValue = Me.MinValue
+            Me._SelectedMaxValue = Me.MaxValue
         End If
 
         If MinMaxValuesToSet IsNot Nothing Then
             ' Reset selected Min and Max Values:
-            Me.SelectedMinValue = MinMaxValuesToSet.Item1
-            Me.SelectedMaxValue = MinMaxValuesToSet.Item2
+            Me._SelectedMinValue = MinMaxValuesToSet.Item1
+            Me._SelectedMaxValue = MinMaxValuesToSet.Item2
         End If
 
         ' Calculate Paint-Parameters from Data
@@ -226,7 +226,7 @@ Public Class mValueRangeSelector
                 '################################################
                 ' Allow only plausible borders, that are not larger than the corresponding counterparts.
                 If NewSelectedValue > Me.SelectedMinValue And NewSelectedValue <> Me.SelectedMaxValue Then
-                    Me.SelectedMaxValue = NewSelectedValue
+                    Me._SelectedMaxValue = NewSelectedValue
                     bValuesChanged = True
                 End If
             Case MouseButtons.Right
@@ -234,7 +234,7 @@ Public Class mValueRangeSelector
                 '################################################
                 ' Allow only plausible borders, that are not larger than the corresponding counterparts.
                 If NewSelectedValue < Me.SelectedMaxValue And NewSelectedValue <> Me.SelectedMinValue Then
-                    Me.SelectedMinValue = NewSelectedValue
+                    Me._SelectedMinValue = NewSelectedValue
                     bValuesChanged = True
                 End If
         End Select
@@ -265,8 +265,8 @@ Public Class mValueRangeSelector
     ''' Set Markers again to cover the full value-range:
     ''' </summary>
     Private Sub btnFullScale_Click(sender As System.Object, e As System.EventArgs) Handles btnFullScale.Click
-        Me.SelectedMinValue = Me.MinValue
-        Me.SelectedMaxValue = Me.MaxValue
+        Me._SelectedMinValue = Me.MinValue
+        Me._SelectedMaxValue = Me.MaxValue
 
         RaiseEvent SelectedRangeChanged()
 
@@ -280,11 +280,32 @@ Public Class mValueRangeSelector
 
         ' Set the new values for the plot.
         If Me.txtMaxValue.DecimalValue < Me.txtMinValue.DecimalValue Then
-            Me.SelectedMinValue = Me.txtMaxValue.DecimalValue
-            Me.SelectedMaxValue = Me.txtMinValue.DecimalValue
+            Me._SelectedMinValue = Me.txtMaxValue.DecimalValue
+            Me._SelectedMaxValue = Me.txtMinValue.DecimalValue
         Else
-            Me.SelectedMaxValue = Me.txtMaxValue.DecimalValue
-            Me.SelectedMinValue = Me.txtMinValue.DecimalValue
+            Me._SelectedMaxValue = Me.txtMaxValue.DecimalValue
+            Me._SelectedMinValue = Me.txtMinValue.DecimalValue
+        End If
+
+        ' Raise the event
+        RaiseEvent SelectedRangeChanged()
+
+        ' Initialize Repaint-Process
+        Me.pPaintArea.Refresh()
+    End Sub
+
+    ''' <summary>
+    ''' Manually change the selected value range.
+    ''' </summary>
+    Public Sub SetSelectedRange(ByVal MinValue As Double, ByVal MaxValue As Double)
+
+        ' Set the new values for the plot.
+        If MinValue < MaxValue Then
+            Me._SelectedMinValue = MinValue
+            Me._SelectedMaxValue = MaxValue
+        Else
+            Me._SelectedMaxValue = MaxValue
+            Me._SelectedMinValue = MinValue
         End If
 
         ' Raise the event
@@ -305,8 +326,8 @@ Public Class mValueRangeSelector
     Private Sub txtSigma_TextChanged(ByRef NT As NumericTextbox) Handles txtSigma.ValidValueChanged
 
         ' Go through the value list and calculate the std. deviation.
-        Me.SelectedMinValue = Me.DataStatistics.Mean - Me.txtSigma.DecimalValue * Me.DataStatistics.StandardDeviation
-        Me.SelectedMaxValue = Me.DataStatistics.Mean + Me.txtSigma.DecimalValue * Me.DataStatistics.StandardDeviation
+        Me._SelectedMinValue = Me.DataStatistics.Mean - Me.txtSigma.DecimalValue * Me.DataStatistics.StandardDeviation
+        Me._SelectedMaxValue = Me.DataStatistics.Mean + Me.txtSigma.DecimalValue * Me.DataStatistics.StandardDeviation
 
         ' Save as settings.
         My.Settings.ValueRangePlotter_SigmaValue = Me.txtSigma.DecimalValue

@@ -90,6 +90,7 @@ Public Class cFileImportSpectraFoxSFD
 
                                                 ' Add the column to the file.
                                                 oSpectroscopyTable.AddNonPersistentColumn(SpectroscopyColumn)
+                                                oSpectroscopyTable.MeasurementPoints = ColumnValues.Count
                                             End If
 
                                         Case "Location"

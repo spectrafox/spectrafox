@@ -161,125 +161,139 @@ Public Class cFileImport
         '
         For Each oFile As FileInfo In fiFileList
 
-            '######### Progress Reporting ##########
-            ' If the Job is done by a Background-Worker, then report the Progress
-            ' and check, if the User has requested a cancellation of the Thread.
-            If Not BackgroundWorker Is Nothing Then
-                BackgroundWorker.ReportProgress(Convert.ToInt32(i / (iMax + 1) * 100),
+            '#Added 2017/04/03: catch exception,
+            ' otherwise the rest of the list will not load correctly on error
+            Try
+
+                '######### Progress Reporting ##########
+                ' If the Job is done by a Background-Worker, then report the Progress
+                ' and check, if the User has requested a cancellation of the Thread.
+                If Not BackgroundWorker Is Nothing Then
+                    BackgroundWorker.ReportProgress(Convert.ToInt32(i / (iMax + 1) * 100),
                                                 My.Resources.rFileImport.FileImport_ScanningFiles.Replace("%f", oFile.Name) _
                                                                                                  .Replace("%i", i.ToString) _
                                                                                                  .Replace("%m", iMax.ToString))
-                If BackgroundWorker.CancellationPending Then Exit For
-            End If
-            '#######################################
-
-
-            '############## FILE FILTER SECTION ###############
-            If IsFileImportException(oFile) Then Continue For
-            If lFilesToIgnoreDuringImport.Contains(oFile.FullName) Then Continue For
-
-            ' Filter here for the selected names, because people use filters
-            ' to save time, and to not load all files in the folder.
-            ' Other files can be loaded in a different run, if necessary.
-            If FileNameFilterToInclude.Count > 0 Then
-                If Not FileNameFilterToInclude.Contains(oFile.Name) Then Continue For
-            End If
-
-            ' Now check, if we have already fetched these files in the buffer,
-            ' and if the files have changed. If not, we can also jump over these files.
-            If diFileList.ContainsKey(oFile.FullName) Then
-                ' Ignore differences smaller than seconds!
-                If diFileList(oFile.FullName).LastFileChange.Truncate(TimeSpan.TicksPerSecond) = oFile.LastWriteTime.Truncate(TimeSpan.TicksPerSecond) Then
-                    Continue For
+                    If BackgroundWorker.CancellationPending Then Exit For
                 End If
-            End If
+                '#######################################
 
 
-            '##################################################
+                '############## FILE FILTER SECTION ###############
+                If IsFileImportException(oFile) Then Continue For
+                If lFilesToIgnoreDuringImport.Contains(oFile.FullName) Then Continue For
+
+                ' Filter here for the selected names, because people use filters
+                ' to save time, and to not load all files in the folder.
+                ' Other files can be loaded in a different run, if necessary.
+                If FileNameFilterToInclude.Count > 0 Then
+                    If Not FileNameFilterToInclude.Contains(oFile.Name) Then Continue For
+                End If
+
+                ' Now check, if we have already fetched these files in the buffer,
+                ' and if the files have changed. If not, we can also jump over these files.
+                If diFileList.ContainsKey(oFile.FullName) Then
+                    ' Ignore differences smaller than seconds!
+                    If diFileList(oFile.FullName).LastFileChange.Truncate(TimeSpan.TicksPerSecond) = oFile.LastWriteTime.Truncate(TimeSpan.TicksPerSecond) Then
+                        Continue For
+                    End If
+                End If
 
 
-            '############## FILE IMPORT SECTION ###############
+                '##################################################
 
-            ' Create the file-object
-            Dim oFileObject As cFileObject = cFileObject.GetFileObjectFromPath(oFile,
+
+                '############## FILE IMPORT SECTION ###############
+
+                ' Create the file-object
+                Dim oFileObject As cFileObject = cFileObject.GetFileObjectFromPath(oFile,
                                                                                ReaderBuffer,
                                                                                ImportRoutines_SpectroscopyTables,
                                                                                ImportRoutines_ScanImages,
                                                                                ImportRoutines_GridFiles)
 
-            ' If we have a valid FileObject, load the headers of the file.
-            If Not oFileObject Is Nothing Then
+                ' If we have a valid FileObject, load the headers of the file.
+                If Not oFileObject Is Nothing Then
 
-                ' Get a list of files that should be ignored after this specific import.
-                ' This list is stored then in the FileObject, and later
-                ' combined with the global import-ignore list.
-                Dim IgnoreFilesAfterThisImport As New List(Of String)
+                    ' Get a list of files that should be ignored after this specific import.
+                    ' This list is stored then in the FileObject, and later
+                    ' combined with the global import-ignore list.
+                    Dim IgnoreFilesAfterThisImport As New List(Of String)
 
-                ' Fetch the headers of the files.
-                Select Case oFileObject.FileType
-                    Case cFileObject.FileTypes.SpectroscopyTable
-                        Dim oSpectroscopyTable As cSpectroscopyTable = Nothing
-                        cFileImport.GetSpectroscopyFile(oFileObject,
+                    ' Fetch the headers of the files.
+                    Select Case oFileObject.FileType
+                        Case cFileObject.FileTypes.SpectroscopyTable
+                            Dim oSpectroscopyTable As cSpectroscopyTable = Nothing
+                            If Not cFileImport.GetSpectroscopyFile(oFileObject,
                                                         oSpectroscopyTable,
                                                         True,
                                                         IgnoreFilesAfterThisImport,
-                                                        lParameterFileCache)
+                                                        lParameterFileCache) Then
+                                Continue For
+                            End If
 
-                        ' Set custom parameters to the fileobject.
-                        oFileObject.DisplayName = oSpectroscopyTable.DisplayName
+                            ' Set custom parameters to the fileobject.
+                            oFileObject.DisplayName = oSpectroscopyTable.DisplayName
 
-                    Case cFileObject.FileTypes.ScanImage
-                        Dim oScanImage As cScanImage = Nothing
-                        cFileImport.GetScanImageFile(oFileObject,
+                        Case cFileObject.FileTypes.ScanImage
+                            Dim oScanImage As cScanImage = Nothing
+                            If Not cFileImport.GetScanImageFile(oFileObject,
                                                      oScanImage,
                                                      True,
                                                      IgnoreFilesAfterThisImport,
-                                                     lParameterFileCache)
+                                                     lParameterFileCache) Then
+                                Continue For
+                            End If
 
-                        ' Set custom parameters to the fileobject.
-                        oFileObject.DisplayName = oScanImage.DisplayName
+                            ' Set custom parameters to the fileobject.
+                            oFileObject.DisplayName = oScanImage.DisplayName
 
-                    Case cFileObject.FileTypes.GridFile
-                        Dim oGridFile As cGridFile = Nothing
-                        cFileImport.GetGridFile(oFileObject,
+                        Case cFileObject.FileTypes.GridFile
+                            Dim oGridFile As cGridFile = Nothing
+                            If Not cFileImport.GetGridFile(oFileObject,
                                                 oGridFile,
                                                 True,
                                                 IgnoreFilesAfterThisImport,
-                                                lParameterFileCache)
+                                                lParameterFileCache) Then
+                                Continue For
+                            End If
 
-                        ' Set custom parameters to the fileobject.
-                        oFileObject.DisplayName = oGridFile.DisplayName
+                            ' Set custom parameters to the fileobject.
+                            oFileObject.DisplayName = oGridFile.DisplayName
 
-                End Select
+                    End Select
 
-                ' The local list does sometimes contain a path. So add the path for each entry,
-                ' where it is missing, or remove it.
-                For Each FileName As String In IgnoreFilesAfterThisImport
+                    ' The local list does sometimes contain a path. So add the path for each entry,
+                    ' where it is missing, or remove it.
+                    For Each FileName As String In IgnoreFilesAfterThisImport
 
-                    Dim FileNameWithoutPath As String = IO.Path.GetFileName(FileName)
-                    Dim FileNameWithPath As String = oFile.DirectoryName & IO.Path.DirectorySeparatorChar & FileNameWithoutPath
+                        Dim FileNameWithoutPath As String = IO.Path.GetFileName(FileName)
+                        Dim FileNameWithPath As String = oFile.DirectoryName & IO.Path.DirectorySeparatorChar & FileNameWithoutPath
 
-                    ' Add the local ignore list to the global ignore list.
-                    lFilesToIgnoreDuringImport.Add(FileNameWithPath)
+                        ' Add the local ignore list to the global ignore list.
+                        lFilesToIgnoreDuringImport.Add(FileNameWithPath)
 
-                    ' Add the ignore list to the file object.
-                    If oFileObject._FileObjectDescribedByMultipleFiles Is Nothing Then
-                        oFileObject._FileObjectDescribedByMultipleFiles = New List(Of String)
+                        ' Add the ignore list to the file object.
+                        If oFileObject._FileObjectDescribedByMultipleFiles Is Nothing Then
+                            oFileObject._FileObjectDescribedByMultipleFiles = New List(Of String)
+                        End If
+                        oFileObject._FileObjectDescribedByMultipleFiles.Add(FileNameWithoutPath)
+
+                    Next
+
+                    ' Add the file-object to the output list, if we do not have to overwrite it.
+                    If diFileList.ContainsKey(oFileObject.FullFileNameInclPath) Then
+                        diFileList(oFileObject.FullFileNameInclPath) = oFileObject
+                    Else
+                        diFileList.Add(oFileObject.FullFileNameInclPath, oFileObject)
                     End If
-                    oFileObject._FileObjectDescribedByMultipleFiles.Add(FileNameWithoutPath)
 
-                Next
-
-                ' Add the file-object to the output list, if we do not have to overwrite it.
-                If diFileList.ContainsKey(oFileObject.FullFileNameInclPath) Then
-                    diFileList(oFileObject.FullFileNameInclPath) = oFileObject
-                Else
-                    diFileList.Add(oFileObject.FullFileNameInclPath, oFileObject)
                 End If
 
-            End If
+                '#################################################
 
-            '#################################################
+            Catch ex As Exception
+                Debug.WriteLine("FileImport-Error: " & ex.Message)
+            End Try
 
             i += 1
         Next

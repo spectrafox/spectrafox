@@ -11,7 +11,7 @@ Public Class cFileImportNanonisSpectroscopyFile
     ''' <summary>
     ''' Regex for parsing the column header.
     ''' </summary>
-    Public Shared ColumnHeaderRegex As New Regex("(?<ColumnName>.*?)\s\((?<Unit>[a-zA-Z]*?)\)", RegexOptions.Compiled)
+    Public Shared ColumnHeaderRegex As New Regex("(?<ColumnName>.*?)\s\((?<Unit>[\(\)/a-zA-Z]*?)\)", RegexOptions.Compiled)
 
     ''' <summary>
     ''' Imports the Spectroscopy-File into a cSpectroscopyTable-object

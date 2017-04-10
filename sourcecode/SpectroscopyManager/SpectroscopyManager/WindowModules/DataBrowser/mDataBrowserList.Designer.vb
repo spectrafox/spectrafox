@@ -83,6 +83,7 @@ Partial Class mDataBrowserList
         Me.mnuTools_OpenScanImagesSeparately = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator5 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnuTools_ScanImageDataCache = New System.Windows.Forms.ToolStripMenuItem()
+        Me.mnuTools_OpenMovieGenerator = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuGridTools = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuGridTools_ExportGridSpectra = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuSpecialTools = New System.Windows.Forms.ToolStripMenuItem()
@@ -124,6 +125,8 @@ Partial Class mDataBrowserList
         Me.lblProgressHeading = New System.Windows.Forms.Label()
         Me.pbProgress = New System.Windows.Forms.ProgressBar()
         Me.panBrowserList = New SpectroscopyManager.VirtualVerticalPanel()
+        Me.ToolStripSeparator17 = New System.Windows.Forms.ToolStripSeparator()
+        Me.ToolStripSeparator18 = New System.Windows.Forms.ToolStripSeparator()
         Me.mnu.SuspendLayout()
         Me.ssStatus.SuspendLayout()
         Me.cmSpectroscopyFile.SuspendLayout()
@@ -534,7 +537,7 @@ Partial Class mDataBrowserList
         '
         'mnuMultipleScanImageFileActions
         '
-        Me.mnuMultipleScanImageFileActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuTools_OpenScanImagesSeparately, Me.ToolStripSeparator5, Me.mnuTools_ScanImageDataCache})
+        Me.mnuMultipleScanImageFileActions.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.mnuTools_OpenScanImagesSeparately, Me.ToolStripSeparator5, Me.mnuTools_ScanImageDataCache, Me.ToolStripSeparator17, Me.mnuTools_OpenMovieGenerator, Me.ToolStripSeparator18})
         Me.mnuMultipleScanImageFileActions.Enabled = False
         Me.mnuMultipleScanImageFileActions.Image = Global.SpectroscopyManager.My.Resources.Resources.topography_16
         Me.mnuMultipleScanImageFileActions.Name = "mnuMultipleScanImageFileActions"
@@ -546,20 +549,27 @@ Partial Class mDataBrowserList
         '
         Me.mnuTools_OpenScanImagesSeparately.Image = Global.SpectroscopyManager.My.Resources.Resources.topography_16
         Me.mnuTools_OpenScanImagesSeparately.Name = "mnuTools_OpenScanImagesSeparately"
-        Me.mnuTools_OpenScanImagesSeparately.Size = New System.Drawing.Size(217, 22)
+        Me.mnuTools_OpenScanImagesSeparately.Size = New System.Drawing.Size(246, 22)
         Me.mnuTools_OpenScanImagesSeparately.Text = "open image files separately"
         '
         'ToolStripSeparator5
         '
         Me.ToolStripSeparator5.Name = "ToolStripSeparator5"
-        Me.ToolStripSeparator5.Size = New System.Drawing.Size(214, 6)
+        Me.ToolStripSeparator5.Size = New System.Drawing.Size(243, 6)
         '
         'mnuTools_ScanImageDataCache
         '
         Me.mnuTools_ScanImageDataCache.Image = Global.SpectroscopyManager.My.Resources.Resources.save_16
         Me.mnuTools_ScanImageDataCache.Name = "mnuTools_ScanImageDataCache"
-        Me.mnuTools_ScanImageDataCache.Size = New System.Drawing.Size(217, 22)
+        Me.mnuTools_ScanImageDataCache.Size = New System.Drawing.Size(246, 22)
         Me.mnuTools_ScanImageDataCache.Text = "persistent data storage"
+        '
+        'mnuTools_OpenMovieGenerator
+        '
+        Me.mnuTools_OpenMovieGenerator.Image = Global.SpectroscopyManager.My.Resources.Resources.movie_16
+        Me.mnuTools_OpenMovieGenerator.Name = "mnuTools_OpenMovieGenerator"
+        Me.mnuTools_OpenMovieGenerator.Size = New System.Drawing.Size(246, 22)
+        Me.mnuTools_OpenMovieGenerator.Text = "create animated gif from images"
         '
         'mnuGridTools
         '
@@ -859,6 +869,16 @@ Partial Class mDataBrowserList
         Me.panBrowserList.TabIndex = 1
         Me.panBrowserList.VirtualHeightOfThePanel = 100
         '
+        'ToolStripSeparator17
+        '
+        Me.ToolStripSeparator17.Name = "ToolStripSeparator17"
+        Me.ToolStripSeparator17.Size = New System.Drawing.Size(243, 6)
+        '
+        'ToolStripSeparator18
+        '
+        Me.ToolStripSeparator18.Name = "ToolStripSeparator18"
+        Me.ToolStripSeparator18.Size = New System.Drawing.Size(243, 6)
+        '
         'mDataBrowserList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -984,4 +1004,7 @@ Partial Class mDataBrowserList
     Friend WithEvents mnuGridTools As ToolStripMenuItem
     Friend WithEvents mnuGridTools_ExportGridSpectra As ToolStripMenuItem
     Friend WithEvents cmnuGridFile_ExportGridSpectra As ToolStripMenuItem
+    Friend WithEvents mnuTools_OpenMovieGenerator As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator17 As ToolStripSeparator
+    Friend WithEvents ToolStripSeparator18 As ToolStripSeparator
 End Class

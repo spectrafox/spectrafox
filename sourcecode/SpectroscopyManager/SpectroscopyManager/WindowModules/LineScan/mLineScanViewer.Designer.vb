@@ -368,8 +368,6 @@ Partial Class mLineScanViewer
         Me.vsValueRangeSelector.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.vsValueRangeSelector.Location = New System.Drawing.Point(770, 3)
         Me.vsValueRangeSelector.Name = "vsValueRangeSelector"
-        Me.vsValueRangeSelector.SelectedMaxValue = 0R
-        Me.vsValueRangeSelector.SelectedMinValue = 0R
         Me.vsValueRangeSelector.Size = New System.Drawing.Size(163, 309)
         Me.vsValueRangeSelector.TabIndex = 5
         '

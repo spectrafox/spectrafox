@@ -664,8 +664,6 @@ Partial Class wGridPlotter
             Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.vrsPlotSettings_ColorScaling.Location = New System.Drawing.Point(15, 207)
         Me.vrsPlotSettings_ColorScaling.Name = "vrsPlotSettings_ColorScaling"
-        Me.vrsPlotSettings_ColorScaling.SelectedMaxValue = 0R
-        Me.vrsPlotSettings_ColorScaling.SelectedMinValue = 0R
         Me.vrsPlotSettings_ColorScaling.Size = New System.Drawing.Size(213, 303)
         Me.vrsPlotSettings_ColorScaling.TabIndex = 75
         '

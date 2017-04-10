@@ -216,7 +216,7 @@ Public Class mScanImageViewer
             Me.oScanImagesPending = Nothing
 
             ' Only show the parameter selection for single images.
-            If ScanImages.Count = 1 Then
+            If ScanImages.Count = 1 AndAlso ScanImages(0).GeneralPropertyArray.Count > 0 Then
                 ' Get all parameters of the image, and populate the combobox
                 ' where one can select a parameter for plotting.
                 With Me.cbParameterDisplay
@@ -245,7 +245,7 @@ Public Class mScanImageViewer
             End If
 
             ' Write Scan-Channels to Combobox and select first:
-            Me.cbChannel.InitializeColumns(cScanImage.GetCommonColumns(Me.oScanImages), ScanChannelName)
+            Me.cbChannel.InitializeColumns(cScanImage.GetCommonScanChannelNames(Me.oScanImages), ScanChannelName)
             Me.UpdateSelectedScanChannelName()
 
         End If

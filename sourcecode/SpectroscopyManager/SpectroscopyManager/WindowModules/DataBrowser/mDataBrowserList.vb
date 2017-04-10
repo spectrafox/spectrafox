@@ -1504,10 +1504,11 @@ Public Class mDataBrowserList
 
         ' Count the number of selected spectroscopy-tables and scan images,
         ' to enable the menu buttons.
-        Me.mnuMultipleSpectroscopyFileActions.Enabled = iCountSpectroscopyTables > 0
-        Me.mnuMultipleScanImageFileActions.Enabled = iCountScanImages > 0
-        Me.mnuGridTools.Enabled = iCountGridFiles > 0
+        Me.mnuMultipleSpectroscopyFileActions.Enabled = (iCountSpectroscopyTables > 0)
+        Me.mnuMultipleScanImageFileActions.Enabled = (iCountScanImages > 0)
+        Me.mnuGridTools.Enabled = (iCountGridFiles > 0)
         Me.mnuGridTools_ExportGridSpectra.Enabled = (iCountGridFiles = 1)
+        Me.mnuTools_OpenMovieGenerator.Enabled = (iCountScanImages > 1)
 
         ' If we have selected only a single spectroscopy-table, report this to the hosting window.
         ' Do the same for scan-images
@@ -2779,6 +2780,18 @@ Public Class mDataBrowserList
             Dim GE As New wGridExporter
             GE.Show(Me.FileObjectsSelected(0))
         End If
+    End Sub
+
+#End Region
+
+#Region "ScanImage Tools Menu"
+
+    ''' <summary>
+    ''' Open the movie generator
+    ''' </summary>
+    Private Sub mnuTools_OpenMovieGenerator_Click(sender As Object, e As EventArgs) Handles mnuTools_OpenMovieGenerator.Click
+        Dim MG As New wScanImageMovieGenerator
+        MG.Show(Me.FileObjectsSelected)
     End Sub
 
 #End Region
