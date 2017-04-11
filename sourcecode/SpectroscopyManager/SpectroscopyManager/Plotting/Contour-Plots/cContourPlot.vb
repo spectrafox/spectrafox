@@ -151,6 +151,7 @@ Public Class cContourPlot
             End If
 
             Dim zz As Double
+            Dim PlotValue As Double
             ' Draw the pixels from the Brush-Colors, depending on the Value
             ' with respect to the Min and Max to show Value. Ignore the Pixel,
             ' if the Float-Mesh does not contain a value, or if the values
@@ -161,12 +162,20 @@ Public Class cContourPlot
                     zz = Me.ValueMatrix(y, x) 'meshF(x, y)
 
                     If Double.IsNaN(zz) Or Double.IsInfinity(zz) Then Continue For
-                    If zz > MaxIntensityCorrespondingValue Then Continue For
-                    If zz < MinIntensityCorrespondingValue Then Continue For
+
+                    ' If the value is larger than the maximum intensity,
+                    ' use the maximum intensity.
+                    If zz > MaxIntensityCorrespondingValue Then
+                        PlotValue = MaxIntensityCorrespondingValue
+                    ElseIf zz < MinIntensityCorrespondingValue Then
+                        PlotValue = MinIntensityCorrespondingValue
+                    Else
+                        PlotValue = zz
+                    End If
 
                     PlotColorBrush = cColorScheme.GetPlotColorFromColorScale(MaxIntensityCorrespondingValue,
                                                                              MinIntensityCorrespondingValue,
-                                                                             zz, Me._BrushArray)
+                                                                             PlotValue, Me._BrushArray)
 
                     If Not PlotColorBrush Is Nothing Then
                         Me.oFastImage.SetPixel(x, y, PlotColorBrush.Color)

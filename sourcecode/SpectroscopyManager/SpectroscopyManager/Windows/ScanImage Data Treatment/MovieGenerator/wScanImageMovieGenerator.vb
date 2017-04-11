@@ -21,6 +21,18 @@ Public Class wScanImageMovieGenerator
     ''' </summary>
     Protected WithEvents _PlotWorker As New BackgroundWorker
 
+    Protected _PlottedImages As New List(Of Image)
+
+    Public Property ImageSize As New Size(300, 300)
+
+    Private Property SelectedParameterDisplayKey As String
+    Private Property SelectedScanChannel As String
+    Private Property SelectedMaxValue As Double
+    Private Property SelectedMinValue As Double
+    Private Property PropertyPlotPosition As PointF
+    Private Property ShowScaleBar As Boolean
+
+
 #End Region
 
 #Region "Form Contructor/Desctructor"
@@ -36,8 +48,9 @@ Public Class wScanImageMovieGenerator
     ''' <summary>
     ''' Form closing
     ''' </summary>
-    Private Sub Form_Close() Handles MyBase.FormClosing
-
+    Private Sub Form_Close(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        If Me._GIFAnimationWorker.IsBusy Then e.Cancel = True
+        If Me._PlotWorker.IsBusy Then e.Cancel = True
     End Sub
 
 #End Region
@@ -77,16 +90,19 @@ Public Class wScanImageMovieGenerator
             For Each ScanImage As cScanImage In Me._ScanImageList
 
                 ' Create a new scan-viewer
-                Dim ScanImageViewer As New mScanImageViewer()
+                Dim ScanImageViewer As New PictureBox()
 
                 ' Set the individual scan objects
                 With ScanImageViewer
-                    .cbChannel.Enabled = False
-                    .cbChannel.SetSelectedEntry(Me.scChannel.SelectedEntry)
-                    .SetScanImageObjects(ScanImage)
-                    .Size = New Size(400, 400)
+                    '.cbChannel.Enabled = False
+                    '.cbChannel.SetSelectedEntry(Me.scChannel.SelectedEntry)
+                    '.SetScanImageObjects(ScanImage)
+                    .Size = ImageSize
                     .BorderStyle = BorderStyle.Fixed3D
                 End With
+
+                ' Add the storage
+                Me._PlottedImages.Add(Nothing)
 
                 ' Fill the order box
                 Me.lbOrdering.Items.Add(ScanImage.FileNameWithoutPath)
@@ -114,51 +130,26 @@ Public Class wScanImageMovieGenerator
 
 #End Region
 
-#Region "Global Color Scaling"
+#Region "Replot"
 
     ''' <summary>
-    ''' Enable or disable the global color scaling
+    ''' Enable or disable the global file property display
     ''' </summary>
-    Private Sub grpColorScaling_CheckChanged() Handles grpColorScaling.CheckChanged
+    Private Sub Replot() Handles cbParameterDisplay.SelectedIndexChanged,
+        vrsColorScaling.SelectedRangeChanged,
+        cpColorPicker.SelectedColorSchemaChanged,
+        tbPlotPositionX.ValueChanged,
+        tbPlotPositionY.ValueChanged,
+        ckbShowScaleBar.CheckedChanged
+
         If Not Me.bReady Then Return
-
-        ' deactivate the individual controls
-        For i As Integer = 0 To Me.flpImages.Controls.Count - 1 Step 1
-
-            ' Only react on ScanImageViewers
-            If Not TypeOf Me.flpImages.Controls(i) Is mScanImageViewer Then Continue For
-            Dim ScanImageViewer As mScanImageViewer = CType(Me.flpImages.Controls(i), mScanImageViewer)
-
-            ' Enable/disable the range selectors globally
-            ScanImageViewer.vsValueRangeSelector.Enabled = (Not Me.grpColorScaling.Checked)
-        Next
-
-        ' Rescale the colors to the currently selected range
-        Me.RescaleColors()
+        Me.PlotImageAsync()
 
     End Sub
 
-    ''' <summary>
-    ''' Rescales the colors.
-    ''' </summary>
-    Public Sub RescaleColors() Handles vrsColorScaling.SelectedRangeChanged
-        If Not Me.bReady Then Return
+#End Region
 
-        ' Only react, if activated
-        If Not Me.grpColorScaling.Checked Then Return
-
-        ' Rescale all colors:
-        For i As Integer = 0 To Me.flpImages.Controls.Count - 1 Step 1
-
-            ' Only react on ScanImageViewers
-            If Not TypeOf Me.flpImages.Controls(i) Is mScanImageViewer Then Continue For
-            Dim ScanImageViewer As mScanImageViewer = CType(Me.flpImages.Controls(i), mScanImageViewer)
-
-            ' Set the range globally
-            ScanImageViewer.vsValueRangeSelector.SetSelectedRange(Me.vrsColorScaling.SelectedMinValue, Me.vrsColorScaling.SelectedMaxValue)
-        Next
-
-    End Sub
+#Region "Plotting"
 
     ''' <summary>
     ''' ScanChannel switched
@@ -166,62 +157,98 @@ Public Class wScanImageMovieGenerator
     Private Sub scChannel_Switch() Handles scChannel.SelectedIndexChanged
         If Not Me.bReady Then Return
 
+        ' Get a value histogram for all scan channels from the selected channel
         Dim HistogramValues As New List(Of Double)
 
-        ' Rescale all colors:
-        For i As Integer = 0 To Me.flpImages.Controls.Count - 1 Step 1
-
-            ' Only react on ScanImageViewers
-            If Not TypeOf Me.flpImages.Controls(i) Is mScanImageViewer Then Continue For
-            Dim ScanImageViewer As mScanImageViewer = CType(Me.flpImages.Controls(i), mScanImageViewer)
-
-            ' Set the individual scan objects
-            With ScanImageViewer
-                .cbChannel.SetSelectedEntry(Me.scChannel.SelectedEntry)
-            End With
-
-            If ScanImageViewer.ScanImagePlotted.ScanChannelExists(Me.scChannel.SelectedEntry) Then
-                HistogramValues.AddRange(ScanImageViewer.ScanImagePlotted.ScanChannels(Me.scChannel.SelectedEntry).ScanData.Values)
-            Else
-                Return
+        For Each ScanImage As cScanImage In Me._ScanImageList
+            If ScanImage.ScanChannelExists(Me.scChannel.SelectedEntry) Then
+                HistogramValues.AddRange(ScanImage.ScanChannels(Me.scChannel.SelectedEntry).ScanData.Values)
             End If
-
         Next
 
         ' Assign data to the value range selector
         If HistogramValues.Count > 0 Then
             Me.vrsColorScaling.SetValueArray(HistogramValues.ToArray)
+            Me.vrsColorScaling.SetSelectedRange(HistogramValues.Min, HistogramValues.Max)
         End If
+
+        ' Plot
+        Me.PlotImageAsync()
 
     End Sub
 
-#End Region
+    ''' <summary>
+    ''' Starts the plotting of the image.
+    ''' </summary>
+    Public Sub PlotImageAsync()
+        If Me._PlotWorker.IsBusy Then Return
 
-#Region "Global file property display"
+        ' Save properties
+        Me.SelectedParameterDisplayKey = Convert.ToString(Me.cbParameterDisplay.SelectedItem)
+        Me.SelectedScanChannel = Me.scChannel.SelectedEntry
+        Me.SelectedMaxValue = Me.vrsColorScaling.SelectedMaxValue
+        Me.SelectedMinValue = Me.vrsColorScaling.SelectedMinValue
+        Me.PropertyPlotPosition = New PointF(Convert.ToSingle(Me.tbPlotPositionX.Value / 100 * Me.ImageSize.Width),
+                                             Convert.ToSingle(Me.tbPlotPositionY.Value / 100 * Me.ImageSize.Height))
+        Me.ShowScaleBar = Me.ckbShowScaleBar.Checked
+
+        Me._PlotWorker.RunWorkerAsync()
+    End Sub
 
     ''' <summary>
-    ''' Enable or disable the global file property display
+    ''' Plots the images in a background thread.
     ''' </summary>
-    Private Sub gbPropertyDisplay_CheckChanged() Handles gbPropertyDisplay.CheckChanged, cbParameterDisplay.SelectedIndexChanged
-        If Not Me.bReady Then Return
-        If Me.cbParameterDisplay.SelectedItem Is Nothing Then Return
+    Private Sub PlotImage() Handles _PlotWorker.DoWork
 
-        ' deactivate the individual controls
-        For i As Integer = 0 To Me.flpImages.Controls.Count - 1 Step 1
+        ' fill all pictureboxes
+        For i As Integer = 0 To Me._ScanImageList.Count - 1 Step 1
 
             ' Only react on ScanImageViewers
-            If Not TypeOf Me.flpImages.Controls(i) Is mScanImageViewer Then Continue For
-            Dim ScanImageViewer As mScanImageViewer = CType(Me.flpImages.Controls(i), mScanImageViewer)
+            If Me._PlottedImages.Count <= i Then Return
 
-            ' Enable/display the display
-            ScanImageViewer.ckbParameterDisplay.Enabled = (Not Me.gbPropertyDisplay.Checked)
+            ' Create the plotter
+            Dim ScanImagePlot As New cScanImagePlot(Me._ScanImageList(i))
 
-            ' If enabled, set the display value
-            If Me.gbPropertyDisplay.Checked Then
-                ScanImageViewer.cbParameterDisplay.SelectedValue = Me.cbParameterDisplay.SelectedItem
-            End If
+            ' Calculate Image:
+            With ScanImagePlot
+                .ClearPointMarkList()
+
+                ' Create the heading for each picture
+                If Me._ScanImageList(i).GeneralPropertyArray.ContainsKey(SelectedParameterDisplayKey) Then
+                    Dim PropertyValueToPrint As String = Me._ScanImageList(i).GeneralPropertyArray(Me.SelectedParameterDisplayKey)
+
+                    If IsNumeric(PropertyValueToPrint) Then
+                        PropertyValueToPrint = cUnits.GetFormatedValueString(Convert.ToDouble(PropertyValueToPrint))
+                    End If
+
+                    Dim PropertyText As New cScanImagePlot.TextObject(Me.PropertyPlotPosition, PropertyValueToPrint)
+                    .AddTextObjects({PropertyText}.ToList)
+                End If
+
+                .ColorScheme = Me.cpColorPicker.SelectedColorScheme
+                .PlotScaleBar = Me.ShowScaleBar
+                .CreateImage(Me.SelectedMaxValue, Me.SelectedMinValue,
+                             Me.SelectedScanChannel,
+                             Me.ImageSize.Width, Me.ImageSize.Height,
+                             True)
+            End With
+
+            ' Set the individual image objects
+            Me._PlottedImages(i) = ScanImagePlot.Image
         Next
 
+    End Sub
+
+    ''' <summary>
+    ''' Show all pictures
+    ''' </summary>
+    Protected Sub PlotFinished() Handles _PlotWorker.RunWorkerCompleted
+        For i As Integer = 0 To Me._PlottedImages.Count - 1 Step 1
+            If Me.flpImages.Controls.Count <= i Then Return
+            If TypeOf Me.flpImages.Controls(i) Is PictureBox Then
+                CType(Me.flpImages.Controls(i), PictureBox).Image = Me._PlottedImages(i)
+            End If
+        Next
     End Sub
 
 #End Region
@@ -310,8 +337,8 @@ Public Class wScanImageMovieGenerator
             For i As Integer = 0 To Me.flpImages.Controls.Count - 1 Step 1
 
                 ' Only react on ScanImageViewers
-                If Not TypeOf Me.flpImages.Controls(i) Is mScanImageViewer Then Continue For
-                Dim ScanImageViewer As mScanImageViewer = CType(Me.flpImages.Controls(i), mScanImageViewer)
+                If Not TypeOf Me.flpImages.Controls(i) Is PictureBox Then Continue For
+                Dim ScanImageViewer As PictureBox = CType(Me.flpImages.Controls(i), PictureBox)
 
 
                 ' Report progress
@@ -322,7 +349,7 @@ Public Class wScanImageMovieGenerator
                 ' Generate the image
 
                 ' Store the image:
-                Images.Add(New Bitmap(ScanImageViewer.pbScanImage.Image))
+                Images.Add(New Bitmap(ScanImageViewer.Image))
 
             Next
 
@@ -379,7 +406,6 @@ Public Class wScanImageMovieGenerator
     ''' Enables of disables the interface to load something.
     ''' </summary>
     Protected Sub ActivateLoadingButton(ByVal Active As Boolean)
-        Me.grpColorScaling.Enabled = Active
         Me.gbChannel.Enabled = Active
         Me.gbGenerateGIF.Enabled = Active
         For i As Integer = 0 To Me.flpImages.Controls.Count - 1 Step 1

@@ -25,7 +25,6 @@ Partial Class wScanImageMovieGenerator
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(wScanImageMovieGenerator))
         Me.flpImages = New System.Windows.Forms.FlowLayoutPanel()
         Me.vrsColorScaling = New SpectroscopyManager.mValueRangeSelector()
-        Me.grpColorScaling = New SpectroscopyManager.GroupBoxCheckable()
         Me.gbGenerateGIF = New System.Windows.Forms.GroupBox()
         Me.lblAnimationTime = New System.Windows.Forms.Label()
         Me.txtAnimationTime = New SpectroscopyManager.NumericTextbox()
@@ -34,13 +33,19 @@ Partial Class wScanImageMovieGenerator
         Me.scChannel = New SpectroscopyManager.ucScanChannelSelector()
         Me.gbOrdering = New System.Windows.Forms.GroupBox()
         Me.lbOrdering = New System.Windows.Forms.ListBox()
-        Me.gbPropertyDisplay = New SpectroscopyManager.GroupBoxCheckable()
         Me.cbParameterDisplay = New System.Windows.Forms.ComboBox()
-        Me.grpColorScaling.SuspendLayout()
+        Me.lblFileProperty = New System.Windows.Forms.Label()
+        Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
+        Me.tbPlotPositionX = New System.Windows.Forms.TrackBar()
+        Me.tbPlotPositionY = New System.Windows.Forms.TrackBar()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.ckbShowScaleBar = New System.Windows.Forms.CheckBox()
         Me.gbGenerateGIF.SuspendLayout()
         Me.gbChannel.SuspendLayout()
         Me.gbOrdering.SuspendLayout()
-        Me.gbPropertyDisplay.SuspendLayout()
+        CType(Me.tbPlotPositionX, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.tbPlotPositionY, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'flpImages
@@ -51,28 +56,15 @@ Partial Class wScanImageMovieGenerator
         Me.flpImages.AutoScroll = True
         Me.flpImages.Location = New System.Drawing.Point(0, 4)
         Me.flpImages.Name = "flpImages"
-        Me.flpImages.Size = New System.Drawing.Size(420, 672)
+        Me.flpImages.Size = New System.Drawing.Size(420, 712)
         Me.flpImages.TabIndex = 1
         '
         'vrsColorScaling
         '
-        Me.vrsColorScaling.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.vrsColorScaling.Location = New System.Drawing.Point(3, 16)
+        Me.vrsColorScaling.Location = New System.Drawing.Point(426, 187)
         Me.vrsColorScaling.Name = "vrsColorScaling"
-        Me.vrsColorScaling.Size = New System.Drawing.Size(196, 170)
+        Me.vrsColorScaling.Size = New System.Drawing.Size(202, 189)
         Me.vrsColorScaling.TabIndex = 76
-        '
-        'grpColorScaling
-        '
-        Me.grpColorScaling.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.grpColorScaling.Checked = False
-        Me.grpColorScaling.Controls.Add(Me.vrsColorScaling)
-        Me.grpColorScaling.Location = New System.Drawing.Point(426, 136)
-        Me.grpColorScaling.Name = "grpColorScaling"
-        Me.grpColorScaling.Size = New System.Drawing.Size(202, 189)
-        Me.grpColorScaling.TabIndex = 77
-        Me.grpColorScaling.TabStop = False
-        Me.grpColorScaling.Text = "use uniform color scaling"
         '
         'gbGenerateGIF
         '
@@ -153,9 +145,9 @@ Partial Class wScanImageMovieGenerator
         Me.gbOrdering.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.gbOrdering.Controls.Add(Me.lbOrdering)
-        Me.gbOrdering.Location = New System.Drawing.Point(426, 383)
+        Me.gbOrdering.Location = New System.Drawing.Point(426, 521)
         Me.gbOrdering.Name = "gbOrdering"
-        Me.gbOrdering.Size = New System.Drawing.Size(202, 293)
+        Me.gbOrdering.Size = New System.Drawing.Size(202, 195)
         Me.gbOrdering.TabIndex = 80
         Me.gbOrdering.TabStop = False
         Me.gbOrdering.Text = "image order (move by drag and drop)"
@@ -167,63 +159,135 @@ Partial Class wScanImageMovieGenerator
         Me.lbOrdering.FormattingEnabled = True
         Me.lbOrdering.Location = New System.Drawing.Point(3, 16)
         Me.lbOrdering.Name = "lbOrdering"
-        Me.lbOrdering.Size = New System.Drawing.Size(196, 274)
+        Me.lbOrdering.Size = New System.Drawing.Size(196, 176)
         Me.lbOrdering.TabIndex = 0
-        '
-        'gbPropertyDisplay
-        '
-        Me.gbPropertyDisplay.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.gbPropertyDisplay.Checked = False
-        Me.gbPropertyDisplay.Controls.Add(Me.cbParameterDisplay)
-        Me.gbPropertyDisplay.Location = New System.Drawing.Point(426, 329)
-        Me.gbPropertyDisplay.Name = "gbPropertyDisplay"
-        Me.gbPropertyDisplay.Size = New System.Drawing.Size(202, 48)
-        Me.gbPropertyDisplay.TabIndex = 81
-        Me.gbPropertyDisplay.TabStop = False
-        Me.gbPropertyDisplay.Text = "overlay uniform file property"
         '
         'cbParameterDisplay
         '
+        Me.cbParameterDisplay.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cbParameterDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cbParameterDisplay.FormattingEnabled = True
-        Me.cbParameterDisplay.Location = New System.Drawing.Point(8, 19)
+        Me.cbParameterDisplay.Location = New System.Drawing.Point(434, 395)
         Me.cbParameterDisplay.Name = "cbParameterDisplay"
         Me.cbParameterDisplay.Size = New System.Drawing.Size(186, 21)
         Me.cbParameterDisplay.TabIndex = 17
+        '
+        'lblFileProperty
+        '
+        Me.lblFileProperty.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblFileProperty.AutoSize = True
+        Me.lblFileProperty.Location = New System.Drawing.Point(431, 379)
+        Me.lblFileProperty.Name = "lblFileProperty"
+        Me.lblFileProperty.Size = New System.Drawing.Size(101, 13)
+        Me.lblFileProperty.TabIndex = 81
+        Me.lblFileProperty.Text = "overlay file property:"
+        '
+        'cpColorPicker
+        '
+        Me.cpColorPicker.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cpColorPicker.Location = New System.Drawing.Point(429, 136)
+        Me.cpColorPicker.Name = "cpColorPicker"
+        Me.cpColorPicker.Size = New System.Drawing.Size(198, 45)
+        Me.cpColorPicker.TabIndex = 82
+        Me.cpColorPicker.TabStop = False
+        '
+        'tbPlotPositionX
+        '
+        Me.tbPlotPositionX.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tbPlotPositionX.Location = New System.Drawing.Point(463, 422)
+        Me.tbPlotPositionX.Maximum = 100
+        Me.tbPlotPositionX.Name = "tbPlotPositionX"
+        Me.tbPlotPositionX.Size = New System.Drawing.Size(162, 45)
+        Me.tbPlotPositionX.TabIndex = 83
+        Me.tbPlotPositionX.TickStyle = System.Windows.Forms.TickStyle.TopLeft
+        '
+        'tbPlotPositionY
+        '
+        Me.tbPlotPositionY.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tbPlotPositionY.Location = New System.Drawing.Point(463, 464)
+        Me.tbPlotPositionY.Maximum = 100
+        Me.tbPlotPositionY.Name = "tbPlotPositionY"
+        Me.tbPlotPositionY.Size = New System.Drawing.Size(162, 45)
+        Me.tbPlotPositionY.TabIndex = 83
+        '
+        'Label1
+        '
+        Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(431, 435)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(34, 13)
+        Me.Label1.TabIndex = 81
+        Me.Label1.Text = "X (%):"
+        '
+        'Label2
+        '
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(431, 470)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(34, 13)
+        Me.Label2.TabIndex = 81
+        Me.Label2.Text = "Y (%):"
+        '
+        'ckbShowScaleBar
+        '
+        Me.ckbShowScaleBar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.ckbShowScaleBar.AutoSize = True
+        Me.ckbShowScaleBar.Location = New System.Drawing.Point(440, 498)
+        Me.ckbShowScaleBar.Name = "ckbShowScaleBar"
+        Me.ckbShowScaleBar.Size = New System.Drawing.Size(94, 17)
+        Me.ckbShowScaleBar.TabIndex = 84
+        Me.ckbShowScaleBar.Text = "show scalebar"
+        Me.ckbShowScaleBar.UseVisualStyleBackColor = True
         '
         'wScanImageMovieGenerator
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(630, 675)
-        Me.Controls.Add(Me.gbPropertyDisplay)
+        Me.ClientSize = New System.Drawing.Size(630, 715)
+        Me.Controls.Add(Me.ckbShowScaleBar)
+        Me.Controls.Add(Me.tbPlotPositionY)
+        Me.Controls.Add(Me.tbPlotPositionX)
+        Me.Controls.Add(Me.cpColorPicker)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lblFileProperty)
+        Me.Controls.Add(Me.vrsColorScaling)
+        Me.Controls.Add(Me.cbParameterDisplay)
         Me.Controls.Add(Me.gbOrdering)
         Me.Controls.Add(Me.gbChannel)
         Me.Controls.Add(Me.gbGenerateGIF)
-        Me.Controls.Add(Me.grpColorScaling)
         Me.Controls.Add(Me.flpImages)
         Me.MinimumSize = New System.Drawing.Size(300, 300)
         Me.Name = "wScanImageMovieGenerator"
         Me.Text = "create animated GIF"
         Me.Controls.SetChildIndex(Me.flpImages, 0)
-        Me.Controls.SetChildIndex(Me.grpColorScaling, 0)
         Me.Controls.SetChildIndex(Me.gbGenerateGIF, 0)
         Me.Controls.SetChildIndex(Me.gbChannel, 0)
         Me.Controls.SetChildIndex(Me.gbOrdering, 0)
-        Me.Controls.SetChildIndex(Me.gbPropertyDisplay, 0)
-        Me.grpColorScaling.ResumeLayout(False)
+        Me.Controls.SetChildIndex(Me.cbParameterDisplay, 0)
+        Me.Controls.SetChildIndex(Me.vrsColorScaling, 0)
+        Me.Controls.SetChildIndex(Me.lblFileProperty, 0)
+        Me.Controls.SetChildIndex(Me.Label1, 0)
+        Me.Controls.SetChildIndex(Me.Label2, 0)
+        Me.Controls.SetChildIndex(Me.cpColorPicker, 0)
+        Me.Controls.SetChildIndex(Me.tbPlotPositionX, 0)
+        Me.Controls.SetChildIndex(Me.tbPlotPositionY, 0)
+        Me.Controls.SetChildIndex(Me.ckbShowScaleBar, 0)
         Me.gbGenerateGIF.ResumeLayout(False)
         Me.gbGenerateGIF.PerformLayout()
         Me.gbChannel.ResumeLayout(False)
         Me.gbOrdering.ResumeLayout(False)
-        Me.gbPropertyDisplay.ResumeLayout(False)
+        CType(Me.tbPlotPositionX, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.tbPlotPositionY, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
     Friend WithEvents flpImages As FlowLayoutPanel
     Friend WithEvents vrsColorScaling As mValueRangeSelector
-    Friend WithEvents grpColorScaling As GroupBoxCheckable
     Friend WithEvents gbGenerateGIF As GroupBox
     Friend WithEvents lblAnimationTime As Label
     Friend WithEvents txtAnimationTime As NumericTextbox
@@ -232,6 +296,12 @@ Partial Class wScanImageMovieGenerator
     Friend WithEvents scChannel As ucScanChannelSelector
     Friend WithEvents gbOrdering As GroupBox
     Friend WithEvents lbOrdering As ListBox
-    Friend WithEvents gbPropertyDisplay As GroupBoxCheckable
     Friend WithEvents cbParameterDisplay As ComboBox
+    Friend WithEvents lblFileProperty As Label
+    Friend WithEvents cpColorPicker As ucColorPalettePicker
+    Friend WithEvents tbPlotPositionX As TrackBar
+    Friend WithEvents tbPlotPositionY As TrackBar
+    Friend WithEvents Label1 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents ckbShowScaleBar As CheckBox
 End Class

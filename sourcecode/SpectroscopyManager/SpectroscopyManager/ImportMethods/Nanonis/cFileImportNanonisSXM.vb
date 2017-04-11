@@ -73,6 +73,9 @@ Public Class cFileImportNanonisSXM
                             End While
                             sHeader = sLine
                             ReadNextTag = False ' Already read the next tag
+
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
                         Case "Z-CONTROLLER"
 
                             ' Read out the controller settings:
@@ -106,6 +109,8 @@ Public Class cFileImportNanonisSXM
                                     If M.Success Then oScanImage.ZControllerTimeConstant = Double.Parse(M.Groups("Value").Value, Globalization.CultureInfo.InvariantCulture)
                                 End If
                             End If
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
 
                         Case "Multipass-Config"
                             ' Multipass-Config, read until next settings-name starts.
@@ -116,18 +121,29 @@ Public Class cFileImportNanonisSXM
                             sHeader = sLine
                             ReadNextTag = False ' Already read the next tag
 
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
+
                         Case "REC_DATE"
                             TimeString &= " " & sLine
                         Case "REC_TIME"
                             TimeString &= " " & sLine
                         Case "SCAN_DIR"
                             RecordingDirection = sLine
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
                         Case "SCAN_ANGLE"
                             oScanImage.ScanAngle = Double.Parse(sLine, Globalization.CultureInfo.InvariantCulture)
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
                         Case "ACQ_TIME"
                             oScanImage.ACQ_Time = Double.Parse(sLine, Globalization.CultureInfo.InvariantCulture)
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
                         Case "BIAS"
                             oScanImage.Bias = Double.Parse(sLine, Globalization.CultureInfo.InvariantCulture)
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
                         Case "SCAN_RANGE"
                             Dim oRegEx As New Regex("(?<XValue>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)\s*?(?<YValue>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)", RegexOptions.Compiled)
                             Dim oMatch As Match = oRegEx.Match(sLine)
@@ -137,6 +153,10 @@ Public Class cFileImportNanonisSXM
                                 oScanImage.ScanRange_X = Double.Parse(oMatch.Groups("XValue").Value, Globalization.CultureInfo.InvariantCulture)
                                 oScanImage.ScanRange_Y = Double.Parse(oMatch.Groups("YValue").Value, Globalization.CultureInfo.InvariantCulture)
                             End If
+
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
+
                         Case "SCAN_OFFSET"
                             ' Read two parameters: use regex since separation is not unique
                             Dim oRegEx As New Regex("(?<XValue>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)\s*?(?<YValue>[\-]?[0-9]*?\.[0-9]*?E[+\-][0-9]*)", RegexOptions.Compiled)
@@ -147,6 +167,10 @@ Public Class cFileImportNanonisSXM
                                 oScanImage.ScanOffset_X = Double.Parse(oMatch.Groups("XValue").Value, Globalization.CultureInfo.InvariantCulture)
                                 oScanImage.ScanOffset_Y = Double.Parse(oMatch.Groups("YValue").Value, Globalization.CultureInfo.InvariantCulture)
                             End If
+
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
+
                         Case "SCAN_PIXELS"
                             ' Read two parameters: use regex since separation is not unique
                             Dim oRegEx As New Regex("\s*(?<XValue>\d*)\s*(?<YValue>\d*)\s*", RegexOptions.Compiled)
@@ -157,6 +181,10 @@ Public Class cFileImportNanonisSXM
                                 oScanImage.ScanPixels_X = Integer.Parse(oMatch.Groups("XValue").Value, Globalization.CultureInfo.InvariantCulture)
                                 oScanImage.ScanPixels_Y = Integer.Parse(oMatch.Groups("YValue").Value, Globalization.CultureInfo.InvariantCulture)
                             End If
+
+                            ' Add the content to the property array.
+                            oScanImage.AddGeneralProperty(sHeader, sLine)
+
                         Case "DATA_INFO"
                             ' In the DATA_INFO section, all recorded Channels are saved.
                             '###########################################################
@@ -213,6 +241,7 @@ Public Class cFileImportNanonisSXM
                             sHeader = sLine
                             ReadNextTag = False ' Already read the next tag
                     End Select
+
                 Loop
 
                 ' Parse the Record-Time
