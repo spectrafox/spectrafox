@@ -50,9 +50,9 @@ Partial Class wScanImageLineProfile
         Me.gbSettings = New System.Windows.Forms.GroupBox()
         Me.tcDataContainer = New System.Windows.Forms.TabControl()
         Me.tpPlot = New System.Windows.Forms.TabPage()
+        Me.svPlot = New SpectroscopyManager.mSpectroscopyTableViewer()
         Me.tpDataTable = New System.Windows.Forms.TabPage()
         Me.dtProfile = New SpectroscopyManager.mSpectroscopyTableDataTable()
-        Me.svPlot = New SpectroscopyManager.mSpectroscopyTableViewer()
         Me.gbPoint1.SuspendLayout()
         Me.gbPoint2.SuspendLayout()
         Me.gbDistance.SuspendLayout()
@@ -369,29 +369,10 @@ Partial Class wScanImageLineProfile
         Me.tpPlot.Text = "profile plot"
         Me.tpPlot.UseVisualStyleBackColor = True
         '
-        'tpDataTable
-        '
-        Me.tpDataTable.Controls.Add(Me.dtProfile)
-        Me.tpDataTable.Location = New System.Drawing.Point(4, 22)
-        Me.tpDataTable.Name = "tpDataTable"
-        Me.tpDataTable.Padding = New System.Windows.Forms.Padding(3)
-        Me.tpDataTable.Size = New System.Drawing.Size(703, 476)
-        Me.tpDataTable.TabIndex = 1
-        Me.tpDataTable.Text = "data table"
-        Me.tpDataTable.UseVisualStyleBackColor = True
-        '
-        'dtProfile
-        '
-        Me.dtProfile.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtProfile.Location = New System.Drawing.Point(3, 3)
-        Me.dtProfile.Name = "dtProfile"
-        Me.dtProfile.Size = New System.Drawing.Size(697, 470)
-        Me.dtProfile.TabIndex = 1
-        '
         'svPlot
         '
-        Me.svPlot.AllowAdjustingXColumn = False
-        Me.svPlot.AllowAdjustingYColumn = False
+        Me.svPlot.AllowAdjustingXColumn = True
+        Me.svPlot.AllowAdjustingYColumn = True
         Me.svPlot.AutomaticallyRestoreScaleAfterRedraw = True
         Me.svPlot.CallbackDataPointSelected = Nothing
         Me.svPlot.CallbackXRangeSelected = Nothing
@@ -412,6 +393,25 @@ Partial Class wScanImageLineProfile
         Me.svPlot.TabIndex = 0
         Me.svPlot.TurnOnLastFilterSaving_Y = False
         Me.svPlot.TurnOnLastSelectionSaving_Y = False
+        '
+        'tpDataTable
+        '
+        Me.tpDataTable.Controls.Add(Me.dtProfile)
+        Me.tpDataTable.Location = New System.Drawing.Point(4, 22)
+        Me.tpDataTable.Name = "tpDataTable"
+        Me.tpDataTable.Padding = New System.Windows.Forms.Padding(3)
+        Me.tpDataTable.Size = New System.Drawing.Size(703, 476)
+        Me.tpDataTable.TabIndex = 1
+        Me.tpDataTable.Text = "data table"
+        Me.tpDataTable.UseVisualStyleBackColor = True
+        '
+        'dtProfile
+        '
+        Me.dtProfile.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtProfile.Location = New System.Drawing.Point(3, 3)
+        Me.dtProfile.Name = "dtProfile"
+        Me.dtProfile.Size = New System.Drawing.Size(697, 470)
+        Me.dtProfile.TabIndex = 1
         '
         'wScanImageLineProfile
         '

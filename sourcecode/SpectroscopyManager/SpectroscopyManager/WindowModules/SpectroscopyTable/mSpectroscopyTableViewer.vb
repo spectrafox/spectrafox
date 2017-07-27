@@ -236,8 +236,12 @@ Public Class mSpectroscopyTableViewer
         UpdateStyleSpectroscopyTableList()
 
         ' Update ColumnList
+        Me.cbX.TurnOnLastSelectionSaving = False
+        Me.cbY.TurnOnLastSelectionSaving = False
         Me.cbX.InitializeColumns(SpectroscopyTable.GetColumnNameList, My.Settings.LastSpectroscopyPlot_SelectedColumnNameX, False)
         Me.cbY.InitializeColumns(SpectroscopyTable.GetColumnNameList, My.Settings.LastSpectroscopyPlot_SelectedColumnNames, Me.TurnOnLastFilterSaving_Y)
+        Me.cbX.TurnOnLastSelectionSaving = True
+        Me.cbY.TurnOnLastSelectionSaving = True
 
         Me.bReady = True
     End Sub
@@ -564,15 +568,14 @@ Public Class mSpectroscopyTableViewer
         ' Fill the Column-Selectors.
         Me.bReady = False
 
-        Me.cbX.InitializeColumns(SpectroscopyTable.GetColumnList)
+        Me.cbX.InitializeColumns(SpectroscopyTable.GetColumnList,, False)
         Me.cbY.InitializeColumns(SpectroscopyTable.GetColumnList,, Me.TurnOnLastFilterSaving_Y)
 
-        Dim YColumnsToSelect As List(Of String)
+        Dim YColumnsToSelect As New List(Of String)
         If (PreferLastSelectedColumnNames) AndAlso
            (My.Settings.LastSpectroscopyPlot_SelectedColumnNames IsNot Nothing AndAlso My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count > 0) Then
 
             ' Add the list from the settings.
-            YColumnsToSelect = New List(Of String)(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count)
             For Each C As String In My.Settings.LastSpectroscopyPlot_SelectedColumnNames
                 YColumnsToSelect.Add(C)
             Next
@@ -580,7 +583,7 @@ Public Class mSpectroscopyTableViewer
         Else
 
             ' add the given list
-            YColumnsToSelect = SelectedColumnNamesY
+            YColumnsToSelect.AddRange(SelectedColumnNamesY)
         End If
 
         ' Select the given entries:

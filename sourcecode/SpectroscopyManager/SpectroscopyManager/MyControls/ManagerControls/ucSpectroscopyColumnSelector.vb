@@ -50,6 +50,7 @@ Public Class ucSpectroscopyColumnSelector
             If V = String.Empty Then
                 Debug.WriteLine("ucColumnSelector: SetLastSelection->EmptyString")
             End If
+            Debug.WriteLine("ucColumnSelector: storing last selection: " & V)
         Next
         My.Settings.LastSpectroscopyPlot_SelectedColumnNames = Value
         'cGlobal.SaveSettings() '##### NEEDS To MUCH TIME!!
