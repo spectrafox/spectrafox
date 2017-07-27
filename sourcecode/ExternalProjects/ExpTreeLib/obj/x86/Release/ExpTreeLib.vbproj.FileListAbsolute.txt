@@ -17,3 +17,10 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Relea
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.vbproj.GenerateResource.Cache
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.dll
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.pdb
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\bin\x86\Release\ExpTreeLib.dll
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\bin\x86\Release\ExpTreeLib.pdb
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.vbprojResolveAssemblyReference.cache
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.ExpTree.resources
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.vbproj.GenerateResource.Cache
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.dll
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x86\Release\ExpTreeLib.pdb

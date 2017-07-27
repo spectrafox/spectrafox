@@ -598,10 +598,22 @@
     <Setting Name="LastFFT_ColumnTargetName" Type="System.String" Scope="User">
       <Value Profile="(Default)">FFT result</Value>
     </Setting>
-    <Setting Name="ScanImageViewer_LastSelectedParameterDisplay" Type="System.String" Scope="User">
+    <Setting Name="ScanImageViewer_LastSelectedParameterDisplay1" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ScanImageViewer_ParameterDisplayEnabled" Type="System.Boolean" Scope="User">
+    <Setting Name="ScanImageViewer_ParameterDisplayEnabled1" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ScanImageViewer_LastSelectedParameterDisplay2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ScanImageViewer_LastSelectedParameterDisplay3" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ScanImageViewer_ParameterDisplayEnabled2" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ScanImageViewer_ParameterDisplayEnabled3" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

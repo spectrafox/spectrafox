@@ -50,14 +50,18 @@ Partial Class mScanImageViewer
         Me.lbFilters = New System.Windows.Forms.ListBox()
         Me.lblFilters = New System.Windows.Forms.Label()
         Me.dpRight = New SpectroscopyManager.DockablePanel()
-        Me.ckbParameterDisplay = New System.Windows.Forms.CheckBox()
-        Me.cbParameterDisplay = New System.Windows.Forms.ComboBox()
+        Me.ckbParameterDisplay1 = New System.Windows.Forms.CheckBox()
+        Me.cbParameterDisplay1 = New System.Windows.Forms.ComboBox()
         Me.btnClearPointMarks = New System.Windows.Forms.Button()
         Me.ckbScaleBarVisible = New System.Windows.Forms.CheckBox()
         Me.ckbUseHighQualityScaling = New System.Windows.Forms.CheckBox()
         Me.vsValueRangeSelector = New SpectroscopyManager.mValueRangeSelector()
         Me.cpColorPicker = New SpectroscopyManager.ucColorPalettePicker()
         Me.lblColorCode = New System.Windows.Forms.Label()
+        Me.cbParameterDisplay2 = New System.Windows.Forms.ComboBox()
+        Me.ckbParameterDisplay2 = New System.Windows.Forms.CheckBox()
+        Me.cbParameterDisplay3 = New System.Windows.Forms.ComboBox()
+        Me.ckbParameterDisplay3 = New System.Windows.Forms.CheckBox()
         CType(Me.pbScanImage, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmnuImageContextMenuStrip.SuspendLayout()
         Me.tsTools.SuspendLayout()
@@ -168,7 +172,7 @@ Partial Class mScanImageViewer
         Me.dpLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.dpLeft.Location = New System.Drawing.Point(0, 25)
         Me.dpLeft.Name = "dpLeft"
-        'TODO: Ausnahme "Invalid Primitive Type: System.IntPtr. Consider using CodeObjectCreateExpression." beim Generieren des Codes für "".
+        'TODO: Code generation for '' failed because of Exception 'Invalid Primitive Type: System.IntPtr. Consider using CodeObjectCreateExpression.'.
         Me.dpLeft.Size = New System.Drawing.Size(166, 503)
         Me.dpLeft.SlidePixelsPerTimerTick = 25
         Me.dpLeft.SuspendMessageFiltering = False
@@ -294,8 +298,12 @@ Partial Class mScanImageViewer
         '
         'dpRight
         '
-        Me.dpRight.Controls.Add(Me.ckbParameterDisplay)
-        Me.dpRight.Controls.Add(Me.cbParameterDisplay)
+        Me.dpRight.Controls.Add(Me.ckbParameterDisplay3)
+        Me.dpRight.Controls.Add(Me.cbParameterDisplay3)
+        Me.dpRight.Controls.Add(Me.ckbParameterDisplay2)
+        Me.dpRight.Controls.Add(Me.cbParameterDisplay2)
+        Me.dpRight.Controls.Add(Me.ckbParameterDisplay1)
+        Me.dpRight.Controls.Add(Me.cbParameterDisplay1)
         Me.dpRight.Controls.Add(Me.btnClearPointMarks)
         Me.dpRight.Controls.Add(Me.ckbScaleBarVisible)
         Me.dpRight.Controls.Add(Me.ckbUseHighQualityScaling)
@@ -305,30 +313,30 @@ Partial Class mScanImageViewer
         Me.dpRight.Dock = System.Windows.Forms.DockStyle.Right
         Me.dpRight.Location = New System.Drawing.Point(455, 25)
         Me.dpRight.Name = "dpRight"
-        'TODO: Ausnahme "Invalid Primitive Type: System.IntPtr. Consider using CodeObjectCreateExpression." beim Generieren des Codes für "".
+        'TODO: Code generation for '' failed because of Exception 'Invalid Primitive Type: System.IntPtr. Consider using CodeObjectCreateExpression.'.
         Me.dpRight.Size = New System.Drawing.Size(170, 503)
         Me.dpRight.SlidePixelsPerTimerTick = 25
         Me.dpRight.SuspendMessageFiltering = False
         Me.dpRight.TabIndex = 14
         '
-        'ckbParameterDisplay
+        'ckbParameterDisplay1
         '
-        Me.ckbParameterDisplay.AutoSize = True
-        Me.ckbParameterDisplay.Location = New System.Drawing.Point(9, 321)
-        Me.ckbParameterDisplay.Name = "ckbParameterDisplay"
-        Me.ckbParameterDisplay.Size = New System.Drawing.Size(115, 17)
-        Me.ckbParameterDisplay.TabIndex = 18
-        Me.ckbParameterDisplay.Text = "print file parameter:"
-        Me.ckbParameterDisplay.UseVisualStyleBackColor = True
+        Me.ckbParameterDisplay1.AutoSize = True
+        Me.ckbParameterDisplay1.Location = New System.Drawing.Point(9, 321)
+        Me.ckbParameterDisplay1.Name = "ckbParameterDisplay1"
+        Me.ckbParameterDisplay1.Size = New System.Drawing.Size(158, 17)
+        Me.ckbParameterDisplay1.TabIndex = 18
+        Me.ckbParameterDisplay1.Text = "print file parameter (1st row):"
+        Me.ckbParameterDisplay1.UseVisualStyleBackColor = True
         '
-        'cbParameterDisplay
+        'cbParameterDisplay1
         '
-        Me.cbParameterDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cbParameterDisplay.FormattingEnabled = True
-        Me.cbParameterDisplay.Location = New System.Drawing.Point(10, 339)
-        Me.cbParameterDisplay.Name = "cbParameterDisplay"
-        Me.cbParameterDisplay.Size = New System.Drawing.Size(154, 21)
-        Me.cbParameterDisplay.TabIndex = 16
+        Me.cbParameterDisplay1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbParameterDisplay1.FormattingEnabled = True
+        Me.cbParameterDisplay1.Location = New System.Drawing.Point(10, 339)
+        Me.cbParameterDisplay1.Name = "cbParameterDisplay1"
+        Me.cbParameterDisplay1.Size = New System.Drawing.Size(154, 21)
+        Me.cbParameterDisplay1.TabIndex = 16
         '
         'btnClearPointMarks
         '
@@ -388,6 +396,44 @@ Partial Class mScanImageViewer
         Me.lblColorCode.TabIndex = 14
         Me.lblColorCode.Text = "color scheme:"
         '
+        'cbParameterDisplay2
+        '
+        Me.cbParameterDisplay2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbParameterDisplay2.FormattingEnabled = True
+        Me.cbParameterDisplay2.Location = New System.Drawing.Point(10, 384)
+        Me.cbParameterDisplay2.Name = "cbParameterDisplay2"
+        Me.cbParameterDisplay2.Size = New System.Drawing.Size(154, 21)
+        Me.cbParameterDisplay2.TabIndex = 16
+        '
+        'ckbParameterDisplay2
+        '
+        Me.ckbParameterDisplay2.AutoSize = True
+        Me.ckbParameterDisplay2.Location = New System.Drawing.Point(9, 366)
+        Me.ckbParameterDisplay2.Name = "ckbParameterDisplay2"
+        Me.ckbParameterDisplay2.Size = New System.Drawing.Size(162, 17)
+        Me.ckbParameterDisplay2.TabIndex = 18
+        Me.ckbParameterDisplay2.Text = "print file parameter (2nd row):"
+        Me.ckbParameterDisplay2.UseVisualStyleBackColor = True
+        '
+        'cbParameterDisplay3
+        '
+        Me.cbParameterDisplay3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbParameterDisplay3.FormattingEnabled = True
+        Me.cbParameterDisplay3.Location = New System.Drawing.Point(10, 429)
+        Me.cbParameterDisplay3.Name = "cbParameterDisplay3"
+        Me.cbParameterDisplay3.Size = New System.Drawing.Size(154, 21)
+        Me.cbParameterDisplay3.TabIndex = 16
+        '
+        'ckbParameterDisplay3
+        '
+        Me.ckbParameterDisplay3.AutoSize = True
+        Me.ckbParameterDisplay3.Location = New System.Drawing.Point(9, 411)
+        Me.ckbParameterDisplay3.Name = "ckbParameterDisplay3"
+        Me.ckbParameterDisplay3.Size = New System.Drawing.Size(159, 17)
+        Me.ckbParameterDisplay3.TabIndex = 18
+        Me.ckbParameterDisplay3.Text = "print file parameter (3rd row):"
+        Me.ckbParameterDisplay3.UseVisualStyleBackColor = True
+        '
         'mScanImageViewer
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -444,6 +490,10 @@ Partial Class mScanImageViewer
     Friend WithEvents btnOpenExternal As Button
     Friend WithEvents ttToolTip As ToolTip
     Friend WithEvents btnClearPointMarks As Button
-    Friend WithEvents cbParameterDisplay As ComboBox
-    Friend WithEvents ckbParameterDisplay As CheckBox
+    Friend WithEvents cbParameterDisplay1 As ComboBox
+    Friend WithEvents ckbParameterDisplay1 As CheckBox
+    Friend WithEvents ckbParameterDisplay3 As CheckBox
+    Friend WithEvents cbParameterDisplay3 As ComboBox
+    Friend WithEvents ckbParameterDisplay2 As CheckBox
+    Friend WithEvents cbParameterDisplay2 As ComboBox
 End Class

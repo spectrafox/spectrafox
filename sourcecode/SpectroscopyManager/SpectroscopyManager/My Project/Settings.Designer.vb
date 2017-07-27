@@ -15,21 +15,21 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
         
         Private Shared defaultInstance As MySettings = CType(Global.System.Configuration.ApplicationSettingsBase.Synchronized(New MySettings()),MySettings)
         
-#Region "Funktion zum automatischen Speichern von My.Settings"
+#Region "My.Settings Auto-Save Functionality"
 #If _MyType = "WindowsForms" Then
     Private Shared addedHandler As Boolean
 
     Private Shared addedHandlerLockObject As New Object
 
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)> _
-    Private Shared Sub AutoSaveSettings(ByVal sender As Global.System.Object, ByVal e As Global.System.EventArgs)
+    Private Shared Sub AutoSaveSettings(sender As Global.System.Object, e As Global.System.EventArgs)
         If My.Application.SaveMySettingsOnExit Then
             My.Settings.Save()
         End If
@@ -2393,24 +2393,72 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property ScanImageViewer_LastSelectedParameterDisplay() As String
+        Public Property ScanImageViewer_LastSelectedParameterDisplay1() As String
             Get
-                Return CType(Me("ScanImageViewer_LastSelectedParameterDisplay"),String)
+                Return CType(Me("ScanImageViewer_LastSelectedParameterDisplay1"),String)
             End Get
             Set
-                Me("ScanImageViewer_LastSelectedParameterDisplay") = value
+                Me("ScanImageViewer_LastSelectedParameterDisplay1") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property ScanImageViewer_ParameterDisplayEnabled() As Boolean
+        Public Property ScanImageViewer_ParameterDisplayEnabled1() As Boolean
             Get
-                Return CType(Me("ScanImageViewer_ParameterDisplayEnabled"),Boolean)
+                Return CType(Me("ScanImageViewer_ParameterDisplayEnabled1"),Boolean)
             End Get
             Set
-                Me("ScanImageViewer_ParameterDisplayEnabled") = value
+                Me("ScanImageViewer_ParameterDisplayEnabled1") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ScanImageViewer_LastSelectedParameterDisplay2() As String
+            Get
+                Return CType(Me("ScanImageViewer_LastSelectedParameterDisplay2"),String)
+            End Get
+            Set
+                Me("ScanImageViewer_LastSelectedParameterDisplay2") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property ScanImageViewer_LastSelectedParameterDisplay3() As String
+            Get
+                Return CType(Me("ScanImageViewer_LastSelectedParameterDisplay3"),String)
+            End Get
+            Set
+                Me("ScanImageViewer_LastSelectedParameterDisplay3") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ScanImageViewer_ParameterDisplayEnabled2() As Boolean
+            Get
+                Return CType(Me("ScanImageViewer_ParameterDisplayEnabled2"),Boolean)
+            End Get
+            Set
+                Me("ScanImageViewer_ParameterDisplayEnabled2") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ScanImageViewer_ParameterDisplayEnabled3() As Boolean
+            Get
+                Return CType(Me("ScanImageViewer_ParameterDisplayEnabled3"),Boolean)
+            End Get
+            Set
+                Me("ScanImageViewer_ParameterDisplayEnabled3") = value
             End Set
         End Property
     End Class

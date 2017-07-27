@@ -583,7 +583,9 @@ Public Class mSpectroscopyTableViewer
         Else
 
             ' add the given list
-            YColumnsToSelect.AddRange(SelectedColumnNamesY)
+            If SelectedColumnNamesY IsNot Nothing Then
+                YColumnsToSelect.AddRange(SelectedColumnNamesY)
+            End If
         End If
 
         ' Select the given entries:

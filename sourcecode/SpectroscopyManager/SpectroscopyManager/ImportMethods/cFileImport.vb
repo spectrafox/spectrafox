@@ -924,8 +924,15 @@ Public Class cFileImport
 
             ' Start the import:
             TargetSpectroscopyTable = ImportRoutine.ImportSpectroscopyTable(FileObject.FullFileNameInclPath, FetchOnlyFileHeader, , FilesToIgnoreAfterThisImport, ParameterFilesImportedOnce)
-            FileObject.SpectroscopyTable = TargetSpectroscopyTable
 
+            ' Add some usefull properties to the file-object
+            TargetSpectroscopyTable.AddGeneralProperty("filename", FileObject.FileNameWithoutPath)
+            TargetSpectroscopyTable.AddGeneralProperty("path", FileObject.Path)
+            TargetSpectroscopyTable.AddGeneralProperty("full filename", FileObject.FullFileNameInclPath)
+
+            ' Store the spectroscopy table
+            FileObject.SpectroscopyTable = TargetSpectroscopyTable
+            
             '' Get again the FULL FileObject
             FileObject = cFileObject.GetFileObjectFromPath(FileObject)
 
@@ -1071,11 +1078,23 @@ Public Class cFileImport
             FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , ,
                                                            {ImportRoutine}.ToList)
 
+            ' Catch, if the FileObject could not be loaded, e.g. due to some change of the file on the disk
+            If FileObject Is Nothing Then
+                Throw New Exception("Loading not possible. Perhaps the file changed on the disk? Please refresh the cache.")
+            End If
+
             ' Start the import of the scan image file.
             TargetScanImage = ImportRoutine.ImportScanImage(FileObject.FullFileNameInclPath,
                                                             FetchOnlyFileHeader, ,
                                                             FilesToIgnoreAfterThisImport,
                                                             ParameterFilesImportedOnce)
+
+            ' Add some usefull properties to the file-object
+            TargetScanImage.AddGeneralProperty("filename", FileObject.FileNameWithoutPath)
+            TargetScanImage.AddGeneralProperty("path", FileObject.Path)
+            TargetScanImage.AddGeneralProperty("full filename", FileObject.FullFileNameInclPath)
+
+            ' Store the scan image
             FileObject.ScanImage = TargetScanImage
 
             '' Get again the FULL FileObject
