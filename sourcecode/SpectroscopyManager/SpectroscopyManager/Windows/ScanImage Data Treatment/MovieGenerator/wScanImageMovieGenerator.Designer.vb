@@ -61,6 +61,7 @@ Partial Class wScanImageMovieGenerator
         '
         'vrsColorScaling
         '
+        Me.vrsColorScaling.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.vrsColorScaling.Location = New System.Drawing.Point(426, 187)
         Me.vrsColorScaling.Name = "vrsColorScaling"
         Me.vrsColorScaling.Size = New System.Drawing.Size(202, 189)

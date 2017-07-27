@@ -1099,7 +1099,16 @@ Public Class cFileObject
                         With .XAxis
                             .Scale.IsVisible = False
                             With .Title
-                                .Text = oSpectroscopyTable.Column(XColumnName).AxisTitle
+
+                                ' Generate XAxis title
+                                Dim XAxisTitle As New Text.StringBuilder
+                                XAxisTitle.AppendLine(oSpectroscopyTable.Column(XColumnName).AxisTitle)
+                                XAxisTitle.Append(cUnits.GetFormatedValueString(oSpectroscopyTable.Column(XColumnName).GetMinimumValueOfColumn, 1))
+                                XAxisTitle.Append(" → ")
+                                XAxisTitle.Append(cUnits.GetFormatedValueString(oSpectroscopyTable.Column(XColumnName).GetMaximumValueOfColumn, 1))
+
+                                ' Set the text
+                                .Text = XAxisTitle.ToString
                                 .FontSpec.Size = 32
                                 .Gap = 0
                             End With
@@ -1108,6 +1117,7 @@ Public Class cFileObject
                             Else
                                 .Type = ZedGraph.AxisType.Linear
                             End If
+
                         End With
 
                         '#################
@@ -1115,7 +1125,16 @@ Public Class cFileObject
                         With .YAxis
                             .Scale.IsVisible = False
                             With .Title
-                                .Text = oSpectroscopyTable.Column(YColumnName).AxisTitle
+
+                                ' Generate YAxis title
+                                Dim YAxisTitle As New Text.StringBuilder
+                                YAxisTitle.AppendLine(oSpectroscopyTable.Column(YColumnName).AxisTitle)
+                                YAxisTitle.Append(cUnits.GetFormatedValueString(oSpectroscopyTable.Column(YColumnName).GetMinimumValueOfColumn, 1))
+                                YAxisTitle.Append(" → ")
+                                YAxisTitle.Append(cUnits.GetFormatedValueString(oSpectroscopyTable.Column(YColumnName).GetMaximumValueOfColumn, 1))
+
+                                ' Set the text
+                                .Text = YAxisTitle.ToString
                                 .FontSpec.Size = 32
                                 .Gap = 0
                             End With

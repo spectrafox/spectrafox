@@ -898,6 +898,10 @@ Public Class cFileImport
                                                Optional ByRef FilesToIgnoreAfterThisImport As List(Of String) = Nothing,
                                                Optional ByRef ParameterFilesImportedOnce As List(Of iFileImport_ParameterFileToBeImportedOnce) = Nothing) As Boolean
 
+        ' Cache the filename to load for exception handling
+        Dim FileNameWithoutPath As String = FileObject.FileNameWithoutPath
+        Dim FileNameInclPath As String = FileObject.FullFileNameInclPath
+
         ' Check, if the file still exists
         If Not System.IO.File.Exists(FileObject.FullFileNameInclPath) Then Return False
 
@@ -910,8 +914,13 @@ Public Class cFileImport
             Dim ImportRoutine As iFileImport_SpectroscopyTable = cFileImport.GetImportRoutineFromType_SpectroscopyTable(FileObject.ImportRoutine)
             If ImportRoutine Is Nothing Then Return False
 
-            '' Get again the FULL FileObject
+            ' Get again the FULL FileObject
             FileObject = cFileObject.GetFileObjectFromPath(New FileInfo(FileObject.FullFileNameInclPath), , {ImportRoutine}.ToList,)
+
+            ' Catch, if the FileObject could not be loaded, e.g. due to some change of the file on the disk
+            If FileObject Is Nothing Then
+                Throw New Exception("Loading not possible. Perhaps the file changed on the disk? Please refresh the cache.")
+            End If
 
             ' Start the import:
             TargetSpectroscopyTable = ImportRoutine.ImportSpectroscopyTable(FileObject.FullFileNameInclPath, FetchOnlyFileHeader, , FilesToIgnoreAfterThisImport, ParameterFilesImportedOnce)
@@ -948,7 +957,7 @@ Public Class cFileImport
             Return GetSpectroscopyFile(FileObject, TargetSpectroscopyTable)
         Catch ex As Exception
             ' File-Import failed.
-            MessageBox.Show(My.Resources.rFileImport.FileImportError.Replace("%fn", FileObject.FullFileNameInclPath) _
+            MessageBox.Show(My.Resources.rFileImport.FileImportError.Replace("%fn", FileNameInclPath) _
                                                                     .Replace("%e", ex.Message),
                             My.Resources.rFileImport.FileImportError_title, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
