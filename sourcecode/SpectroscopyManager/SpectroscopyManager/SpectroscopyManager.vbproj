@@ -148,23 +148,22 @@
       <HintPath>..\packages\DotNetZip.Reduced.1.9.1.8\lib\net20\Ionic.Zip.Reduced.dll</HintPath>
     </Reference>
     <Reference Include="Magick.NET-Q8-AnyCPU, Version=7.0.0.0, Culture=neutral, PublicKeyToken=2004825badfa91ec, processorArchitecture=MSIL">
-      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.4.100\lib\net40-client\Magick.NET-Q8-AnyCPU.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Magick.NET-Q8-AnyCPU.7.0.7.700\lib\net40\Magick.NET-Q8-AnyCPU.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics, Version=3.15.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.3.15.0\lib\net40\MathNet.Numerics.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics.Data.Matlab, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.Data.Matlab.3.2.0\lib\net40\MathNet.Numerics.Data.Matlab.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MathNet.Numerics.Data.Matlab, Version=3.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Data.Matlab.3.2.1\lib\net40\MathNet.Numerics.Data.Matlab.dll</HintPath>
     </Reference>
-    <Reference Include="MathNet.Numerics.Data.Text, Version=3.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.Data.Text.3.2.0\lib\net40\MathNet.Numerics.Data.Text.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MathNet.Numerics.Data.Text, Version=3.2.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Data.Text.3.2.1\lib\net40\MathNet.Numerics.Data.Text.dll</HintPath>
     </Reference>
     <Reference Include="NetSparkle.Net40">
       <HintPath>..\packages\NetSparkle.1.1.0\lib\net40-full\NetSparkle.Net40.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SmartThreadPool, Version=2.2.4.0, Culture=neutral, PublicKeyToken=1126fe8b671e8a79, processorArchitecture=MSIL">
       <HintPath>..\packages\SmartThreadPool.dll.2.2.4\lib\net45\SmartThreadPool.dll</HintPath>
@@ -560,6 +559,7 @@
     <Compile Include="HelperClasses\cSmartThreadPoolExtended.vb" />
     <Compile Include="HelperClasses\cStringCollectionHistory.vb" />
     <Compile Include="HelperClasses\ReadOnlyDictionary.vb" />
+    <Compile Include="ImportMethods\UnknownDAT\cFileImportUnknownDAT.vb" />
     <Compile Include="ImportMethods\Bruker\cFileImportBruker.vb" />
     <Compile Include="ImportMethods\Bruker\cFileImportBrukerDAT.vb" />
     <Compile Include="ImportMethods\Bruker\cFileImportBrukerFLT.vb" />
@@ -573,6 +573,9 @@
     <Compile Include="ImportMethods\Nanonis\cFileImportNanonisSpectroscopyFile.vb" />
     <Compile Include="ImportMethods\Nanonis\cFileImportNanonisZ.vb" />
     <Compile Include="ImportMethods\NanoObserver\cFileImportNanoObserverNAO.vb" />
+    <Compile Include="ImportMethods\NanoQT\cFileImportNanoQTData.vb" />
+    <Compile Include="ImportMethods\NanoQT\cFileImportNanoQTDataJS.vb" />
+    <Compile Include="ImportMethods\NanoQT\cFileImportNanoQTDataJSON.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotec.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecCUR.vb" />
     <Compile Include="ImportMethods\Nanotec\cFileImportNanotecImages.vb" />

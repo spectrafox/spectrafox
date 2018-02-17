@@ -9138,6 +9138,63 @@
             <param name="integers">List of Integers.</param>
             <returns>Least common multiple <c>lcm</c>(list of integers)</returns>
         </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfScalarFunctionConstrained(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find value x that minimizes the scalar function f(x), constrained within bounds, using the Golden Section algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.GoldenSectionMinimizer"/> directly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunction(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x) using the Nelder-Mead Simplex algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.NelderMeadSimplex"/> directly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionConstrained(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x), constrained within bounds, using the Broyden–Fletcher–Goldfarb–Shanno Bounded (BFGS-B) algorithm.
+            The missing gradient is evaluated numerically (forward difference).
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.BfgsBMinimizer"/> directly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionGradient(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x) using the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.BfgsMinimizer"/> directly.
+            An alternative routine using conjugate gradients (CG) is available in <see cref="T:MathNet.Numerics.Optimization.ConjugateGradientMinimizer"/>.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionGradient(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Tuple{System.Double,MathNet.Numerics.LinearAlgebra.Vector{System.Double}}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x) using the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.BfgsMinimizer"/> directly.
+            An alternative routine using conjugate gradients (CG) is available in <see cref="T:MathNet.Numerics.Optimization.ConjugateGradientMinimizer"/>.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionGradientConstrained(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x), constrained within bounds, using the Broyden–Fletcher–Goldfarb–Shanno Bounded (BFGS-B) algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.BfgsBMinimizer"/> directly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionGradientConstrained(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Tuple{System.Double,MathNet.Numerics.LinearAlgebra.Vector{System.Double}}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x), constrained within bounds, using the Broyden–Fletcher–Goldfarb–Shanno Bounded (BFGS-B) algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.BfgsBMinimizer"/> directly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionGradientHessian(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x) using the Newton algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.NewtonMinimizer"/> directly.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.FindMinimum.OfFunctionGradientHessian(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Tuple{System.Double,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Int32)">
+            <summary>
+            Find vector x that minimizes the function f(x) using the Newton algorithm.
+            For more options and diagnostics consider to use <see cref="T:MathNet.Numerics.Optimization.NewtonMinimizer"/> directly.
+            </summary>
+        </member>
         <member name="M:MathNet.Numerics.Generate.Map``2(``0[],System.Func{``0,``1})">
             <summary>
             Generate samples by sampling a function at the provided points.
@@ -9574,7 +9631,7 @@
         </member>
         <member name="M:MathNet.Numerics.GoodnessOfFit.RSquared(System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double})">
             <summary>
-            Calculated the R-Squared value, also known as coefficient of determination,
+            Calculates the R-Squared value, also known as coefficient of determination,
             given modelled and observed values
             </summary>
             <param name="modelledValues">The values expected from the modelled</param>
@@ -9583,12 +9640,32 @@
         </member>
         <member name="M:MathNet.Numerics.GoodnessOfFit.R(System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double})">
             <summary>
-            Calculated the R value, also known as linear correlation coefficient,
+            Calculates the R value, also known as linear correlation coefficient,
             given modelled and observed values
             </summary>
             <param name="modelledValues">The values expected from the modelled</param>
             <param name="observedValues">The actual data set values obtained</param>
             <returns>Person product-momentum correlation coefficient.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.GoodnessOfFit.PopulationStandardError(System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>
+            Calculates the Standard Error of the regression, given a sequence of
+            modeled/predicted values, and a sequence of actual/observed values 
+            </summary>
+            <param name="modelledValues">The modelled/predicted values</param>
+            <param name="observedValues">The observed/actual values</param>
+            <returns>The Standard Error of the regression</returns>
+        </member>
+        <member name="M:MathNet.Numerics.GoodnessOfFit.StandardError(System.Collections.Generic.IEnumerable{System.Double},System.Collections.Generic.IEnumerable{System.Double},System.Int32)">
+            <summary>
+            Calculates the Standard Error of the regression, given a sequence of
+            modeled/predicted values, and a sequence of actual/observed values
+            </summary>
+            <param name="modelledValues">The modelled/predicted values</param>
+            <param name="observedValues">The observed/actual values</param>
+            <param name="degreesOfFreedom">The degrees of freedom by which the 
+            number of samples is reduced for performing the Standard Error calculation</param>
+            <returns>The Standard Error of the regression</returns>
         </member>
         <member name="T:MathNet.Numerics.IntegralTransforms.Fourier">
             <summary>
@@ -9604,11 +9681,24 @@
             Complex Fast (FFT) Implementation of the Discrete Fourier Transform (DFT).
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward(MathNet.Numerics.Complex32[])">
+            <summary>
+            Applies the forward Fast Fourier Transform (FFT) to arbitrary-length sample vectors.
+            </summary>
+            <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward(System.Numerics.Complex[])">
             <summary>
             Applies the forward Fast Fourier Transform (FFT) to arbitrary-length sample vectors.
             </summary>
             <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the forward Fast Fourier Transform (FFT) to arbitrary-length sample vectors.
+            </summary>
+            <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
@@ -9617,12 +9707,31 @@
             <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward(System.Single[],System.Single[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the forward Fast Fourier Transform (FFT) to arbitrary-length sample vectors.
+            </summary>
+            <param name="real">Real part of the sample vector, where the FFT is evaluated in place.</param>
+            <param name="imaginary">Imaginary part of the sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward(System.Double[],System.Double[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Applies the forward Fast Fourier Transform (FFT) to arbitrary-length sample vectors.
             </summary>
             <param name="real">Real part of the sample vector, where the FFT is evaluated in place.</param>
             <param name="imaginary">Imaginary part of the sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.ForwardReal(System.Single[],System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Packed Real-Complex forward Fast Fourier Transform (FFT) to arbitrary-length sample vectors.
+            Since for real-valued time samples the complex spectrum is conjugate-even (symmetry),
+            the spectrum can be fully reconstructed form the positive frequencies only (first half).
+            The data array needs to be N+2 (if N is even) or N+1 (if N is odd) long in order to support such a packed spectrum.
+            </summary>
+            <param name="data">Data array of length N+2 (if N is even) or N+1 (if N is odd).</param>
+            <param name="n">The number of samples.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.ForwardReal(System.Double[],System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
@@ -9636,6 +9745,17 @@
             <param name="n">The number of samples.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.ForwardMultiDim(MathNet.Numerics.Complex32[],System.Int32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the forward Fast Fourier Transform (FFT) to multiple dimensional sample data.
+            </summary>
+            <param name="samples">Sample data, where the FFT is evaluated in place.</param>
+            <param name="dimensions">
+            The data size per dimension. The first dimension is the major one.
+            For example, with two dimensions "rows" and "columns" the samples are assumed to be organized row by row.
+            </param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.ForwardMultiDim(System.Numerics.Complex[],System.Int32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Applies the forward Fast Fourier Transform (FFT) to multiple dimensional sample data.
@@ -9645,6 +9765,16 @@
             The data size per dimension. The first dimension is the major one.
             For example, with two dimensions "rows" and "columns" the samples are assumed to be organized row by row.
             </param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward2D(MathNet.Numerics.Complex32[],System.Int32,System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the forward Fast Fourier Transform (FFT) to two dimensional sample data.
+            </summary>
+            <param name="samplesRowWise">Sample data, organized row by row, where the FFT is evaluated in place</param>
+            <param name="rows">The number of rows.</param>
+            <param name="columns">The number of columns.</param>
+            <remarks>Data available organized column by column instead of row by row can be processed directly by swapping the rows and columns arguments.</remarks>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward2D(System.Numerics.Complex[],System.Int32,System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
@@ -9657,6 +9787,13 @@
             <remarks>Data available organized column by column instead of row by row can be processed directly by swapping the rows and columns arguments.</remarks>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward2D(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32},MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the forward Fast Fourier Transform (FFT) to a two dimensional data in form of a matrix.
+            </summary>
+            <param name="samples">Sample matrix, where the FFT is evaluated in place</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Forward2D(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex},MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Applies the forward Fast Fourier Transform (FFT) to a two dimensional data in form of a matrix.
@@ -9664,11 +9801,24 @@
             <param name="samples">Sample matrix, where the FFT is evaluated in place</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse(MathNet.Numerics.Complex32[])">
+            <summary>
+            Applies the inverse Fast Fourier Transform (iFFT) to arbitrary-length sample vectors.
+            </summary>
+            <param name="spectrum">Spectrum data, where the iFFT is evaluated in place.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse(System.Numerics.Complex[])">
             <summary>
             Applies the inverse Fast Fourier Transform (iFFT) to arbitrary-length sample vectors.
             </summary>
             <param name="spectrum">Spectrum data, where the iFFT is evaluated in place.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the inverse Fast Fourier Transform (iFFT) to arbitrary-length sample vectors.
+            </summary>
+            <param name="spectrum">Spectrum data, where the iFFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
@@ -9677,12 +9827,31 @@
             <param name="spectrum">Spectrum data, where the iFFT is evaluated in place.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse(System.Single[],System.Single[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the inverse Fast Fourier Transform (iFFT) to arbitrary-length sample vectors.
+            </summary>
+            <param name="real">Real part of the sample vector, where the iFFT is evaluated in place.</param>
+            <param name="imaginary">Imaginary part of the sample vector, where the iFFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse(System.Double[],System.Double[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Applies the inverse Fast Fourier Transform (iFFT) to arbitrary-length sample vectors.
             </summary>
             <param name="real">Real part of the sample vector, where the iFFT is evaluated in place.</param>
             <param name="imaginary">Imaginary part of the sample vector, where the iFFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.InverseReal(System.Single[],System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Packed Real-Complex inverse Fast Fourier Transform (iFFT) to arbitrary-length sample vectors.
+            Since for real-valued time samples the complex spectrum is conjugate-even (symmetry),
+            the spectrum can be fully reconstructed form the positive frequencies only (first half).
+            The data array needs to be N+2 (if N is even) or N+1 (if N is odd) long in order to support such a packed spectrum.
+            </summary>
+            <param name="data">Data array of length N+2 (if N is even) or N+1 (if N is odd).</param>
+            <param name="n">The number of samples.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.InverseReal(System.Double[],System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
@@ -9696,6 +9865,17 @@
             <param name="n">The number of samples.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.InverseMultiDim(MathNet.Numerics.Complex32[],System.Int32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the inverse Fast Fourier Transform (iFFT) to multiple dimensional sample data.
+            </summary>
+            <param name="spectrum">Spectrum data, where the iFFT is evaluated in place.</param>
+            <param name="dimensions">
+            The data size per dimension. The first dimension is the major one.
+            For example, with two dimensions "rows" and "columns" the samples are assumed to be organized row by row.
+            </param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.InverseMultiDim(System.Numerics.Complex[],System.Int32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Applies the inverse Fast Fourier Transform (iFFT) to multiple dimensional sample data.
@@ -9705,6 +9885,16 @@
             The data size per dimension. The first dimension is the major one.
             For example, with two dimensions "rows" and "columns" the samples are assumed to be organized row by row.
             </param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse2D(MathNet.Numerics.Complex32[],System.Int32,System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the inverse Fast Fourier Transform (iFFT) to two dimensional sample data.
+            </summary>
+            <param name="spectrumRowWise">Sample data, organized row by row, where the iFFT is evaluated in place</param>
+            <param name="rows">The number of rows.</param>
+            <param name="columns">The number of columns.</param>
+            <remarks>Data available organized column by column instead of row by row can be processed directly by swapping the rows and columns arguments.</remarks>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse2D(System.Numerics.Complex[],System.Int32,System.Int32,MathNet.Numerics.IntegralTransforms.FourierOptions)">
@@ -9717,12 +9907,27 @@
             <remarks>Data available organized column by column instead of row by row can be processed directly by swapping the rows and columns arguments.</remarks>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse2D(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32},MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Applies the inverse Fast Fourier Transform (iFFT) to a two dimensional data in form of a matrix.
+            </summary>
+            <param name="spectrum">Sample matrix, where the iFFT is evaluated in place</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Inverse2D(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex},MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Applies the inverse Fast Fourier Transform (iFFT) to a two dimensional data in form of a matrix.
             </summary>
             <param name="spectrum">Sample matrix, where the iFFT is evaluated in place</param>
             <param name="options">Fourier Transform Convention Options.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.NaiveForward(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Naive forward DFT, useful e.g. to verify faster algorithms.
+            </summary>
+            <param name="samples">Time-space sample vector.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+            <returns>Corresponding frequency-space vector.</returns>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.NaiveForward(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
@@ -9732,6 +9937,14 @@
             <param name="options">Fourier Transform Convention Options.</param>
             <returns>Corresponding frequency-space vector.</returns>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.NaiveInverse(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Naive inverse DFT, useful e.g. to verify faster algorithms.
+            </summary>
+            <param name="spectrum">Frequency-space sample vector.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+            <returns>Corresponding time-space vector.</returns>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.NaiveInverse(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Naive inverse DFT, useful e.g. to verify faster algorithms.
@@ -9740,11 +9953,27 @@
             <param name="options">Fourier Transform Convention Options.</param>
             <returns>Corresponding time-space vector.</returns>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2Forward(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Radix-2 forward FFT for power-of-two sized sample vectors.
+            </summary>
+            <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2Forward(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Radix-2 forward FFT for power-of-two sized sample vectors.
             </summary>
             <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2Inverse(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Radix-2 inverse FFT for power-of-two sized sample vectors.
+            </summary>
+            <param name="spectrum">Sample vector, where the FFT is evaluated in place.</param>
             <param name="options">Fourier Transform Convention Options.</param>
             <exception cref="T:System.ArgumentException"/>
         </member>
@@ -9756,11 +9985,25 @@
             <param name="options">Fourier Transform Convention Options.</param>
             <exception cref="T:System.ArgumentException"/>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinForward(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Bluestein forward FFT for arbitrary sized sample vectors.
+            </summary>
+            <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinForward(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
             <summary>
             Bluestein forward FFT for arbitrary sized sample vectors.
             </summary>
             <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="options">Fourier Transform Convention Options.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinInverse(MathNet.Numerics.Complex32[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
+            <summary>
+            Bluestein inverse FFT for arbitrary sized sample vectors.
+            </summary>
+            <param name="spectrum">Sample vector, where the FFT is evaluated in place.</param>
             <param name="options">Fourier Transform Convention Options.</param>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinInverse(System.Numerics.Complex[],MathNet.Numerics.IntegralTransforms.FourierOptions)">
@@ -9778,9 +10021,23 @@
             <param name="options">Fourier Transform Convention Options.</param>
             <returns>Fourier series exponent sign.</returns>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.ForwardScaleByOptions(MathNet.Numerics.IntegralTransforms.FourierOptions,MathNet.Numerics.Complex32[])">
+            <summary>
+            Rescale FFT-the resulting vector according to the provided convention options.
+            </summary>
+            <param name="options">Fourier Transform Convention Options.</param>
+            <param name="samples">Sample Vector.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.ForwardScaleByOptions(MathNet.Numerics.IntegralTransforms.FourierOptions,System.Numerics.Complex[])">
             <summary>
             Rescale FFT-the resulting vector according to the provided convention options.
+            </summary>
+            <param name="options">Fourier Transform Convention Options.</param>
+            <param name="samples">Sample Vector.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.InverseScaleByOptions(MathNet.Numerics.IntegralTransforms.FourierOptions,MathNet.Numerics.Complex32[])">
+            <summary>
+            Rescale the iFFT-resulting vector according to the provided convention options.
             </summary>
             <param name="options">Fourier Transform Convention Options.</param>
             <param name="samples">Sample Vector.</param>
@@ -9809,6 +10066,13 @@
             will cause k*k in the Bluestein sequence to overflow (GH-286).
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinSequence32(System.Int32)">
+            <summary>
+            Generate the bluestein sequence for the provided problem size.
+            </summary>
+            <param name="n">Number of samples.</param>
+            <returns>Bluestein sequence exp(I*Pi*k^2/N)</returns>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinSequence(System.Int32)">
             <summary>
             Generate the bluestein sequence for the provided problem size.
@@ -9816,9 +10080,21 @@
             <param name="n">Number of samples.</param>
             <returns>Bluestein sequence exp(I*Pi*k^2/N)</returns>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinConvolutionParallel(MathNet.Numerics.Complex32[])">
+            <summary>
+            Convolution with the bluestein sequence (Parallel Version).
+            </summary>
+            <param name="samples">Sample Vector.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.BluesteinConvolutionParallel(System.Numerics.Complex[])">
             <summary>
             Convolution with the bluestein sequence (Parallel Version).
+            </summary>
+            <param name="samples">Sample Vector.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.SwapRealImaginary(MathNet.Numerics.Complex32[])">
+            <summary>
+            Swap the real and imaginary parts of each sample.
             </summary>
             <param name="samples">Sample Vector.</param>
         </member>
@@ -9828,12 +10104,27 @@
             </summary>
             <param name="samples">Sample Vector.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Bluestein(MathNet.Numerics.Complex32[],System.Int32)">
+            <summary>
+            Bluestein generic FFT for arbitrary sized sample vectors.
+            </summary>
+            <param name="samples">Time-space sample vector.</param>
+            <param name="exponentSign">Fourier series exponent sign.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Bluestein(System.Numerics.Complex[],System.Int32)">
             <summary>
             Bluestein generic FFT for arbitrary sized sample vectors.
             </summary>
             <param name="samples">Time-space sample vector.</param>
             <param name="exponentSign">Fourier series exponent sign.</param>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Naive(MathNet.Numerics.Complex32[],System.Int32)">
+            <summary>
+            Naive generic DFT, useful e.g. to verify faster algorithms.
+            </summary>
+            <param name="samples">Time-space sample vector.</param>
+            <param name="exponentSign">Fourier series exponent sign.</param>
+            <returns>Corresponding frequency-space vector.</returns>
         </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Naive(System.Numerics.Complex[],System.Int32)">
             <summary>
@@ -9850,6 +10141,15 @@
             <typeparam name="T">Sample type</typeparam>
             <param name="samples">Sample vector</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2Step(MathNet.Numerics.Complex32[],System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Radix-2 Step Helper Method
+            </summary>
+            <param name="samples">Sample vector.</param>
+            <param name="exponentSign">Fourier series exponent sign.</param>
+            <param name="levelSize">Level Group Size.</param>
+            <param name="k">Index inside of the level.</param>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2Step(System.Numerics.Complex[],System.Int32,System.Int32,System.Int32)">
             <summary>
             Radix-2 Step Helper Method
@@ -9859,9 +10159,25 @@
             <param name="levelSize">Level Group Size.</param>
             <param name="k">Index inside of the level.</param>
         </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2(MathNet.Numerics.Complex32[],System.Int32)">
+            <summary>
+            Radix-2 generic FFT for power-of-two sized sample vectors.
+            </summary>
+            <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="exponentSign">Fourier series exponent sign.</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
         <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2(System.Numerics.Complex[],System.Int32)">
             <summary>
             Radix-2 generic FFT for power-of-two sized sample vectors.
+            </summary>
+            <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
+            <param name="exponentSign">Fourier series exponent sign.</param>
+            <exception cref="T:System.ArgumentException"/>
+        </member>
+        <member name="M:MathNet.Numerics.IntegralTransforms.Fourier.Radix2Parallel(MathNet.Numerics.Complex32[],System.Int32)">
+            <summary>
+            Radix-2 generic FFT for power-of-two sample vectors (Parallel Version).
             </summary>
             <param name="samples">Sample vector, where the FFT is evaluated in place.</param>
             <param name="exponentSign">Fourier series exponent sign.</param>
@@ -11722,7 +12038,7 @@
             <param name="residualVector">The vector containing the current residual vectors.</param>
             <remarks>
             The individual stop criteria may internally track the progress of the calculation based
-            on the invocation of this method. Therefore this method should only be called if the 
+            on the invocation of this method. Therefore this method should only be called if the
             calculation has moved forwards at least one step.
             </remarks>
         </member>
@@ -11872,7 +12188,7 @@
         </member>
         <member name="T:MathNet.Numerics.LinearAlgebra.Solvers.IterationCountStopCriterion`1">
             <summary>
-            Defines an <see cref="T:MathNet.Numerics.LinearAlgebra.Solvers.IIterationStopCriterion`1"/> that monitors the numbers of iteration 
+            Defines an <see cref="T:MathNet.Numerics.LinearAlgebra.Solvers.IIterationStopCriterion`1"/> that monitors the numbers of iteration
             steps as stop criterion.
             </summary>
         </member>
@@ -11894,7 +12210,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Solvers.IterationCountStopCriterion`1.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Solvers.IterationCountStopCriterion`1"/> class with the default maximum 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Solvers.IterationCountStopCriterion`1"/> class with the default maximum
             number of iterations.
             </summary>
         </member>
@@ -11927,7 +12243,7 @@
             <param name="residualVector">The vector containing the current residual vectors.</param>
             <remarks>
             The individual stop criteria may internally track the progress of the calculation based
-            on the invocation of this method. Therefore this method should only be called if the 
+            on the invocation of this method. Therefore this method should only be called if the
             calculation has moved forwards at least one step.
             </remarks>
         </member>
@@ -12002,7 +12318,7 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Solvers.IIterativeSolverSetup`1">
             <summary>
             Defines the interface for objects that can create an iterative solver with
-            specific settings. This interface is used to pass iterative solver creation 
+            specific settings. This interface is used to pass iterative solver creation
             setup information around.
             </summary>
         </member>
@@ -12028,7 +12344,7 @@
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Solvers.IIterativeSolverSetup`1.SolutionSpeed">
             <summary>
-            Gets the relative speed of the solver. 
+            Gets the relative speed of the solver.
             </summary>
             <value>Returns a value between 0 and 1, inclusive.</value>
         </member>
@@ -12047,9 +12363,9 @@
             Preconditioners are used by iterative solvers to improve the convergence
             speed of the solving process. Increase in convergence speed
             is related to the number of iterations necessary to get a converged solution.
-            So while in general the use of a preconditioner means that the iterative 
+            So while in general the use of a preconditioner means that the iterative
             solver will perform fewer iterations it does not guarantee that the actual
-            solution time decreases given that some preconditioners can be expensive to 
+            solution time decreases given that some preconditioners can be expensive to
             setup and run.
             </para>
             <para>
@@ -12740,7 +13056,7 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Double.Solvers.CompositeSolver">
             <summary>
             A composite matrix solver. The actual solver is made by a sequence of
-            matrix solvers. 
+            matrix solvers.
             </summary>
             <remarks>
             <para>
@@ -12776,16 +13092,16 @@
             </summary>
             <remarks>
             <para>
-            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an 
+            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an
             alternative version of the Bi-Conjugate Gradient stabilized (CG) solver.
-            Unlike the CG solver the GPBiCG solver can be used on 
+            Unlike the CG solver the GPBiCG solver can be used on
             non-symmetric matrices. <br/>
             Note that much of the success of the solver depends on the selection of the
             proper preconditioner.
             </para>
             <para>
             The GPBiCG algorithm was taken from: <br/>
-            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with 
+            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with
             efficiency and robustness
             <br/>
             S. Fujino
@@ -12801,13 +13117,13 @@
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Double.Solvers.GpBiCg._numberOfBiCgStabSteps">
             <summary>
-            Indicates the number of <c>BiCGStab</c> steps should be taken 
+            Indicates the number of <c>BiCGStab</c> steps should be taken
             before switching.
             </summary>
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Double.Solvers.GpBiCg._numberOfGpbiCgSteps">
             <summary>
-            Indicates the number of <c>GPBiCG</c> steps should be taken 
+            Indicates the number of <c>GPBiCG</c> steps should be taken
             before switching.
             </summary>
         </member>
@@ -12857,7 +13173,7 @@
             <remarks>
             <para>
             The Multiple-Lanczos Bi-Conjugate Gradient stabilized (ML(k)-BiCGStab) solver is an 'improvement'
-            of the standard BiCgStab solver. 
+            of the standard BiCgStab solver.
             </para>
             <para>
             The algorithm was taken from: <br/>
@@ -12895,7 +13211,7 @@
             Gets or sets the number of starting vectors.
             </summary>
             <remarks>
-            Must be larger than 1 and smaller than the number of variables in the matrix that 
+            Must be larger than 1 and smaller than the number of variables in the matrix that
             for which this solver will be used.
             </remarks>
         </member>
@@ -12906,7 +13222,7 @@
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Double.Solvers.MlkBiCgStab.StartingVectors">
             <summary>
-            Gets or sets a series of orthonormal vectors which will be used as basis for the 
+            Gets or sets a series of orthonormal vectors which will be used as basis for the
             Krylov sub-space.
             </summary>
         </member>
@@ -12927,7 +13243,7 @@
             <returns>
              An array with starting vectors. The array will never be larger than the
              <paramref name="maximumNumberOfStartingVectors"/> but it may be smaller if
-             the <paramref name="numberOfVariables"/> is smaller than 
+             the <paramref name="numberOfVariables"/> is smaller than
              the <paramref name="maximumNumberOfStartingVectors"/>.
             </returns>
         </member>
@@ -13478,14 +13794,14 @@
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
             <para>Any real square matrix A (m x n) may be decomposed as A = QR where Q is an orthogonal matrix
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
             The computation of the QR decomposition is done at construction time by Householder transformation.
-            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is performed, the resulting Q matrix is an m x m matrix 
-            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the 
-            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.     
+            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is performed, the resulting Q matrix is an m x m matrix
+            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the
+            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.
             </remarks>
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Double.Factorization.QR.Determinant">
@@ -13543,7 +13859,7 @@
             <para>A class which encapsulates the functionality of an LU factorization.</para>
             <para>For a matrix A, the LU factorization is a pair of lower triangular matrix L and
             upper triangular matrix U so that A = L*U.</para>
-            <para>In the Math.Net implementation we also store a set of pivot elements for increased 
+            <para>In the Math.Net implementation we also store a set of pivot elements for increased
             numerical stability. The pivot elements encode a permutation matrix P such that P*A = L*U.</para>
             </summary>
             <remarks>
@@ -13632,9 +13948,9 @@
             <param name="d">Arrays for internal storage of real parts of eigenvalues</param>
             <param name="e">Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures tred2 by 
-            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures tred2 by
+            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.DenseEvd.SymmetricDiagonalize(System.Double[],System.Double[],System.Double[],System.Int32)">
@@ -13737,9 +14053,9 @@
             <param name="d">Arrays for internal storage of real parts of eigenvalues</param>
             <param name="e">Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures tred2 by 
-            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures tred2 by
+            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserEvd.SymmetricDiagonalize(MathNet.Numerics.LinearAlgebra.Matrix{System.Double},System.Double[],System.Double[],System.Int32)">
@@ -13841,6 +14157,16 @@
             <param name="input">The right hand side vector, <b>b</b>.</param>
             <param name="result">The left hand side <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>, <b>x</b>.</param>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.DenseCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{System.Double})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
+        </member>
         <member name="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.DenseLU">
             <summary>
             <para>A class which encapsulates the functionality of an LU factorization.</para>
@@ -13883,8 +14209,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.DenseQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -13923,13 +14249,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.DenseSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Double.DenseMatrix"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -13971,7 +14297,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Double})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserGramSchmidt"/> class. This object creates an orthogonal matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserGramSchmidt"/> class. This object creates an orthogonal matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -14004,6 +14330,15 @@
             or positive definite, the constructor will throw an exception.
             </remarks>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserCholesky.DoCholesky(MathNet.Numerics.LinearAlgebra.Matrix{System.Double})">
+            <summary>
+            Computes the Cholesky factorization in-place.
+            </summary>
+            <param name="factor">On entry, the matrix to factor. On exit, the Cholesky factor matrix</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="factor"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not positive definite.</exception>
+        </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserCholesky.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Double})">
             <summary>
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserCholesky"/> class. This object will compute the
@@ -14013,6 +14348,16 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+        </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{System.Double})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserCholesky.DoCholeskyStep(MathNet.Numerics.LinearAlgebra.Matrix{System.Double},System.Int32,System.Int32,System.Int32,System.Double[],System.Int32)">
             <summary>
@@ -14081,8 +14426,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -14136,13 +14481,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -14196,7 +14541,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserSvd.Drotg(System.Double@,System.Double@,System.Double@,System.Double@)">
             <summary>
-            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s 
+            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s
             associated with the Givens rotation that zeros the y-coordinate of the point.
             </summary>
             <param name="da">Provides the x-coordinate of the point p. On exit contains the parameter r associated with the Givens rotation</param>
@@ -14236,7 +14581,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Double.Factorization.UserSvd.Drot(MathNet.Numerics.LinearAlgebra.Matrix{System.Double},System.Int32,System.Int32,System.Int32,System.Double,System.Double)">
             <summary>
-            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>, 
+            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>,
             each vector element of these vectors is replaced as follows: x(i) = c*x(i) + s*y(i); y(i) = c*y(i) - s*x(i)
             </summary>
             <param name="a">Source matrix</param>
@@ -17021,7 +17366,7 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Single.Solvers.CompositeSolver">
             <summary>
             A composite matrix solver. The actual solver is made by a sequence of
-            matrix solvers. 
+            matrix solvers.
             </summary>
             <remarks>
             <para>
@@ -17057,16 +17402,16 @@
             </summary>
             <remarks>
             <para>
-            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an 
+            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an
             alternative version of the Bi-Conjugate Gradient stabilized (CG) solver.
-            Unlike the CG solver the GPBiCG solver can be used on 
+            Unlike the CG solver the GPBiCG solver can be used on
             non-symmetric matrices. <br/>
             Note that much of the success of the solver depends on the selection of the
             proper preconditioner.
             </para>
             <para>
             The GPBiCG algorithm was taken from: <br/>
-            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with 
+            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with
             efficiency and robustness
             <br/>
             S. Fujino
@@ -17082,13 +17427,13 @@
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Single.Solvers.GpBiCg._numberOfBiCgStabSteps">
             <summary>
-            Indicates the number of <c>BiCGStab</c> steps should be taken 
+            Indicates the number of <c>BiCGStab</c> steps should be taken
             before switching.
             </summary>
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Single.Solvers.GpBiCg._numberOfGpbiCgSteps">
             <summary>
-            Indicates the number of <c>GPBiCG</c> steps should be taken 
+            Indicates the number of <c>GPBiCG</c> steps should be taken
             before switching.
             </summary>
         </member>
@@ -17138,7 +17483,7 @@
             <remarks>
             <para>
             The Multiple-Lanczos Bi-Conjugate Gradient stabilized (ML(k)-BiCGStab) solver is an 'improvement'
-            of the standard BiCgStab solver. 
+            of the standard BiCgStab solver.
             </para>
             <para>
             The algorithm was taken from: <br/>
@@ -17176,7 +17521,7 @@
             Gets or sets the number of starting vectors.
             </summary>
             <remarks>
-            Must be larger than 1 and smaller than the number of variables in the matrix that 
+            Must be larger than 1 and smaller than the number of variables in the matrix that
             for which this solver will be used.
             </remarks>
         </member>
@@ -17187,7 +17532,7 @@
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Single.Solvers.MlkBiCgStab.StartingVectors">
             <summary>
-            Gets or sets a series of orthonormal vectors which will be used as basis for the 
+            Gets or sets a series of orthonormal vectors which will be used as basis for the
             Krylov sub-space.
             </summary>
         </member>
@@ -17208,7 +17553,7 @@
             <returns>
              An array with starting vectors. The array will never be larger than the
              <paramref name="maximumNumberOfStartingVectors"/> but it may be smaller if
-             the <paramref name="numberOfVariables"/> is smaller than 
+             the <paramref name="numberOfVariables"/> is smaller than
              the <paramref name="maximumNumberOfStartingVectors"/>.
             </returns>
         </member>
@@ -18481,10 +18826,10 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.DenseVector.DoPointwiseMultiply(MathNet.Numerics.LinearAlgebra.Vector{System.Single},MathNet.Numerics.LinearAlgebra.Vector{System.Single})">
             <summary>
-            Pointwise divide this vector with another vector and stores the result into the result vector.
+            Pointwise multiply this vector with another vector and stores the result into the result vector.
             </summary>
-            <param name="other">The vector to pointwise divide this one by.</param>
-            <param name="result">The vector to store the result of the pointwise division.</param>
+            <param name="other">The vector to pointwise multiply this one by.</param>
+            <param name="result">The vector to store the result of the pointwise multiplication.</param>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.DenseVector.DoPointwiseDivide(MathNet.Numerics.LinearAlgebra.Vector{System.Single},MathNet.Numerics.LinearAlgebra.Vector{System.Single})">
             <summary>
@@ -18951,7 +19296,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Single})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseGramSchmidt"/> class. This object creates an orthogonal matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseGramSchmidt"/> class. This object creates an orthogonal matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -19017,9 +19362,9 @@
             <param name="d">Arrays for internal storage of real parts of eigenvalues</param>
             <param name="e">Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures tred2 by 
-            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures tred2 by
+            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseEvd.SymmetricDiagonalize(System.Single[],System.Single[],System.Single[],System.Int32)">
@@ -19122,6 +19467,16 @@
             <param name="input">The right hand side vector, <b>b</b>.</param>
             <param name="result">The left hand side <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>, <b>x</b>.</param>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{System.Single})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
+        </member>
         <member name="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseLU">
             <summary>
             <para>A class which encapsulates the functionality of an LU factorization.</para>
@@ -19164,8 +19519,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -19204,13 +19559,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.DenseSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Single.DenseMatrix"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -19300,7 +19655,7 @@
             <para>A class which encapsulates the functionality of an LU factorization.</para>
             <para>For a matrix A, the LU factorization is a pair of lower triangular matrix L and
             upper triangular matrix U so that A = L*U.</para>
-            <para>In the Math.Net implementation we also store a set of pivot elements for increased 
+            <para>In the Math.Net implementation we also store a set of pivot elements for increased
             numerical stability. The pivot elements encode a permutation matrix P such that P*A = L*U.</para>
             </summary>
             <remarks>
@@ -19316,14 +19671,14 @@
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
             <para>Any real square matrix A (m x n) may be decomposed as A = QR where Q is an orthogonal matrix
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
             The computation of the QR decomposition is done at construction time by Householder transformation.
-            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is peformed, the resulting Q matrix is an m x m matrix 
-            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the 
-            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.     
+            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is peformed, the resulting Q matrix is an m x m matrix
+            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the
+            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.
             </remarks>
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Single.Factorization.QR.Determinant">
@@ -19387,7 +19742,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Single})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserGramSchmidt"/> class. This object creates an orthogonal matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserGramSchmidt"/> class. This object creates an orthogonal matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -19420,6 +19775,15 @@
             or positive definite, the constructor will throw an exception.
             </remarks>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserCholesky.DoCholesky(MathNet.Numerics.LinearAlgebra.Matrix{System.Single})">
+            <summary>
+            Computes the Cholesky factorization in-place.
+            </summary>
+            <param name="factor">On entry, the matrix to factor. On exit, the Cholesky factor matrix</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="factor"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not positive definite.</exception>
+        </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserCholesky.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Single})">
             <summary>
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserCholesky"/> class. This object will compute the
@@ -19429,6 +19793,16 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+        </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{System.Single})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserCholesky.DoCholeskyStep(MathNet.Numerics.LinearAlgebra.Matrix{System.Single},System.Int32,System.Int32,System.Int32,System.Single[],System.Int32)">
             <summary>
@@ -19490,9 +19864,9 @@
             <param name="d">Arrays for internal storage of real parts of eigenvalues</param>
             <param name="e">Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures tred2 by 
-            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures tred2 by
+            Bowdler, Martin, Reinsch, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserEvd.SymmetricDiagonalize(MathNet.Numerics.LinearAlgebra.Matrix{System.Single},System.Single[],System.Single[],System.Int32)">
@@ -19601,8 +19975,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -19656,13 +20030,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -19716,7 +20090,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserSvd.Drotg(System.Single@,System.Single@,System.Single@,System.Single@)">
             <summary>
-            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s 
+            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s
             associated with the Givens rotation that zeros the y-coordinate of the point.
             </summary>
             <param name="da">Provides the x-coordinate of the point p. On exit contains the parameter r associated with the Givens rotation</param>
@@ -19756,7 +20130,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Single.Factorization.UserSvd.Drot(MathNet.Numerics.LinearAlgebra.Matrix{System.Single},System.Int32,System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
-            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>, 
+            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>,
             each vector element of these vectors is replaced as follows: x(i) = c*x(i) + s*y(i); y(i) = c*y(i) - s*x(i)
             </summary>
             <param name="a">Source matrix</param>
@@ -21299,7 +21673,7 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex.Solvers.CompositeSolver">
             <summary>
             A composite matrix solver. The actual solver is made by a sequence of
-            matrix solvers. 
+            matrix solvers.
             </summary>
             <remarks>
             <para>
@@ -21335,16 +21709,16 @@
             </summary>
             <remarks>
             <para>
-            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an 
+            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an
             alternative version of the Bi-Conjugate Gradient stabilized (CG) solver.
-            Unlike the CG solver the GPBiCG solver can be used on 
+            Unlike the CG solver the GPBiCG solver can be used on
             non-symmetric matrices. <br/>
             Note that much of the success of the solver depends on the selection of the
             proper preconditioner.
             </para>
             <para>
             The GPBiCG algorithm was taken from: <br/>
-            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with 
+            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with
             efficiency and robustness
             <br/>
             S. Fujino
@@ -21360,13 +21734,13 @@
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Complex.Solvers.GpBiCg._numberOfBiCgStabSteps">
             <summary>
-            Indicates the number of <c>BiCGStab</c> steps should be taken 
+            Indicates the number of <c>BiCGStab</c> steps should be taken
             before switching.
             </summary>
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Complex.Solvers.GpBiCg._numberOfGpbiCgSteps">
             <summary>
-            Indicates the number of <c>GPBiCG</c> steps should be taken 
+            Indicates the number of <c>GPBiCG</c> steps should be taken
             before switching.
             </summary>
         </member>
@@ -21416,7 +21790,7 @@
             <remarks>
             <para>
             The Multiple-Lanczos Bi-Conjugate Gradient stabilized (ML(k)-BiCGStab) solver is an 'improvement'
-            of the standard BiCgStab solver. 
+            of the standard BiCgStab solver.
             </para>
             <para>
             The algorithm was taken from: <br/>
@@ -21454,7 +21828,7 @@
             Gets or sets the number of starting vectors.
             </summary>
             <remarks>
-            Must be larger than 1 and smaller than the number of variables in the matrix that 
+            Must be larger than 1 and smaller than the number of variables in the matrix that
             for which this solver will be used.
             </remarks>
         </member>
@@ -21465,7 +21839,7 @@
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Complex.Solvers.MlkBiCgStab.StartingVectors">
             <summary>
-            Gets or sets a series of orthonormal vectors which will be used as basis for the 
+            Gets or sets a series of orthonormal vectors which will be used as basis for the
             Krylov sub-space.
             </summary>
         </member>
@@ -21486,7 +21860,7 @@
             <returns>
              An array with starting vectors. The array will never be larger than the
              <paramref name="maximumNumberOfStartingVectors"/> but it may be smaller if
-             the <paramref name="numberOfVariables"/> is smaller than 
+             the <paramref name="numberOfVariables"/> is smaller than
              the <paramref name="maximumNumberOfStartingVectors"/>.
             </returns>
         </member>
@@ -23252,7 +23626,7 @@
             <para>A class which encapsulates the functionality of an LU factorization.</para>
             <para>For a matrix A, the LU factorization is a pair of lower triangular matrix L and
             upper triangular matrix U so that A = L*U.</para>
-            <para>In the Math.Net implementation we also store a set of pivot elements for increased 
+            <para>In the Math.Net implementation we also store a set of pivot elements for increased
             numerical stability. The pivot elements encode a permutation matrix P such that P*A = L*U.</para>
             </summary>
             <remarks>
@@ -23268,14 +23642,14 @@
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
             <para>Any real square matrix A (m x n) may be decomposed as A = QR where Q is an orthogonal matrix
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
             The computation of the QR decomposition is done at construction time by Householder transformation.
-            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is peformed, the resulting Q matrix is an m x m matrix 
-            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the 
-            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.     
+            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is peformed, the resulting Q matrix is an m x m matrix
+            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the
+            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.
             </remarks>
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Complex.Factorization.QR.Determinant">
@@ -23339,7 +23713,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseGramSchmidt"/> class. This object creates an unitary matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseGramSchmidt"/> class. This object creates an unitary matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -23406,9 +23780,9 @@
             <param name="e">Output: Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="tau">Output: Arrays that contains further information about the transformations.</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures HTRIDI by 
-            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures HTRIDI by
+            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseEvd.SymmetricDiagonalize(System.Numerics.Complex[],System.Double[],System.Double[],System.Int32)">
@@ -23512,6 +23886,16 @@
             <param name="input">The right hand side vector, <b>b</b>.</param>
             <param name="result">The left hand side <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>, <b>x</b>.</param>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
+        </member>
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseLU">
             <summary>
             <para>A class which encapsulates the functionality of an LU factorization.</para>
@@ -23554,8 +23938,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -23594,13 +23978,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.DenseSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.DenseMatrix"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -23642,7 +24026,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserGramSchmidt"/> class. This object creates an unitary matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserGramSchmidt"/> class. This object creates an unitary matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -23675,6 +24059,15 @@
             or positive definite, the constructor will throw an exception.
             </remarks>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserCholesky.DoCholesky(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex})">
+            <summary>
+            Computes the Cholesky factorization in-place.
+            </summary>
+            <param name="factor">On entry, the matrix to factor. On exit, the Cholesky factor matrix</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="factor"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not positive definite.</exception>
+        </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserCholesky.Create(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex})">
             <summary>
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserCholesky"/> class. This object will compute the
@@ -23684,6 +24077,16 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+        </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserCholesky.DoCholeskyStep(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex},System.Int32,System.Int32,System.Int32,System.Numerics.Complex[],System.Int32)">
             <summary>
@@ -23746,9 +24149,9 @@
             <param name="e">Output: Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="tau">Output: Arrays that contains further information about the transformations.</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures HTRIDI by 
-            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures HTRIDI by
+            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserEvd.SymmetricDiagonalize(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex},System.Double[],System.Double[],System.Int32)">
@@ -23859,8 +24262,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -23914,13 +24317,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -23974,7 +24377,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserSvd.Srotg(System.Double@,System.Double@,System.Double@,System.Double@)">
             <summary>
-            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s 
+            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s
             associated with the Givens rotation that zeros the y-coordinate of the point.
             </summary>
             <param name="da">Provides the x-coordinate of the point p. On exit contains the parameter r associated with the Givens rotation</param>
@@ -24014,7 +24417,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex.Factorization.UserSvd.Csrot(MathNet.Numerics.LinearAlgebra.Matrix{System.Numerics.Complex},System.Int32,System.Int32,System.Int32,System.Double,System.Double)">
             <summary>
-            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>, 
+            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>,
             each vector element of these vectors is replaced as follows: x(i) = c*x(i) + s*y(i); y(i) = c*y(i) - s*x(i)
             </summary>
             <param name="a">Source matrix</param>
@@ -25530,7 +25933,7 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex32.Solvers.CompositeSolver">
             <summary>
             A composite matrix solver. The actual solver is made by a sequence of
-            matrix solvers. 
+            matrix solvers.
             </summary>
             <remarks>
             <para>
@@ -25566,16 +25969,16 @@
             </summary>
             <remarks>
             <para>
-            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an 
+            The Generalized Product Bi-Conjugate Gradient (GPBiCG) solver is an
             alternative version of the Bi-Conjugate Gradient stabilized (CG) solver.
-            Unlike the CG solver the GPBiCG solver can be used on 
+            Unlike the CG solver the GPBiCG solver can be used on
             non-symmetric matrices. <br/>
             Note that much of the success of the solver depends on the selection of the
             proper preconditioner.
             </para>
             <para>
             The GPBiCG algorithm was taken from: <br/>
-            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with 
+            GPBiCG(m,l): A hybrid of BiCGSTAB and GPBiCG methods with
             efficiency and robustness
             <br/>
             S. Fujino
@@ -25591,13 +25994,13 @@
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Complex32.Solvers.GpBiCg._numberOfBiCgStabSteps">
             <summary>
-            Indicates the number of <c>BiCGStab</c> steps should be taken 
+            Indicates the number of <c>BiCGStab</c> steps should be taken
             before switching.
             </summary>
         </member>
         <member name="F:MathNet.Numerics.LinearAlgebra.Complex32.Solvers.GpBiCg._numberOfGpbiCgSteps">
             <summary>
-            Indicates the number of <c>GPBiCG</c> steps should be taken 
+            Indicates the number of <c>GPBiCG</c> steps should be taken
             before switching.
             </summary>
         </member>
@@ -25647,7 +26050,7 @@
             <remarks>
             <para>
             The Multiple-Lanczos Bi-Conjugate Gradient stabilized (ML(k)-BiCGStab) solver is an 'improvement'
-            of the standard BiCgStab solver. 
+            of the standard BiCgStab solver.
             </para>
             <para>
             The algorithm was taken from: <br/>
@@ -25685,7 +26088,7 @@
             Gets or sets the number of starting vectors.
             </summary>
             <remarks>
-            Must be larger than 1 and smaller than the number of variables in the matrix that 
+            Must be larger than 1 and smaller than the number of variables in the matrix that
             for which this solver will be used.
             </remarks>
         </member>
@@ -25696,7 +26099,7 @@
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Complex32.Solvers.MlkBiCgStab.StartingVectors">
             <summary>
-            Gets or sets a series of orthonormal vectors which will be used as basis for the 
+            Gets or sets a series of orthonormal vectors which will be used as basis for the
             Krylov sub-space.
             </summary>
         </member>
@@ -25717,7 +26120,7 @@
             <returns>
              An array with starting vectors. The array will never be larger than the
              <paramref name="maximumNumberOfStartingVectors"/> but it may be smaller if
-             the <paramref name="numberOfVariables"/> is smaller than 
+             the <paramref name="numberOfVariables"/> is smaller than
              the <paramref name="maximumNumberOfStartingVectors"/>.
             </returns>
         </member>
@@ -26265,7 +26668,7 @@
             <para>A class which encapsulates the functionality of an LU factorization.</para>
             <para>For a matrix A, the LU factorization is a pair of lower triangular matrix L and
             upper triangular matrix U so that A = L*U.</para>
-            <para>In the Math.Net implementation we also store a set of pivot elements for increased 
+            <para>In the Math.Net implementation we also store a set of pivot elements for increased
             numerical stability. The pivot elements encode a permutation matrix P such that P*A = L*U.</para>
             </summary>
             <remarks>
@@ -26281,14 +26684,14 @@
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
             <para>Any real square matrix A (m x n) may be decomposed as A = QR where Q is an orthogonal matrix
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
             The computation of the QR decomposition is done at construction time by Householder transformation.
-            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is peformed, the resulting Q matrix is an m x m matrix 
-            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the 
-            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.     
+            If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Full"/> factorization is peformed, the resulting Q matrix is an m x m matrix
+            and the R matrix is an m x n matrix. If a <seealso cref="F:MathNet.Numerics.LinearAlgebra.Factorization.QRMethod.Thin"/> factorization is performed, the
+            resulting Q matrix is an m x n matrix and the R matrix is an n x n matrix.
             </remarks>
         </member>
         <member name="P:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.QR.Determinant">
@@ -26352,7 +26755,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseGramSchmidt"/> class. This object creates an unitary matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseGramSchmidt"/> class. This object creates an unitary matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -26419,9 +26822,9 @@
             <param name="e">Output: Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="tau">Output: Arrays that contains further information about the transformations.</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures HTRIDI by 
-            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures HTRIDI by
+            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseEvd.SymmetricDiagonalize(MathNet.Numerics.Complex32[],System.Single[],System.Single[],System.Int32)">
@@ -26525,6 +26928,16 @@
             <param name="input">The right hand side vector, <b>b</b>.</param>
             <param name="result">The left hand side <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>, <b>x</b>.</param>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
+        </member>
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseLU">
             <summary>
             <para>A class which encapsulates the functionality of an LU factorization.</para>
@@ -26567,8 +26980,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -26607,13 +27020,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.DenseSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.DenseMatrix"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -26655,7 +27068,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserGramSchmidt.Create(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32})">
             <summary>
-            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserGramSchmidt"/> class. This object creates an unitary matrix 
+            Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserGramSchmidt"/> class. This object creates an unitary matrix
             using the modified Gram-Schmidt method.
             </summary>
             <param name="matrix">The matrix to factor.</param>
@@ -26688,6 +27101,15 @@
             or positive definite, the constructor will throw an exception.
             </remarks>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserCholesky.DoCholesky(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32})">
+            <summary>
+            Computes the Cholesky factorization in-place.
+            </summary>
+            <param name="factor">On entry, the matrix to factor. On exit, the Cholesky factor matrix</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="factor"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="factor"/> is not positive definite.</exception>
+        </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserCholesky.Create(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32})">
             <summary>
             Initializes a new instance of the <see cref="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserCholesky"/> class. This object will compute the
@@ -26697,6 +27119,16 @@
             <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
             <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+        </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserCholesky.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+            <exception cref="T:System.ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not a square matrix.</exception>
+            <exception cref="T:System.ArgumentException">If <paramref name="matrix"/> is not positive definite.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">If <paramref name="matrix"/> does not have the same dimensions as the existing factor.</exception>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserCholesky.DoCholeskyStep(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32},System.Int32,System.Int32,System.Int32,MathNet.Numerics.Complex32[],System.Int32)">
             <summary>
@@ -26759,9 +27191,9 @@
             <param name="e">Output: Arrays for internal storage of imaginary parts of eigenvalues</param>
             <param name="tau">Output: Arrays that contains further information about the transformations.</param>
             <param name="order">Order of initial matrix</param>
-            <remarks>This is derived from the Algol procedures HTRIDI by 
-            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for 
-            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding 
+            <remarks>This is derived from the Algol procedures HTRIDI by
+            Smith, Boyle, Dongarra, Garbow, Ikebe, Klema, Moler, and Wilkinson, Handbook for
+            Auto. Comp., Vol.ii-Linear Algebra, and the corresponding
             Fortran subroutine in EISPACK.</remarks>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserEvd.SymmetricDiagonalize(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32},System.Single[],System.Single[],System.Int32)">
@@ -26872,8 +27304,8 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserQR">
             <summary>
             <para>A class which encapsulates the functionality of the QR decomposition.</para>
-            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix 
-            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix 
+            <para>Any real square matrix A may be decomposed as A = QR where Q is an orthogonal matrix
+            (its columns are orthogonal unit vectors meaning QTQ = I) and R is an upper triangular matrix
             (also called right triangular matrix).</para>
             </summary>
             <remarks>
@@ -26927,13 +27359,13 @@
         <member name="T:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserSvd">
             <summary>
             <para>A class which encapsulates the functionality of the singular value decomposition (SVD) for <see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</para>
-            <para>Suppose M is an m-by-n matrix whose entries are real numbers. 
+            <para>Suppose M is an m-by-n matrix whose entries are real numbers.
             Then there exists a factorization of the form M = UΣVT where:
             - U is an m-by-m unitary matrix;
             - Σ is m-by-n diagonal matrix with nonnegative real numbers on the diagonal;
-            - VT denotes transpose of V, an n-by-n unitary matrix; 
-            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal 
-            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined 
+            - VT denotes transpose of V, an n-by-n unitary matrix;
+            Such a factorization is called a singular-value decomposition of M. A common convention is to order the diagonal
+            entries Σ(i,i) in descending order. In this case, the diagonal matrix Σ is uniquely determined
             by M (though the matrices U and V are not). The diagonal entries of Σ are known as the singular values of M.</para>
             </summary>
             <remarks>
@@ -26987,7 +27419,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserSvd.Srotg(System.Single@,System.Single@,System.Single@,System.Single@)">
             <summary>
-            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s 
+            Given the Cartesian coordinates (da, db) of a point p, these fucntion return the parameters da, db, c, and s
             associated with the Givens rotation that zeros the y-coordinate of the point.
             </summary>
             <param name="da">Provides the x-coordinate of the point p. On exit contains the parameter r associated with the Givens rotation</param>
@@ -27027,7 +27459,7 @@
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Complex32.Factorization.UserSvd.Csrot(MathNet.Numerics.LinearAlgebra.Matrix{MathNet.Numerics.Complex32},System.Int32,System.Int32,System.Int32,System.Single,System.Single)">
             <summary>
-            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>, 
+            Performs rotation of points in the plane. Given two vectors x <paramref name="columnA"/> and y <paramref name="columnB"/>,
             each vector element of these vectors is replaced as follows: x(i) = c*x(i) + s*y(i); y(i) = c*y(i) - s*x(i)
             </summary>
             <param name="a">Source matrix</param>
@@ -31735,7 +32167,7 @@
         <member name="M:MathNet.Numerics.LinearAlgebra.Matrix`1.PointwiseBinary(System.Action{MathNet.Numerics.LinearAlgebra.Matrix{`0},MathNet.Numerics.LinearAlgebra.Matrix{`0}},MathNet.Numerics.LinearAlgebra.Matrix{`0})">
             <summary>
             Helper function to apply a binary function which takes two matrices
-            and modifies the latter in place.  A copy of the "this" matrix is 
+            and modifies the latter in place.  A copy of the "this" matrix is
             first made and then passed to f together with the other matrix. The
             copy is then returned as the result
             </summary>
@@ -31837,7 +32269,8 @@
             matrix and a given other matrix being the 'x' of atan2 and the
             'this' matrix being the 'y'
             </summary>
-            <param name="other"></param>
+            <param name="other">The other matrix 'y'</param>
+            <param name="result">The matrix with the result and 'x'</param>
             <returns></returns>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Matrix`1.PointwiseCeiling">
@@ -33751,8 +34184,8 @@
         <member name="M:MathNet.Numerics.LinearAlgebra.Vector`1.PointwiseBinary(System.Action{`0,MathNet.Numerics.LinearAlgebra.Vector{`0}},`0)">
             <summary>
             Helper function to apply a binary function which takes a scalar and
-            a vector and modifies the latter in place. A copy of the "this" 
-            vector is therefore first made and then passed to f together with 
+            a vector and modifies the latter in place. A copy of the "this"
+            vector is therefore first made and then passed to f together with
             the scalar argument.  The copy is then returned as the result
             </summary>
             <param name="f">Function which takes a scalar and a vector, modifies the vector in place and returns void</param>
@@ -33766,12 +34199,13 @@
             </summary>
             <param name="f">Function which takes a scalar and a vector, modifies the vector in place and returns void</param>
             <param name="x">The scalar to be passed to the function</param>
+            <param name="result">The vector where the result will be placed</param>
             <exception cref="T:System.ArgumentException">If this vector and <paramref name="result"/> are not the same size.</exception>
         </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Vector`1.PointwiseBinary(System.Action{MathNet.Numerics.LinearAlgebra.Vector{`0},MathNet.Numerics.LinearAlgebra.Vector{`0}},MathNet.Numerics.LinearAlgebra.Vector{`0})">
             <summary>
             Helper function to apply a binary function which takes two vectors
-            and modifies the latter in place.  A copy of the "this" vector is 
+            and modifies the latter in place.  A copy of the "this" vector is
             first made and then passed to f together with the other vector. The
             copy is then returned as the result
             </summary>
@@ -35407,6 +35841,12 @@
             Gets the log determinant of the matrix for which the Cholesky matrix was computed.
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.LinearAlgebra.Factorization.Cholesky`1.Factorize(MathNet.Numerics.LinearAlgebra.Matrix{`0})">
+            <summary>
+            Calculates the Cholesky factorization of the input matrix.
+            </summary>
+            <param name="matrix">The matrix to be factorized<see cref="T:MathNet.Numerics.LinearAlgebra.Matrix`1"/>.</param>
+        </member>
         <member name="M:MathNet.Numerics.LinearAlgebra.Factorization.Cholesky`1.Solve(MathNet.Numerics.LinearAlgebra.Matrix{`0})">
             <summary>
             Solves a system of linear equations, <b>AX = B</b>, with A Cholesky factorized.
@@ -35440,7 +35880,7 @@
             <para>A class which encapsulates the functionality of an LU factorization.</para>
             <para>For a matrix A, the LU factorization is a pair of lower triangular matrix L and
             upper triangular matrix U so that A = L*U.</para>
-            <para>In the Math.Net implementation we also store a set of pivot elements for increased 
+            <para>In the Math.Net implementation we also store a set of pivot elements for increased
             numerical stability. The pivot elements encode a permutation matrix P such that P*A = L*U.</para>
             </summary>
             <remarks>
@@ -36008,6 +36448,290 @@
             <param name="N">Size of output array(the larger, the finer)</param>
             <param name="f">ode function</param>
             <returns>approximations</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.BfgsMinimizerBase.#ctor(System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Creates a base class for BFGS minimization
+            </summary>
+            <param name="gradientTolerance">The gradient tolerance</param>
+            <param name="parameterTolerance">The parameter tolerance</param>
+            <param name="functionProgressTolerance">The funciton progress tolerance</param>
+            <param name="maximumIterations">The maximum number of iterations</param>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.LineSearch.WolfeLineSearch.FindConformingStep(MathNet.Numerics.Optimization.IObjectiveFunctionEvaluation,MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double)">
+            <summary>Implemented following http://www.math.washington.edu/~burke/crs/408/lectures/L9-weak-Wolfe.pdf</summary>
+            <param name="startingPoint">The objective function being optimized, evaluated at the starting point of the search</param>
+            <param name="searchDirection">Search direction</param>
+            <param name="initialStep">Initial size of the step in the search direction</param>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.LineSearch.WolfeLineSearch.FindConformingStep(MathNet.Numerics.Optimization.IObjectiveFunctionEvaluation,MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double)">
+            <summary></summary>
+            <param name="startingPoint">The objective function being optimized, evaluated at the starting point of the search</param>
+            <param name="searchDirection">Search direction</param>
+            <param name="initialStep">Initial size of the step in the search direction</param>
+            <param name="upperBound">The upper bound</param>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.LineSearch.WeakWolfeLineSearch">
+             <summary>
+             Search for a step size alpha that satisfies the weak wolfe conditions. The weak Wolfe
+             Conditions are
+             i)  Armijo Rule:         f(x_k + alpha_k p_k) &lt;= f(x_k) + c1 alpha_k p_k^T g(x_k)
+             ii) Curvature Condition: p_k^T g(x_k + alpha_k p_k) &gt;= c2 p_k^T g(x_k)
+             where g(x) is the gradient of f(x), 0 &lt; c1 &lt; c2 &lt; 1.
+            
+             Implementation is based on http://www.math.washington.edu/~burke/crs/408/lectures/L9-weak-Wolfe.pdf
+            
+             references:
+             http://en.wikipedia.org/wiki/Wolfe_conditions
+             http://www.math.washington.edu/~burke/crs/408/lectures/L9-weak-Wolfe.pdf
+             </summary>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.NelderMeadSimplex">
+            <summary>
+            Class implementing the Nelder-Mead simplex algorithm, used to find a minima when no gradient is available.
+            Called fminsearch() in Matlab. A description of the algorithm can be found at
+            http://se.mathworks.com/help/matlab/math/optimizing-nonlinear-functions.html#bsgpq6p-11
+            or
+            https://en.wikipedia.org/wiki/Nelder%E2%80%93Mead_method
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.FindMinimum(MathNet.Numerics.Optimization.IObjectiveFunction,MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Finds the minimum of the objective function without an intial pertubation, the default values used
+            by fminsearch() in Matlab are used instead
+            http://se.mathworks.com/help/matlab/math/optimizing-nonlinear-functions.html#bsgpq6p-11
+            </summary>
+            <param name="objectiveFunction">The objective function, no gradient or hessian needed</param>
+            <param name="initialGuess">The intial guess</param>
+            <returns>The minimum point</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.FindMinimum(MathNet.Numerics.Optimization.IObjectiveFunction,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Finds the minimum of the objective function with an intial pertubation
+            </summary>
+            <param name="objectiveFunction">The objective function, no gradient or hessian needed</param>
+            <param name="initialGuess">The intial guess</param>
+            <param name="initalPertubation">The inital pertubation</param>
+            <returns>The minimum point</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.Minimum(MathNet.Numerics.Optimization.IObjectiveFunction,MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Int32)">
+            <summary>
+            Finds the minimum of the objective function without an intial pertubation, the default values used
+            by fminsearch() in Matlab are used instead
+            http://se.mathworks.com/help/matlab/math/optimizing-nonlinear-functions.html#bsgpq6p-11
+            </summary>
+            <param name="objectiveFunction">The objective function, no gradient or hessian needed</param>
+            <param name="initialGuess">The intial guess</param>
+            <returns>The minimum point</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.Minimum(MathNet.Numerics.Optimization.IObjectiveFunction,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Int32)">
+            <summary>
+            Finds the minimum of the objective function with an intial pertubation
+            </summary>
+            <param name="objectiveFunction">The objective function, no gradient or hessian needed</param>
+            <param name="initialGuess">The intial guess</param>
+            <param name="initalPertubation">The inital pertubation</param>
+            <returns>The minimum point</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.InitializeErrorValues(MathNet.Numerics.LinearAlgebra.Vector{System.Double}[],MathNet.Numerics.Optimization.IObjectiveFunction)">
+            <summary>
+            Evaluate the objective function at each vertex to create a corresponding
+            list of error values for each vertex
+            </summary>
+            <param name="vertices"></param>
+            <param name="objectiveFunction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.HasConverged(System.Double,MathNet.Numerics.Optimization.NelderMeadSimplex.ErrorProfile,System.Double[])">
+            <summary>
+            Check whether the points in the error profile have so little range that we
+            consider ourselves to have converged
+            </summary>
+            <param name="convergenceTolerance"></param>
+            <param name="errorProfile"></param>
+            <param name="errorValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.EvaluateSimplex(System.Double[])">
+            <summary>
+            Examine all error values to determine the ErrorProfile
+            </summary>
+            <param name="errorValues"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.InitializeVertices(MathNet.Numerics.Optimization.NelderMeadSimplex.SimplexConstant[])">
+            <summary>
+            Construct an initial simplex, given starting guesses for the constants, and
+            initial step sizes for each dimension
+            </summary>
+            <param name="simplexConstants"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.TryToScaleSimplex(System.Double,MathNet.Numerics.Optimization.NelderMeadSimplex.ErrorProfile@,MathNet.Numerics.LinearAlgebra.Vector{System.Double}[],System.Double[],MathNet.Numerics.Optimization.IObjectiveFunction)">
+            <summary>
+            Test a scaling operation of the high point, and replace it if it is an improvement
+            </summary>
+            <param name="scaleFactor"></param>
+            <param name="errorProfile"></param>
+            <param name="vertices"></param>
+            <param name="errorValues"></param>
+            <param name="objectiveFunction"></param>
+            <returns></returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.ShrinkSimplex(MathNet.Numerics.Optimization.NelderMeadSimplex.ErrorProfile,MathNet.Numerics.LinearAlgebra.Vector{System.Double}[],System.Double[],MathNet.Numerics.Optimization.IObjectiveFunction)">
+            <summary>
+            Contract the simplex uniformly around the lowest point
+            </summary>
+            <param name="errorProfile"></param>
+            <param name="vertices"></param>
+            <param name="errorValues"></param>
+            <param name="objectiveFunction"></param>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.NelderMeadSimplex.ComputeCentroid(MathNet.Numerics.LinearAlgebra.Vector{System.Double}[],MathNet.Numerics.Optimization.NelderMeadSimplex.ErrorProfile)">
+            <summary>
+            Compute the centroid of all points except the worst
+            </summary>
+            <param name="vertices"></param>
+            <param name="errorProfile"></param>
+            <returns></returns>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NelderMeadSimplex.SimplexConstant.Value">
+            <summary>
+            The value of the constant
+            </summary>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.ObjectiveFunctions.ForwardDifferenceGradientObjectiveFunction">
+            <summary>
+            Adapts an objective function with only value implemented 
+            to provide a gradient as well. Gradient calculation is 
+            done using the finite difference method, specifically 
+            forward differences.
+            
+            For each gradient computed, the algorithm requires an 
+            additional number of function evaluations equal to the 
+            functions's number of input parameters.
+            </summary>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.IObjectiveFunctionEvaluation">
+            <summary>
+            Objective function with a frozen evaluation that must not be changed from the outside.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.IObjectiveFunctionEvaluation.CreateNew">
+            <summary>Create a new unevaluated and independent copy of this objective function</summary>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.IObjectiveFunction">
+            <summary>
+            Objective function with a mutable evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.IObjectiveFunction.Fork">
+            <summary>Create a new independent copy of this objective function, evaluated at the same point.</summary>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.BfgsSolver">
+            <summary>
+            Broyden-Fletcher-Goldfarb-Shanno solver for finding function minima
+            See http://en.wikipedia.org/wiki/Broyden%E2%80%93Fletcher%E2%80%93Goldfarb%E2%80%93Shanno_algorithm
+            Inspired by implementation: https://github.com/PatWie/CppNumericalSolvers/blob/master/src/BfgsSolver.cpp
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.BfgsSolver.Solve(MathNet.Numerics.LinearAlgebra.Double.Vector,System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}})">
+            <summary>
+            Finds a minimum of a function by the BFGS quasi-Newton method
+            This uses the function and it's gradient (partial derivatives in each direction) and approximates the Hessian
+            </summary>
+            <param name="initialGuess">An initial guess</param>
+            <param name="functionValue">Evaluates the function at a point</param>
+            <param name="functionGradient">Evaluates the gradient of the function at a point</param>
+            <returns>The minimum found</returns>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.BfgsBMinimizer">
+            <summary>
+            Broyden–Fletcher–Goldfarb–Shanno Bounded (BFGS-B) algorithm is an iterative method for solving box-constrained nonlinear optimization problems
+            http://www.ece.northwestern.edu/~nocedal/PSfiles/limited.ps.gz
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.BfgsBMinimizer.FindMinimum(MathNet.Numerics.Optimization.IObjectiveFunction,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Find the minimum of the objective function given lower and upper bounds
+            </summary>
+            <param name="objective">The objective function, must support a gradient</param>
+            <param name="lowerBound">The lower bound</param>
+            <param name="upperBound">The upper bound</param>
+            <param name="initialGuess">The initial guess</param>
+            <returns>The MinimizationResult which contains the minimum and the ExitCondition</returns>
+        </member>
+        <member name="T:MathNet.Numerics.Optimization.BfgsMinimizer">
+            <summary>
+            Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm is an iterative method for solving unconstrained nonlinear optimization problems
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.BfgsMinimizer.#ctor(System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Creates BFGS minimizer
+            </summary>
+            <param name="gradientTolerance">The gradient tolerance</param>
+            <param name="parameterTolerance">The parameter tolerance</param>
+            <param name="functionProgressTolerance">The funciton progress tolerance</param>
+            <param name="maximumIterations">The maximum number of iterations</param>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.BfgsMinimizer.FindMinimum(MathNet.Numerics.Optimization.IObjectiveFunction,MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Find the minimum of the objective function given lower and upper bounds
+            </summary>
+            <param name="objective">The objective function, must support a gradient</param>
+            <param name="initialGuess">The initial guess</param>
+            <returns>The MinimizationResult which contains the minimum and the ExitCondition</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.Value(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double})">
+            <summary>
+            Objective function where neither Gradient nor Hessian is available.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.Gradient(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Tuple{System.Double,MathNet.Numerics.LinearAlgebra.Vector{System.Double}}})">
+            <summary>
+            Objective function where the Gradient is available. Greedy evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.Gradient(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}})">
+            <summary>
+            Objective function where the Gradient is available. Lazy evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.Hessian(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Tuple{System.Double,MathNet.Numerics.LinearAlgebra.Matrix{System.Double}}})">
+            <summary>
+            Objective function where the Hessian is available. Greedy evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.Hessian(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}})">
+            <summary>
+            Objective function where the Hessian is available. Lazy evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.GradientHessian(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Tuple{System.Double,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}}})">
+            <summary>
+            Objective function where both Gradient and Hessian are available. Greedy evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.GradientHessian(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}})">
+            <summary>
+            Objective function where both Gradient and Hessian are available. Lazy evaluation.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.ScalarValue(System.Func{System.Double,System.Double})">
+            <summary>
+            Objective function where neither first nor second derivative is available.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.ScalarDerivative(System.Func{System.Double,System.Double},System.Func{System.Double,System.Double})">
+            <summary>
+            Objective function where the first derivative is available.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.ScalarSecondDerivative(System.Func{System.Double,System.Double},System.Func{System.Double,System.Double},System.Func{System.Double,System.Double})">
+            <summary>
+            Objective function where the first and second derivatives are available.
+            </summary>
         </member>
         <member name="T:MathNet.Numerics.Precision">
             <summary>
@@ -37501,6 +38225,11 @@
         <member name="P:MathNet.Numerics.Properties.Resources.ConvergenceFailed">
             <summary>
               Looks up a localized string similar to An algorithm failed to converge..
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Properties.Resources.DegreesOfFreedomMustBeLessThanSampleSize">
+            <summary>
+              Looks up a localized string similar to The sample size must be larger than the given degrees of freedom..
             </summary>
         </member>
         <member name="P:MathNet.Numerics.Properties.Resources.FeaturePlannedButNotImplementedYet">
@@ -43253,6 +43982,13 @@
             Extension methods for the Complex type provided by System.Numerics
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.ComplexExtensions.MagnitudeSquared(MathNet.Numerics.Complex32)">
+            <summary>
+            Gets the squared magnitude of the <c>Complex</c> number.
+            </summary>
+            <param name="complex">The <see cref="T:MathNet.Numerics.Complex32"/> number to perfom this operation on.</param>
+            <returns>The squared magnitude of the <c>Complex</c> number.</returns>
+        </member>
         <member name="M:MathNet.Numerics.ComplexExtensions.MagnitudeSquared(System.Numerics.Complex)">
             <summary>
             Gets the squared magnitude of the <c>Complex</c> number.
@@ -45878,6 +46614,7 @@
             A 32-bit combined multiple recursive generator with 2 components of order 3.
             </summary>
             <remarks>Based off of P. L'Ecuyer, "Combined Multiple Recursive Random Number Generators," Operations Research, 44, 5 (1996), 816--822. </remarks>
+            
         </member>
         <member name="M:MathNet.Numerics.Random.Mrg32k3a.#ctor">
             <summary>
@@ -46848,7 +47585,7 @@
             <param name="f">The function to find roots from.</param>
             <param name="lowerBound">The low value of the range where the root is supposed to be.</param>
             <param name="upperBound">The high value of the range where the root is supposed to be.</param>
-            <param name="accuracy">Desired accuracy. The root will be refined until the accuracy or the maximum number of iterations is reached.</param>
+            <param name="accuracy">Desired accuracy for both the root and the function value at the root. The root will be refined until the accuracy or the maximum number of iterations is reached.</param>
             <param name="maxIterations">Maximum number of iterations. Usually 100.</param>
             <param name="root">The root that was found, if any. Undefined if the function returns false.</param>
             <returns>True if a root with the specified accuracy was found, else false.</returns>
