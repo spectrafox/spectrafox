@@ -283,10 +283,13 @@ Public Class mSpectroscopyTableViewer
     ''' </summary>
     Public Sub AllSpectroscopyTablesLoaded()
         ' Update ColumnList
+        Dim LastSelectedX As String = My.Settings.LastSpectroscopyPlot_SelectedColumnNameX
+        Dim LastSelectedY(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count) As String
+        My.Settings.LastSpectroscopyPlot_SelectedColumnNames.CopyTo(LastSelectedY, 0)
         Me.bReady = False
-        Me.cbX.InitializeColumns(Me.SpectroscopyTables, My.Settings.LastSpectroscopyPlot_SelectedColumnNameX, False)
+        Me.cbX.InitializeColumns(Me.SpectroscopyTables, LastSelectedX, False)
         Me.bReady = True
-        Me.cbY.InitializeColumns(Me.SpectroscopyTables, My.Settings.LastSpectroscopyPlot_SelectedColumnNames, Me.TurnOnLastFilterSaving_Y)
+        Me.cbY.InitializeColumns(Me.SpectroscopyTables, LastSelectedY.ToList, Me.TurnOnLastFilterSaving_Y)
     End Sub
 
     ''' <summary>
@@ -295,13 +298,17 @@ Public Class mSpectroscopyTableViewer
     Public Sub AddSpectroscopyTables(ByRef AddSpectroscopyTables As List(Of cSpectroscopyTable))
         For Each SpectroscopyTable As cSpectroscopyTable In AddSpectroscopyTables
             Me.AddSpectroscopyTable(SpectroscopyTable)
+            Me.bReady = False
         Next
 
         ' Update ColumnList
+        Dim LastSelectedX As String = My.Settings.LastSpectroscopyPlot_SelectedColumnNameX
+        Dim LastSelectedY(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count) As String
+        My.Settings.LastSpectroscopyPlot_SelectedColumnNames.CopyTo(LastSelectedY, 0)
         Me.bReady = False
-        Me.cbX.InitializeColumns(Me.SpectroscopyTables, My.Settings.LastSpectroscopyPlot_SelectedColumnNameX, False)
+        Me.cbX.InitializeColumns(Me.SpectroscopyTables, LastSelectedX, False)
         Me.bReady = True
-        Me.cbY.InitializeColumns(Me.SpectroscopyTables, My.Settings.LastSpectroscopyPlot_SelectedColumnNames, Me.TurnOnLastFilterSaving_Y)
+        Me.cbY.InitializeColumns(Me.SpectroscopyTables, LastSelectedY.ToList, Me.TurnOnLastFilterSaving_Y)
     End Sub
 
     ''' <summary>

@@ -1915,6 +1915,9 @@
     <None Include="Resources\curve.png" />
     <None Include="Resources\curve_16.png" />
     <None Include="Resources\curve_25.png" />
+    <Content Include="License-JSONNET.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="License-Magick.NET.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

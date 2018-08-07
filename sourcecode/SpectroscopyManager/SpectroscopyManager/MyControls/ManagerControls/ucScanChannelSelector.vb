@@ -17,7 +17,7 @@ Public Class ucScanChannelSelector
     ''' </summary>
     Public Overrides Sub SetLastFilterText(ByVal Value As String)
         My.Settings.ScanChannelSelector_LastFilterText = Value
-        cGlobal.SaveSettings()
+        'cGlobal.SaveSettings() ##### NEEDS TO MUCH TIME!!
     End Sub
 
     ''' <summary>
@@ -32,7 +32,7 @@ Public Class ucScanChannelSelector
     ''' </summary>
     Public Overrides Sub SetLastUsedFilters(ByVal Value As StringCollection)
         My.Settings.ScanChannelFilter_LastUsedFilters = Value
-        cGlobal.SaveSettings()
+        'cGlobal.SaveSettings() ##### NEEDS TO MUCH TIME!!
     End Sub
 
     ''' <summary>
@@ -46,8 +46,14 @@ Public Class ucScanChannelSelector
     ''' Override to save value to a certain settings variable.
     ''' </summary>
     Public Overrides Sub SetLastSelection(ByVal Value As StringCollection)
+        For Each V As String In Value
+            If V = String.Empty Then
+                Debug.WriteLine("ucChannelSelector: SetLastSelection->EmptyString")
+            End If
+            Debug.WriteLine("ucChannelSelector: storing last selection: " & V)
+        Next
         My.Settings.ScanChannelSelector_LastSelectedChannelNames = Value
-        cGlobal.SaveSettings()
+        'cGlobal.SaveSettings() '##### NEEDS To MUCH TIME!!
     End Sub
 
 #End Region

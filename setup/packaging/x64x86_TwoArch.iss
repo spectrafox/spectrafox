@@ -94,7 +94,8 @@ Source: "{#BuildDirectory_x86}\License-Magick.NET.txt"; DestDir: "{app}";
 Source: "{#BuildDirectory_x86}\License-Math.Net.txt"; DestDir: "{app}"; 
 Source: "{#BuildDirectory_x86}\License-ZedGraph.txt"; DestDir: "{app}"; 
 Source: "{#BuildDirectory_x86}\License-zip.txt"; DestDir: "{app}";
-Source: "{#BuildDirectory_x86}\License-NetSparkle.txt"; DestDir: "{app}";
+Source: "{#BuildDirectory_x86}\License-NetSparkle.txt"; DestDir: "{app}";    
+Source: "{#BuildDirectory_x86}\License-JSONNET.txt"; DestDir: "{app}";
 
 ; Place a file to the output, that marks that this setup is executed with low privileges!
 ; This is necessary for the automatic update procedure!

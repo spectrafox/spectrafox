@@ -29,6 +29,10 @@ Microsoft Public License (Ms-PL)
 ExpTreeLib (http://www.codeproject.com/Articles/8546/An-All-VB-NET-Explorer-Tree-Control-with-ImageList)
 The Code Project Open License (CPOL) 1.02
 
+JSON.NET (https://www.newtonsoft.com/json)
+The MIT License (MIT)
+Copyright (c) 2007 James Newton-King
+
 Magick.NET (https://magick.codeplex.com/)
 Apache License 2.0
 

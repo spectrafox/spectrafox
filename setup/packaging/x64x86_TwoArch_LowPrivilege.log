@@ -42,12 +42,12 @@ Reading [Code] section
 Parsing [Tasks] section, line 53
 Parsing [Dirs] section, line 56
 Parsing [Dirs] section, line 57
-Parsing [Icons] section, line 133
 Parsing [Icons] section, line 134
 Parsing [Icons] section, line 135
-Parsing [Run] section, line 139
+Parsing [Icons] section, line 136
 Parsing [Run] section, line 140
 Parsing [Run] section, line 141
+Parsing [Run] section, line 142
 Parsing [Files] section, line 63
 Parsing [Files] section, line 64
 Parsing [Files] section, line 65
@@ -82,9 +82,10 @@ Parsing [Files] section, line 96
    Reading version info: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-zip.txt
 Parsing [Files] section, line 97
    Reading version info: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-NetSparkle.txt
-Parsing [Files] section, line 102
+Parsing [Files] section, line 98
+   Reading version info: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-JSONNET.txt
+Parsing [Files] section, line 103
    Reading version info: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\LowPrivilegeSetup.txt
-Parsing [Files] section, line 105
 Parsing [Files] section, line 106
 Parsing [Files] section, line 107
 Parsing [Files] section, line 108
@@ -106,7 +107,8 @@ Parsing [Files] section, line 123
 Parsing [Files] section, line 124
 Parsing [Files] section, line 125
 Parsing [Files] section, line 126
-Parsing [Files] section, line 130
+Parsing [Files] section, line 127
+Parsing [Files] section, line 131
    Reading version info: D:\SpectraFox\setup\packaging\addons\dotNetFx45_Full_setup.exe
 Compiling [Code] section
 Deleting spectrafox-stable_lowpriv.exe from output directory
@@ -136,6 +138,7 @@ Creating setup files
    Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-ZedGraph.txt
    Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-zip.txt
    Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-NetSparkle.txt
+   Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\License-JSONNET.txt
    Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\LowPrivilegeSetup.txt
    Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\bg\NetSparkle.Net40.resources.dll
    Compressing: D:\SpectraFox\setup\packaging\..\..\sourcecode\Build\x86\Release\de\NetSparkle.Net40.resources.dll
@@ -236,7 +239,7 @@ Creating setup files
    Compressing Setup program executable
    Updating version info
 
-Warning: Line 163, Column 23: [Hint] Variable 'REQNETVER' never used
+Warning: Line 164, Column 23: [Hint] Variable 'REQNETVER' never used
 
-Successful compile (7.547 sec). Resulting Setup program filename is:
+Successful compile (7.344 sec). Resulting Setup program filename is:
 D:\SpectraFox\setup\output\spectrafox-stable_lowpriv.exe

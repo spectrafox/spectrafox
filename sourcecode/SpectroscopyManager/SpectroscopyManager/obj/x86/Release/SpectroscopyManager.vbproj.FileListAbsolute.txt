@@ -1144,3 +1144,4 @@ D:\SpectraFox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release
 D:\SpectraFox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.application
 D:\SpectraFox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.exe
 D:\SpectraFox\sourcecode\SpectroscopyManager\SpectroscopyManager\obj\x86\Release\SpectroscopyManager.pdb
+D:\SpectraFox\sourcecode\Build\x86\Release\License-JSONNET.txt

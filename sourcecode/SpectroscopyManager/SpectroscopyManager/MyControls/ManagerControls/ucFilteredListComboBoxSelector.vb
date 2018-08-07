@@ -661,12 +661,13 @@ Public Class ucFilteredListComboBoxSelector
             .DropDownItems.Clear()
 
             ' add button and handlers
-            If My.Settings.DataColumnFilter_LastUsedFilters.Count > 0 Then
+            Dim lLastUsedFilters As StringCollection = Me.GetLastUsedFilters()
+            If lLastUsedFilters.Count > 0 Then
                 .Enabled = True
                 ' Add the stored history
-                For i As Integer = Me.GetLastUsedFilters.Count - 1 To 0 Step -1
-                    .DropDownItems.Add(Me.GetLastUsedFilters(i))
-                    AddHandler .DropDownItems(Me.GetLastUsedFilters.Count - 1 - i).Click, AddressOf SelectFilterFromHistory
+                For i As Integer = lLastUsedFilters.Count - 1 To 0 Step -1
+                    .DropDownItems.Add(lLastUsedFilters(i))
+                    AddHandler .DropDownItems(lLastUsedFilters.Count - 1 - i).Click, AddressOf SelectFilterFromHistory
                 Next
             Else
                 .Enabled = False
