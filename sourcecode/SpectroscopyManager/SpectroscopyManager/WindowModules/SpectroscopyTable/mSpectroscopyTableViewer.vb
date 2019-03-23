@@ -284,7 +284,7 @@ Public Class mSpectroscopyTableViewer
     Public Sub AllSpectroscopyTablesLoaded()
         ' Update ColumnList
         Dim LastSelectedX As String = My.Settings.LastSpectroscopyPlot_SelectedColumnNameX
-        Dim LastSelectedY(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count) As String
+        Dim LastSelectedY(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count - 1) As String
         My.Settings.LastSpectroscopyPlot_SelectedColumnNames.CopyTo(LastSelectedY, 0)
         Me.bReady = False
         Me.cbX.InitializeColumns(Me.SpectroscopyTables, LastSelectedX, False)
@@ -303,7 +303,7 @@ Public Class mSpectroscopyTableViewer
 
         ' Update ColumnList
         Dim LastSelectedX As String = My.Settings.LastSpectroscopyPlot_SelectedColumnNameX
-        Dim LastSelectedY(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count) As String
+        Dim LastSelectedY(My.Settings.LastSpectroscopyPlot_SelectedColumnNames.Count - 1) As String
         My.Settings.LastSpectroscopyPlot_SelectedColumnNames.CopyTo(LastSelectedY, 0)
         Me.bReady = False
         Me.cbX.InitializeColumns(Me.SpectroscopyTables, LastSelectedX, False)

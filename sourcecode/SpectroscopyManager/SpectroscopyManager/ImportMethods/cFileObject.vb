@@ -148,7 +148,7 @@ Public Class cFileObject
     ''' IMPORTANT: This list should only contain filenames! NO PATHS, as these are
     '''            relative on each computer!
     ''' </summary>
-    Protected Friend _FileObjectDescribedByMultipleFiles As List(Of String)
+    Protected Friend _FileObjectDescribedByMultipleFiles As New List(Of String)
 
     ''' <summary>
     ''' This list stores the filenames that a single file object is describing.
