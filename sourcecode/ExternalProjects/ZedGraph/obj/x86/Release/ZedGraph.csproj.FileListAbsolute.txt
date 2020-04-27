@@ -161,7 +161,6 @@ D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\bin\x86\Release\sv\ZedGraph.r
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\bin\x86\Release\tr\ZedGraph.resources.dll
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\bin\x86\Release\zh-cn\ZedGraph.resources.dll
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\bin\x86\Release\zh-tw\ZedGraph.resources.dll
-D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.csprojResolveAssemblyReference.cache
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.ZedGraph.ZedGraphControl.resources
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.ZedGraph.ZedGraphLocale.resources
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.ZedGraph.ZedGraphLocale.tw.resources
@@ -194,3 +193,5 @@ D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\zh-cn\ZedGrap
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\zh-tw\ZedGraph.resources.dll
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.dll
 D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.pdb
+D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.csprojAssemblyReference.cache
+D:\SpectraFox\sourcecode\ExternalProjects\ZedGraph\obj\x86\Release\ZedGraph.csproj.CoreCompileInputs.cache

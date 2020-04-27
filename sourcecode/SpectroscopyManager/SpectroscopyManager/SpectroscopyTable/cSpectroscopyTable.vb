@@ -1040,7 +1040,7 @@ Public Class cSpectroscopyTable
             Dim LengthDifference As Integer = Math.Abs(Me.CurrentColumnLength - Column.Values(True).Count)
             ' Columns already exist in the SpectroscopyTable
             If LengthDifference > 0 Then
-                Throw New ArgumentException("SpectroscopyTable: Column of unequal length added.")
+                Throw New ArgumentException("SpectroscopyTable: Column of unequal length added. Difference: " & LengthDifference)
             End If
         End If
 

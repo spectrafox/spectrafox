@@ -3553,6 +3553,206 @@
             <param name="n">The number of trials (n). Range: n ≥ 0.</param>
             <returns>a sequence of successes in <paramref name="n"/> trials.</returns>
         </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.a">
+            <summary>
+            Gets the scale (a) of the distribution. Range: a > 0.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.c">
+            <summary>
+            Gets the first shape parameter (c) of the distribution. Range: c > 0.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.k">
+            <summary>
+            Gets the second shape parameter (k) of the distribution. Range: k > 0.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.#ctor(System.Double,System.Double,System.Double,System.Random)">
+            <summary>
+            Initializes a new instance of the Burr Type XII class.
+            </summary>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+            <param name="randomSource">The random number generator which is used to draw random samples. Optional, can be null.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.ToString">
+            <summary>
+            A string representation of the distribution.
+            </summary>
+            <returns>a string representation of the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.IsValidParameterSet(System.Double,System.Double,System.Double)">
+            <summary>
+            Tests whether the provided values are valid parameters for this distribution.
+            </summary>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.RandomSource">
+            <summary>
+            Gets the random number generator which is used to draw random samples.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Mean">
+            <summary>
+            Gets the mean of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Variance">
+            <summary>
+            Gets the variance of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.StdDev">
+            <summary>
+            Gets the standard deviation of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Mode">
+            <summary>
+            Gets the mode of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Minimum">
+            <summary>
+            Gets the minimum of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Maximum">
+            <summary>
+            Gets the maximum of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Entropy">
+            <summary>
+            Gets the entropy of the Burr distribution (currently not supported).
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Skewness">
+            <summary>
+            Gets the skewness of the Burr distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.Burr.Median">
+            <summary>
+            Gets the median of the Burr distribution.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Sample">
+            <summary>
+            Generates a sample from the Burr distribution.
+            </summary>
+            <returns>a sample from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Samples(System.Double[])">
+            <summary>
+            Fills an array with samples generated from the distribution.
+            </summary>
+            <param name="values">The array to fill with the samples.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Samples">
+            <summary>
+            Generates a sequence of samples from the Burr distribution.
+            </summary>
+            <returns>a sequence of samples from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Sample(System.Random,System.Double,System.Double,System.Double)">
+            <summary>
+            Generates a sample from the Burr distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+            <returns>a sample from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Samples(System.Random,System.Double[],System.Double,System.Double,System.Double)">
+            <summary>
+            Fills an array with samples generated from the distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="values">The array to fill with the samples.</param>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Samples(System.Random,System.Double,System.Double,System.Double)">
+            <summary>
+            Generates a sequence of samples from the Burr distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+            <returns>a sequence of samples from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.GetMoment(System.Double)">
+            <summary>
+            Gets the n-th raw moment of the distribution.
+            </summary>
+            <param name="n">The order (n) of the moment. Range: n ≥ 1.</param>
+            <returns>the n-th moment of the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.Density(System.Double)">
+            <summary>
+            Computes the probability density of the distribution (PDF) at x, i.e. ∂P(X ≤ x)/∂x.
+            </summary>
+            <param name="x">The location at which to compute the density.</param>
+            <returns>the density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.Burr.PDF(System.Double,System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.DensityLn(System.Double)">
+            <summary>
+            Computes the log probability density of the distribution (lnPDF) at x, i.e. ln(∂P(X ≤ x)/∂x).
+            </summary>
+            <param name="x">The location at which to compute the log density.</param>
+            <returns>the log density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.Burr.PDFLn(System.Double,System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.CumulativeDistribution(System.Double)">
+            <summary>
+            Computes the cumulative distribution (CDF) of the distribution at x, i.e. P(X ≤ x).
+            </summary>
+            <param name="x">The location at which to compute the cumulative distribution function.</param>
+            <returns>the cumulative distribution at location <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.Burr.CDF(System.Double,System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.PDF(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the probability density of the distribution (PDF) at x, i.e. ∂P(X ≤ x)/∂x.
+            </summary>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+            <param name="x">The location at which to compute the density.</param>
+            <returns>the density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.Burr.Density(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.PDFLn(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the log probability density of the distribution (lnPDF) at x, i.e. ln(∂P(X ≤ x)/∂x).
+            </summary>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+            <param name="x">The location at which to compute the log density.</param>
+            <returns>the log density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.Burr.DensityLn(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.Burr.CDF(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the cumulative distribution (CDF) of the distribution at x, i.e. P(X ≤ x).
+            </summary>
+            <param name="a">The scale parameter a of the Burr distribution. Range: a > 0.</param>
+            <param name="c">The first shape parameter c of the Burr distribution. Range: c > 0.</param>
+            <param name="k">The second shape parameter k of the Burr distribution. Range: k > 0.</param>
+            <param name="x">The location at which to compute the cumulative distribution function.</param>
+            <returns>the cumulative distribution at location <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.Burr.CumulativeDistribution(System.Double)"/>
+        </member>
         <member name="T:MathNet.Numerics.Distributions.Categorical">
             <summary>
             Discrete Univariate Categorical distribution.
@@ -7191,6 +7391,217 @@
             <param name="scale">The scale (β) of the distribution. Range: β > 0.</param>
             <returns>a sequence of samples from the distribution.</returns>
         </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Mu">
+            <summary>
+            Gets the mean (μ) of the distribution. Range: μ > 0.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Lambda">
+            <summary>
+            Gets the shape (λ) of the distribution. Range: λ > 0.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.#ctor(System.Double,System.Double,System.Random)">
+            <summary>
+            Initializes a new instance of the InverseGaussian class.
+            </summary>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <param name="randomSource">The random number generator which is used to draw random samples.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.ToString">
+            <summary>
+            A string representation of the distribution.
+            </summary>
+            <returns>a string representation of the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.IsValidParameterSet(System.Double,System.Double)">
+            <summary>
+            Tests whether the provided values are valid parameters for this distribution.
+            </summary>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.RandomSource">
+            <summary>
+            Gets the random number generator which is used to draw random samples.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Mean">
+            <summary>
+            Gets the mean of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Variance">
+            <summary>
+            Gets the variance of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.StdDev">
+            <summary>
+            Gets the standard deviation of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Median">
+            <summary>
+            Gets the median of the Inverse Gaussian distribution.
+            No closed form analytical expression exists, so this value is approximated numerically and can throw an exception.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Minimum">
+            <summary>
+            Gets the minimum of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Maximum">
+            <summary>
+            Gets the maximum of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Skewness">
+            <summary>
+            Gets the skewness of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Kurtosis">
+            <summary>
+            Gets the kurtosis of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Mode">
+            <summary>
+            Gets the mode of the Inverse Gaussian distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.InverseGaussian.Entropy">
+            <summary>
+            Gets the entropy of the Inverse Gaussian distribution (currently not supported).
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Sample">
+            <summary>
+            Generates a sample from the inverse Gaussian distribution.
+            </summary>
+            <returns>a sample from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Samples(System.Double[])">
+            <summary>
+            Fills an array with samples generated from the distribution.
+            </summary>
+            <param name="values">The array to fill with the samples.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Samples">
+            <summary>
+            Generates a sequence of samples from the inverse Gaussian distribution.
+            </summary>
+            <returns>a sequence of samples from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Sample(System.Random,System.Double,System.Double)">
+            <summary>
+            Generates a sample from the inverse Gaussian distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <returns>a sample from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Samples(System.Random,System.Double[],System.Double,System.Double)">
+            <summary>
+            Fills an array with samples generated from the distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="values">The array to fill with the samples.</param>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Samples(System.Random,System.Double,System.Double)">
+            <summary>
+            Generates a sequence of samples from the Burr distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <returns>a sequence of samples from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Density(System.Double)">
+            <summary>
+            Computes the probability density of the distribution (PDF) at x, i.e. ∂P(X ≤ x)/∂x.
+            </summary>
+            <param name="x">The location at which to compute the density.</param>
+            <returns>the density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.PDF(System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.DensityLn(System.Double)">
+            <summary>
+            Computes the log probability density of the distribution (lnPDF) at x, i.e. ln(∂P(X ≤ x)/∂x).
+            </summary>
+            <param name="x">The location at which to compute the log density.</param>
+            <returns>the log density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.PDFLn(System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.CumulativeDistribution(System.Double)">
+            <summary>
+            Computes the cumulative distribution (CDF) of the distribution at x, i.e. P(X ≤ x).
+            </summary>
+            <param name="x">The location at which to compute the cumulative distribution function.</param>
+            <returns>the cumulative distribution at location <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.CDF(System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.InvCDF(System.Double)">
+            <summary>
+            Computes the inverse cumulative distribution (CDF) of the distribution at p, i.e. solving for P(X ≤ x) = p.
+            </summary>
+            <param name="p">The location at which to compute the inverse cumulative distribution function.</param>
+            <returns>the inverse cumulative distribution at location <paramref name="p"/>.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.PDF(System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the probability density of the distribution (PDF) at x, i.e. ∂P(X ≤ x)/∂x.
+            </summary>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <param name="x">The location at which to compute the density.</param>
+            <returns>the density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.Density(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.PDFLn(System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the log probability density of the distribution (lnPDF) at x, i.e. ln(∂P(X ≤ x)/∂x).
+            </summary>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <param name="x">The location at which to compute the log density.</param>
+            <returns>the log density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.DensityLn(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.CDF(System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the cumulative distribution (CDF) of the distribution at x, i.e. P(X ≤ x).
+            </summary>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <param name="x">The location at which to compute the cumulative distribution function.</param>
+            <returns>the cumulative distribution at location <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.CumulativeDistribution(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.ICDF(System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the inverse cumulative distribution (CDF) of the distribution at p, i.e. solving for P(X ≤ x) = p.
+            </summary>
+            <param name="mu">The mean (μ) of the distribution. Range: μ > 0.</param>
+            <param name="lambda">The shape (λ) of the distribution. Range: λ > 0.</param>
+            <param name="p">The location at which to compute the inverse cumulative distribution function.</param>
+             <returns>the inverse cumulative distribution at location <paramref name="p"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.InverseGaussian.CumulativeDistribution(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.InverseGaussian.Estimate(System.Collections.Generic.IEnumerable{System.Double},System.Random)">
+            <summary>
+            Estimates the Inverse Gaussian parameters from sample data with maximum-likelihood.
+            </summary>
+            <param name="samples">The samples to estimate the distribution parameters from.</param>
+            <param name="randomSource">The random number generator which is used to draw random samples. Optional, can be null.</param>
+            <returns>An Inverse Gaussian distribution.</returns>
+        </member>
         <member name="T:MathNet.Numerics.Distributions.InverseWishart">
             <summary>
             Multivariate Inverse Wishart distribution. This distribution is
@@ -10328,6 +10739,225 @@
             <param name="mode">Mode (most frequent value).  Range: lower ≤ mode ≤ upper</param>
             <returns>a sequence of samples from the distribution.</returns>
         </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.#ctor(System.Double,System.Double,System.Double,System.Random)">
+            <summary>
+            Initializes a new instance of the TruncatedPareto class.
+            </summary>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <param name="randomSource">The random number generator which is used to draw random samples.</param>
+            <exception cref="T:System.ArgumentException">If <paramref name="scale"/> or <paramref name="shape"/> are non-positive or if T ≤ xm.</exception>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.ToString">
+            <summary>
+            A string representation of the distribution.
+            </summary>
+            <returns>a string representation of the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.IsValidParameterSet(System.Double,System.Double,System.Double)">
+            <summary>
+            Tests whether the provided values are valid parameters for this distribution.
+            </summary>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.RandomSource">
+            <summary>
+            Gets the random number generator which is used to draw random samples.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Scale">
+            <summary>
+            Gets the scale (xm) of the distribution. Range: xm > 0.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Shape">
+            <summary>
+            Gets the shape (α) of the distribution. Range: α > 0.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Truncation">
+            <summary>
+            Gets the truncation (T) of the distribution. Range: T > 0.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.GetMoment(System.Int32)">
+            <summary>
+            Gets the n-th raw moment of the distribution.
+            </summary>
+            <param name="n">The order (n) of the moment. Range: n ≥ 1.</param>
+            <returns>the n-th moment of the distribution.</returns>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Mean">
+            <summary>
+            Gets the mean of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Variance">
+            <summary>
+            Gets the variance of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.StdDev">
+            <summary>
+            Gets the standard deviation of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Mode">
+            <summary>
+            Gets the mode of the truncated Pareto distribution (not supported).
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Minimum">
+            <summary>
+            Gets the minimum of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Maximum">
+            <summary>
+            Gets the maximum of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Entropy">
+            <summary>
+            Gets the entropy of the truncated Pareto distribution (not supported).
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Skewness">
+            <summary>
+            Gets the skewness of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Distributions.TruncatedPareto.Median">
+            <summary>
+            Gets the median of the truncated Pareto distribution.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Sample">
+            <summary>
+            Generates a sample from the truncated Pareto distribution.
+            </summary>
+            <returns>a sample from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Samples(System.Double[])">
+            <summary>
+            Fills an array with samples generated from the distribution.
+            </summary>
+            <param name="values">The array to fill with the samples.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Samples">
+            <summary>
+            Generates a sequence of samples from the truncated Pareto distribution.
+            </summary>
+            <returns>a sequence of samples from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Sample(System.Random,System.Double,System.Double,System.Double)">
+            <summary>
+            Generates a sample from the truncated Pareto distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <returns>a sample from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Samples(System.Random,System.Double[],System.Double,System.Double,System.Double)">
+            <summary>
+            Fills an array with samples generated from the distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="values">The array to fill with the samples.</param>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Samples(System.Random,System.Double,System.Double,System.Double)">
+            <summary>
+            Generates a sequence of samples from the truncated Pareto distribution.
+            </summary>
+            <param name="rnd">The random number generator to use.</param>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <returns>a sequence of samples from the distribution.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.Density(System.Double)">
+            <summary>
+            Computes the probability density of the distribution (PDF) at x, i.e. ∂P(X ≤ x)/∂x.
+            </summary>
+            <param name="x">The location at which to compute the density.</param>
+            <returns>the density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.PDF(System.Double,System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.DensityLn(System.Double)">
+            <summary>
+            Computes the log probability density of the distribution (lnPDF) at x, i.e. ln(∂P(X ≤ x)/∂x).
+            </summary>
+            <param name="x">The location at which to compute the log density.</param>
+            <returns>the log density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.PDFLn(System.Double,System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.CumulativeDistribution(System.Double)">
+            <summary>
+            Computes the cumulative distribution (CDF) of the distribution at x, i.e. P(X ≤ x).
+            </summary>
+            <param name="x">The location at which to compute the cumulative distribution function.</param>
+            <returns>the cumulative distribution at location <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.CDF(System.Double,System.Double,System.Double,System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.InvCDF(System.Double)">
+            <summary>
+            Computes the inverse cumulative distribution (CDF) of the distribution at p, i.e. solving for P(X ≤ x) = p.
+            </summary>
+            <param name="p">The location at which to compute the inverse cumulative distribution function.</param>
+            <returns>the inverse cumulative distribution at location <paramref name="p"/>.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.ICDF(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the inverse cumulative distribution (CDF) of the distribution at p, i.e. solving for P(X ≤ x) = p.
+            </summary>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <param name="p">The location at which to compute the inverse cumulative distribution function.</param>
+             <returns>the inverse cumulative distribution at location <paramref name="p"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.CumulativeDistribution(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.PDF(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the probability density of the distribution (PDF) at x, i.e. ∂P(X ≤ x)/∂x.
+            </summary>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <param name="x">The location at which to compute the density.</param>
+            <returns>the density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.Density(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.PDFLn(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the log probability density of the distribution (lnPDF) at x, i.e. ln(∂P(X ≤ x)/∂x).
+            </summary>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <param name="x">The location at which to compute the log density.</param>
+            <returns>the log density at <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.DensityLn(System.Double)"/>
+        </member>
+        <member name="M:MathNet.Numerics.Distributions.TruncatedPareto.CDF(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Computes the cumulative distribution (CDF) of the distribution at x, i.e. P(X ≤ x).
+            </summary>
+            <param name="scale">The scale (xm) of the distribution. Range: xm > 0.</param>
+            <param name="shape">The shape (α) of the distribution. Range: α > 0.</param>
+            <param name="truncation">The truncation (T) of the distribution. Range: T > xm.</param>
+            <param name="x">The location at which to compute the cumulative distribution function.</param>
+            <returns>the cumulative distribution at location <paramref name="x"/>.</returns>
+            <seealso cref="M:MathNet.Numerics.Distributions.TruncatedPareto.CumulativeDistribution(System.Double)"/>
+        </member>
         <member name="T:MathNet.Numerics.Distributions.Weibull">
             <summary>
             Continuous Univariate Weibull distribution.
@@ -12651,6 +13281,103 @@
             /// <param name="invervalEndB">Where the interval ends for the second (outside) integral, exclusive and finite.</param>
             <returns>Approximation of the finite integral in the given interval.</returns>
         </member>
+        <member name="M:MathNet.Numerics.Integrate.DoubleExponential(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth function by double-exponential quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="targetAbsoluteError">The expected relative accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integrate.GaussLegendre(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth function by Gauss-Legendre quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2-20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calculated on the fly.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integrate.GaussKronrod(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth function by Gauss-Kronrod quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <param name="maximumDepth">The maximum number of interval splittings permitted before stopping.</param>
+            <param name="order">The number of Gauss-Kronrod points. Pre-computed for 15, 31, 41, 51 and 61 points.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integrate.GaussKronrod(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double@,System.Double@,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth function by Gauss-Kronrod quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="error">The difference between the (N-1)/2 point Gauss approximation and the N-point Gauss-Kronrod approximation</param>
+            <param name="L1Norm">The L1 norm of the result, if there is a significant difference between this and the returned value, then the result is likely to be ill-conditioned.</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <param name="maximumDepth">The maximum number of interval splittings permitted before stopping</param>
+            <param name="order">The number of Gauss-Kronrod points. Pre-computed for 15, 21, 31, 41, 51 and 61 points</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="T:MathNet.Numerics.ContourIntegrate">
+            <summary>
+            Numerical Contour Integration of a complex-valued function over a real variable,.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.ContourIntegrate.DoubleExponential(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Double)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth complex function by double-exponential quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="targetAbsoluteError">The expected relative accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.ContourIntegrate.GaussLegendre(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Int32)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth complex function by double-exponential quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2-20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calculated on the fly.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.ContourIntegrate.GaussKronrod(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth function by Gauss-Kronrod quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <param name="maximumDepth">The maximum number of interval splittings permitted before stopping</param>
+            <param name="order">The number of Gauss-Kronrod points. Pre-computed for 15, 21, 31, 41, 51 and 61 points</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.ContourIntegrate.GaussKronrod(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Double@,System.Double@,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Approximation of the definite integral of an analytic smooth function by Gauss-Kronrod quadrature. When either or both limits are infinite, the integrand is assumed rapidly decayed to zero as x -> infinity.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
+            <param name="intervalBegin">Where the interval starts.</param>
+            <param name="intervalEnd">Where the interval stops.</param>
+            <param name="error">The difference between the (N-1)/2 point Gauss approximation and the N-point Gauss-Kronrod approximation</param>
+            <param name="L1Norm">The L1 norm of the result, if there is a significant difference between this and the returned value, then the result is likely to be ill-conditioned.</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <param name="maximumDepth">The maximum number of interval splittings permitted before stopping</param>
+            <param name="order">The number of Gauss-Kronrod points. Pre-computed for 15, 21, 31, 41, 51 and 61 points</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
         <member name="T:MathNet.Numerics.Integration.DoubleExponentialTransformation">
             <summary>
             Analytic integration algorithm for smooth functions with no discontinuities
@@ -12668,6 +13395,16 @@
             Approximate the integral by the double exponential transformation
             </summary>
             <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.DoubleExponentialTransformation.ContourIntegrate(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Double)">
+            <summary>
+            Approximate the integral by the double exponential transformation
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
             <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
             <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
             <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
@@ -12696,6 +13433,53 @@
             <summary>
             Precomputed weight vector per level.
             </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussKronrodRule.Order">
+            <summary>
+            Getter for the order.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussKronrodRule.KronrodAbscissas">
+            <summary>
+            Getter that returns a clone of the array containing the Kronrod abscissas.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussKronrodRule.KronrodWeights">
+            <summary>
+            Getter that returns a clone of the array containing the Kronrod weights.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Integration.GaussKronrodRule.GaussWeights">
+            <summary>
+            Getter that returns a clone of the array containing the Gauss weights.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussKronrodRule.Integrate(System.Func{System.Double,System.Double},System.Double,System.Double,System.Double@,System.Double@,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Performs adaptive Gauss-Kronrod quadrature on function f over the range (a,b)
+            </summary>
+            <param name="f">The analytic smooth function to integrate</param>
+            <param name="intervalBegin">Where the interval starts</param>
+            <param name="intervalEnd">Where the interval stops</param>
+            <param name="error">The difference between the (N-1)/2 point Gauss approximation and the N-point Gauss-Kronrod approximation</param>
+            <param name="L1Norm">The L1 norm of the result, if there is a significant difference between this and the returned value, then the result is likely to be ill-conditioned.</param>
+            <param name="targetRelativeError">The maximum relative error in the result</param>
+            <param name="maximumDepth">The maximum number of interval splittings permitted before stopping</param>
+            <param name="order">The number of Gauss-Kronrod points. Pre-computed for 15, 21, 31, 41, 51 and 61 points</param>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussKronrodRule.ContourIntegrate(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Double@,System.Double@,System.Double,System.Int32,System.Int32)">
+            <summary>
+            Performs adaptive Gauss-Kronrod quadrature on function f over the range (a,b)
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real axis.</param>
+            <param name="intervalBegin">Where the interval starts</param>
+            <param name="intervalEnd">Where the interval stops</param>
+            <param name="error">The difference between the (N-1)/2 point Gauss approximation and the N-point Gauss-Kronrod approximation</param>
+            <param name="L1Norm">The L1 norm of the result, if there is a significant difference between this and the returned value, then the result is likely to be ill-conditioned.</param>
+            <param name="targetRelativeError">The maximum relative error in the result</param>
+            <param name="maximumDepth">The maximum number of interval splittings permitted before stopping</param>
+            <param name="order">The number of Gauss-Kronrod points. Pre-computed for 15, 21, 31, 41, 51 and 61 points</param>
+            <returns></returns>
         </member>
         <member name="T:MathNet.Numerics.Integration.GaussLegendreRule">
             <summary>
@@ -12759,6 +13543,16 @@
             <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2-20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calculated on the fly.</param>
             <returns>Approximation of the finite integral in the given interval.</returns>
         </member>
+        <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.ContourIntegrate(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Int32)">
+            <summary>
+            Approximates a definite integral using an Nth order Gauss-Legendre rule.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
+            <param name="invervalBegin">Where the interval starts, exclusive and finite.</param>
+            <param name="invervalEnd">Where the interval ends, exclusive and finite.</param>
+            <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2-20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calculated on the fly.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
         <member name="M:MathNet.Numerics.Integration.GaussLegendreRule.Integrate(System.Func{System.Double,System.Double,System.Double},System.Double,System.Double,System.Double,System.Double,System.Int32)">
             <summary>
             Approximates a 2-dimensional definite integral using an Nth order Gauss-Legendre rule over the rectangle [a,b] x [c,d].
@@ -12770,6 +13564,54 @@
             /// <param name="invervalEndB">Where the interval ends for the second (outside) integral, exclusive and finite.</param>
             <param name="order">Defines an Nth order Gauss-Legendre rule. The order also defines the number of abscissas and weights for the rule. Precomputed Gauss-Legendre abscissas/weights for orders 2-20, 32, 64, 96, 100, 128, 256, 512, 1024 are used, otherwise they're calculated on the fly.</param>
             <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.GaussRule.GaussKronrodPoint">
+            <summary>
+            Contains a method to compute the Gauss-Kronrod abscissas/weights and precomputed abscissas/weights for orders 15, 21, 31, 41, 51, 61.
+            </summary>
+            <summary>
+            Contains a method to compute the Gauss-Kronrod abscissas/weights.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.Integration.GaussRule.GaussKronrodPoint.PreComputed">
+            <summary>
+            Precomputed abscissas/weights for orders 15, 21, 31, 41, 51, 61.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussKronrodPoint.Generate(System.Int32,System.Double)">
+            <summary>
+            Computes the Gauss-Kronrod abscissas/weights and Gauss weights.
+            </summary>
+            <param name="order">Defines an Nth order Gauss-Kronrod rule. The order also defines the number of abscissas and weights for the rule.</param>
+            <param name="eps">Required precision to compute the abscissas/weights.</param>
+            <returns>Object containing the non-negative abscissas/weights, order.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussKronrodPoint.StieltjesP(System.Int32)">
+            <summary>
+            Returns coefficients of a Stieltjes polynomial in terms of Legendre polynomials.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussKronrodPoint.LegendreSeries(System.Double[],System.Double)">
+            <summary>
+            Return value and derivative of a Legendre series at given points.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussKronrodPoint.LegendreP(System.Int32,System.Double)">
+            <summary>
+            Return value and derivative of a Legendre polynomial of order at given points.
+            </summary>
+        </member>
+        <member name="T:MathNet.Numerics.Integration.GaussRule.GaussKronrodPointFactory">
+            <summary>
+            Creates a Gauss-Kronrod point.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.GaussRule.GaussKronrodPointFactory.GetGaussPoint(System.Int32)">
+            <summary>
+            Getter for the GaussKronrodPoint.
+            </summary>
+            <param name="order">Defines an Nth order Gauss-Kronrod rule. Precomputed Gauss-Kronrod abscissas/weights for orders 15, 21, 31, 41, 51, 61 are used, otherwise they're calculated on the fly.</param>
+            <returns>Object containing the non-negative abscissas/weights, and order.</returns>
         </member>
         <member name="T:MathNet.Numerics.Integration.GaussRule.GaussLegendrePoint">
             <summary>
@@ -12828,6 +13670,11 @@
             Contains the abscissas/weights, order, and intervalBegin/intervalEnd.
             </summary>
         </member>
+        <member name="T:MathNet.Numerics.Integration.GaussRule.GaussPointPair">
+            <summary>
+            Contains two GaussPoint.
+            </summary>
+        </member>
         <member name="T:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule">
             <summary>
             Approximation algorithm for definite integrals by the Trapezium rule of the Newton-Cotes family.
@@ -12845,11 +13692,30 @@
             <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
             <returns>Approximation of the finite integral in the given interval.</returns>
         </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.ContourIntegrateTwoPoint(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double)">
+            <summary>
+            Direct 2-point approximation of the definite integral in the provided interval by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on real domain.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
         <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateComposite(System.Func{System.Double,System.Double},System.Double,System.Double,System.Int32)">
             <summary>
             Composite N-point approximation of the definite integral in the provided interval by the trapezium rule.
             </summary>
             <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="numberOfPartitions">Number of composite subdivision partitions.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.ContourIntegrateComposite(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Int32)">
+            <summary>
+            Composite N-point approximation of the definite integral in the provided interval by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on real domain.</param>
             <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
             <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
             <param name="numberOfPartitions">Number of composite subdivision partitions.</param>
@@ -12865,11 +13731,34 @@
             <param name="targetError">The expected accuracy of the approximation.</param>
             <returns>Approximation of the finite integral in the given interval.</returns>
         </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.ContourIntegrateAdaptive(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Double)">
+            <summary>
+            Adaptive approximation of the definite integral in the provided interval by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, define don real domain.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="targetError">The expected accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
         <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.IntegrateAdaptiveTransformedOdd(System.Func{System.Double,System.Double},System.Double,System.Double,System.Collections.Generic.IEnumerable{System.Double[]},System.Collections.Generic.IEnumerable{System.Double[]},System.Double,System.Double)">
             <summary>
             Adaptive approximation of the definite integral by the trapezium rule.
             </summary>
             <param name="f">The analytic smooth function to integrate.</param>
+            <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
+            <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
+            <param name="levelAbscissas">Abscissa vector per level provider.</param>
+            <param name="levelWeights">Weight vector per level provider.</param>
+            <param name="levelOneStep">First Level Step</param>
+            <param name="targetRelativeError">The expected relative accuracy of the approximation.</param>
+            <returns>Approximation of the finite integral in the given interval.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Integration.NewtonCotesTrapeziumRule.ContourIntegrateAdaptiveTransformedOdd(System.Func{System.Double,System.Numerics.Complex},System.Double,System.Double,System.Collections.Generic.IEnumerable{System.Double[]},System.Collections.Generic.IEnumerable{System.Double[]},System.Double,System.Double)">
+            <summary>
+            Adaptive approximation of the definite integral by the trapezium rule.
+            </summary>
+            <param name="f">The analytic smooth complex function to integrate, defined on the real domain.</param>
             <param name="intervalBegin">Where the interval starts, inclusive and finite.</param>
             <param name="intervalEnd">Where the interval stops, inclusive and finite.</param>
             <param name="levelAbscissas">Abscissa vector per level provider.</param>
@@ -39088,6 +39977,74 @@
         <member name="M:MathNet.Numerics.Optimization.IObjectiveFunction.Fork">
             <summary>Create a new independent copy of this objective function, evaluated at the same point.</summary>
         </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.ObservedY">
+            <summary>
+            Get the y-values of the observations.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.Weights">
+            <summary>
+            Get the values of the weights for the observations.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.ModelValues">
+            <summary>
+            Get the y-values of the fitted model that correspond to the independent values.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.Point">
+            <summary>
+            Get the values of the parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.Value">
+            <summary>
+            Get the residual sum of squares.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.Gradient">
+            <summary>
+            Get the Gradient vector. G = J'(y - f(x; p))
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.Hessian">
+            <summary>
+            Get the approximated Hessian matrix. H = J'J
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.FunctionEvaluations">
+            <summary>
+            Get the number of calls to function.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.JacobianEvaluations">
+            <summary>
+            Get the number of calls to jacobian.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.IObjectiveModelEvaluation.DegreeOfFreedom">
+            <summary>
+            Get the degree of freedom.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.LevenbergMarquardtMinimizer.InitialMu">
+            <summary>
+            The scale factor for initial mu
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.LevenbergMarquardtMinimizer.Minimum(MathNet.Numerics.Optimization.IObjectiveModel,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Collections.Generic.List{System.Boolean},System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Non-linear least square fitting by the Levenberg-Marduardt algorithm.
+            </summary>
+            <param name="objective">The objective function, including model, observations, and parameter bounds.</param>
+            <param name="initialGuess">The initial guess values.</param>
+            <param name="initialMu">The initial damping parameter of mu.</param>        
+            <param name="gradientTolerance">The stopping threshold for infinity norm of the gradient vector.</param>
+            <param name="stepTolerance">The stopping threshold for L2 norm of the change of parameters.</param>
+            <param name="functionTolerance">The stopping threshold for L2 norm of the residuals.</param>
+            <param name="maximumIterations">The max iterations.</param>
+            <returns>The result of the Levenberg-Marquardt minimization</returns>
+        </member>
         <member name="T:MathNet.Numerics.Optimization.LimitedMemoryBfgsMinimizer">
             <summary>
             Limited Memory version of Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm
@@ -39259,6 +40216,66 @@
             The value of the constant
             </summary>
         </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizationResult.MinimizingPoint">
+            <summary>
+            Returns the best fit parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizationResult.StandardErrors">
+            <summary>
+            Returns the standard errors of the corresponding parameters 
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizationResult.MinimizedValues">
+            <summary>
+            Returns the y-values of the fitted model that correspond to the independent values.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizationResult.Covariance">
+            <summary>
+            Returns the covariance matrix at minimizing point.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizationResult.Correlation">
+            <summary>
+             Returns the correlation matrix at minimizing point.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.FunctionTolerance">
+            <summary>
+            The stopping threshold for the function value or L2 norm of the residuals.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.StepTolerance">
+            <summary>
+            The stopping threshold for L2 norm of the change of the parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.GradientTolerance">
+            <summary>
+            The stopping threshold for infinity norm of the gradient.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.MaximumIterations">
+            <summary>
+            The maximum number of iterations.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.LowerBound">
+            <summary>
+            The lower bound of the parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.UpperBound">
+            <summary>
+            The upper bound of the parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.NonlinearMinimizerBase.Scales">
+            <summary>
+            The scale factors for the parameters.
+            </summary>
+        </member>
         <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.Value(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double})">
             <summary>
             Objective function where neither Gradient nor Hessian is available.
@@ -39309,6 +40326,37 @@
             Objective function where the first and second derivatives are available.
             </summary>
         </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.NonlinearModel(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            objective model with a user supplied jacobian for non-linear least squares regression.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.NonlinearModel(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Int32)">
+            <summary>
+            Objective model for non-linear least squares regression.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.NonlinearModel(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,MathNet.Numerics.LinearAlgebra.Vector{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Objective model with a user supplied jacobian for non-linear least squares regression.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.NonlinearModel(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Double,System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Int32)">
+            <summary>
+            Objective model for non-linear least squares regression.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.NonlinearFunction(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Matrix{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Objective function with a user supplied jacobian for nonlinear least squares regression.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunction.NonlinearFunction(System.Func{MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double}},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Int32)">
+            <summary>
+            Objective function for nonlinear least squares regression.
+            The numerical jacobian with accuracy order is used.
+            </summary>
+        </member>
         <member name="T:MathNet.Numerics.Optimization.ObjectiveFunctions.ForwardDifferenceGradientObjectiveFunction">
              <summary>
              Adapts an objective function with only value implemented
@@ -39320,6 +40368,122 @@
              additional number of function evaluations equal to the
              functions's number of input parameters.
              </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.ObservedX">
+            <summary>
+            Set or get the values of the independent variable.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.ObservedY">
+            <summary>
+            Set or get the values of the observations.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.Weights">
+            <summary>
+            Set or get the values of the weights for the observations.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.IsFixed">
+            <summary>
+            Get whether parameters are fixed or free.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.NumberOfObservations">
+            <summary>
+            Get the number of observations.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.NumberOfParameters">
+            <summary>
+            Get the number of unknown parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.DegreeOfFreedom">
+            <summary>
+            Get the degree of freedom
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.FunctionEvaluations">
+            <summary>
+            Get the number of calls to function.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.JacobianEvaluations">
+            <summary>
+            Get the number of calls to jacobian.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.Point">
+            <summary>
+            Set or get the values of the parameters.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.ModelValues">
+            <summary>
+            Get the y-values of the fitted model that correspond to the independent values.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.Value">
+            <summary>
+            Get the residual sum of squares.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.Gradient">
+            <summary>
+            Get the Gradient vector of x and p.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.Hessian">
+            <summary>
+            Get the Hessian matrix of x and p, J'WJ
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.SetObserved(MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double})">
+            <summary>
+            Set observed data to fit.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.ObjectiveFunctions.NonlinearObjectiveFunction.SetParameters(MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Collections.Generic.List{System.Boolean})">
+            <summary>
+            Set parameters and bounds.
+            </summary>
+            <param name="initialGuess">The initial values of parameters.</param>
+            <param name="isFixed">The list to the parameters fix or free.</param>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.TrustRegion.TrustRegionDogLegMinimizer.#ctor(System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Non-linear least square fitting by the trust region dogleg algorithm.
+            </summary>
+        </member>
+        <member name="F:MathNet.Numerics.Optimization.TrustRegion.TrustRegionMinimizerBase.Subproblem">
+            <summary>
+            The trust region subproblem.
+            </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Optimization.TrustRegion.TrustRegionMinimizerBase.RadiusTolerance">
+            <summary>
+            The stopping threshold for the trust region radius.
+            </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.TrustRegion.TrustRegionMinimizerBase.Minimum(MathNet.Numerics.Optimization.TrustRegion.ITrustRegionSubproblem,MathNet.Numerics.Optimization.IObjectiveModel,MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},MathNet.Numerics.LinearAlgebra.Vector{System.Double},System.Collections.Generic.List{System.Boolean},System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Non-linear least square fitting by the trust-region algorithm.
+            </summary>
+            <param name="objective">The objective model, including function, jacobian, observations, and parameter bounds.</param>
+            <param name="subproblem">The subproblem</param>
+            <param name="initialGuess">The initial guess values.</param>
+            <param name="functionTolerance">The stopping threshold for L2 norm of the residuals.</param>
+            <param name="gradientTolerance">The stopping threshold for infinity norm of the gradient vector.</param>
+            <param name="stepTolerance">The stopping threshold for L2 norm of the change of parameters.</param>
+            <param name="radiusTolerance">The stopping threshold for trust region radius</param>
+            <param name="maximumIterations">The max iterations.</param>
+            <returns></returns>
+        </member>
+        <member name="M:MathNet.Numerics.Optimization.TrustRegion.TrustRegionNewtonCGMinimizer.#ctor(System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Non-linear least square fitting by the trust region Newton-Conjugate-Gradient algorithm.
+            </summary>
         </member>
         <member name="T:MathNet.Numerics.Permutation">
             <summary>
@@ -40038,6 +41202,12 @@
             <param name="b">The second value.</param>
             <param name="maxNumbersBetween">The maximum number of floating point values for which the two values are considered equal. Must be 1 or larger.</param>
             <returns><c>true</c> if the first value is smaller than the second value; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:MathNet.Numerics.Precision.IsFinite(System.Double)">
+            <summary>
+            Checks if a given double values is finite, i.e. neither NaN nor inifnity
+            </summary>
+            <param name="value">The value to be checked fo finitenes.</param>
         </member>
         <member name="F:MathNet.Numerics.Precision.DoubleWidth">
             <summary>
@@ -41389,6 +42559,11 @@
                Looks up a localized string similar to Algorithm experience a numerical break down
             .
              </summary>
+        </member>
+        <member name="P:MathNet.Numerics.Properties.Resources.NumericalEstimationFailed">
+            <summary>
+              Looks up a localized string similar to: Numerical estimation of the statistic has failed.
+            </summary>
         </member>
         <member name="P:MathNet.Numerics.Properties.Resources.PartialOrderException">
             <summary>
@@ -50926,11 +52101,6 @@
             <para>Our unit tests suggest that the accuracy of the Exponential Integral function is correct up to 13 floating point digits.</para>
             </remarks>
         </member>
-        <member name="M:MathNet.Numerics.SpecialFunctions.#cctor">
-            <summary>
-            Initializes static members of the SpecialFunctions class.
-            </summary>
-        </member>
         <member name="M:MathNet.Numerics.SpecialFunctions.Factorial(System.Int32)">
             <summary>
             Computes the factorial function x -> x! of an integer number > 0. The function can represent all number up
@@ -55900,6 +57070,14 @@
             <summary>
             Triangular window.
             </summary>
+        </member>
+        <member name="M:MathNet.Numerics.Window.Tukey(System.Int32,System.Double)">
+            <summary>
+            Tukey tapering window. A rectangular window bounded
+            by half a cosine window on each side.
+            </summary>
+            <param name="width">Width of the window</param>
+            <param name="r">Fraction of the window occupied by the cosine parts</param>
         </member>
     </members>
 </doc>

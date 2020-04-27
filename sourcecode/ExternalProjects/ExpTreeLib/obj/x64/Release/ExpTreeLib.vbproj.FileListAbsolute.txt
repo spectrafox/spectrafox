@@ -20,8 +20,9 @@ D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Relea
 D:\SpectraFoxGIT\spectrafox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.pdb
 D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\bin\x64\Release\ExpTreeLib.dll
 D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\bin\x64\Release\ExpTreeLib.pdb
-D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.vbprojResolveAssemblyReference.cache
 D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.ExpTree.resources
 D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.vbproj.GenerateResource.Cache
 D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.dll
 D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.pdb
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.vbprojAssemblyReference.cache
+D:\SpectraFox\sourcecode\ExternalProjects\ExpTreeLib\obj\x64\Release\ExpTreeLib.vbproj.CoreCompileInputs.cache

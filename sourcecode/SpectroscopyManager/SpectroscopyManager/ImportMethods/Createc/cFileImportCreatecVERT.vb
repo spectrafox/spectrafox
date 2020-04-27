@@ -60,9 +60,13 @@ Public Class cFileImportCreatecVERT
             ' Read first line to get the STMAFM-Version:
             ReaderBuffer = sr.ReadLine
 
-            ' VERT files contain in first row "[ParVERT30]" in Version 3 and
+            ' VERT files contain in first row
+            ' "[ParVERT32]" in Version 4 and
+            ' "[ParVERT30]" in Version 3 and
             ' "[Parameter]" in older Versions
-            If ReaderBuffer.Contains("[ParVERT30]") Then
+            If ReaderBuffer.Contains("[ParVERT32]") Then
+                STMAFMVersion = STMAFM_Version.Version3above
+            ElseIf ReaderBuffer.Contains("[ParVERT30]") Then
                 STMAFMVersion = STMAFM_Version.Version3above
             ElseIf ReaderBuffer.Contains("[Parameter]") Then
                 STMAFMVersion = STMAFM_Version.Version2
@@ -613,6 +617,7 @@ Public Class cFileImportCreatecVERT
             End If
 
             Dim ColRowNumber As New cSpectroscopyTable.DataColumn
+            Dim RowNumberOfMeasurementPointColumn As Integer = NumberOfCols + 1
             With ColRowNumber
                 ' Save Column-Name
                 .Name = My.Resources.ColumnName_MeasurementPoints
@@ -620,7 +625,7 @@ Public Class cFileImportCreatecVERT
                 .UnitSymbol = "1"
                 .UnitType = cUnits.UnitType.Unitary
             End With
-            lSortedColumnList.Add(NumberOfCols + 1, ColRowNumber)
+            lSortedColumnList.Add(RowNumberOfMeasurementPointColumn, ColRowNumber)
 
             '// ** Calculate conversion factor facIV from ADC0-units to V; **
             '// ** facIV = C_ADC0, see file "STMAFM_Data_Conversion.ppt"; **
@@ -642,6 +647,11 @@ Public Class cFileImportCreatecVERT
                     End If
 
                     For j As Integer = 0 To SplittedLine.Length - 1 Step 1
+                        ' don't follow empty values
+                        If SplittedLine(j).Trim = "" Then
+                            Continue For
+                        End If
+
                         ' Save Spectroscopy-Values.
                         If Not Double.TryParse(SplittedLine(j), NumberStyles.Float, CultureInfo.InvariantCulture, Value) Then
                             Value = 0
@@ -701,7 +711,7 @@ Public Class cFileImportCreatecVERT
                     ' Add the row number to the separate column
                     ' if we are not in the backward sweep!
                     If iRowCounter <= oSpectroscopyTable.MeasurementPoints Then
-                        lSortedColumnList(NumberOfCols + 1).AddValueToColumn(iRowCounter)
+                        lSortedColumnList(RowNumberOfMeasurementPointColumn).AddValueToColumn(iRowCounter)
                     End If
 
                     iRowCounter += 1
@@ -819,9 +829,12 @@ Public Class cFileImportCreatecVERT
             ReaderBuffer = sr.ReadLine
         End Using
 
-        ' VERT files contain in first row "[ParVERT30]" in Version 3 and
+        ' VERT files contain in first row 
+        ' "[ParVERT32]" in Version 4 and
+        ' "[ParVERT30]" in Version 3 and
         ' "[Parameter]" in older Versions
-        If ReaderBuffer.Contains("[ParVERT30]") Or
+        If ReaderBuffer.Contains("[ParVERT32]") Or
+            ReaderBuffer.Contains("[ParVERT30]") Or
            ReaderBuffer.Contains("[Parameter]") Then
             Return True
         End If

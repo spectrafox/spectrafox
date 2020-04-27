@@ -9,12 +9,142 @@
     <span style="font-size:15px; font-weight:bold;">Stable Update Channel:</span><br />
 
     <p>
-        Version 2016.04.06.0<br />
+        Version 2020.04.27.0<br />
         <ol>
-            <li>[bugfix] Summing data columns of different files was always taking the alphabetically first selected file as source file.</li>
+            <li>[improvement] added support for Createc V4 file format</li>
         </ol>
     </p>
 
+    <p>
+        Version 2019.04.23.0<br />
+        <ol>
+            <li>[bugfix] editing multiple omicron matrix files lead to a crash</li>
+            <li>[bugfix] the selected columns of the spectroscopy channel viewer were reset when switching between single file and multiple file view</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2018.07.08.0<br />
+        <ol>
+            <li>[bugfix] selection of multiple spectroscopy files</li>
+            <li>[bugfix] filters of scan channels were not saved correctly</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2017.11.22.0<br />
+        <ol>
+            <li>[new] NanoQT file format included</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2017.07.27.0<br />
+        <ol>          
+            <li>[improved] display the axis range in new preview images in the data browser</li>
+            <li>[improved] display three file parameters in the scan images</li>
+            <li>[bugfix] Y-axis channels are now selected correctly again</li>
+            <li>[bugfix] fixed an anchor in the gif animation creator</li>
+            <li>[bugfix] fixed a crash that occured when a file changed on the disk</li>
+        </ol>
+    </p>
+
+    <p>
+        Version 2017.04.10.2<br />
+        <ol>
+            <li>[new] SpectraFox file format (.sfd)</li>
+            <li>[new] export possibility of grid spectra to SFD files</li>
+            <li>[new] separate data explorer for grid files</li>
+            <li>[new] gif animation generator for multiple scan images</li>
+            <li>[improved] the scan image file viewer has now a new tab showing all header properties</li>
+            <li>[improved] the scan image viewer can now display an arbitrary property embed in the image</li>
+            <li>[improved] fixed that values above the max/min intensity value in the image plots were plotted transparent</li>
+            <li>[bugfix] scan for compatible files now continues, if a broken file was found</li>
+            <li>[bugfix] Nanonis files with more complex units in the headers are recognized correctly</li>
+        </ol>
+    </p>
+        
+    <p>
+        Version 2017.03.09.0<br />
+        <ol>
+            <li>[improved] the cache file is now stored in a background thread, not blocking the UI-thread anymore</li>
+            <li>[improved] the cache file is now stored in a compressed way (spectrafox.sfcc)</li>
+            <li>[improved] the spectroscopy file viewer has now a new tab showing all header properties</li>
+            <li>[import] Nanonis files compatibility increased</li>
+            <li>[export] IGOR wave file</li>
+        </ol>
+    </p>
+
+    <p>
+        up to Version 2017.02.09.0<br />
+        <ol>
+            <li>[improvement] added a delete option to the data column rename tool - thanks to Laetitia Farinacci</li>
+            <li>[bugfix] Nanonis z-spectroscopy: some meta data was not correctly read out</li>
+        </ol>
+    </p>
+    
+    <p>
+        up to Version 2017.01.02.0<br />
+        <ol>
+            <li>[bugfix] summing a column to another failed</li>
+            <li>[bugfix] current force deconvolution - fixed a bug for non-cropped data</li>
+            <li>[bugfix] Nanonis import failed, if files were recorded with the high speed gain</li>
+            <li>[bugfix] Createc columns were named hard coded with dI/dV for ADC3 channels</li>
+            <li>[fitmodel] introduced BCS triple gap fit model</li>            
+            <li>[new-alpha] NanoObserver images are can be loaded</li>
+            <li>[third party] libraries updated</li>
+        </ol>
+    </p>  
+
+     <p>
+        up to Version 2016.08.17.0<br />
+        <ol>
+            <li>[new] tool to merge two image files</li>
+            <li>[new] added inelastic tip-sample convolution fit class</li>
+            <li>[improvement] added customized automatic list refresh timer</li>
+            <li>[improvement] included creep correction into the grid file plotter</li>
+            <li>[improvement] added a button to remove all point marks of the spectra locations in the scan images</li>
+            <li>[improvement] added export format Nanotec STP to the image viewer</li>
+            <li>[export] added new export format for spectra (space separated values)</li>
+            <li>[bugfix] the last used filter is now stored correctly</li>
+            <li>[bugfix] sporadic crash during list refresh in a folder that gets new files got fixed</li>
+            <li>[bugfix] added global angle offset to image merger tool</li>
+            <li>[bugfix] fixed a rarely occuring bug in the value range selector histrogram</li>
+            <li>[bugfix] fixed a bug in the data handling windows</li>
+            <li>[bugfix] fixed a bug in the folder browser tree</li>
+            <li>[bugfix] scrolling through the file list does not modify the plot colors anymore</li>
+            <li>[bugfix] continuous list refresh on a folder that changes could lead to a sporadic crash</li>
+        </ol>
+    </p>
+
+    <span style="font-size:15px; font-weight:bold;">Earlier Changes:</span><br />
+
+    <p>
+        up to Version 2016.05.16.0<br />
+        <ol>
+            <li>[new] opening of scan images in external viewers is possible now</li>
+            <li>[new] new file type: spectroscopy grids (support so far for Nanonis files)</li>
+            <li>[new] create antimated gifs in the grip plotter</li>
+            <li>[new] Bruker AFM data support</li>
+            <li>[improvement] finished basic handling of grid files</li>            
+            <li>[improvement] line scan plot now suuport limiting the plot range, and plotting to log10 basis</li>
+            <li>[improvement] spectra locations in images are now showing the name of the spectrum on hovering with the mouse over the point</li>
+            <li>[improvement] scan image viewer: clicking on the location of a spectrum now jumps to that spectrum</li>
+            <li>[improvement] grid plotter: clicking on the location of a spectrum now jumps to that spectrum</li>
+            <li>[improvement] grid plotter performance improved</li>
+            <li>[improvement] added path-textbox in the folder browser to be able to open a path directly</li>
+            <li>[improvement] backward channels in Createc files are now reversed during import</li>
+            <li>[bugfix] fixed a minor bug in the interpolation function</li>
+            <li>[bugfix] cache handling of files that consist out of multiple data files</li>
+            <li>[bugfix] importing of files failed, if the file extension was modified in lower and upper letters</li>
+            <li>[bugfix] fixed a bug introduced in the last dev-version on drawing scan images</li>
+            <li>[bugfix] fixed a small bug in the numeric text box</li>
+            <li>[bugfix] Fixed a crash occurring in the line profile selection, when being outside the image.</li>
+            <li>[bugfix] No spectrafox.sfc cache file is written anymore to folders without data files.</li>
+            <li>[bugfix] Summing data columns of different files was always taking the alphabetically first selected file as source file.</li>
+        </ol>
+    </p>
+        
     <p>
         Version 2016.04.01.0<br />
         <ol>
@@ -36,9 +166,6 @@
             <li>[bugfix] Rare crash when opening multiple instances of SpectraFox.</li>
         </ol>
     </p>
-
-    
-    <span style="font-size:15px; font-weight:bold;">Earlier Changes:</span><br />
 
     <p>
         Version 2016.03.03.0<br />
