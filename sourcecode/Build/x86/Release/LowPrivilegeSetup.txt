@@ -1,3 +1,0 @@
-﻿Do NOT remove this file!
-It stores that your setup has been performed with low privileges!
-This is important for the automatic update procedure!

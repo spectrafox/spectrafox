@@ -1,8 +1,0 @@
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\x86\Debug\ExpTreeLib.dll
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x86\Debug x86\ExpTreeLib.ExpTree.resources
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x86\Debug x86\ExpTreeLib.vbproj.GenerateResource.Cache
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x86\Debug x86\ExpTreeLib.dll
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x86\Debug x86\ExpTreeLib.xml
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\obj\x86\Debug x86\ExpTreeLib.pdb
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\x86\Debug\ExpTreeLib.pdb
-D:\SpectraFox2\ExternalProjects\ExpTreeLib\bin\x86\Debug\ExpTreeLib.xml

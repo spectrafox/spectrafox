@@ -1,1 +1,0 @@
-D:\SpectraFox2\Build\x64\Release\SpectroscopyManager.exe.config
