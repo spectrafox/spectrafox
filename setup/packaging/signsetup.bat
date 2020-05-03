@@ -1,1 +1,0 @@
-"C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\signtool.exe" sign /sha1 0B190EE1FF7510AAD9B3FC81B89CCEAD4EFA1283 /t http://timestamp.verisign.com/scripts/timstamp.dll /v "Output\spectrafox-setup.exe"

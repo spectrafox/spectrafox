@@ -25,6 +25,9 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ss]etup/[Oo]utput/
+[Ss]etup/*.html
+[Ss]etup/*.exe
+[Ss]etup/[Pp]ackaging/*.log
 
 # Visual Studio 2015 cache/options directory
 .vs/

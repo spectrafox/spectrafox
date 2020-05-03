@@ -66,25 +66,20 @@ Source: "{#BuildDirectory_x64}\SpectroscopyManager.pdb"; DestDir: "{app}"; Flags
 Source: "{#BuildDirectory_x64}\SpectroscopyManager.exe.config"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "{#BuildDirectory_x64}\SpectroscopyManager.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "{#BuildDirectory_x64}\SpectroscopyManager.pdb"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
-;Source: "{#BuildDirectory_x64}\SpectroscopyManager.xml"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "{#BuildDirectory_x64}\ExpTreeLib.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 Source: "{#BuildDirectory_x64}\ZedGraph.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: Is64BitInstallMode
 
 ; Place all x86 files here, first one should be marked 'solidbreak'
-;Source: "MyProg.exe"; DestDir: "{app}"; Check: not Is64BitInstallMode; Flags: solidbreak
 Source: "{#BuildDirectory_x86}\SpectroscopyManager.exe"; DestDir: "{app}"; Flags: ignoreversion solidbreak; Check: not Is64BitInstallMode;
 Source: "{#BuildDirectory_x86}\SpectroscopyManager.application"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "{#BuildDirectory_x86}\SpectroscopyManager.pdb"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "{#BuildDirectory_x86}\SpectroscopyManager.exe.config"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "{#BuildDirectory_x86}\SpectroscopyManager.exe.manifest"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "{#BuildDirectory_x86}\SpectroscopyManager.pdb"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
-;Source: "{#BuildDirectory_x86}\SpectroscopyManager.xml"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "{#BuildDirectory_x86}\ExpTreeLib.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 Source: "{#BuildDirectory_x86}\ZedGraph.dll"; DestDir: "{app}"; Flags: ignoreversion; Check: not Is64BitInstallMode
 
 ; Place all common files here, first one should be marked 'solidbreak'
-;Source: "MyProg.chm"; DestDir: "{app}"; Flags: solidbreak
-;Source: "Readme.txt"; DestDir: "{app}"; Flags: isreadme
 Source: "{#BuildDirectory_x86}\changelog_stable.html"; DestDir: "{app}"; Flags: ignoreversion solidbreak
 Source: "{#BuildDirectory_x86}\changelog_dev.html"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\License.txt"; DestDir: "{app}"; 
@@ -114,20 +109,14 @@ Source: "{#BuildDirectory_x86}\MathNet.Numerics.Data.Matlab.xml"; DestDir: "{app
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.Data.Text.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.Data.Text.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDirectory_x86}\MathNet.Numerics.IO.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDirectory_x86}\MathNet.Numerics.IO.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDirectory_x86}\MathNet.Numerics.IO.xml"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDirectory_x86}\MathNet.Numerics.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\MathNet.Numerics.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\SmartThreadPool.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "{#BuildDirectory_x86}\SmartThreadPool.pdb"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\NetSparkle.Net40.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\ZedGraph.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\zlib.net.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "{#BuildDirectory_x86}\ColorSchemes\*"; DestDir: "{app}\ColorSchemes"; Flags: ignoreversion recursesubdirs
 
 ; .NET Framework Setup
-;Source: "addons\dotNetFx40_Full_setup.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: not IsRequiredDotNetDetected
 Source: "addons\dotNetFx45_Full_setup.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: not IsRequiredDotNetDetected
                                                                                                                                    
 [Icons]
@@ -136,7 +125,6 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
-;Filename: {tmp}\dotNetFx40_Full_setup.exe; Parameters: "/q:a /c:""install /l /q"""; Check: not IsRequiredDotNetDetected; StatusMsg: Installing Microsoft .NET Framework 4.0. Please wait ...
 Filename: {tmp}\dotNetFx45_Full_setup.exe; Parameters: "/q:a /c:""install /l /q"""; Check: not IsRequiredDotNetDetected; StatusMsg: Installing Microsoft .NET Framework 4.5. Please wait ...
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent unchecked
 Filename: http://wiki.spectrafox.com/; Description: "open the online manual"; Flags: postinstall shellexec unchecked
