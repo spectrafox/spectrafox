@@ -221,13 +221,9 @@ Public Class cFileImportCreatecVERT
             ReaderBuffer = sr.ReadLine
             SplittedLine = Split(ReaderBuffer.Trim, vbTab)
 
-            If STMAFMVersion = STMAFM_Version.Version4 Then
-                channelOffset = 1
-            End If
-
             ' Depending on Version determine Column-Positions
             Select Case STMAFMVersion
-                Case > STMAFM_Version.Version3
+                Case >= STMAFM_Version.Version3
                     ' Set permanent Channel-Positions
                     posV = 1
                     posZ = 2
