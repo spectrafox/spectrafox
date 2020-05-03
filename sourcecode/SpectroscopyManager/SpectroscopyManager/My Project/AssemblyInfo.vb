@@ -34,5 +34,5 @@ Imports System.Resources
 ' übernehmen, indem Sie "*" eingeben:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2020.04.27.0")>
-<Assembly: AssemblyFileVersion("2020.04.27.0")>
+<Assembly: AssemblyVersion("2020.04.27.1")>
+<Assembly: AssemblyFileVersion("2020.04.27.1")>

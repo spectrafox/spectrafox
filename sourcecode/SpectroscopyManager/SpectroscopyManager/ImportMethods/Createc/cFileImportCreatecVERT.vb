@@ -6,9 +6,10 @@ Public Class cFileImportCreatecVERT
     Implements iFileImport_SpectroscopyTable
 
     Private Enum STMAFM_Version
-        Version3above
-        Version2
-        Version1
+        Version4 = 4
+        Version3 = 3
+        Version2 = 2
+        Version1 = 1
     End Enum
 
     ''' <summary>
@@ -65,9 +66,9 @@ Public Class cFileImportCreatecVERT
             ' "[ParVERT30]" in Version 3 and
             ' "[Parameter]" in older Versions
             If ReaderBuffer.Contains("[ParVERT32]") Then
-                STMAFMVersion = STMAFM_Version.Version3above
+                STMAFMVersion = STMAFM_Version.Version4
             ElseIf ReaderBuffer.Contains("[ParVERT30]") Then
-                STMAFMVersion = STMAFM_Version.Version3above
+                STMAFMVersion = STMAFM_Version.Version3
             ElseIf ReaderBuffer.Contains("[Parameter]") Then
                 STMAFMVersion = STMAFM_Version.Version2
             Else
@@ -168,9 +169,11 @@ Public Class cFileImportCreatecVERT
             Dim oMatchVers2 As Match = oRegExVers2.Match(ReaderBuffer.Trim)
 
             Dim DataPoints As Integer = 0
-            ' Extract Version 2 Settings
+            ' Extract Version 2 or 3+ Settings
             If oMatchVers3.Success Then
-                If STMAFMVersion = STMAFM_Version.Version2 Then If STMAFMVersion = STMAFM_Version.Version3above Then Throw New Exception("Statistics-Row in VERT-File is from Version 3, but file seemed to be Version <= 2. Perhaps a corrupt file? (File: " & oSpectroscopyTable.FullFileName & ")")
+                If STMAFMVersion = STMAFM_Version.Version2 Then
+                    Throw New Exception("Statistics-Row in VERT-File is from Version 3, but file seemed to be Version <= 2. Perhaps a corrupt file? (File: " & oSpectroscopyTable.FullFileName & ")")
+                End If
                 DataPoints = Integer.Parse(oMatchVers3.Groups("Param1").Value, Globalization.CultureInfo.InvariantCulture)
                 ' Save first in DAC-Units
                 ' Recalculation NEEDED!!!
@@ -178,7 +181,9 @@ Public Class cFileImportCreatecVERT
                 oSpectroscopyTable.Location_Y = Integer.Parse(oMatchVers3.Groups("Param3").Value, Globalization.CultureInfo.InvariantCulture)
                 ChannelListEncoding = Integer.Parse(oMatchVers3.Groups("Param4").Value, Globalization.CultureInfo.InvariantCulture)
             ElseIf oMatchVers2.Success Then
-                If STMAFMVersion = STMAFM_Version.Version3above Then Throw New Exception("Statistics-Row in VERT-File is from Version 2, but file seemed to be Version >= 3. Perhaps a corrupt file? (File: " & oSpectroscopyTable.FullFileName & ")")
+                If STMAFMVersion = STMAFM_Version.Version3 Then
+                    Throw New Exception("Statistics-Row in VERT-File is from Version 2, but file seemed to be Version >= 3. Perhaps a corrupt file? (File: " & oSpectroscopyTable.FullFileName & ")")
+                End If
                 DataPoints = Integer.Parse(oMatchVers2.Groups("Param1").Value, Globalization.CultureInfo.InvariantCulture)
                 ' Save first in DAC-Units
                 ' Recalculation NEEDED!!!
@@ -210,19 +215,30 @@ Public Class cFileImportCreatecVERT
             Dim posAMP As Integer = -1
             Dim posZ As Integer = -1
             Dim posTopo As Integer = -1
+            Dim channelOffset As Integer = 0
 
             ' Read next row for real Column-Count:
             ReaderBuffer = sr.ReadLine
             SplittedLine = Split(ReaderBuffer.Trim, vbTab)
 
+            If STMAFMVersion = STMAFM_Version.Version4 Then
+                channelOffset = 1
+            End If
+
             ' Depending on Version determine Column-Positions
             Select Case STMAFMVersion
-                Case STMAFM_Version.Version3above
+                Case > STMAFM_Version.Version3
                     ' Set permanent Channel-Positions
                     posV = 1
                     posZ = 2
 
-                    NumberOfCols = 3
+                    ' only for version 4: an additional (yet unknown) column has been added
+                    If STMAFMVersion = STMAFM_Version.Version4 Then
+                        channelOffset = 1
+                        NumberOfCols = 4
+                    Else
+                        NumberOfCols = 3
+                    End If
 
                     ' In Version 3, the Channel-List has to be decoded:
                     ' Current = 1
@@ -254,67 +270,85 @@ Public Class cFileImportCreatecVERT
                     Next
 
                     '// ** Set I channel position; **
-                    If ChannelExist(0) Then posI = 3
+                    If ChannelExist(0) Then
+                        posI = 3 + channelOffset
+                    End If
 
                     '// ** Set internal IV (dI/dV) channel position; **
                     If ChannelExist(1) Then
-                        posInternalIV = 3
-                        If ChannelExist(0) Then posInternalIV += 1
+                        posInternalIV = 3 + channelOffset
+                        If ChannelExist(0) Then
+                            posInternalIV += 1
+                        End If
                     End If
 
                     '// ** Set IV (ADC 1) channel position; **
                     If ChannelExist(4) Then
-                        posIV = 3
+                        posIV = 3 + channelOffset
                         For b As Integer = 0 To 3 Step 1
-                            If ChannelExist(b) Then posIV += 1
+                            If ChannelExist(b) Then
+                                posIV += 1
+                            End If
                         Next
                     End If
 
                     '// ** Set IIVV (ADC 2) channel position; **
                     If ChannelExist(5) Then
-                        posIIVV = 3
+                        posIIVV = 3 + channelOffset
                         For b As Integer = 0 To 4 Step 1
-                            If ChannelExist(b) Then posIIVV += 1
+                            If ChannelExist(b) Then
+                                posIIVV += 1
+                            End If
                         Next
                     End If
 
                     '// ** Set ADC3 (ADC 3) channel position; **
                     If ChannelExist(6) Then
-                        posADC3 = 3
+                        posADC3 = 3 + channelOffset
                         For b As Integer = 0 To 5 Step 1
-                            If ChannelExist(b) Then posADC3 += 1
+                            If ChannelExist(b) Then
+                                posADC3 += 1
+                            End If
                         Next
                     End If
 
                     '// ** Set DF channel position; **
                     If ChannelExist(7) Then
-                        posDF = 3
+                        posDF = 3 + channelOffset
                         For b As Integer = 0 To 6 Step 1
-                            If ChannelExist(b) Then posDF += 1
+                            If ChannelExist(b) Then
+                                posDF += 1
+                            End If
                         Next
                     End If
 
                     '// ** Set EXC channel position; **
                     If ChannelExist(8) Then
-                        posEXC = 3
+                        posEXC = 3 + channelOffset
                         For b As Integer = 0 To 7 Step 1
-                            If ChannelExist(b) Then posEXC += 1
+                            If ChannelExist(b) Then
+                                posEXC += 1
+                            End If
                         Next
                     End If
 
                     '// ** Set AMP channel position; **
                     If ChannelExist(9) Then
-                        posAMP = 3
+                        posAMP = 3 + channelOffset
                         For b As Integer = 0 To 8 Step 1
-                            If ChannelExist(b) Then posAMP += 1
+                            If ChannelExist(b) Then
+                                posAMP += 1
+                            End If
                         Next
                     End If
 
                     '// ** Set Topography (DAC 0) channel position; **
                     If ChannelExist(12) Then
-                        posTopo = 3
+                        posTopo = 3 + channelOffset
                         For b As Integer = 0 To 11 Step 1
-                            If ChannelExist(b) Then posTopo += 1
+                            If ChannelExist(b) Then
+                                posTopo += 1
+                            End If
                         Next
                     End If
 
