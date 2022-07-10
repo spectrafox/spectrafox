@@ -240,9 +240,9 @@ Public Class cMouseBounds
             Case WM_MOUSEWHEEL
                 Try
                     If MouseInBounds Then
-                        Dim zDelta As Integer = HIWORD(CInt(msg.WParam))
-                        Dim y As Integer = HIWORD(CInt(msg.LParam))
-                        Dim x As Integer = LoWord(CInt(msg.LParam))
+                        Dim zDelta As Integer = HiWord(GetInt(msg.WParam))
+                        Dim y As Integer = HiWord(GetInt(msg.LParam))
+                        Dim x As Integer = LoWord(GetInt(msg.LParam))
                         Dim butt As System.Windows.Forms.MouseButtons = Me.GetMouseButton(msg.WParam)
                         Dim arg0 As New System.Windows.Forms.MouseEventArgs(butt, 1, x, y, zDelta)
                         Dim ModKey As Keys = Me.GetModifierKeys(msg.WParam)
@@ -300,7 +300,7 @@ Public Class cMouseBounds
     ''' </summary>
     Private Function GetMouseButton(WParam As IntPtr) As System.Windows.Forms.MouseButtons
         Dim butt As System.Windows.Forms.MouseButtons
-        Select Case LoWord(CInt(WParam))
+        Select Case LoWord(GetInt(WParam))
             Case MK_LBUTTON
                 butt = System.Windows.Forms.MouseButtons.Left
                 Exit Select
@@ -328,7 +328,7 @@ Public Class cMouseBounds
     ''' </summary>
     Private Function GetModifierKeys(WParam As IntPtr) As Keys
         Dim butt As Keys = Keys.None
-        Select Case LoWord(CInt(WParam))
+        Select Case LoWord(GetInt(WParam))
             Case MK_CONTROL
                 butt = Keys.Control
                 Exit Select
@@ -446,7 +446,7 @@ Public Class cMouseBounds
 
     Private Function getScrollEventType(wParam As System.IntPtr) As ScrollEventType
         Dim res As ScrollEventType = 0
-        Select Case LoWord(CInt(wParam))
+        Select Case LoWord(GetInt(wParam))
             Case SB_LINEUP
                 res = ScrollEventType.SmallDecrement
                 Exit Select
@@ -550,10 +550,6 @@ Public Class cMouseBounds
     Private Shared Function SendMessage(hWnd As IntPtr, Msg As UInteger, wParam As UIntPtr, lParam As IntPtr) As IntPtr
     End Function
 
-    <DllImport("user32.dll")> _
-    Private Shared Function HIWORD(wParam As System.IntPtr) As Integer
-    End Function
-
     Private Shared Function MakeLong(LoWord As Integer, HiWord As Integer) As Integer
         Return (HiWord << 16) Or (LoWord And &HFFFF)
     End Function
@@ -572,6 +568,14 @@ Public Class cMouseBounds
 
     Private Shared Function LoWord(number As Integer) As Integer
         Return number And &HFFFF
+    End Function
+
+    Private Shared Function GetInt(ptr As IntPtr) As Integer
+        If IntPtr.Size = 8 Then
+            Return CInt(ptr.ToInt64())
+        Else
+            Return ptr.ToInt32()
+        End If
     End Function
 
 #End Region

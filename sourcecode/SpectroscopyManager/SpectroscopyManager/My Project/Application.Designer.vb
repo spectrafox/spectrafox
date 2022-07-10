@@ -14,10 +14,10 @@ Option Explicit On
 
 Namespace My
     
-    'HINWEIS: Diese Datei wird automatisch generiert und darf nicht direkt bearbeitet werden. Wenn Sie Änderungen vornehmen möchten,
-    ' oder bei in dieser Datei auftretenden Buildfehlern wechseln Sie zum Projekt-Designer.
-    ' (Wechseln Sie dazu zu den Projekteigenschaften, oder doppelklicken Sie auf den Knoten "Mein Projekt" im
-    ' Projektmappen-Explorer). Nehmen Sie auf der Registerkarte "Anwendung" entsprechende Änderungen vor.
+    'NOTE: This file is auto-generated; do not modify it directly.  To make changes,
+    ' or if you encounter build errors in this file, go to the Project Designer
+    ' (go to Project Properties or double-click the My Project node in
+    ' Solution Explorer), and make changes on the Application tab.
     '
     Partial Friend Class MyApplication
         

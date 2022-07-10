@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  A strongly-typed resource class, for looking up localized strings, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute()>  _
     Friend Class rFitFunction_Fano
@@ -49,12 +49,12 @@ Namespace My.Resources
                 Return resourceMan
             End Get
         End Property
-
+        
         '''<summary>
         '''  Overrides the current thread's CurrentUICulture property for all
         '''  resource lookups using this strongly typed resource class.
         '''</summary>
-        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>
+        <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
         Friend Shared Property Culture() As Global.System.Globalization.CultureInfo
             Get
                 Return resourceCulture
@@ -63,7 +63,7 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to Authors:
         '''Michael Ruby.
@@ -73,7 +73,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Authors", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to Fano resonance line-shape. Describes the interference between a background and a resonant scattering process. The Fano parameter (q) is the ratio between resonant and background scattering..
         '''</summary>
@@ -82,7 +82,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Description", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to Y0 + A * [ (q+(x-Xc)/G )^2 / (1+q^2) / (1+((x-Xc)/G)^2 ].
         '''</summary>
@@ -91,7 +91,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Formula", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to Fano Resonance.
         '''</summary>
@@ -100,7 +100,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Name", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to (A) Amplitude.
         '''</summary>
@@ -109,7 +109,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Parameter_Amplitude", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to (q) Fano factor.
         '''</summary>
@@ -118,7 +118,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Parameter_FanoFactor", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to (b) linear background.
         '''</summary>
@@ -127,7 +127,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Parameter_LinearBackground", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to (G) width.
         '''</summary>
@@ -136,7 +136,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Parameter_ResonantWidth", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to (Xc) X shift.
         '''</summary>
@@ -145,7 +145,7 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Parameter_XCenter", resourceCulture)
             End Get
         End Property
-
+        
         '''<summary>
         '''  Looks up a localized string similar to (Y0) Y offset.
         '''</summary>

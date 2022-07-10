@@ -1203,13 +1203,24 @@ Public Class wGridPlotter
 
                 ' Get the time per image.
                 Dim AnimationTime As Integer = CInt(Me.txtAnimationTime.DecimalValue / Images.Count)
+                Dim magickFactory As New MagickFactory()
 
                 For i As Integer = 0 To Images.Count - 1 Step 1
-                    GIFCreator.Add(New MagickImage(Images(i)))
-                    Images(i).Dispose()
-                    GIFCreator(i).AnimationDelay = AnimationTime
-                    ' For DEBUG:
-                    'Images(i).Save(FileBrowser.FileName & "." & i.ToString & ".gif")
+                    Using memoryStream As New IO.MemoryStream
+                        ' save bitmap to memory stream
+                        Images(i).Save(memoryStream, Imaging.ImageFormat.Bmp)
+                        Images(i).Dispose()
+                        ' For DEBUG:
+                        'Images(i).Save(FileBrowser.FileName & "." & i.ToString & ".gif")
+
+                        ' reset memory stream position
+                        memoryStream.Position = 0
+
+                        ' create new MagickImage from the memory stream and attach to collection
+                        GIFCreator.Add(New MagickImage(magickFactory.Image.Create(memoryStream)))
+                        GIFCreator(i).AnimationDelay = AnimationTime
+                        memoryStream.Close()
+                    End Using
                 Next
 
                 ' Adjust the settings of the GIF
