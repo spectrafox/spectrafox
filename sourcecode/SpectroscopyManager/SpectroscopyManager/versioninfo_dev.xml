@@ -3,15 +3,15 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>SpectraFox Update</title>
-    <link>http://download.spectrafox.com/versioninfo_dev.xml</link>
+    <link>https://download.spectrafox.com/versioninfo_dev.xml</link>
     <description></description>
     <language>en</language>
     <item>
       <title>Version 2016.01.19.0</title>
-      <sparkle:releaseNotesLink>http://download.spectrafox.com/changelog_dev.html</sparkle:releaseNotesLink>
+      <sparkle:releaseNotesLink>https://download.spectrafox.com/changelog_dev.html</sparkle:releaseNotesLink>
       <pubDate>2016/01/19</pubDate>
       <enclosure
-          url="http://download.spectrafox.com/spectrafox-dev.exe"
+          url="https://download.spectrafox.com/spectrafox-dev.exe"
           length="5120"
           type="application/octet-stream"
           sparkle:version="2016.01.19.0"

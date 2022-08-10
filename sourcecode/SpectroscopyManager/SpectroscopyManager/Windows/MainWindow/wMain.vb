@@ -40,9 +40,9 @@ Public Class wMain
 
         ' Now distinguish between the different update channels!
         If My.Settings.AutoUpdateOnlyStable Then
-            _SparkleUpdater = New Sparkle("http://download.spectrafox.com/versioninfo_stable" & LowPrivilegeSetupAppendix & ".xml", cProgrammDeployment.ProgramIcon)
+            _SparkleUpdater = New Sparkle("https://download.spectrafox.com/versioninfo_stable" & LowPrivilegeSetupAppendix & ".xml", cProgrammDeployment.ProgramIcon)
         Else
-            _SparkleUpdater = New Sparkle("http://download.spectrafox.com/versioninfo_dev" & LowPrivilegeSetupAppendix & ".xml", cProgrammDeployment.ProgramIcon)
+            _SparkleUpdater = New Sparkle("https://download.spectrafox.com/versioninfo_dev" & LowPrivilegeSetupAppendix & ".xml", cProgrammDeployment.ProgramIcon)
         End If
 
         ' start the Auto-Update, if settings don't forbid:
