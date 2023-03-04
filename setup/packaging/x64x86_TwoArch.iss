@@ -117,7 +117,7 @@ Source: "{#BuildDirectory_x86}\zlib.net.dll"; DestDir: "{app}"; Flags: ignorever
 Source: "{#BuildDirectory_x86}\ColorSchemes\*"; DestDir: "{app}\ColorSchemes"; Flags: ignoreversion recursesubdirs
 
 ; .NET Framework Setup
-Source: "addons\dotNetFx45_Full_setup.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: not IsRequiredDotNetDetected
+Source: "addons\ndp48-web.exe"; DestDir: {tmp}; Flags: deleteafterinstall; Check: not IsRequiredDotNetDetected
                                                                                                                                    
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

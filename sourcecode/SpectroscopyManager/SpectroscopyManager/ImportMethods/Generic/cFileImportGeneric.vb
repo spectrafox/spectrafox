@@ -172,11 +172,11 @@ Public Class cFileImportGeneric
     End Property
 
     ''' <summary>
-    ''' Checks, if the given file is a known GSXM file-type
+    ''' Checks, if the given file is a known generic CSV file-type
     ''' </summary>
     Public Function IdentifyFile(ByRef FullFileNamePlusPath As String,
                                  Optional ByRef ReaderBuffer As String = "") As Boolean Implements iFileImport_SpectroscopyTable.IdentifyFile
-        Return cFileImportGeneric.DetermineSeparatorCharacter(FullFileNamePlusPath, ReaderBuffer) <> Chr(0)
+        Return cFileImportGeneric.DetermineSeparatorCharacter(FullFileNamePlusPath, ReaderBuffer, 1000) <> Chr(0)
     End Function
 
 End Class
