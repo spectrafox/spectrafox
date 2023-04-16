@@ -83,7 +83,7 @@
         For x As Integer = 0 To XCount - 1 Step 1
             For y As Integer = 0 To YCount - 1 Step 1
                 If Not Double.IsNaN(ScanChannel.ScanData(y, x)) Then
-                    ScanChannel.ScanData(y, x) = ScanChannel.ScanData(y, x) - x * dGradientX - y * dGradientY
+                    ScanChannel.ScanData(y, x) = ScanChannel.ScanData(y, x) + x * dGradientX + y * dGradientY
                 Else
                     ScanChannel.ScanData(y, x) = Double.NaN
                 End If

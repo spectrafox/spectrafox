@@ -40,160 +40,204 @@ Public Class cFileImportNanonisSpectroscopyFile
 
                 SplittedLine = Split(ReaderBuffer, vbTab, 2)
                 If SplittedLine.Length <> 2 Then Continue Do
-                Dim sPropertyName As String = SplittedLine(0).Trim
-                Dim sPropertyValue As String = SplittedLine(1).Trim
+                Dim propertyName As String = SplittedLine(0).Trim
+                Dim stringValue As String = SplittedLine(1).Trim
+
+                ' Try to parse different data formats
+                Dim isFloat As Boolean = False
+                Dim floatValue As Double = Nothing
+
+                Dim isInteger As Boolean = False
+                Dim integerValue As Integer = Nothing
+
+                Dim isBool As Boolean = False
+                Dim boolValue As Boolean = Nothing
+
+                Dim isDate As Boolean = False
+                Dim dateValue As Date = Nothing
+
+                Select Case (True)
+                    Case Integer.TryParse(stringValue, Globalization.NumberStyles.Float, Globalization.CultureInfo.InvariantCulture, integerValue)
+                        isInteger = True
+                    Case Double.TryParse(stringValue, Globalization.NumberStyles.Float, Globalization.CultureInfo.InvariantCulture, floatValue)
+                        isFloat = True
+                    Case Boolean.TryParse(stringValue, boolValue)
+                        isBool = True
+                    Case Date.TryParse(stringValue, Globalization.CultureInfo.CreateSpecificCulture("de-DE"), Globalization.DateTimeStyles.None, dateValue)
+                        isDate = True
+                End Select
+
+                If (Not isBool) Then
+                    If (isFloat) Then
+                        If (floatValue = 1) Then
+                            isBool = True
+                            boolValue = True
+                        ElseIf (floatValue = 0) Then
+                            isBool = False
+                            boolValue = False
+                        End If
+                    ElseIf (isInteger) Then
+                        If (integerValue = 1) Then
+                            isBool = True
+                            boolValue = True
+                        ElseIf (integerValue = 0) Then
+                            isBool = False
+                            boolValue = False
+                        End If
+                    End If
+                End If
 
                 With oSpectroscopyTable
                     ' Treat Comment separately:
-                    If sPropertyName.Contains("Comment") Then
-                        .Comment &= sPropertyValue & vbCrLf
+                    If propertyName.Contains("Comment") Then
+                        .Comment &= stringValue & vbCrLf
                     End If
 
                     ' Other Properties
-                    Select Case sPropertyName
+                    Select Case propertyName
 
                         Case "Date"
-                            If Not Date.TryParse(sPropertyValue, Globalization.CultureInfo.CreateSpecificCulture("de-DE"), Globalization.DateTimeStyles.None, .RecordDate) Then
+                            If isDate Then
+                                .RecordDate = dateValue
+                            Else
                                 .RecordDate = Now
                             End If
 
                         Case "X (m)"
-                            .Location_X = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Location_X = floatValue
                         Case "Y (m)"
-                            .Location_Y = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Location_Y = floatValue
                         Case "Z (m)"
-                            .Location_Z = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Location_Z = floatValue
 
                         Case "Z offset (m)"
-                            .Z_Offset = Double.NaN
-                            Double.TryParse(sPropertyValue, Globalization.NumberStyles.Float, Globalization.CultureInfo.InvariantCulture, .Z_Offset)
+                            .Z_Offset = floatValue
                         Case "Z sweep distance (m)"
-                            .Z_Sweep_Distance = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Z_Sweep_Distance = floatValue
                         Case "Settling time (s)"
-                            .SettlingTime_s = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .SettlingTime_s = floatValue
                         Case "Integration time (s)"
-                            .IntegrationTime_s = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .IntegrationTime_s = floatValue
                         Case "Z-Ctrl hold"
-                            .FeedbackOff = Boolean.Parse(sPropertyValue)
+                            .FeedbackOff = boolValue
 
 
                         Case "Bias>Bias (V)"
-                            .FeedbackOpenBias_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .FeedbackOpenBias_V = floatValue
                         Case "Bias>Calibration (V/V)"
-                            .Bias_Calibration_V_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Bias_Calibration_V_V = floatValue
                         Case "Bias>Offset (V)"
-                            .Bias_OffSet_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Bias_OffSet_V = floatValue
 
 
                         Case "Bias Spectroscopy>Sweep Start (V)"
-                            .BiasSpec_SweepStart_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .BiasSpec_SweepStart_V = floatValue
                         Case "Bias Spectroscopy>Sweep End (V)"
-                            .BiasSpec_SweepEnd_V = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .BiasSpec_SweepEnd_V = floatValue
                         Case "Bias Spectroscopy>Num Pixel"
-                            .MeasurementPoints = Integer.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .MeasurementPoints = integerValue
                         Case "Bias Spectroscopy>Z Avg time"
-                            .Z_Avg_Time_s = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Z_Avg_Time_s = floatValue
                         Case "Bias Spectroscopy>backward sweep"
-                            .Backward_Sweep = Boolean.Parse(sPropertyValue)
+                            .Backward_Sweep = boolValue
                         Case "Bias Spectroscopy>Number of sweeps"
-                            .NumberOfSweeps = Integer.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .NumberOfSweeps = integerValue
 
                         Case "Current>Current (A)"
-                            .Curr_Current = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Curr_Current = floatValue
                         Case "Current>Calibration (A/V)"
-                            .Curr_Calibration = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Curr_Calibration = floatValue
                         Case "Current>Offset (A)"
-                            .Curr_Offset = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Curr_Offset = floatValue
                         Case "Current>Gain"
-                            .Curr_Gain = sPropertyValue
+                            .Curr_Gain = stringValue
 
                         Case "Z Spectroscopy>Num Pixel"
-                            .MeasurementPoints = Integer.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .MeasurementPoints = integerValue
                         Case "Z Spectroscopy>Z Avg time (s)"
-                            .Z_Avg_Time_s = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Z_Avg_Time_s = floatValue
                         Case "Z Spectroscopy>backward sweep"
-                            .Backward_Sweep = Boolean.Parse(sPropertyValue)
+                            .Backward_Sweep = boolValue
                         Case "Z Spectroscopy>Number of sweeps"
-                            .NumberOfSweeps = Integer.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .NumberOfSweeps = integerValue
 
                         Case "Z-Controller>Setpoint"
-                            .FeedbackOpenCurrent_A = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .FeedbackOpenCurrent_A = floatValue
                             .ZController_Setpoint = .FeedbackOpenCurrent_A
                         Case "Z-Controller>Setpoint unit"
-                            .ZController_SetpointUnit = sPropertyValue
+                            .ZController_SetpointUnit = stringValue
                         Case "Z-Controller>Controller name"
-                            .ZController_ControllerName = sPropertyValue
+                            .ZController_ControllerName = stringValue
                         Case "Z-Controller>Controller status"
-                            .ZController_ControllerStatus = (sPropertyValue = "OFF")
+                            .ZController_ControllerStatus = (stringValue = "OFF")
                         Case "Z-Controller>P gain"
-                            .ZController_PGain = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .ZController_PGain = floatValue
                         Case "Z-Controller>I gain"
-                            .ZController_IGain = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .ZController_IGain = floatValue
                         Case "Z-Controller>Time const (s)"
-                            .ZController_TimeConst = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .ZController_TimeConst = floatValue
                         Case "Z-Controller>TipLift (m)"
-                            .ZController_TipLift = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .ZController_TipLift = floatValue
                         Case "Z-Controller>Switch off delay (s)"
-                            .ZController_SwitchOffDelay = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .ZController_SwitchOffDelay = floatValue
                         Case "Z-Controller>Z (m)"
-                            .ZController_Z = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .ZController_Z = floatValue
 
 
                         Case "Oscillation Control>differential input"
-                            .OscCntrl_DifferentialInput = Boolean.Parse(sPropertyValue)
+                            .OscCntrl_DifferentialInput = boolValue
                         Case "Oscillation Control>input 1/10"
-                            .OscCntrl_Input1To10 = Boolean.Parse(sPropertyValue)
+                            .OscCntrl_Input1To10 = boolValue
                         Case "Oscillation Control>Input Calibration (m/V)"
-                            .OscCntrl_InputCalibration = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_InputCalibration = floatValue
                         Case "Oscillation Control>Input Range (m)"
-                            .OscCntrl_InputRange = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_InputRange = floatValue
                         Case "Oscillation Control>Center Frequency (Hz)"
-                            .OscCntrl_CenterFrequency = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_CenterFrequency = floatValue
                         Case "Oscillation Control>Range (Hz)"
-                            .OscCntrl_Range = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_Range = floatValue
                         Case "Oscillation Control>Reference Phase (deg)"
-                            .OscCntrl_ReferencePhase = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_ReferencePhase = floatValue
                         Case "Oscillation Control>Harmonic"
-                            .OscCntrl_Harmonic = Int32.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_Harmonic = integerValue
                         Case "Oscillation Control>Phase P gain (Hz/rad)"
-                            .OscCntrl_PhasePGain = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_PhasePGain = floatValue
                         Case "Oscillation Control>Phase I gain (Hz/rad/s)"
-                            .OscCntrl_PhaseIGain = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_PhaseIGain = floatValue
                         Case "Oscillation Control>FrequencyShift (Hz)"
-                            .OscCntrl_FrequencyShift = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_FrequencyShift = floatValue
                         Case "Oscillation Control>Amplitude Setpoint (m)"
-                            .OscCntrl_AmplitudeSetpoint = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_AmplitudeSetpoint = floatValue
                         Case "Oscillation Control>Amplitude P gain (V/nm)"
-                            .OscCntrl_AmplitudePGain = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_AmplitudePGain = floatValue
                         Case "Oscillation Control>Amplitude I gain (V/nm/s)"
-                            .OscCntrl_AmplitudeIGain = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_AmplitudeIGain = floatValue
                         Case "Oscillation Control>Amplitude controller on"
-                            .OscCntrl_AmplitudeControllerStatus = Boolean.Parse(sPropertyValue)
+                            .OscCntrl_AmplitudeControllerStatus = boolValue
                         Case "Oscillation Control>output off"
-                            .OscCntrl_OutputOff = Boolean.Parse(sPropertyValue)
+                            .OscCntrl_OutputOff = boolValue
                         Case "Oscillation Control>output add"
-                            .OscCntrl_OutputAdd = Boolean.Parse(sPropertyValue)
+                            .OscCntrl_OutputAdd = boolValue
                         Case "Oscillation Control>output divider"
-                            .OscCntrl_OutputDivider = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_OutputDivider = floatValue
                         Case "Oscillation Control>PLL-Setup Q-Factor"
-                            .OscCntrl_PLLSetup_QFactor = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_PLLSetup_QFactor = floatValue
                         Case "Oscillation Control>PLL-Setup Demod. Bandwidth Amp (Hz)"
-                            .OscCntrl_PLLSetup_DemodBandwidthAmplitude = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_PLLSetup_DemodBandwidthAmplitude = floatValue
                         Case "Oscillation Control>PLL-Setup Demod. Bandwidth Pha (Hz)"
-                            .OscCntrl_PLLSetup_DemodBandwidthPhase = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_PLLSetup_DemodBandwidthPhase = floatValue
                         Case "Oscillation Control>PLL-Setup amplitude/excitation (m/V)"
-                            .OscCntrl_PLLSetup_AmplitudeToExcitation = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_PLLSetup_AmplitudeToExcitation = floatValue
                         Case "Oscillation Control>Excitation (V)"
-                            .OscCntrl_Excitation = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .OscCntrl_Excitation = floatValue
 
 
                         Case "Temperature 1>Temperature 1 (K)"
-                            .Temperature = Double.Parse(sPropertyValue, Globalization.CultureInfo.InvariantCulture)
+                            .Temperature = floatValue
 
                         Case Else
                             ' Add to the general property array.
-                            .AddGeneralProperty(sPropertyName, sPropertyValue)
-
+                            .AddGeneralProperty(propertyName, stringValue)
                     End Select
                 End With
             Loop
